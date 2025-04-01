@@ -21,5 +21,19 @@ La vitesse de chaque monstre est aléatoire, fixe, et déterminée lors de son a
 Chaque monstre se dirige en azimut brutal, dans la direction du joueur
 
 
+Le joueur tire à distance (visée par positionnement souris, ou via l'un des joysticks manette/tactile)
+
+
+Lorsqu'un monstre est au contact du joueur, ce dernier perd des points de vie
+
+
 Le joueur doit éliminer tous les monstres de la vague, pour passer à la vague suivante. S'il échoue, il peut retenter la dernière vague autant de fois qu'il lui sera nécessaire.
 
+
+Le jeu doit inclure la possibilité de sauvegarder/charger une partie (c'est mieux pour un jeu infini)
+
+
+Chaque monstre éliminé permet au joueur de trouver des pièces, qu'il pourra ensuite dépenser au magasin afin d'améliorer ses caractéristiques 
+
+
+Lorsqu'il échoue à vaincre une vague de monstre, le joueur perd une partie de ses gains de la vague en question, le sauvetage et les soins qu'il reçoit alors n'étant pas gratuits.
