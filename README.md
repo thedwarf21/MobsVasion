@@ -37,3 +37,6 @@ Chaque monstre éliminé permet au joueur de trouver des pièces, qu'il pourra e
 
 
 Lorsqu'il échoue à vaincre une vague de monstre, le joueur perd une partie de ses gains de la vague en question, le sauvetage et les soins qu'il reçoit alors n'étant pas gratuits.
+
+
+Ajouter des sons et de la musique.
