@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="" />
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <link rel="manifest" href="manifest.json">
+    <!--link rel="icon" type="image/png" href="images/icon.png" /--> <!-- ça, on verra plus tard -->
+    <title>Mobs Vasion</title>
+
+    <!-- Styles et fonts -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/hud.css"/>
+    <link rel="stylesheet" type="text/css" href="css/rs_dialog.css"/>
+    <link rel="stylesheet" type="text/css" href="css/rs_toast.css"/>
+    
+    <!-- Scripts -->
+    <script type="text/javascript" src="scripts/rs_wcl.js"></script>
+    <script type="text/javascript" src="scripts/rs_dialog.js"></script>
+    <script type="text/javascript" src="scripts/rs_toast.js"></script>
+    <script type="text/javascript" src="scripts/rs_game_engine.js"></script>
+    <script type="text/javascript" src="scripts/rs_game_timer.js"></script> <!-- refacto de découplage => à tester -->
+    <script type="text/javascript" src="scripts/rs_save_manager.js"></script> <!-- refacto de découplage => à tester -->
+    <script type="text/javascript" src="scripts/rs_audio_manager.js"></script> <!-- refacto de découplage => à tester -->
+    <script type="text/javascript" src="scripts/AH_GameInitializer.js"></script> <!-- à adapter et renommer -->
+    <script type="text/javascript" src="scripts/main.js"></script>
+
+    <!-- Lancement de l'initialisation -->
+    <script type="text/javascript">
+      //MainController.init();
+    </script>
+  </head>
+
+  <!-- Corps de la page -->
+  <body onload="AH_MainController.onLoad()">
+    <div class="game-window" id="game-window"></div>
+    <div class="hud">
+    </div>
+  </body>
+</html>
