@@ -248,8 +248,8 @@ class MobileGameElement extends HTMLDivElement {
 	 * Ecrit un message d'erreur dans la console: propriété en lecture seule
 	 */
 	set hitbox(value) { console.error("La propriété hitbox de MobileGameElement est en lecture seule."); }
-  }
-  customElements.define('div-game-element', MobileGameElement, { extends: 'div' });
+}
+customElements.define('div-game-element', MobileGameElement, { extends: 'div' });
 
 /**
  * Couche d'abstraction permettant d'interfacer des contrôles à l'API native Gamepad.
@@ -258,17 +258,13 @@ class MobileGameElement extends HTMLDivElement {
  *    - une fonction rattachée, exécutant l'action correspondante
  *    - l'indice du bouton de manette rattaché, dans la liste fournie par l'API
  *
- * @class      GamepadControlsMapper
+ * @class      GamepadGenericAdapter
  */
-class GamepadControlsMapper {
+class GamepadGenericAdapter {
 	constructor() { this.controls = []; }
 
-	addControlEntry(name, fnAction) {
-		this.controls.push({
-			name: name,
-			execute: fnAction,
-			buttonIndex: undefined
-		});
+	addControlEntry(name, fnAction, isAuto) {
+		this.controls.push(new GamepadControl(name, fnAction, isAuto));
 	}
 
 	setControlMapping(controlIndex, buttonIndex) {
@@ -276,11 +272,10 @@ class GamepadControlsMapper {
 	}
 
 	applyControlsMapping() {
-		let gamepad = GamepadControlsMapper.getConnectedGamepad();
-		for (let control of this.controls) {
-			if (control.buttonIndex && gamepad.buttons[control.buttonIndex].pressed)
-				control.execute();
-		}
+		let gamepad = GamepadGenericAdapter.getConnectedGamepad();
+		this.__updateJoysticksStates(gamepad);
+		for (let control of this.controls)
+			control.applyContext(gamepad);
 	}
 
 	static getConnectedGamepad() {
@@ -289,18 +284,77 @@ class GamepadControlsMapper {
 			if (gamepad != null)
 				return gamepad;
 	}
+
+	__updateJoysticksStates(gamepad) {
+		this.leftJoystick = new GamepadJoystick(gamepad.axes[0], gamepad.axes[1]);
+		this.rightJoystick = new GamepadJoystick(gamepad.axes[2], gamepad.axes[3]);
+		if (gamepad.axes.length > 4)
+			this.accelerometer = new GamepadJoystick(gamepad.axes[4], gamepad.axes[5]);
+	}
 }
 
 /**
- * Construit et piloté l'interface de configuration de la manette, 
- * en s'appuyant sur une instance de GamepadControlsMapper.
+ * Représente un contrôle de Gamepad, géré par GamepadGenericAdapter.
  *
- * @class      GamepadConfigInterface
+ * @class      GamepadControl
  */
-class GamepadConfigInterface {
-	constructor(game_controls_mapper, fnOnClose) {
+class GamepadControl {
+	constructor(name, fnAction, isAuto) {
+		this.name = name;
+		this.execute = fnAction;
+		this.isAuto = isAuto;
+		this.executeFired = false;
+		this.buttonIndex = undefined;
+	}
+
+	applyContext(gamepad) {
+		if (this.__isButtonPressed(gamepad)) {
+			if (this.__isExecutionPossible()) {
+				this.execute();
+				this.executeFired = true;
+			}
+		} else this.executeFired = false;
+	}
+
+	__isButtonPressed(gamepad) {
+		return this.buttonIndex && gamepad.buttons[this.buttonIndex].pressed;
+	}
+
+	__isExecutionPossible() {
+		return !this.executeFired || this.isAuto;
+	}
+}
+
+/**
+ * Représente un joystick de Gamepad, géré par GamepadGenericAdapter.
+ *
+ * @class      GamepadJoystick
+ */
+class GamepadJoystick {
+	constructor(x_rate, y_rate) {
+		this.x = x_rate;
+		this.y = y_rate;
+		this.__computeAngleAndIntensity();
+	}
+
+	__computeAngleAndIntensity() {
+		this.angle = (Math.atan2(this.y, this.x) * 180) / Math.PI;
+		this.intensity 	= Math.abs(this.x) > Math.abs(this.y) 
+						? Math.abs(this.x) 
+						: Math.abs(this.y);
+	}
+}
+
+/**
+ * Génère et gère l'UI permettant le mapping de GamepadGenericAdapter
+ * Le constructeur de la classe attend une instance de GamepadGenericAdapter en paramètre
+ *
+ * @class      GamepadConfigUI
+ */
+class GamepadConfigUI {
+	constructor(game_controls_mapper, fnOnUiClose) {
 		this.controls_mapper = game_controls_mapper;
-		this.show(fnOnClose);
+		this.show(fnOnUiClose);
 	}
 
 	show(fnOnClose) {
@@ -310,11 +364,7 @@ class GamepadConfigInterface {
 			for (let i=0; i<this.controls_mapper.controls.length; i++) {
 				container.appendChild(this.__getConfigInterfaceItem(i));
 			}
-			popup.querySelector("#btn_close").addEventListener("click", ()=> {
-				popup.closeModal();
-				if (fnOnClose)
-					fnOnClose();
-			});
+			popup.querySelector("#btn_close").addEventListener("click", ()=> { popup.closeModal() });
 			document.body.appendChild(popup);
 		});
 	}
@@ -361,7 +411,7 @@ class GamepadConfigInterface {
 
 	__captureButtonPressed(fnThen) {
 		let interval_id = setInterval(()=> {
-			let gamepad = GamepadControlsMapper.getConnectedGamepad();
+			let gamepad = GamepadGenericAdapter.getConnectedGamepad();
 			for (let i=0; i<gamepad.buttons.length; i++) {
 				if (gamepad.buttons[i].pressed) {
 					clearInterval(interval_id);
