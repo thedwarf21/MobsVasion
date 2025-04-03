@@ -1,4 +1,15 @@
 /**
+ * Pioche une valeur au hasard dans une liste
+ * 
+ * @param 	{array} 	values_list 	Liste de valeur dans laquelle piocher au hasard
+ * @returns   			La valeur piochée dans la liste
+ */
+function randomize(values_list) {
+	let randomIndex = Math.floor(Math.random() * values_list.length);
+	return values_list[randomIndex];
+}
+
+/**
  * La classe RS_Hitbox centralise les tests de collision
  *
  * @class      RS_Hitbox
@@ -96,6 +107,149 @@ class RS_ViewPortCompatibility {
 		return value + css_unit;
 	}
 }
+
+/**
+ * Classe mère des éléments mobiles du jeu
+ */
+class MobileGameElement extends HTMLDivElement {
+
+	/*** Propriétés devant être initialisés pour que l'objet fonctionne correctement ***/
+	x                 = null;
+	y                 = null;
+	deltaX            = null;
+	deltaY            = null;
+	pixel_size        = null;
+  
+	/**
+	 * Constructeur par défaut de tous les composants mobiles du jeu
+	 * Les coordonnées passées en paramètre sont les coordonnées d'apparition
+	 *
+	 * @param      {object}  viewport  Instance de RS_ViewPortCompatibility
+	 * @param      {number}  x       Optionnel: Abscisses en pixels virtuels du coin supérieur gauche de l'élément contenant l'image du vaisseau
+	 * @param      {number}  y       Optionnel: Ordonnées en pixels virtuels du coin supérieur gauche de l'élément contenant l'image du vaisseau
+	 */
+	constructor(viewport, x, y) {
+	  super();
+	  this.classList.add("game");
+
+	  if (!viewport instanceof RS_ViewPortCompatibility) {
+		console.error("MobileGameElement.constructor : le paramètre viewport doit être une instance de RS_ViewPortCompatibility");
+	  }
+  
+	  // Certains éléments initialisent eux-mêmes leurs coordonnées. Les paramètres peuvent donc être absents.
+	  if (x != undefined && y != undefined) {
+		this.x = x;
+		this.y = y;
+		this.viewport = viewport
+		this.style.left = viewport.getCssValue(this.x, false);
+		this.style.top = viewport.getCssValue(this.y, true);
+	  }
+	}
+  
+	/**
+	 * Fonction de déplacement de base
+	 *
+	 * @param      {boolean}  removeOnScreenLeave  move(true) => à sa sortie de l'écran, l'élément est supprimé du DOM
+	 */
+	move(removeOnScreenLeave) {
+  
+	  // Calcul des nouvelles coordonnées
+	  this.y -= this.deltaY;
+	  this.x += this.deltaX;
+	  
+	  // Gestion de la sortie d'écran selon removeOnScreenLeave
+	  //--------------------------------------------------------
+	  // true  --> suppression de l'élément
+	  // false --> on ramène l'élément au bord opposé
+	  let window_height = this.viewport.VIRTUAL_HEIGHT,
+		  window_width = this.viewport.VIRTUAL_WIDTH;
+	  if (removeOnScreenLeave) {
+		if (this.y > window_height || this.y < -this.pixel_size || this.x > window_width || this.x < -this.pixel_size) 
+		  this.remove();
+	  } else {
+		if (this.y > window_height) 
+		  this.y -= (window_height + this.pixel_size);
+		if (this.y < -this.pixel_size) 
+		  this.y += (window_height + this.pixel_size);
+		if (this.x > window_width) 
+		  this.x -= (window_width + this.pixel_size);
+		if (this.x < -this.pixel_size) 
+		  this.x += (window_width + this.pixel_size);
+	  }
+  
+	  // Application des nouvelles coordonnées
+	  this.style.top = this.viewport.getCssValue(this.y, true);
+	  this.style.left = this.viewport.getCssValue(this.x, false);
+	}
+  
+	/**
+	 * Fonction déclenchant une animation sur l'élément
+	 *
+	 * @param   	{string}	animationCssClass	Nom de la classe CSS correspondant à l'animation
+	 * @param		{number}	duration			Durée en ms de l'animation
+	 * @param      	{function}  fnPostAnimation  	Hook post-animation
+	 */
+	animate(animationCssClass, duration, fnPostAnimation) {
+	  this.classList.add(animationCssClass);
+	  if (typeof fnPostAnimation == "function")
+		setTimeout(fnPostAnimation, duration);
+	}
+  
+	/**
+	 * Ajoute un élément permettant de visualiser la hitbox de l'élément
+	 */
+	addVisualHitBox() {
+	  let div = document.createElement("DIV");
+	  div.classList.add("hitbox");
+  
+	  // On applique le coefficient pour obtenir la marge 
+	  // marge de centrage => réduction du rayon = <rayon_hitbox_de_base> - <rayon_hitbox_souhaité>
+	  let margin, cssSize;
+	  if (this.hitbox_size_coef) {
+		margin = this.pixel_size/2 * (1 - this.hitbox_size_coef);
+		cssSize = `calc(100% - ${this.viewport.getCssValue(margin * 2, true)})`;
+	  } else {
+		margin = 0;
+		cssSize = "100%";
+	  }
+	  div.style.margin = this.viewport.getCssValue(margin, true);
+	  div.style.height = cssSize;
+	  div.style.width = cssSize;
+	  div.style.opacity = "0"; // Afficher/cacher selon paramétrage utilisateur
+	  this.appendChild(div);
+	}
+
+	/**
+	 * Permet d'afficher/cacher la hitbox de l'élément
+	 * 
+	 * @param {boolean} makeVisible 
+	 */
+	setHitboxDisplay(makeVisible) { 
+		this.querySelector(".hitbox").style.opacity = makeVisible ? "1" : "0";
+	}
+  
+	/**
+	 * Retourne l'objet RS_Hitbox correspondant au vaisseau
+	 *
+	 * @type       {RS_Hitbox}
+	 */
+	get hitbox() {
+	  let radius_coef = this.hitbox_size_coef || 1;
+	  
+	  // On retourne un objet donnant le coef à appliquer à la taille 
+	  return new RS_Hitbox(RS_Hitbox.SHAPE_CIRCLE, {
+		radius: this.pixel_size/2 * radius_coef,
+		x: this.x + (this.pixel_size / 2),
+		y: this.y + (this.pixel_size / 2)
+	  });
+	}
+  
+	/**
+	 * Ecrit un message d'erreur dans la console: propriété en lecture seule
+	 */
+	set hitbox(value) { console.error("La propriété hitbox de MobileGameElement est en lecture seule."); }
+  }
+  customElements.define('div-game-element', MobileGameElement, { extends: 'div' });
 
 /**
  * Couche d'abstraction permettant d'interfacer des contrôles à l'API native Gamepad.
