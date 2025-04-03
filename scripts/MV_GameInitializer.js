@@ -1,0 +1,106 @@
+class MV_GameInitializer {
+
+	/*
+	 * Initialisation par défaut => le scope du controller principal est initialisé avec ses attributs, au lancement du jeu
+	 * 		Les données correspondant à la partie (attribut "game") sont mis à jour au fil de l'eau
+	 * 		L'attribut "controls" permet au timer d'accéder rapidement à l'état des touches de contrôle
+	 * 		L'attribut "shop" permet l'affichage et la gestion par le programme, du magasin d'améliorations (prix, effets)
+	 * 		  il permet également de stocker le niveau d'amélioration courant, pour chacune d'entre elle
+	 */
+	static get initial_scope() {
+		return {
+			game: {
+				money: 0,
+				xp: 0,
+				level: 1,
+				save_slot: 1,
+				beforeNextShot: 0,
+				kills_count: 0,
+				sound_fx_on: true,
+				music_on: true,
+				showHitboxes: false
+			},
+			controls: {
+				upPressed: false,
+				downPressed: false,
+				rightPressed: false,
+				leftPressed: false,
+				paused: true,
+				firing_primary: false,
+				firing_secondary: false
+			},
+			gamepad_mapper: null,
+			shop: [] // définira les articles du magasin (données de calcul du prix et de l'effet en fonction du niveau d'amélioration, ainsi que du libellé pour affichage et d'un identifiant unique)
+		};
+	}
+
+	static addKeyListeners(controller) {
+		let controls = controller.scope.controls;
+		window.addEventListener('keydown', function(e) {
+			if (e.code == "ArrowDown")
+				controls.downPressed = true;
+			else if (e.code == "ArrowUp")
+				controls.upPressed = true;
+			else if (e.code == "ArrowLeft")
+				controls.leftPressed = true;
+			else if (e.code == "ArrowRight")
+				controls.rightPressed = true;
+			else if (e.code == "Space")
+				controls.firing_secondary = true;
+			else if (e.code == "KeyP") 
+				controller.togglePause();
+		});
+		window.addEventListener('keyup', function(e) {
+			if (e.code == "ArrowDown")
+				controls.downPressed = false;
+			if (e.code == "ArrowUp")
+				controls.upPressed = false;
+			if (e.code == "ArrowLeft")
+				controls.leftPressed = false;
+			if (e.code == "ArrowRight")
+				controls.rightPressed = false;
+			if (e.code == "Space")
+				controls.firing_secondary = false;
+		});
+
+		// penser à ajouter un listener de clic, pour le tir principal
+	}
+
+	static addTouchListeners(controller) {
+		let controls = controller.scope.controls;
+		// J'ai prévu des joysticks virtuels pour le déplacement et le tir principal 
+		// => idéalement, il faudrait délèguer la responsabilité de générer des informations exploitables (angle + force, au lieu de coordonnées de tapstart + coordonnées actuelles)
+		// et dans un format homogène à celui retourné par GamepadGenericAdapter pour les joysticks, de manière à mutualiser le traitement
+
+		document.querySelector('.hud .pause').addEventListener('click', function(e) { controller.togglePause(); });
+	}
+
+	static prepareGamepadControls(controller) {
+		window.addEventListener('gamepadconnected', (event)=> {
+			console.log("Manette connectée");
+
+			let controls = controller.scope.controls;
+			let gcm = new GamepadControlsMapper();
+			gcm.addControlEntry("Pause", ()=> { controller.togglePause(); });
+			gcm.addControlEntry("Tir secondaire", ()=> { controls.firing_secondary = true; });
+			// ah ouais... ça fait pas beaucoup de boutons du coup...
+
+			controller.scope.gamepad_mapper = gcm;
+			let was_paused = controls.paused;
+			controls.paused = true;
+			controller.scope.gamepadControlsUI = new GamepadConfigInterface(gcm, ()=> { controls.paused = was_paused; });
+		});
+
+		window.addEventListener('gamepaddisconnected', (event)=> {
+			controller.scope.gamepadControlsUI = null;
+			controller.scope.gamepad_mapper = null;
+			controller.clearGamepadControls();
+			controller.togglePause();
+		});
+	}
+
+	static clearGamepadControls(controller) {
+		let controls = controller.scope.controls;
+		controls.firing_secondary = false;
+	}
+}
