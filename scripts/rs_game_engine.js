@@ -119,6 +119,7 @@ class MobileGameElement extends HTMLDivElement {
 	deltaX            = null;
 	deltaY            = null;
 	pixel_size        = null;
+	viewport		  = null;
   
 	/**
 	 * Constructeur par défaut de tous les composants mobiles du jeu
@@ -129,21 +130,26 @@ class MobileGameElement extends HTMLDivElement {
 	 * @param      {number}  y       Optionnel: Ordonnées en pixels virtuels du coin supérieur gauche de l'élément contenant l'image du vaisseau
 	 */
 	constructor(viewport, x, y) {
-	  super();
-	  this.classList.add("game");
-
-	  if (!viewport instanceof RS_ViewPortCompatibility) {
-		console.error("MobileGameElement.constructor : le paramètre viewport doit être une instance de RS_ViewPortCompatibility");
-	  }
+	  	super();
+	  	this.classList.add("game");
+	  
+	  	if (!viewport) {
+			console.error("MobileGameElement.constructor : le paramètre viewport est obligatoire");
+			return;
+	  	}
+	  	if (!viewport instanceof RS_ViewPortCompatibility) {
+			console.error("MobileGameElement.constructor : le paramètre viewport doit être une instance de RS_ViewPortCompatibility");
+			return;
+	  	}
   
-	  // Certains éléments initialisent eux-mêmes leurs coordonnées. Les paramètres peuvent donc être absents.
-	  if (x != undefined && y != undefined) {
-		this.x = x;
-		this.y = y;
-		this.viewport = viewport
-		this.style.left = viewport.getCssValue(this.x, false);
-		this.style.top = viewport.getCssValue(this.y, true);
-	  }
+	  	// Certains éléments initialisent eux-mêmes leurs coordonnées. Les paramètres peuvent donc être absents.
+	  	this.viewport = viewport
+	  	if (x != undefined && y != undefined) {
+			this.x = x;
+			this.y = y;
+			this.style.left = viewport.getCssValue(this.x, false);
+			this.style.top = viewport.getCssValue(this.y, true);
+	  	}
 	}
   
 	/**

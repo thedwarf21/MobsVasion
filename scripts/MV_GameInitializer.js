@@ -34,7 +34,15 @@ class MV_GameInitializer {
 		};
 	}
 
-	static addKeyListeners(controller) {
+	static prepareGame(controller) {
+		controller.scope = MV_GameInitializer.initial_scope;
+		MV_GameInitializer.__addTouchListeners(controller);
+		MV_GameInitializer.__addKeyListeners(controller);
+		MV_GameInitializer.__prepareGamepadControls(controller);
+        MV_GameInitializer.__createTimer(controller);
+	}
+
+	static __addKeyListeners(controller) {
 		let controls = controller.scope.controls;
 		window.addEventListener('keydown', function(e) {
 			if (e.code == "ArrowDown")
@@ -66,7 +74,12 @@ class MV_GameInitializer {
 		// penser à ajouter un listener de clic, pour le tir principal
 	}
 
-	static addTouchListeners(controller) {
+	static clearGamepadControlsState(controller) {
+		let controls = controller.scope.controls;
+		controls.firing_secondary = false;
+	}
+
+	static __addTouchListeners(controller) {
 		let controls = controller.scope.controls;
 		// J'ai prévu des joysticks virtuels pour le déplacement et le tir principal 
 		// => idéalement, il faudrait délèguer la responsabilité de générer des informations exploitables (angle + force, au lieu de coordonnées de tapstart + coordonnées actuelles)
@@ -75,7 +88,7 @@ class MV_GameInitializer {
 		document.querySelector('.hud .pause').addEventListener('click', function(e) { controller.togglePause(); });
 	}
 
-	static prepareGamepadControls(controller) {
+	static __prepareGamepadControls(controller) {
 		window.addEventListener('gamepadconnected', (event)=> {
 			console.log("Manette connectée");
 
@@ -99,8 +112,7 @@ class MV_GameInitializer {
 		});
 	}
 
-	static clearGamepadControls(controller) {
-		let controls = controller.scope.controls;
-		controls.firing_secondary = false;
+	static __createTimer(controller) {
+		controller.timer = new MV_Timer(controller.scope.gamepad_mapper, controller.scope.controls);
 	}
 }

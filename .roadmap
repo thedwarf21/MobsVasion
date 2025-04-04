@@ -9,7 +9,7 @@ X   Tâche en cours
 V   Tâche terminée
 
 *   Personnage
-    _   Créer et afficher le personnage
+    V   Créer et afficher le personnage
     _   Déplacer le personnage dans la fenêtre avec les commandes, sans qu'il puisse en sorir
     _   Gérer les tirs
 *   Monstres

@@ -1,0 +1,9 @@
+.character {
+	background: rgb(59, 102, 189);
+    border-radius: 50%;
+	position: absolute;
+	height: 8.3vh; /* taille en px vituels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_vaisseau_px)  */
+	width: 8.3vh;
+	transform-origin: center; /* il va falloir faire pivoter le personnage quand on aura une image, autant qu'il pivote autour de son milieu plutôt qu'autour d'un coin */
+}
+

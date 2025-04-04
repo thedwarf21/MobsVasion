@@ -15,28 +15,31 @@
     <link rel="stylesheet" type="text/css" href="css/hud.css"/>
     <link rel="stylesheet" type="text/css" href="css/rs_dialog.css"/>
     <link rel="stylesheet" type="text/css" href="css/rs_toast.css"/>
+    <link rel="stylesheet" type="text/css" href="css/MV_Game_Elements.css"/>
     
     <!-- Scripts -->
     <script type="text/javascript" src="scripts/rs_wcl.js"></script>
     <script type="text/javascript" src="scripts/rs_dialog.js"></script>
     <script type="text/javascript" src="scripts/rs_toast.js"></script>
     <script type="text/javascript" src="scripts/rs_game_engine.js"></script>
-    <script type="text/javascript" src="scripts/rs_game_timer.js"></script> <!-- refacto de découplage => à tester -->
-    <script type="text/javascript" src="scripts/rs_save_manager.js"></script> <!-- refacto de découplage => à tester -->
-    <script type="text/javascript" src="scripts/rs_audio_manager.js"></script> <!-- refacto de découplage => à tester -->
-    <script type="text/javascript" src="scripts/MV_GameInitializer.js"></script> <!-- à adapter -->
+    <script type="text/javascript" src="scripts/rs_save_manager.js"></script>
+    <script type="text/javascript" src="scripts/rs_audio_manager.js"></script>
+    <script type="text/javascript" src="scripts/MV_Timer.js"></script>
+    <script type="text/javascript" src="scripts/MV_GameInitializer.js"></script>
+    <script type="text/javascript" src="scripts/MV_GameElements.js"></script>
     <script type="text/javascript" src="scripts/main.js"></script>
 
     <!-- Lancement de l'initialisation -->
     <script type="text/javascript">
-      //MainController.init();
+      MainController.init();
     </script>
   </head>
 
   <!-- Corps de la page -->
-  <body onload="AH_MainController.onLoad()">
+  <body onload="MainController.onLoad()">
     <div class="game-window" id="game-window"></div>
     <div class="hud">
+      <div class="pause"></div>
     </div>
   </body>
 </html>
