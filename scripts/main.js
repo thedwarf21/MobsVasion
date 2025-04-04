@@ -13,6 +13,7 @@ const SOUND_LIB = {
 const DEFAULT_AUDIO_LASTING_TIME = 1000;
 
 const CHARACTER_SIZE = 50;
+const CHARACTER_SPEED = 5;
 
 var debug = false;
 
@@ -22,7 +23,7 @@ var debug = false;
 class MainController {
 
     // Accesseurs permettant d'accéder aux éléments du jeu
-    get character() { return document.getElementsByClassName("character")[0]; }
+    static get character() { return document.getElementsByClassName("character")[0]; }
 
 	// Fonction appelée lorsque la page est chargée
 	static onLoad() {
@@ -56,5 +57,11 @@ class MainController {
         // Création du vaisseau, initialisé par défaut (centré et immobile)
 		let character = new MV_Character(MainController.viewport);
 		MainController.addToGameWindow(character);
+    }
+
+    static togglePause() { 
+        let controls_state = MainController.scope.controls;
+        controls_state.paused = !controls_state.paused;
+        console.log(controls_state.paused ? "pause" : "roule !");
     }
 }

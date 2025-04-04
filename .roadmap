@@ -1,5 +1,6 @@
 Si je devait le découper en tickets, ça ressemblerait probablement à quelque chose comme ça (je vous mets juste les titres des tickets).
 Je le tiendrai à jour en "cochant" les tâches accomplies au fur et à mesure.
+Je m'efforcerai de faire un commit par tâche.
 À moins que je n'ai pas pensé à tout, je devrais pouvoir le dépiler dans cet ordre.
 
 Légende :
@@ -7,10 +8,15 @@ Légende :
 _   Tâche à accomplir
 X   Tâche en cours
 V   Tâche terminée
+>   Sous-tâche
 
 *   Personnage
     V   Créer et afficher le personnage
-    _   Déplacer le personnage dans la fenêtre avec les commandes, sans qu'il puisse en sorir
+    V   Déplacer le personnage dans la fenêtre avec les commandes (manette uniquement, pour commencer), sans qu'il puisse en sorir
+        >   Création de la classe MV_Character
+        >   Création du rendu provisoire
+        >   Gestion de la commande de pause
+        >   Fin de la refacto commencée (évidemment, tout a pété, au moment de tout brancher ensemble :D)
     _   Gérer les tirs
 *   Monstres
     _   Faire apparaître un monstre
@@ -43,6 +49,13 @@ V   Tâche terminée
     _   Alimenter la propriété de paramétrage, dans le scope du MainController (liste d'objets JSON "shop" dans le GameInitializer)
     _   Créer le template HTML et la feuille de style CSS de la popup magasin
     _   Mettre en place les mécanismes automatisés de calculs et mise à jour de L'UI (suite à un achat: -ressources joueur, recalcul et maj affichage item acheté -> next lvl)
+*   Commandes
+    _   Clavier + Souris
+    _   Tactile
+*   UX
+    _   Gérer les sauvegardes
+    _   Améliorer le rendu visuel (utiliser des images, des effets, etc.)
+    _   Ajouter l'audio
 
 *   Fignolage
 

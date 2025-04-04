@@ -114,12 +114,13 @@ class RS_ViewPortCompatibility {
 class MobileGameElement extends HTMLDivElement {
 
 	/*** Propriétés devant être initialisés pour que l'objet fonctionne correctement ***/
-	x                 = null;
-	y                 = null;
-	deltaX            = null;
-	deltaY            = null;
-	pixel_size        = null;
-	viewport		  = null;
+	x               = null;
+	y               = null;
+	deltaX          = null;
+	deltaY          = null;
+	angle			= null;
+	pixel_size      = null;
+	viewport		= null;
   
 	/**
 	 * Constructeur par défaut de tous les composants mobiles du jeu
@@ -158,34 +159,35 @@ class MobileGameElement extends HTMLDivElement {
 	 * @param      {boolean}  removeOnScreenLeave  move(true) => à sa sortie de l'écran, l'élément est supprimé du DOM
 	 */
 	move(removeOnScreenLeave) {
-  
-	  // Calcul des nouvelles coordonnées
-	  this.y -= this.deltaY;
-	  this.x += this.deltaX;
-	  
-	  // Gestion de la sortie d'écran selon removeOnScreenLeave
-	  //--------------------------------------------------------
-	  // true  --> suppression de l'élément
-	  // false --> on ramène l'élément au bord opposé
-	  let window_height = this.viewport.VIRTUAL_HEIGHT,
-		  window_width = this.viewport.VIRTUAL_WIDTH;
-	  if (removeOnScreenLeave) {
-		if (this.y > window_height || this.y < -this.pixel_size || this.x > window_width || this.x < -this.pixel_size) 
-		  this.remove();
-	  } else {
-		if (this.y > window_height) 
-		  this.y -= (window_height + this.pixel_size);
-		if (this.y < -this.pixel_size) 
-		  this.y += (window_height + this.pixel_size);
-		if (this.x > window_width) 
-		  this.x -= (window_width + this.pixel_size);
-		if (this.x < -this.pixel_size) 
-		  this.x += (window_width + this.pixel_size);
-	  }
-  
-	  // Application des nouvelles coordonnées
-	  this.style.top = this.viewport.getCssValue(this.y, true);
-	  this.style.left = this.viewport.getCssValue(this.x, false);
+		this.y += this.deltaY;
+		this.x += this.deltaX;
+		
+		// Gestion de l'arriver en bordure d'écran selon removeOnScreenLeave
+		//------------------------------------------------------------------
+		// true  --> suppression de l'élément
+		// false --> bloquer
+	  	let window_height = this.viewport.VIRTUAL_HEIGHT,
+		 	 window_width = this.viewport.VIRTUAL_WIDTH;
+	  	if (removeOnScreenLeave) {
+			if (this.y > window_height || this.y < -this.pixel_size || this.x > window_width || this.x < -this.pixel_size) 
+		  		this.remove();
+	  	} else {
+			if (this.y + this.pixel_size > window_height) 
+				this.y = window_height - this.pixel_size;
+			if (this.y < 0) 
+				this.y = 0;
+			if (this.x + this.pixel_size > window_width) 
+				this.x = window_width - this.pixel_size;
+			if (this.x < 0) 
+				this.x = 0;
+		}
+
+	  	this.style.top = this.viewport.getCssValue(this.y, true);
+	  	this.style.left = this.viewport.getCssValue(this.x, false);
+
+	  	if (this.angle >= 360) this.angle -= 360;
+    	if (this.angle < 0) this.angle += 360;
+    	this.style.transform = "rotateZ(" + this.angle + "deg)";
 	}
   
 	/**
@@ -269,12 +271,20 @@ customElements.define('div-game-element', MobileGameElement, { extends: 'div' })
 class GamepadGenericAdapter {
 	constructor() { this.controls = []; }
 
-	addControlEntry(name, fnAction, isAuto) {
-		this.controls.push(new GamepadControl(name, fnAction, isAuto));
+	addControlEntry(name, fnAction, isAuto, isAlwaysAvailable) {
+		this.controls.push(new GamepadControl(name, fnAction, isAuto, isAlwaysAvailable));
 	}
 
 	setControlMapping(controlIndex, buttonIndex) {
+		this.controls[controlIndex].actionAlreadyDone = true; // Empêche l'exécution de l'action durant le paramétrage
 		this.controls[controlIndex].buttonIndex = buttonIndex;
+	}
+
+	applyAlwaysAvailableControls() {
+		let gamepad = GamepadGenericAdapter.getConnectedGamepad();
+		for (let control of this.controls)
+			if (control.isAlwaysAvailable)
+				control.applyContext(gamepad);
 	}
 
 	applyControlsMapping() {
@@ -305,11 +315,12 @@ class GamepadGenericAdapter {
  * @class      GamepadControl
  */
 class GamepadControl {
-	constructor(name, fnAction, isAuto) {
+	constructor(name, fnAction, isAuto, isAlwaysAvailable) {
 		this.name = name;
 		this.execute = fnAction;
 		this.isAuto = isAuto;
-		this.executeFired = false;
+		this.isAlwaysAvailable = isAlwaysAvailable;
+		this.actionAlreadyDone = false;
 		this.buttonIndex = undefined;
 	}
 
@@ -317,9 +328,9 @@ class GamepadControl {
 		if (this.__isButtonPressed(gamepad)) {
 			if (this.__isExecutionPossible()) {
 				this.execute();
-				this.executeFired = true;
+				this.actionAlreadyDone = true;
 			}
-		} else this.executeFired = false;
+		} else this.actionAlreadyDone = false;
 	}
 
 	__isButtonPressed(gamepad) {
@@ -327,7 +338,7 @@ class GamepadControl {
 	}
 
 	__isExecutionPossible() {
-		return !this.executeFired || this.isAuto;
+		return !this.actionAlreadyDone || this.isAuto;
 	}
 }
 
@@ -344,7 +355,7 @@ class GamepadJoystick {
 	}
 
 	__computeAngleAndIntensity() {
-		this.angle = (Math.atan2(this.y, this.x) * 180) / Math.PI;
+		this.angle = Math.atan2(this.y, this.x);
 		this.intensity 	= Math.abs(this.x) > Math.abs(this.y) 
 						? Math.abs(this.x) 
 						: Math.abs(this.y);

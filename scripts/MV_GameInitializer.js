@@ -93,26 +93,26 @@ class MV_GameInitializer {
 			console.log("Manette connectée");
 
 			let controls = controller.scope.controls;
-			let gcm = new GamepadControlsMapper();
-			gcm.addControlEntry("Pause", ()=> { controller.togglePause(); });
-			gcm.addControlEntry("Tir secondaire", ()=> { controls.firing_secondary = true; });
-			// ah ouais... ça fait pas beaucoup de boutons du coup...
+			let gamepad = new GamepadGenericAdapter();
+			gamepad.addControlEntry("Pause", ()=> { controller.togglePause(); }, false, true);
+			gamepad.addControlEntry("Tir secondaire", ()=> { controls.firing_secondary = true; });
+			// ah ouais... ça fait pas beaucoup de boutons du coup, pour le moment...
 
-			controller.scope.gamepad_mapper = gcm;
+			controller.timer.gamepad_mapper = gamepad;
 			let was_paused = controls.paused;
 			controls.paused = true;
-			controller.scope.gamepadControlsUI = new GamepadConfigInterface(gcm, ()=> { controls.paused = was_paused; });
+			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, ()=> { controls.paused = was_paused; });
 		});
 
 		window.addEventListener('gamepaddisconnected', (event)=> {
 			controller.scope.gamepadControlsUI = null;
-			controller.scope.gamepad_mapper = null;
-			controller.clearGamepadControls();
+			controller.timer.gamepad_mapper = null;
+			MV_GameInitializer.clearGamepadControlsState(controller.scope.controls);
 			controller.togglePause();
 		});
 	}
 
 	static __createTimer(controller) {
-		controller.timer = new MV_Timer(controller.scope.gamepad_mapper, controller.scope.controls);
+		controller.timer = new MV_Timer(controller.scope.controls);
 	}
 }

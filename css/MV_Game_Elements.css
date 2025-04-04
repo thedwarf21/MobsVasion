@@ -1,5 +1,5 @@
 .character {
-	background: rgb(59, 102, 189);
+	background: radial-gradient(ellipse at left, #2568b0, transparent 80%);
     border-radius: 50%;
 	position: absolute;
 	height: 8.3vh; /* taille en px vituels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_vaisseau_px)  */
