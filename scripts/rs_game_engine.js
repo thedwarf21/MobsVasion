@@ -357,7 +357,7 @@ class GamepadConfigUI {
 		this.show(fnOnUiClose);
 	}
 
-	show(fnOnClose) {
+	show() {
 		let popup = new RS_Dialog("gamepad_config", "Configuration de la manette", [], [], [], false, 
 								  "tpl_gamepad_config.html", ()=> {
 			let container = popup.querySelector("#controls-gui-container");
