@@ -61,7 +61,9 @@ class MainController {
 
     static togglePause() { 
         let controls_state = MainController.scope.controls;
-        controls_state.paused = !controls_state.paused;
-        console.log(controls_state.paused ? "pause" : "roule !");
+        if (!document.getElementsByClassName("rs-modal").length) {
+            controls_state.paused = !controls_state.paused;
+            console.log(controls_state.paused ? "pause" : "roule !");
+        }
     }
 }
