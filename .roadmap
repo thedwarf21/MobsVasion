@@ -1,0 +1,49 @@
+Si je devait le découper en tickets, ça ressemblerait probablement à quelque chose comme ça (je vous mets juste les titres des tickets).
+Je le tiendrai à jour en "cochant" les tâches accomplies au fur et à mesure.
+À moins que je n'ai pas pensé à tout, je devrais pouvoir le dépiler dans cet ordre.
+
+Légende :
+*   Thème
+_   Tâche à accomplir
+X   Tâche en cours
+V   Tâche terminée
+
+*   Personnage
+    _   Créer et afficher le personnage
+    _   Déplacer le personnage dans la fenêtre avec les commandes, sans qu'il puisse en sorir
+    _   Gérer les tirs
+*   Monstres
+    _   Faire apparaître un monstre
+    _   Gérer le déplacement automatique des monstres
+*   Mobs pop de début de vague
+    _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
+    _   Déléguer la dilution du pop à une fonction ou une classe
+*   Points de vie
+    _   Créer un composant ProgressBar réutilisable => propriétés : maxValue, currentValue, barTexture, backgroundTexture (visuellement, LifeBar <> XpBar : texture => background CSS)
+    _   Afficher les barres de vie (personnage et monstre)
+    _   Gérer les PV du personnage --> perte de PV quand un monstre touche le personnage
+    _   Gérer les PV des monstres --> perte de PV d'un monstre quand un tir le touche
+*   Gérer l'argent
+    _   Gérer séparément les ressources collectées lors de la vague en cours, des ressources détenues par le joueur, pour mettre en place un malus en cas de défaite
+    _   Afficher l'argent collecté durant la vague en cours, dans l'UI
+    _   Attribution de l'argent au loot de la vague, lorsqu'un monstre rend l'âme
+    _   Ajout du loot de la vague (avec malus, si défaite) aux ressource du joueur avant d'ouvrir le magasin
+*   Gérer l'XP
+    _   Afficher la barre d'XP et le niveau actuel du joueur dans l'UI
+    _   Lorsque le joueur gagne un niveau, il gagne également un nombre fixe de points de compétence utilisables dans l'onglet "entraînement" du magasin
+    _   
+*   Conditions de fin de vague
+    _   Défaite (PV joueur <= 0)
+    _   Victoire (Tous les monstres de la vague ont pop, et il n'y en a plus un seul en jeu)
+*   Rapport de fin de vague
+    _   Créer le template HTML et la feuille de style CSS de la popup
+    _   Affichage des valeurs calculées
+*   Magasin
+    _   Programmer l'ouverture du magasin après fermeture par le joueur du rapport de fin de vague
+    _   Alimenter la propriété de paramétrage, dans le scope du MainController (liste d'objets JSON "shop" dans le GameInitializer)
+    _   Créer le template HTML et la feuille de style CSS de la popup magasin
+    _   Mettre en place les mécanismes automatisés de calculs et mise à jour de L'UI (suite à un achat: -ressources joueur, recalcul et maj affichage item acheté -> next lvl)
+
+*   Fignolage
+
+X   Documenter et tester, au fil de l'eau
