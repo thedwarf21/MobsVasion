@@ -1,5 +1,8 @@
 class RS_SaveManager {
 
+	get SAVE_FILENAME_PREFIX() { return "mv_save_"; }
+	set SAVE_FILENAME_PREFIX(value) { console.error("RS_SaveManager.SAVE_FILENAME_PREFIX est une constante et ne peut donc pas être modifiée"); }
+
 	/**
 	 * Constructeur attendant les données à sauvegarder (paramétrage et achats dans le jeu)
 	 * 
@@ -7,7 +10,6 @@ class RS_SaveManager {
 	 * @param  {object}  ingame_shop 
 	 */
 	constructor(game_settings, ingame_shop) {
-		this.save_filename_prefix = "mv_save_";
 		this.game_settings = game_settings;
 		this.ingame_shop = ingame_shop;
 	}
@@ -30,7 +32,7 @@ class RS_SaveManager {
 				level: shopElem.level
 			});
 		}
-		localStorage.setItem(this.save_filename_prefix + this.game_settings.save_slot, JSON.stringify(object));
+		localStorage.setItem(this.SAVE_FILENAME_PREFIX + this.game_settings.save_slot, JSON.stringify(object));
 	}
 
 	/**
@@ -38,7 +40,7 @@ class RS_SaveManager {
 	 */
 	loadGame()
 	{
-		let saved_game = JSON.parse(localStorage.getItem(this.save_filename_prefix + this.game_settings.save_slot));
+		let saved_game = JSON.parse(localStorage.getItem(this.SAVE_FILENAME_PREFIX + this.game_settings.save_slot));
 		this.game_settings.money = saved_game.money;
 		this.game_settings.level = saved_game.level;
 		this.game_settings.radial_sensivity = saved_game.radial_sensivity;
