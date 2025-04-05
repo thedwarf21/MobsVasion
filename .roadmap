@@ -10,12 +10,14 @@ X   Tâche en cours
 V   Tâche terminée
 >   Sous-tâche
 
+*   Pause
+    V   Mise en place de pause/unpause et de la commande
+    _   Visuel de pause, quand le jeu est mis en pause sans ouverture de popup (pause in game à la demande de l'utilisateur)
 *   Personnage
     V   Créer et afficher le personnage
     V   Déplacer le personnage dans la fenêtre avec les commandes (manette uniquement, pour commencer), sans qu'il puisse en sorir
         >   Création de la classe MV_Character
         >   Création du rendu provisoire
-        >   Gestion de la commande de pause
         >   Fin de la refacto commencée (évidemment, tout a pété, au moment de tout brancher ensemble :D)
     _   Gérer les tirs
 *   Monstres

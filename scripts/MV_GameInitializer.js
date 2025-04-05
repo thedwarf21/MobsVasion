@@ -74,9 +74,8 @@ class MV_GameInitializer {
 		// penser à ajouter un listener de clic, pour le tir principal
 	}
 
-	static clearGamepadControlsState(controller) {
-		let controls = controller.scope.controls;
-		controls.firing_secondary = false;
+	static clearGamepadControlsState(controls_state) {
+		controls_state.firing_secondary = false;
 	}
 
 	static __addTouchListeners(controller) {
@@ -94,10 +93,9 @@ class MV_GameInitializer {
 
 			let controls = controller.scope.controls;
 			let gamepad = new GamepadGenericAdapter();
-			gamepad.addControlEntry("Pause", ()=> { controller.togglePause(); }, false, true);
-			gamepad.addControlEntry("Tir secondaire", ()=> { controls.firing_secondary = true; });
-			// ah ouais... ça fait pas beaucoup de boutons du coup, pour le moment...
-
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); }); // Le bouton pause a toujours la même action qui s'exécute toujours quel que soit le contexte
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
+			
 			controller.timer.gamepad_mapper = gamepad;
 			let was_paused = controls.paused;
 			controls.paused = true;

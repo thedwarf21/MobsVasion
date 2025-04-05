@@ -18,20 +18,58 @@ class MV_Timer {
 	 */
 	letsPlay() {
 		document.body.scrollTo(0, 0);
-		if (!this.controls_state.paused) {
-			if (this.gamepad_mapper) {
-				this.gamepad_mapper.applyControlsMapping(); // cette méthode met également à jour l'état des joysticks
-				this.__applyJoysticksControls();
-			} else MV_GameInitializer.clearGamepadControlsState(this.controls_state);  // évite les bugs en cas de déconnexion sauvage de la manette
+		this.__applyControls();
 
-			this.__applyControls();
+		if (!this.controls_state.paused) {
 			this.__moveEverything();
 			this.__testCollides();
-
-		} else if (this.gamepad_mapper) {
-			this.gamepad_mapper.applyAlwaysAvailableControls();
 		}
+
 		setTimeout(() => { this.letsPlay(); }, TIME_INTERVAL);
+	}
+
+	__applyControls() {
+		this.__applyKeyboardControls();
+		this.__applyTouchScreenControls();
+
+		if (this.gamepad_mapper) 
+			this.__applyGamepadControls();
+		else MV_GameInitializer.clearGamepadControlsState(this.controls_state);  // évite les bugs en cas de déconnexion sauvage de la manette
+	}
+
+	__moveEverything() {
+	}
+
+	__testCollides() {
+	}
+
+	__applyKeyboardControls() {
+		if (!this.controls_state.paused) {
+
+		} else {
+			let popup = MainController.openedModal;  	// actions à la modale près
+		}
+	}
+
+	__applyTouchScreenControls() {
+		if (!this.controls_state.paused) {
+
+		} else {
+			let popup = MainController.openedModal;		// actions à la modale près
+		}
+	}
+
+	__applyGamepadControls() {
+		let popup = MainController.openedModal;		// actions à la modale près
+		this.gamepad_mapper.updateJoysticksStates();
+		this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.pause);
+		
+		if (!this.controls_state.paused) {
+			this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire);
+			this.__applyJoysticksControls();
+		} else if (popup) {
+			this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire, true);
+		}
 	}
 
 	__applyJoysticksControls() {
@@ -44,15 +82,6 @@ class MV_Timer {
 			character.angle = leftJoystick.angle * 180 / Math.PI;
 		
 		character.move();
-	}
-
-	__applyControls() {
-	}
-
-	__moveEverything() {
-	}
-
-	__testCollides() {
 	}
 }
 

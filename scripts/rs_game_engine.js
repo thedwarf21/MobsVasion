@@ -271,8 +271,8 @@ customElements.define('div-game-element', MobileGameElement, { extends: 'div' })
 class GamepadGenericAdapter {
 	constructor() { this.controls = []; }
 
-	addControlEntry(name, fnAction, isAuto, isAlwaysAvailable) {
-		this.controls.push(new GamepadControl(name, fnAction, isAuto, isAlwaysAvailable));
+	addControlEntry(code, name, fnMainAction, fnSecondaryAction, isAuto) {
+		this.controls.push(new GamepadControl(code, name, fnMainAction, fnSecondaryAction, isAuto));
 	}
 
 	setControlMapping(controlIndex, buttonIndex) {
@@ -280,18 +280,19 @@ class GamepadGenericAdapter {
 		this.controls[controlIndex].buttonIndex = buttonIndex;
 	}
 
-	applyAlwaysAvailableControls() {
+	applyControl(code, isSecondaryAction) {
 		let gamepad = GamepadGenericAdapter.getConnectedGamepad();
 		for (let control of this.controls)
-			if (control.isAlwaysAvailable)
-				control.applyContext(gamepad);
+			if (control.code === code)
+				control.applyContext(gamepad, isSecondaryAction);
 	}
 
-	applyControlsMapping() {
+	updateJoysticksStates() {
 		let gamepad = GamepadGenericAdapter.getConnectedGamepad();
-		this.__updateJoysticksStates(gamepad);
-		for (let control of this.controls)
-			control.applyContext(gamepad);
+		this.leftJoystick = new GamepadJoystick(gamepad.axes[0], gamepad.axes[1]);
+		this.rightJoystick = new GamepadJoystick(gamepad.axes[2], gamepad.axes[3]);
+		if (gamepad.axes.length > 4)
+			this.accelerometer = new GamepadJoystick(gamepad.axes[4], gamepad.axes[5]);
 	}
 
 	static getConnectedGamepad() {
@@ -299,13 +300,6 @@ class GamepadGenericAdapter {
 		for (let gamepad of gamepads)
 			if (gamepad != null)
 				return gamepad;
-	}
-
-	__updateJoysticksStates(gamepad) {
-		this.leftJoystick = new GamepadJoystick(gamepad.axes[0], gamepad.axes[1]);
-		this.rightJoystick = new GamepadJoystick(gamepad.axes[2], gamepad.axes[3]);
-		if (gamepad.axes.length > 4)
-			this.accelerometer = new GamepadJoystick(gamepad.axes[4], gamepad.axes[5]);
 	}
 }
 
@@ -315,22 +309,29 @@ class GamepadGenericAdapter {
  * @class      GamepadControl
  */
 class GamepadControl {
-	constructor(name, fnAction, isAuto, isAlwaysAvailable) {
+	constructor(code, name, fnMainAction, fnSecondaryAction, isAuto) {
+		this.code = code;
 		this.name = name;
-		this.execute = fnAction;
+		this.mainAction = fnMainAction;
+		this.secondaryAction = fnSecondaryAction;
 		this.isAuto = isAuto;
-		this.isAlwaysAvailable = isAlwaysAvailable;
 		this.actionAlreadyDone = false;
 		this.buttonIndex = undefined;
 	}
 
-	applyContext(gamepad) {
+	applyContext(gamepad, isSecondaryAction) {
 		if (this.__isButtonPressed(gamepad)) {
 			if (this.__isExecutionPossible()) {
-				this.execute();
+				this.__execute(isSecondaryAction);
 				this.actionAlreadyDone = true;
 			}
 		} else this.actionAlreadyDone = false;
+	}
+
+	__execute(isSecondaryAction) {
+		if (isSecondaryAction) {
+			this.secondaryAction();
+		} else this.mainAction();
 	}
 
 	__isButtonPressed(gamepad) {
@@ -369,21 +370,25 @@ class GamepadJoystick {
  * @class      GamepadConfigUI
  */
 class GamepadConfigUI {
-	constructor(game_controls_mapper, fnOnUiClose) {
+	constructor(game_controls_mapper) {
 		this.controls_mapper = game_controls_mapper;
-		this.show(fnOnUiClose);
+		this.show();
 	}
 
 	show() {
-		let popup = new RS_Dialog("gamepad_config", "Configuration de la manette", [], [], [], false, 
+		this.popup = new RS_Dialog("gamepad_config", "Configuration de la manette", [], [], [], false, 
 								  "tpl_gamepad_config.html", ()=> {
-			let container = popup.querySelector("#controls-gui-container");
+			let container = this.popup.querySelector("#controls-gui-container");
 			for (let i=0; i<this.controls_mapper.controls.length; i++) {
 				container.appendChild(this.__getConfigInterfaceItem(i));
 			}
-			popup.querySelector("#btn_close").addEventListener("click", ()=> { popup.closeModal() });
-			document.body.appendChild(popup);
+			this.popup.querySelector("#btn_close").addEventListener("click", ()=> { this.closeModal() });
+			document.body.appendChild(this.popup);
 		});
+	}
+
+	closeModal() {
+		this.popup.closeModal();
 	}
 
 	__getConfigInterfaceItem(control_index) {
