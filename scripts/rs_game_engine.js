@@ -388,7 +388,9 @@ class GamepadConfigUI {
 	}
 
 	closeModal() {
-		this.popup.closeModal();
+		this.popup.closeModal(()=> {
+			this.popup = null;
+		});
 	}
 
 	__getConfigInterfaceItem(control_index) {

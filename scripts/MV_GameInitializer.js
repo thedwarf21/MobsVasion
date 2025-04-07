@@ -25,7 +25,7 @@ class MV_GameInitializer {
 				downPressed: false,
 				rightPressed: false,
 				leftPressed: false,
-				paused: true,
+				paused: false,
 				firing_primary: false,
 				firing_secondary: false
 			},

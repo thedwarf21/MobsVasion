@@ -10,16 +10,25 @@ X   Tâche en cours
 V   Tâche terminée
 >   Sous-tâche
 
-*   Pause
+*   Pause et menus
     V   Mise en place de pause/unpause et de la commande
-    _   Visuel de pause, quand le jeu est mis en pause sans ouverture de popup (pause in game à la demande de l'utilisateur)
+        >   Modification du GenericGamepadAdapter
+        >   Enregistrement de la commande et du listener associé, dans le GameInitializer
+    V   Affichage de la pause/reprise
+        >   Pause => affiche la popup de préférences utilisateur (voir plus bas), qui pourra également être ouverte depuis le magasin
+        >   Unpause => fermeture et destruction de toutes les popups ouvertes au moment de l'action
+    _   Gérer la manette dans les menus (à voir plus tard => je n'ai pas encore d'idée satisfaisante en tête pour le gérer proprement)
 *   Personnage
     V   Créer et afficher le personnage
+        >   style CSS du personnage
+        >   Implémentation d'un personnage à travers une classe héritant de MobileGameElement
+        >   Instancier la classe gérant le personnage, et l'injecter dans la fenêtre (MainController)
     V   Déplacer le personnage dans la fenêtre avec les commandes (manette uniquement, pour commencer), sans qu'il puisse en sorir
         >   Création de la classe MV_Character
         >   Création du rendu provisoire
-        >   Fin de la refacto commencée (évidemment, tout a pété, au moment de tout brancher ensemble :D)
-    _   Gérer les tirs
+        >   Fin de la refacto commencée plus tôt (évidemment, tout a pété, au moment de tout brancher ensemble :D)
+    _   Gérer le tir principal
+    _   Gérer le tir secondaire (une "ruade" : le déplacement est très rapide l'espace d'un bref instant => idéal pour sortir des mauvais pas)
 *   Monstres
     _   Faire apparaître un monstre
     _   Gérer le déplacement automatique des monstres
@@ -31,6 +40,9 @@ V   Tâche terminée
     _   Afficher les barres de vie (personnage et monstre)
     _   Gérer les PV du personnage --> perte de PV quand un monstre touche le personnage
     _   Gérer les PV des monstres --> perte de PV d'un monstre quand un tir le touche
+*   Préférences utilisateur
+    -   Bouton ouvrant la fenêtre de configuration de la manette, si une manette a été reconnue
+    -   Ajouter les autres préférences au fur et à mesure des intégration des fonctionnalités correspondantes (possibilité de désactiver la musique et/ou les effets sonores, par exemple)
 *   Gérer l'argent
     _   Gérer séparément les ressources collectées lors de la vague en cours, des ressources détenues par le joueur, pour mettre en place un malus en cas de défaite
     _   Afficher l'argent collecté durant la vague en cours, dans l'UI
@@ -39,7 +51,7 @@ V   Tâche terminée
 *   Gérer l'XP
     _   Afficher la barre d'XP et le niveau actuel du joueur dans l'UI
     _   Lorsque le joueur gagne un niveau, il gagne également un nombre fixe de points de compétence utilisables dans l'onglet "entraînement" du magasin
-    _   
+    _   L'XP nécessaire par niveau, sera calculée, comme les prix des améliorations, sur une suite basée sur celle de Fibonacci : Un = U(n-1) + U(n-2)
 *   Conditions de fin de vague
     _   Défaite (PV joueur <= 0)
     _   Victoire (Tous les monstres de la vague ont pop, et il n'y en a plus un seul en jeu)

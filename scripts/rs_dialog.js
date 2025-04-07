@@ -73,15 +73,19 @@ class RS_Dialog extends HTMLDivElement {
   /*****************************************
    * Fonction fermant la boîte de dialogue *
    *****************************************/
-  closeModal() {
+  closeModal(onPopupClosed) {
     let popup = this.getElementsByClassName("rs-modal")[0];
     let close_btn_col = popup.getElementsByClassName("rs-close-btn");
     if (close_btn_col.length)
       close_btn_col[0].remove();
     popup.classList.add("rs-closed");
 
-    // On attend la fin de l'animation pour supprimer le nœud
-    setTimeout(()=> { popup.parentNode.remove(); }, 500);
+    // On attend la fin de l'animation pour supprimer le nœud et exécuter le hook
+    setTimeout(()=> { 
+      popup.parentNode.remove(); 
+      if (onPopupClosed)
+        onPopupClosed();
+    }, 500);
   }
 
   /***************************************************************
