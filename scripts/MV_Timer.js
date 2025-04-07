@@ -21,16 +21,19 @@ class MV_Timer {
 		this.__applyControls();
 
 		if (!this.controls_state.paused) {
+			if (this.gamepad_mapper)
+				this.__applyGamepadControls();
+			
 			this.__moveEverything();
 			this.__testCollides();
-
-			if (this.gamepad_mapper) 
-				this.__applyGamepadControls();
 		}
 
-		if (MainController.scope.game.beforeNextShot)
-			MainController.scope.game.beforeNextShot--;
+		if (MainController.scope.game.before_next_shot)
+			MainController.scope.game.before_next_shot--;
+		if (MainController.scope.game.before_next_dash)
+			MainController.scope.game.before_next_dash--;
 
+		MV_GameInitializer.clearGamepadControlsState(this.controls_state);
 		setTimeout(() => { this.letsPlay(); }, TIME_INTERVAL);
 	}
 
@@ -38,12 +41,21 @@ class MV_Timer {
 		this.__applyKeyboardControls();
 		this.__applyTouchScreenControls();
 
-		if (this.gamepad_mapper) 
+		if (this.gamepad_mapper)
 			this.__applyGamepadMenuControls();
-		else MV_GameInitializer.clearGamepadControlsState(this.controls_state);  // évite les bugs en cas de déconnexion sauvage de la manette
 	}
 
 	__moveEverything() {
+		let character = MainController.character;
+
+		if (this.controls_state.firing_secondary && !MainController.scope.game.before_next_dash) {
+			character.deltaX = DASH_LENGTH * Math.cos(character.angle * Math.PI / 180);
+			character.deltaY = DASH_LENGTH * Math.sin(character.angle * Math.PI / 180);
+			character.move();
+			this.controls_state.firing_secondary = false;
+			MainController.scope.game.before_next_dash = DASH_INTERVAL;
+		}
+
 		for (let shot of MainController.shots)
 			shot.move(true);
 	}
@@ -87,10 +99,10 @@ class MV_Timer {
 		character.deltaY = leftJoystick.intensity * CHARACTER_SPEED * Math.sin(leftJoystick.angle);
 		
 		let rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
-		if (rightJoystick.intensity !== 0 && !MainController.scope.game.beforeNextShot) {
+		if (rightJoystick.intensity !== 0 && !MainController.scope.game.before_next_shot) {
 			let shot = character.shoot(SHOT_VELOCITY, rightJoystick.angle);
 			MainController.addToGameWindow(shot);
-			MainController.scope.game.beforeNextShot = SHOT_RELOAD_TIME;
+			MainController.scope.game.before_next_shot = SHOT_INTERVAL;
 		}
 		
 		if (rightJoystick.intensity !== 0) // Le personnage regarde où il tire, ou là où il va, dans le cas contraire

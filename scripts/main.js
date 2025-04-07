@@ -17,7 +17,10 @@ const CHARACTER_SPEED = 5;
 
 const SHOT_VELOCITY = 30;
 const SHOT_SIZE = 5;
-const SHOT_RELOAD_TIME = 10;
+const SHOT_INTERVAL = 10;
+
+const DASH_INTERVAL = 50;
+const DASH_LENGTH = 125;
 
 const GAMEPAD_ACTION_CODES = {
     pause: "PAU",

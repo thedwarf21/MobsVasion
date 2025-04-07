@@ -27,10 +27,15 @@ V   Tâche terminée
         >   Création de la classe MV_Character
         >   Création du rendu provisoire
         >   Fin de la refacto commencée plus tôt (évidemment, tout a pété, au moment de tout brancher ensemble :D)
-    V   Gérer le tir principal
+    X   Gérer le tir principal
         >   Création de la classe MV_Shot
         >   Création du rendu provisoire
-    _   Gérer le tir secondaire (une "ruade" : le déplacement est très rapide l'espace d'un bref instant => idéal pour sortir des mauvais pas)
+        >   Gérer la tempo entre deux tirs
+        _   Faire apparaître une barre de progression du rechargement du tir
+    X   Gérer le tir secondaire (une "ruade" dans la direction à laquelle le personnage fait face)
+        >   Déplacement "dash"
+        >   Gérer la tempo entre deux dash
+        _   Faire apparaître une barre de progression du rechargement du dash
 *   Monstres
     _   Faire apparaître un monstre
     _   Gérer le déplacement automatique des monstres
