@@ -144,7 +144,7 @@ class MobileGameElement extends HTMLDivElement {
 	  	}
   
 	  	// Certains éléments initialisent eux-mêmes leurs coordonnées. Les paramètres peuvent donc être absents.
-	  	this.viewport = viewport
+	  	this.viewport = viewport;
 	  	if (x != undefined && y != undefined) {
 			this.x = x;
 			this.y = y;
@@ -388,9 +388,7 @@ class GamepadConfigUI {
 	}
 
 	closeModal() {
-		this.popup.closeModal(()=> {
-			this.popup = null;
-		});
+		this.popup.closeModal();
 	}
 
 	__getConfigInterfaceItem(control_index) {

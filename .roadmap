@@ -27,7 +27,9 @@ V   Tâche terminée
         >   Création de la classe MV_Character
         >   Création du rendu provisoire
         >   Fin de la refacto commencée plus tôt (évidemment, tout a pété, au moment de tout brancher ensemble :D)
-    _   Gérer le tir principal
+    V   Gérer le tir principal
+        >   Création de la classe MV_Shot
+        >   Création du rendu provisoire
     _   Gérer le tir secondaire (une "ruade" : le déplacement est très rapide l'espace d'un bref instant => idéal pour sortir des mauvais pas)
 *   Monstres
     _   Faire apparaître un monstre
@@ -74,3 +76,9 @@ V   Tâche terminée
 *   Fignolage
 
 X   Documenter et tester, au fil de l'eau
+
+
+------------ A AJOUTER ENSUITE ------------
+Choix dans le lobby, entre plusieurs armes pour le tir principal   \
+Choix dans le lobby, entre plusieurs armes pour le tir secondaire   |=> facilitation à la création de nouveau contenu
+Définir de nouveaux types de monstres                              /

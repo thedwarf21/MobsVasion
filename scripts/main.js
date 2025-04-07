@@ -15,6 +15,10 @@ const DEFAULT_AUDIO_LASTING_TIME = 1000;
 const CHARACTER_SIZE = 50;
 const CHARACTER_SPEED = 5;
 
+const SHOT_VELOCITY = 30;
+const SHOT_SIZE = 5;
+const SHOT_RELOAD_TIME = 10;
+
 const GAMEPAD_ACTION_CODES = {
     pause: "PAU",
     secondary_fire: "SEC"
@@ -28,8 +32,9 @@ var debug = false;
 class MainController {
 
     static get character() { return document.getElementsByClassName("character")[0]; }
-    static get openedModal() { return document.getElementsByClassName("rs-modal").length ? document.getElementsByClassName("rs-modal")[0] : null; }
+	static get shots()	{ return document.getElementsByClassName("shot"); }
 	static get hitboxes()	{ return document.getElementsByClassName("hitbox"); }
+    static get openedModal() { return document.getElementsByClassName("rs-modal").length ? document.getElementsByClassName("rs-modal")[0] : null; }
 
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
