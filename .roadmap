@@ -1,7 +1,9 @@
 Si je devait le découper en tickets, ça ressemblerait probablement à quelque chose comme ça (je vous mets juste les titres des tickets).
 Je le tiendrai à jour en "cochant" les tâches accomplies au fur et à mesure.
-Je m'efforcerai de faire un commit par tâche.
-À moins que je n'ai pas pensé à tout, je devrais pouvoir le dépiler dans cet ordre.
+Je m'efforcerai de faire un commit par tâche (j'en aurais bien fait un par sous-tâche, mais comme je suis tout seul sur ce projet...).
+À moins que je n'ai pas pensé à tout (ce qui serait tout à fait normal), je devrais pouvoir le dépiler dans cet ordre.
+
+Je compléterai au fur et à mesure, en mettant en place des sous-tâches, voire en déclenchant de nouvelles tâches, lorsque cela s'avérera nécessaire. 
 
 Légende :
 *   Thème
@@ -20,18 +22,32 @@ V   Tâche terminée
     _   Gérer la manette dans les menus (à voir plus tard => je n'ai pas encore d'idée satisfaisante en tête pour le gérer proprement)
 *   Personnage
     V   Créer et afficher le personnage
-        >   style CSS du personnage
+        >   Style CSS du personnage
         >   Implémentation d'un personnage à travers une classe héritant de MobileGameElement
         >   Instancier la classe gérant le personnage, et l'injecter dans la fenêtre (MainController)
     V   Déplacer le personnage dans la fenêtre avec les commandes (manette uniquement, pour commencer), sans qu'il puisse en sorir
         >   Création de la classe MV_Character
         >   Création du rendu provisoire
         >   Fin de la refacto commencée plus tôt (évidemment, tout a pété, au moment de tout brancher ensemble :D)
-    X   Gérer le tir principal
+    V   Gérer le tir principal
         >   Création de la classe MV_Shot
         >   Création du rendu provisoire
         >   Gérer la tempo entre deux tirs
-        _   Faire apparaître une barre de progression du rechargement du tir
+    _   Composant pour afficher et gérer les barres de niveau (vie, xp, rechargements, etc)
+        _   Style CSS d'une barre de niveau
+        _   Implémentation
+        _   Fond paramétrable, pour la partie pleine de la barre (on ne va pas se brider: la propriété CSS "background" permet de gérer aussi bien des couleurs que des images)
+    X   Gérer le chargeur du tir principal (nombre de coups + rechargement)
+        >   Regrouper les constantes concernant les problématiques d'intervalles entre deux répétitions d'une même action \
+        >   Faire de même pour les compteurs enregistrés dans scope.game                                                   |=> je le fais en passant pour me simplifier la vie quand j'isolerai cette problématique
+        >   Utiliser une boucle automatisée pour la décrémentation des compteurs                                          /
+        >   Ajouter un compteur et une constante, pour le temps de rechargement de l'arme
+        >   Ajouter un compteur et une constante, pour le nombre de balles actuellement dans le chargeur
+        >   L'arme ne doit plus pouvoir tirer, si le chargeur est vide
+        >   Paramétrer et implémenter une action de rechargement (utilisation d'un booléen dans scope.controls)
+        >   L'arme doit se recharger toute seule, si le chargeur est vide et que le joueur n'est pas en train de viser avec son arme (joystick droit)
+        >   Faire apparaître dans l'UI, le nombre de balles du chargeur sous la forme "<balles dans le chargeur> / <capacité chargeur>"
+        _   Faire appraître une barre de progression pour le rechargement de l'arme
     X   Gérer le tir secondaire (une "ruade" dans la direction à laquelle le personnage fait face)
         >   Déplacement "dash"
         >   Gérer la tempo entre deux dash

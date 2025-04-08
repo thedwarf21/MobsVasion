@@ -19,6 +19,14 @@ body {
 	overflow: hidden;
 }
 
+.ammo-display {
+	position: absolute;
+	bottom: 0.5vh;
+	right: 2vh;
+	color: white;
+	font-size: 5vh;
+}
+
 /** Popup configuration manette */
  .control-item-container {
     display: flex;

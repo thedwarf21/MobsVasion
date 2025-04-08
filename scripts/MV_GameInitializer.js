@@ -14,8 +14,12 @@ class MV_GameInitializer {
 				xp: 0,
 				level: 1,
 				save_slot: 1,
-				before_next_shot: 0,
-				before_next_dash: 0,
+				waiting_counter: {
+					shot: 0,
+					dash: 0,
+					clip: 0
+				},
+				clip_ammo: CLIP_SIZE,
 				kills_count: 0,
 				sound_fx_on: true,
 				music_on: true,
@@ -28,7 +32,8 @@ class MV_GameInitializer {
 				leftPressed: false,
 				paused: false,
 				firing_primary: false,
-				firing_secondary: false
+				firing_secondary: false,
+				reloading: false
 			},
 			gamepad_mapper: null,
 			shop: [] // définira les articles du magasin (données de calcul du prix et de l'effet en fonction du niveau d'amélioration, ainsi que du libellé pour affichage et d'un identifiant unique)
@@ -77,6 +82,7 @@ class MV_GameInitializer {
 
 	static clearGamepadControlsState(controls_state) {
 		controls_state.firing_secondary = false;
+		controls_state.reloading = false;
 	}
 
 	static __addTouchListeners(controller) {
@@ -94,8 +100,9 @@ class MV_GameInitializer {
 
 			let controls = controller.scope.controls;
 			let gamepad = new GamepadGenericAdapter();
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); }); // Le bouton pause a toujours la même action qui s'exécute toujours quel que soit le contexte
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
 			
 			controller.timer.gamepad_mapper = gamepad;
 			let was_paused = controls.paused;

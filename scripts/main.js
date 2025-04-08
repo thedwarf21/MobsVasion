@@ -17,14 +17,21 @@ const CHARACTER_SPEED = 5;
 
 const SHOT_VELOCITY = 30;
 const SHOT_SIZE = 5;
-const SHOT_INTERVAL = 10;
 
-const DASH_INTERVAL = 50;
+const CLIP_SIZE = 9;
+
 const DASH_LENGTH = 125;
+
+const TIMEOUTS = {
+	dash_interval: 50,
+	shot_interval: 10,
+	reload_time: 25
+};
 
 const GAMEPAD_ACTION_CODES = {
     pause: "PAU",
-    secondary_fire: "SEC"
+    secondary_fire: "SEC",
+	reload: "REL"
 };
 
 var debug = false;
@@ -42,8 +49,9 @@ class MainController {
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
 		MV_GameInitializer.prepareGame(MainController);
+		MainController.__prepareUI();
 		MainController.timer.letsPlay();
-        MainController.startWave();
+        MainController.__startWave();
 	}
 
     static init() {
@@ -54,13 +62,22 @@ class MainController {
 		game.appendChild(element);
 	}
 
+	static __prepareUI() {
+		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage des munitions dans l'UI
+			object: MainController.scope.game,
+			property: "clip_ammo"
+		}).addBinding(document.querySelector(".ammo-display #current"), "innerHTML");
+		
+		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
+	}
+
     static __clearGameWindow() {
         let character = MainController.character;
 		if (character)
 			character.remove();
     }
 
-    static startWave() {
+    static __startWave() {
 		MainController.__clearGameWindow();
 		let character = new MV_Character(MainController.viewport);
 		MainController.addToGameWindow(character);
