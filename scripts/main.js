@@ -3,7 +3,7 @@
 const WINDOW_HEIGHT = 600;
 
 // Paramétrage
-const TIME_INTERVAL = 50;
+const TIME_INTERVAL = 40;
 
 const AUDIO_PATH = "sounds/";
 const SHOP_MUSIC = "";
@@ -23,9 +23,9 @@ const CLIP_SIZE = 9;
 const DASH_LENGTH = 125;
 
 const TIMEOUTS = {
-	dash_interval: 50,
-	shot_interval: 10,
-	reload_time: 25
+	dash_interval: 75,
+	shot_interval: 13,
+	reload_time: 35
 };
 
 const GAMEPAD_ACTION_CODES = {
