@@ -33,11 +33,10 @@ V   Tâche terminée
         >   Création de la classe MV_Shot
         >   Création du rendu provisoire
         >   Gérer la tempo entre deux tirs
-    _   Composant pour afficher et gérer les barres de niveau (vie, xp, rechargements, etc)
-        _   Style CSS d'une barre de niveau
-        _   Implémentation
-        _   Fond paramétrable, pour la partie pleine de la barre (on ne va pas se brider: la propriété CSS "background" permet de gérer aussi bien des couleurs que des images)
-    X   Gérer le chargeur du tir principal (nombre de coups + rechargement)
+    V   Composant pour afficher et gérer les barres de niveau (vie, xp, rechargements, etc)
+        >   Style CSS d'une barre de niveau
+        >   Implémentation
+    V   Gérer le chargeur du tir principal (nombre de coups + rechargement)
         >   Regrouper les constantes concernant les problématiques d'intervalles entre deux répétitions d'une même action \
         >   Faire de même pour les compteurs enregistrés dans scope.game                                                   |=> je le fais en passant pour me simplifier la vie quand j'isolerai cette problématique
         >   Utiliser une boucle automatisée pour la décrémentation des compteurs                                          /
@@ -47,11 +46,11 @@ V   Tâche terminée
         >   Paramétrer et implémenter une action de rechargement (utilisation d'un booléen dans scope.controls)
         >   L'arme doit se recharger toute seule, si le chargeur est vide et que le joueur n'est pas en train de viser avec son arme (joystick droit)
         >   Faire apparaître dans l'UI, le nombre de balles du chargeur sous la forme "<balles dans le chargeur> / <capacité chargeur>"
-        _   Faire appraître une barre de progression pour le rechargement de l'arme
-    X   Gérer le tir secondaire (une "ruade" dans la direction à laquelle le personnage fait face)
+        >   Faire appraître une barre de progression pour le rechargement de l'arme
+    V   Gérer le tir secondaire (une "ruade" dans la direction à laquelle le personnage fait face)
         >   Déplacement "dash"
         >   Gérer la tempo entre deux dash
-        _   Faire apparaître une barre de progression du rechargement du dash
+        >   Faire apparaître une barre de progression du rechargement du dash
 *   Monstres
     _   Faire apparaître un monstre
     _   Gérer le déplacement automatique des monstres
@@ -64,8 +63,8 @@ V   Tâche terminée
     _   Gérer les PV du personnage --> perte de PV quand un monstre touche le personnage
     _   Gérer les PV des monstres --> perte de PV d'un monstre quand un tir le touche
 *   Préférences utilisateur
-    -   Bouton ouvrant la fenêtre de configuration de la manette, si une manette a été reconnue
-    -   Ajouter les autres préférences au fur et à mesure des intégration des fonctionnalités correspondantes (possibilité de désactiver la musique et/ou les effets sonores, par exemple)
+    V   Bouton ouvrant la fenêtre de configuration de la manette, si une manette a été reconnue
+    X   Ajouter les autres préférences au fur et à mesure des intégration des fonctionnalités correspondantes (possibilité de désactiver la musique et/ou les effets sonores, par exemple)
 *   Gérer l'argent
     _   Gérer séparément les ressources collectées lors de la vague en cours, des ressources détenues par le joueur, pour mettre en place un malus en cas de défaite
     _   Afficher l'argent collecté durant la vague en cours, dans l'UI

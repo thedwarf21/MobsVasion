@@ -40,14 +40,35 @@ class MV_Timer {
 				counters_object[counter_key]--;
 				if (!counters_object[counter_key])
 					this.__performCounterEndAction(counter_key);
+				else this.__performValueChangeAction(counter_key, counters_object[counter_key]);
 			}
 		}
+	}
 
+	__performValueChangeAction(counter_key, counter_value) {
+		switch(counter_key) {
+			case "clip":
+				MainController.primaryReloadGauge.assignValue(TIMEOUTS.reload_time - counter_value);
+				break;
+			case "dash":
+				MainController.secondaryReloadGauge.assignValue(TIMEOUTS.dash_interval - counter_value);
+				break;
+			default:
+				break;	
+		}
 	}
 
 	__performCounterEndAction(counter_key) {
-		if (counter_key === "clip") {
-			MainController.scope.game.clip_ammo = CLIP_SIZE;
+		switch(counter_key) {
+			case "clip":
+				MainController.scope.game.clip_ammo = CLIP_SIZE;
+				MainController.primaryReloadGauge.remove();
+				break;
+			case "dash":
+				MainController.secondaryReloadGauge.remove();
+				break;
+			default:
+				break;	
 		}
 	}
 
@@ -62,23 +83,37 @@ class MV_Timer {
 	__performControlsObjectChanges() {
 		let character = MainController.character;
 
-		if (this.controls_state.reloading)
+		if (this.__mustReload())
 			this.__launchReloadingAction();
 
-		if (this.controls_state.firing_secondary && !MainController.scope.game.waiting_counter.dash) {
+		if (this.controls_state.firing_secondary && !MainController.secondaryReloadGauge) {
 			character.deltaX = DASH_LENGTH * Math.cos(character.angle * Math.PI / 180);
 			character.deltaY = DASH_LENGTH * Math.sin(character.angle * Math.PI / 180);
 			character.move();
 			this.controls_state.firing_secondary = false;
 			MainController.scope.game.waiting_counter.dash = TIMEOUTS.dash_interval;
+			MainController.character.appendChild(new MV_Gauge("secondary-reload", TIMEOUTS.dash_interval, 0));
 		}
 
 		for (let shot of MainController.shots)
 			shot.move(true);
 	}
 
+	__mustReload() {
+		if (this.controls_state.reloading)
+			return true;
+		if (!this.controls_state.firing_primary && !MainController.scope.game.clip_ammo)
+			return true;
+		return false;
+	}
+
 	__launchReloadingAction() {
-		MainController.scope.game.waiting_counter.clip = TIMEOUTS.reload_time;
+		if (!MainController.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
+			MainController.scope.game.waiting_counter.clip = TIMEOUTS.reload_time;
+			
+			let gauge = new MV_Gauge("primary-reload", TIMEOUTS.reload_time, 0);
+			MainController.addToGameWindow(gauge);
+		}
 	}
 
 	__testCollides() {
@@ -119,13 +154,15 @@ class MV_Timer {
 		let leftJoystick = MainController.timer.gamepad_mapper.leftJoystick;
 		let rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
 
-		// Cet agencement et ce nommage nous permettront de mettre en place très facilement un mode "gaucher", dans lequel le tir serait contrôlé par le joystick gauche, et le déplacement par le droit
 		this.__applyMoveJoystick(leftJoystick, character);
-		this.__applyFireJoystick(rightJoystick, character);
+		if (!MainController.primaryReloadGauge)
+			this.__applyFireJoystick(rightJoystick, character);
 
-		if (rightJoystick.intensity !== 0 && !MainController.scope.game.clip_ammo) { // Rechargement automatique si chargeur vide et pas de visée
+		/** */
+		if (rightJoystick.intensity === 0 && !MainController.scope.game.clip_ammo) { // Rechargement automatique si chargeur vide et pas de visée
 			this.__launchReloadingAction();
 		}
+		/** */
 		
 		if (rightJoystick.intensity !== 0) // Le personnage regarde où il vise, ou là où il va s'il ne vise pas
 			character.angle = rightJoystick.angle * 180 / Math.PI;
@@ -140,6 +177,7 @@ class MV_Timer {
 	}
 
 	__applyFireJoystick(joystick, character) {
+		MainController.scope.controls.firing_primary = true;
 		if (joystick.intensity !== 0 && !MainController.scope.game.waiting_counter.shot) {
 			if (MainController.scope.game.clip_ammo) {
 				let shot = character.shoot(SHOT_VELOCITY, joystick.angle);

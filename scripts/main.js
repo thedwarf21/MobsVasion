@@ -41,10 +41,12 @@ var debug = false;
 // => pas d'instanciation de cette classe
 class MainController {
 
-    static get character() { return document.getElementsByClassName("character")[0]; }
+    static get character() { return document.querySelector(".character"); }
 	static get shots()	{ return document.getElementsByClassName("shot"); }
 	static get hitboxes()	{ return document.getElementsByClassName("hitbox"); }
-    static get openedModal() { return document.getElementsByClassName("rs-modal").length ? document.getElementsByClassName("rs-modal")[0] : null; }
+
+	static get primaryReloadGauge() { return document.querySelector(".gauge.primary-reload"); }
+	static get secondaryReloadGauge() { return document.querySelector(".gauge.secondary-reload"); }
 
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);

@@ -81,6 +81,7 @@ class MV_GameInitializer {
 	}
 
 	static clearGamepadControlsState(controls_state) {
+		controls_state.firing_primary = false;
 		controls_state.firing_secondary = false;
 		controls_state.reloading = false;
 	}

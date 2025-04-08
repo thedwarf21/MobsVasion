@@ -10,7 +10,7 @@ body {
 	user-select: none;			/* Propriété standard */
 }
 
-/** Fenêtre de jeu (conteneur) */
+/** Fenêtre de jeu */
 .game-window {
 	width: 100vw;
 	height: 100vh;
@@ -26,6 +26,43 @@ body {
 	color: white;
 	font-size: 5vh;
 }
+
+/** Jauges et autres progress bars */
+.gauge {
+	border: 0.5vh ridge #dbdbdb;
+	padding: 0.2vh;
+}
+.gauge .progress { height: 100%; }
+
+.gauge.primary-reload {
+	position: absolute;
+	bottom: 6.45vh;
+  	right: 1.8vh;
+  	width: 8.5vh;
+  	height: 0.7vh;
+}
+.gauge.primary-reload .progress { background: rgb(54, 181, 28); }
+
+.gauge.secondary-reload {
+	position: absolute;
+  	width: 7vh;
+  	height: 0.2vh;
+  	border: 0.1vh solid #9c9de8;
+  	top: 0;
+  	left: 0;
+  	transform: rotatez(90deg);
+  	transform-origin: left;
+}
+.gauge.secondary-reload .progress { background: rgb(255, 217, 135); }
+
+.gauge.character-health-bar {
+	position: absolute;
+	bottom: 1vh;
+	left: 1vh;
+	width: 40vh;
+  	height: 3vh;
+}
+.gauge.character-health-bar .progress { background: rgb(255, 50, 50); }
 
 /** Popup configuration manette */
  .control-item-container {
