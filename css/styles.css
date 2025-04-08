@@ -45,13 +45,12 @@ body {
 
 .gauge.secondary-reload {
 	position: absolute;
-  	width: 7vh;
-  	height: 0.2vh;
+	bottom: 0;
+	left: 0;
+	box-sizing: border-box;
+  	width: 100%;
+  	height: 1vh;
   	border: 0.1vh solid #9c9de8;
-  	top: 0;
-  	left: 0;
-  	transform: rotatez(90deg);
-  	transform-origin: left;
 }
 .gauge.secondary-reload .progress { background: rgb(255, 217, 135); }
 

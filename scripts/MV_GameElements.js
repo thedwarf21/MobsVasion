@@ -1,4 +1,5 @@
 class MV_Character extends MobileGameElement {
+  character_image_elt;
 
   constructor(viewport) {
     super(viewport);
@@ -24,11 +25,16 @@ class MV_Character extends MobileGameElement {
     this.deltaY = 0;
     this.pixel_size = CHARACTER_SIZE;
 
-    let viewport = MainController.viewport;
-    this.x = (viewport.VIRTUAL_WIDTH - CHARACTER_SIZE) / 2;
-    this.y = (viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
-    this.style.top = viewport.getCssValue(this.y, true);
-    this.style.left = viewport.getCssValue(this.x, false);
+    this.x = (this.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE) / 2;
+    this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
+    this.style.top = this.viewport.getCssValue(this.y, true);
+    this.style.left = this.viewport.getCssValue(this.x, false);
+
+    this.character_image_elt = document.createElement("DIV");
+    this.character_image_elt.classList.add("spinning-image");
+    this.appendChild(this.character_image_elt);
+
+    this.rotate_element = this.character_image_elt;
 
     super.addVisualHitBox();
   }
@@ -54,7 +60,7 @@ class MV_Gauge extends HTMLDivElement {
     super();
     this.classList.add("gauge");
     this.classList.add(css_class_name);
-    
+
     this.__max_value = max_value;
     
     this.__createProgressElement();

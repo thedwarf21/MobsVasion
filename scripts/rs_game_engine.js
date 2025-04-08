@@ -121,6 +121,7 @@ class MobileGameElement extends HTMLDivElement {
 	angle			= null;
 	pixel_size      = null;
 	viewport		= null;
+	rotate_element	= null;
   
 	/**
 	 * Constructeur par défaut de tous les composants mobiles du jeu
@@ -133,6 +134,7 @@ class MobileGameElement extends HTMLDivElement {
 	constructor(viewport, x, y) {
 	  	super();
 	  	this.classList.add("game");
+		this.rotate_element = this;  // Sert à cibler un sous-élément DOM dans une classe enfant (avoue, sans le commentaire, elle t'aurait fait buguer, cette ligne)
 	  
 	  	if (!viewport) {
 			console.error("MobileGameElement.constructor : le paramètre viewport est obligatoire");
@@ -184,10 +186,13 @@ class MobileGameElement extends HTMLDivElement {
 
 	  	this.style.top = this.viewport.getCssValue(this.y, true);
 	  	this.style.left = this.viewport.getCssValue(this.x, false);
+		this.__rotate();
+	}
 
-	  	if (this.angle >= 360) this.angle -= 360;
+	__rotate() {
+		if (this.angle >= 360) this.angle -= 360;
     	if (this.angle < 0) this.angle += 360;
-    	this.style.transform = "rotateZ(" + this.angle + "deg)";
+    	this.rotate_element.style.transform = "rotateZ(" + this.angle + "deg)";
 	}
   
 	/**

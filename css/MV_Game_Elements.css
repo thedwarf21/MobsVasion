@@ -1,9 +1,13 @@
 .character {
-	background: radial-gradient(ellipse at left, #2568b0 50%, transparent 80%);
-    border-radius: 50%;
 	position: absolute;
 	height: 8.3vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_vaisseau_px)  */
 	width: 8.3vh;
+}
+.character .spinning-image {
+    width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background: radial-gradient(ellipse at left, #2568b0 50%, transparent 80%);
 	transform-origin: center; /* il va falloir faire pivoter le personnage quand on aura une image, autant qu'il pivote autour de son milieu plutôt qu'autour d'un coin */
 }
 
