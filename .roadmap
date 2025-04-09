@@ -53,10 +53,10 @@ V   Tâche terminée
         >   Gérer la tempo entre deux dash
         >   Faire apparaître une barre de progression du rechargement du dash
 *   Monstres
-    X   Faire apparaître un monstre
+    V   Faire apparaître un monstre
         >   Style CSS d'un monstre
         >   Classe JS gérant un monstre
-    _   Gérer le déplacement automatique des monstres
+    X   Gérer le déplacement automatique des monstres
 *   Mobs pop de début de vague
     _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
     _   Déléguer la dilution du pop à une fonction ou une classe

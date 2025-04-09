@@ -19,6 +19,12 @@ class MV_Character extends MobileGameElement {
     return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
   }
 
+  dash() {
+    this.deltaX = DASH_LENGTH * Math.cos(this.angle * Math.PI / 180);
+		this.deltaY = DASH_LENGTH * Math.sin(this.angle * Math.PI / 180);
+		this.move();
+  }
+
   __init() {
     this.angle = 0;
     this.deltaX = 0;

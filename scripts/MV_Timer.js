@@ -87,9 +87,7 @@ class MV_Timer {
 			this.__launchReloadingAction();
 
 		if (this.controls_state.firing_secondary && !MainController.secondaryReloadGauge) {
-			character.deltaX = DASH_LENGTH * Math.cos(character.angle * Math.PI / 180);
-			character.deltaY = DASH_LENGTH * Math.sin(character.angle * Math.PI / 180);
-			character.move();
+			character.dash();
 			this.controls_state.firing_secondary = false;
 			MainController.scope.game.waiting_counter.dash = TIMEOUTS.dash_interval;
 			MainController.character.appendChild(new MV_Gauge("secondary-reload", TIMEOUTS.dash_interval, 0));
