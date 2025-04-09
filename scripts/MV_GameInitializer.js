@@ -14,13 +14,14 @@ class MV_GameInitializer {
 				xp: 0,
 				level: 1,
 				save_slot: 1,
+				clip_ammo: CLIP_SIZE,
+				kills_count: 0,
+				health_points: CHARACTER_MAX_LIFE,
 				waiting_counter: {
 					shot: 0,
 					dash: 0,
 					clip: 0
 				},
-				clip_ammo: CLIP_SIZE,
-				kills_count: 0,
 				sound_fx_on: true,
 				music_on: true,
 				showHitboxes: false

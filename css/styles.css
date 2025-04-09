@@ -27,41 +27,27 @@ body {
 	font-size: 5vh;
 }
 
-/** Jauges et autres progress bars */
-.gauge {
-	border: 0.5vh ridge #dbdbdb;
-	padding: 0.2vh;
-}
-.gauge .progress { height: 100%; }
-
-.gauge.primary-reload {
+.bullets {
 	position: absolute;
-	bottom: 6.45vh;
-  	right: 1.8vh;
-  	width: 8.5vh;
-  	height: 0.7vh;
+	bottom: 1vh;
+	left: -4vh;
+	background: url('../images/bullets.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 2vh;
+	height: 3.5vh;
 }
-.gauge.primary-reload .progress { background: rgb(54, 181, 28); }
 
-.gauge.secondary-reload {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	box-sizing: border-box;
-  	width: 100%;
-  	height: 1vh;
-  	border: 0.1vh solid #9c9de8;
-}
-.gauge.secondary-reload .progress { background: rgb(255, 217, 135); }
-
-.gauge.character-health-bar {
+.coeur {
 	position: absolute;
 	bottom: 1vh;
 	left: 1vh;
-	width: 40vh;
-  	height: 3vh;
+	background: url('../images/coeur.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+	width: 3.5vh;
+	height: 3.5vh;
 }
-.gauge.character-health-bar .progress { background: rgb(255, 50, 50); }
 
 /** Popup configuration manette */
  .control-item-container {

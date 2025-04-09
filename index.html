@@ -12,6 +12,7 @@
 
     <!-- Styles et fonts -->
     <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/gauges.css"/>
     <link rel="stylesheet" type="text/css" href="css/hud.css"/>
     <link rel="stylesheet" type="text/css" href="css/rs_dialog.css"/>
     <link rel="stylesheet" type="text/css" href="css/rs_toast.css"/>
@@ -37,18 +38,20 @@
 
   <!-- Corps de la page -->
   <body onload="MainController.onLoad()">
-    <div class="game-window" id="game-window"></div>
+    <div class="game-window" id="game-window">
+      <div class="ammo-display">  
+        <div class="bullets"></div>
+        <span id="current"></span> / <span id="total"></span>
+      </div>
+      <div class="coeur"></div>
+      <div class="hud">
+        <div class="pause"></div>
+      </div>
+    </div>
 
     <!-- Jauge de test d'affichage -->
     <!--div class="gauge secondary-reload">
       <div class="progress" style="width: 100%"></div>
     </div-->
-
-    <div class="ammo-display">
-      <span id="current"></span> / <span id="total"></span>
-    </div>
-    <div class="hud">
-      <div class="pause"></div>
-    </div>
   </body>
 </html>

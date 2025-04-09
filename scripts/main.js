@@ -14,6 +14,7 @@ const DEFAULT_AUDIO_LASTING_TIME = 1000;
 
 const CHARACTER_SIZE = 50;
 const CHARACTER_SPEED = 5;
+const CHARACTER_MAX_LIFE = 50;
 
 const SHOT_VELOCITY = 30;
 const SHOT_SIZE = 5;
@@ -74,7 +75,17 @@ class MainController {
 			object: MainController.scope.game,
 			property: "clip_ammo"
 		}).addBinding(document.querySelector(".ammo-display #current"), "innerHTML");
-		
+
+		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, CHARACTER_MAX_LIFE);
+		this.addToGameWindow(character_health_bar);
+		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage des munitions dans l'UI
+			object: MainController.scope.game,
+			property: "health_points",
+			callback: () => {
+				character_health_bar.assignValue(MainController.scope.game.health_points);
+			}
+		})
+
 		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
 	}
 
