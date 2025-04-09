@@ -30,7 +30,7 @@ class MV_GameInitializer {
 				downPressed: false,
 				rightPressed: false,
 				leftPressed: false,
-				paused: false,
+				paused: true,
 				firing_primary: false,
 				firing_secondary: false,
 				reloading: false

@@ -88,6 +88,7 @@ customElements.define('mv-js-gauge', MV_Gauge, { extends: 'div' });
 
 class MV_Monster extends MobileGameElement {
   __image_elt;
+  __speed;
 
   constructor(viewport, x, y) {
     super(viewport, x, y);
@@ -95,11 +96,22 @@ class MV_Monster extends MobileGameElement {
     this.__init();
   }
 
+  follow(character) {
+    let rad_angle = Math.atan( (character.y - this.y) / (character.x - this.x) );
+    if (character.x < this.x)
+      rad_angle += Math.PI;
+    this.angle = rad_angle * 180 / Math.PI;
+    this.deltaX = this.__speed * Math.cos(rad_angle);
+    this.deltaY = this.__speed * Math.sin(rad_angle);
+    this.move();
+  }
+
   __init() {
     this.angle = 0;
     this.deltaX = 0;
     this.deltaY = 0;
     this.pixel_size = MONSTER_SIZE;
+    this.__setRadomSpeed(MIN_MONSTER_SPEED, MAX_MONSTER_SPEED);
 
     this.__image_elt = document.createElement("DIV");
     this.__image_elt.classList.add("spinning-image");
@@ -108,6 +120,10 @@ class MV_Monster extends MobileGameElement {
     this.rotate_element = this.__image_elt;
 
     super.addVisualHitBox();
+  }
+
+  __setRadomSpeed(min_value, max_value) {
+    this.__speed = Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
   }
 }
 customElements.define('mv-js-monster', MV_Monster, { extends: 'div' });

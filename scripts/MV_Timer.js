@@ -24,9 +24,8 @@ class MV_Timer {
 			
 			this.__performControlsObjectChanges();
 			this.__testCollides();
+			this.__decrementWaitingCounters();
 		}
-		
-		this.__decrementWaitingCounters();
 
 		MV_GameInitializer.clearGamepadControlsState(this.controls_state);
 		setTimeout(() => { this.letsPlay(); }, TIME_INTERVAL);
@@ -95,6 +94,9 @@ class MV_Timer {
 
 		for (let shot of MainController.shots)
 			shot.move(true);
+
+		for (let monster of MainController.monsters)
+			monster.follow(character);
 	}
 
 	__mustReload() {
