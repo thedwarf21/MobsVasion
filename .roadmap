@@ -62,9 +62,9 @@ V   Tâche terminée
     _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
     _   Déléguer la dilution du pop dans le temps, à une fonction ou une classe
 *   Points de vie
-    X   Afficher les barres de vie (personnage et monstre)
+    V   Afficher les barres de vie (personnage et monstre)
     V   Gérer les PV du personnage --> perte de PV quand un monstre touche le personnage
-    _   Gérer les PV des monstres --> perte de PV d'un monstre quand un tir le touche
+    V   Gérer les PV des monstres --> perte de PV d'un monstre quand un tir le touche
 *   Préférences utilisateur
     V   Bouton ouvrant la fenêtre de configuration de la manette, si une manette a été reconnue
     X   Ajouter les autres préférences au fur et à mesure des intégration des fonctionnalités correspondantes (possibilité de désactiver la musique et/ou les effets sonores, par exemple)
