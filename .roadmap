@@ -6,11 +6,12 @@ Je m'efforcerai de faire un commit par tâche (j'en aurais bien fait un par sous
 Je compléterai au fur et à mesure, en mettant en place des sous-tâches, voire en déclenchant de nouvelles tâches, lorsque cela s'avérera nécessaire. 
 
 Légende :
-*   Thème
-_   Tâche à accomplir
+*   Thématique
+_   Tâche/sous-tâche à accomplir
 X   Tâche en cours
+x   Sous-tâche en cours
 V   Tâche terminée
->   Sous-tâche
+>   Sous-tâche terminée
 
 *   Pause et menus
     V   Mise en place de pause/unpause et de la commande
@@ -54,7 +55,7 @@ V   Tâche terminée
 *   Monstres
     X   Faire apparaître un monstre
         >   Style CSS d'un monstre
-        _   Classe JS gérant un monstre
+        >   Classe JS gérant un monstre
     _   Gérer le déplacement automatique des monstres
 *   Mobs pop de début de vague
     _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
