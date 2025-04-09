@@ -18,6 +18,8 @@ const CHARACTER_SPEED = 5;
 const SHOT_VELOCITY = 30;
 const SHOT_SIZE = 5;
 
+const MONSTER_SIZE = 60;
+
 const CLIP_SIZE = 9;
 
 const DASH_LENGTH = 125;

@@ -19,7 +19,7 @@ V   Tâche terminée
     V   Affichage de la pause/reprise
         >   Pause => affiche la popup de préférences utilisateur (voir plus bas), qui pourra également être ouverte depuis le magasin
         >   Unpause => fermeture et destruction de toutes les popups ouvertes au moment de l'action
-    _   Gérer la manette dans les menus (à voir plus tard => je n'ai pas encore d'idée satisfaisante en tête pour le gérer proprement)
+    _   Gérer la manette dans les menus (à voir plus tard => je vois comment faire, mais je préfère attendre d'avoir plusieurs menus, pour gérer tous les cas dès le départ et ne pas avoir à y revenir)
 *   Personnage
     V   Créer et afficher le personnage
         >   Style CSS du personnage
@@ -52,7 +52,9 @@ V   Tâche terminée
         >   Gérer la tempo entre deux dash
         >   Faire apparaître une barre de progression du rechargement du dash
 *   Monstres
-    _   Faire apparaître un monstre
+    X   Faire apparaître un monstre
+        >   Style CSS d'un monstre
+        _   Classe JS gérant un monstre
     _   Gérer le déplacement automatique des monstres
 *   Mobs pop de début de vague
     _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
