@@ -100,11 +100,11 @@ class RS_ViewPortCompatibility {
 
 	refreshScreenRatio() { this.screen_ratio = window.innerWidth / window.innerHeight; }
 
-	getCssValue(virtual_pixels, is_base_axis) {
-		let coefConversion = 100 / this.VIRTUAL_HEIGHT,
-			css_unit = this.base_axis == "y" ? "vh" : "vw",
-			value = virtual_pixels * coefConversion;
-		return value + css_unit;
+	getCssValue(virtual_pixels) {
+		if (this.base_axis == "y") {
+			return (virtual_pixels * 100 / this.VIRTUAL_HEIGHT) + "vh";
+		}
+		return (virtual_pixels * 100 / this.VIRTUAL_WIDTH) + "vw";
 	}
 }
 
@@ -150,8 +150,8 @@ class MobileGameElement extends HTMLDivElement {
 	  	if (x != undefined && y != undefined) {
 			this.x = x;
 			this.y = y;
-			this.style.left = viewport.getCssValue(this.x, false);
-			this.style.top = viewport.getCssValue(this.y, true);
+			this.style.left = viewport.getCssValue(this.x);
+			this.style.top = viewport.getCssValue(this.y);
 	  	}
 	}
   
@@ -184,8 +184,8 @@ class MobileGameElement extends HTMLDivElement {
 				this.x = 0;
 		}
 
-	  	this.style.top = this.viewport.getCssValue(this.y, true);
-	  	this.style.left = this.viewport.getCssValue(this.x, false);
+	  	this.style.top = this.viewport.getCssValue(this.y);
+	  	this.style.left = this.viewport.getCssValue(this.x);
 		this.__rotate();
 	}
 
@@ -203,33 +203,46 @@ class MobileGameElement extends HTMLDivElement {
 	 * @param      	{function}  fnPostAnimation  	Hook post-animation
 	 */
 	animate(animationCssClass, duration, fnPostAnimation) {
-	  this.classList.add(animationCssClass);
-	  if (typeof fnPostAnimation == "function")
-		setTimeout(fnPostAnimation, duration);
+	  	this.classList.add(animationCssClass);
+		if (typeof fnPostAnimation == "function")
+			setTimeout(fnPostAnimation, duration);
 	}
   
 	/**
 	 * Ajoute un élément permettant de visualiser la hitbox de l'élément
 	 */
 	addVisualHitBox() {
-	  let div = document.createElement("DIV");
-	  div.classList.add("hitbox");
-  
-	  // On applique le coefficient pour obtenir la marge 
-	  // marge de centrage => réduction du rayon = <rayon_hitbox_de_base> - <rayon_hitbox_souhaité>
-	  let margin, cssSize;
-	  if (this.hitbox_size_coef) {
-		margin = this.pixel_size/2 * (1 - this.hitbox_size_coef);
-		cssSize = `calc(100% - ${this.viewport.getCssValue(margin * 2, true)})`;
-	  } else {
-		margin = 0;
-		cssSize = "100%";
-	  }
-	  div.style.margin = this.viewport.getCssValue(margin, true);
-	  div.style.height = cssSize;
-	  div.style.width = cssSize;
-	  div.style.opacity = "0"; // Afficher/cacher selon paramétrage utilisateur
-	  this.appendChild(div);
+		let div = document.createElement("DIV");
+		div.classList.add("hitbox");
+	
+		// On applique le coefficient pour obtenir la marge 
+		// marge de centrage => réduction du rayon = <rayon_hitbox_de_base> - <rayon_hitbox_souhaité>
+		let margin, cssSize;
+		if (this.hitbox_size_coef) {
+			margin = this.pixel_size/2 * (1 - this.hitbox_size_coef);
+			cssSize = `calc(100% - ${this.viewport.getCssValue(margin * 2)})`;
+		} else {
+			margin = 0;
+			cssSize = "100%";
+		}
+		div.style.margin = this.viewport.getCssValue(margin);
+		div.style.height = cssSize;
+		div.style.width = cssSize;
+		div.style.opacity = "0"; // Afficher/cacher selon paramétrage utilisateur
+		this.appendChild(div);
+	}
+
+	/**
+	 * Méthode permettant de créer un élément enfant dédié à la partie soumise à rotation de l'affichage.
+	 * 
+	 * @param {string} css_class_name Classe CSS permettant de définir l'affichage.
+	 */
+	addImageElt(css_class_name) {
+		this.__image_elt = document.createElement("DIV");
+		this.__image_elt.classList.add(css_class_name);
+		this.appendChild(this.__image_elt);
+	
+		this.rotate_element = this.__image_elt;
 	}
 
 	/**
@@ -247,14 +260,14 @@ class MobileGameElement extends HTMLDivElement {
 	 * @type       {RS_Hitbox}
 	 */
 	get hitbox() {
-	  let radius_coef = this.hitbox_size_coef || 1;
-	  
-	  // On retourne un objet donnant le coef à appliquer à la taille 
-	  return new RS_Hitbox(RS_Hitbox.SHAPE_CIRCLE, {
-		radius: this.pixel_size/2 * radius_coef,
-		x: this.x + (this.pixel_size / 2),
-		y: this.y + (this.pixel_size / 2)
-	  });
+		let radius_coef = this.hitbox_size_coef || 1;
+		
+		// On retourne un objet donnant le coef à appliquer à la taille 
+		return new RS_Hitbox(RS_Hitbox.SHAPE_CIRCLE, {
+			radius: this.pixel_size/2 * radius_coef,
+			x: this.x + (this.pixel_size / 2),
+			y: this.y + (this.pixel_size / 2)
+		});
 	}
   
 	/**
