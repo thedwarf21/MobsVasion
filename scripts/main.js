@@ -83,8 +83,12 @@ class MainController {
 
     static __startWave() {
 		MainController.__clearGameWindow();
+
 		let character = new MV_Character(MainController.viewport);
 		MainController.addToGameWindow(character);
+
+		let monster = new MV_Monster(MainController.viewport, 50, 50);
+		MainController.addToGameWindow(monster);
     }
 
     static togglePause() { 

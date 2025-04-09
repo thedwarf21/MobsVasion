@@ -1,5 +1,5 @@
 class MV_Character extends MobileGameElement {
-  character_image_elt;
+  __image_elt;
 
   constructor(viewport) {
     super(viewport);
@@ -30,11 +30,11 @@ class MV_Character extends MobileGameElement {
     this.style.top = this.viewport.getCssValue(this.y, true);
     this.style.left = this.viewport.getCssValue(this.x, false);
 
-    this.character_image_elt = document.createElement("DIV");
-    this.character_image_elt.classList.add("spinning-image");
-    this.appendChild(this.character_image_elt);
+    this.__image_elt = document.createElement("DIV");
+    this.__image_elt.classList.add("spinning-image");
+    this.appendChild(this.__image_elt);
 
-    this.rotate_element = this.character_image_elt;
+    this.rotate_element = this.__image_elt;
 
     super.addVisualHitBox();
   }
@@ -78,3 +78,30 @@ class MV_Gauge extends HTMLDivElement {
   }
 }
 customElements.define('mv-js-gauge', MV_Gauge, { extends: 'div' });
+
+
+class MV_Monster extends MobileGameElement {
+  __image_elt;
+
+  constructor(viewport, x, y) {
+    super(viewport, x, y);
+    this.classList.add("monster");
+    this.__init();
+  }
+
+  __init() {
+    this.angle = 0;
+    this.deltaX = 0;
+    this.deltaY = 0;
+    this.pixel_size = MONSTER_SIZE;
+
+    this.__image_elt = document.createElement("DIV");
+    this.__image_elt.classList.add("spinning-image");
+    this.appendChild(this.__image_elt);
+
+    this.rotate_element = this.__image_elt;
+
+    super.addVisualHitBox();
+  }
+}
+customElements.define('mv-js-monster', MV_Monster, { extends: 'div' });
