@@ -56,7 +56,7 @@ V   Tâche terminée
     V   Faire apparaître un monstre
         >   Style CSS d'un monstre
         >   Classe JS gérant un monstre
-    X   Gérer le déplacement automatique des monstres
+    V   Gérer le déplacement automatique des monstres
 *   Mobs pop de début de vague
     _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
     _   Déléguer la dilution du pop à une fonction ou une classe

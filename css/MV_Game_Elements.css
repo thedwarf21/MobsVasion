@@ -33,3 +33,10 @@
 	background: radial-gradient(ellipse at left, #ce680a 50%, transparent 80%);
 	transform-origin: center; /* il va falloir faire pivoter le personnage quand on aura une image, autant qu'il pivote autour de son milieu plutôt qu'autour d'un coin */
 }
+
+.hitbox {
+	position: absolute;
+ 	top: 0;
+	background: radial-gradient(circle at center, white 3%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0.3) 80%);
+	border-radius: 50%;
+}
