@@ -117,6 +117,14 @@ class MV_Timer {
 	}
 
 	__testCollides() {
+		let character = MainController.character;
+		let monsters = MainController.monsters;
+		let shots = MainController.shots;
+
+		for (let monster of monsters) {
+			if (monster.hitbox.checkCollide(character.hitbox))
+				MainController.scope.game.health_points--;
+		}
 	}
 
 	/** Contrôles clavier et écran tactile */
