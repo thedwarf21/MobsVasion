@@ -24,6 +24,10 @@ const MIN_MONSTER_SPEED = 2;
 const MAX_MONSTER_SPEED = 4;
 const MONSTER_MAX_HEALTH = 5;
 
+const MIN_POP_TIMEOUT = 3000;
+const MAX_POP_TIMEOUT = 5000;
+const MOBS_PER_WAVE = 3;
+
 const CLIP_SIZE = 9;
 
 const DASH_LENGTH = 125;
@@ -31,7 +35,10 @@ const DASH_LENGTH = 125;
 const TIMEOUTS = {
 	dash_interval: 75,
 	shot_interval: 13,
-	reload_time: 35
+	reload_time: 35,
+	before_pop: 25,
+	min_pop_interval: 60,
+	max_pop_interval: 100
 };
 
 const GAMEPAD_ACTION_CODES = {
@@ -78,7 +85,7 @@ class MainController {
 		}).addBinding(document.querySelector(".ammo-display #current"), "innerHTML");
 
 		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, CHARACTER_MAX_LIFE);
-		this.addToGameWindow(character_health_bar);
+		MainController.addToGameWindow(character_health_bar);
 		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage des munitions dans l'UI
 			object: MainController.scope.game,
 			property: "health_points",
@@ -102,10 +109,21 @@ class MainController {
 		let character = new MV_Character(MainController.viewport);
 		MainController.addToGameWindow(character);
 
-		this.__popMonsterRandomly();
+		MainController.__popLevelMonsters();
     }
 
-	static __popMonsterRandomly() {
+	static __popLevelMonsters() {
+		MainController.scope.game.wave_pop.timeouts = [];
+		
+		let timeout = TIMEOUTS.before_pop;
+		let mobsNumber = MainController.scope.game.wave_number * MOBS_PER_WAVE; 
+		for (let i=0; i<mobsNumber; i++) {
+			MainController.scope.game.wave_pop.timeouts.push(timeout);
+			timeout += MainController.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
+		}
+	}
+
+	static popMonsterRandomly() {
 		let x_monster, y_monster;
 		let max_x_value = MainController.viewport.VIRTUAL_WIDTH - MONSTER_SIZE;
 		let max_y_value = MainController.viewport.VIRTUAL_HEIGHT - MONSTER_SIZE;

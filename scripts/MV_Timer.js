@@ -25,10 +25,27 @@ class MV_Timer {
 			this.__performControlsObjectChanges();
 			this.__testCollides();
 			this.__decrementWaitingCounters();
+
+			if (MainController.scope.game.wave_pop.timeouts)
+				this.__applyWavePopScheduling();
 		}
 
 		MV_GameInitializer.clearGamepadControlsState(this.controls_state);
 		setTimeout(() => { this.letsPlay(); }, TIME_INTERVAL);
+	}
+
+	__applyWavePopScheduling() {
+		let wave_pop_params = MainController.scope.game.wave_pop;
+		
+		if (wave_pop_params.elapsed == wave_pop_params.timeouts[0]) {
+			MainController.popMonsterRandomly();
+			wave_pop_params.timeouts.shift();
+			
+			if (!wave_pop_params.timeouts.length) {
+				MainController.scope.game.wave_pop.timeouts = null;
+			}
+		}
+		wave_pop_params.elapsed++;
 	}
 
 	__decrementWaitingCounters() {
@@ -131,8 +148,8 @@ class MV_Timer {
 				if (monster.hitbox.checkCollide(shot.hitbox)) {
 					monster.wound(1);
 					shot.remove();
-					if (MainController.monsters.length === 0) // ça va virer, hein... c'est juste pour que vous puissiez tester, en attendant que le reste soit développé
-						MainController.__popMonsterRandomly();
+					if (!MainController.scope.game.wave_pop.timeouts && MainController.monsters.length === 0)
+						console.info("J'y crois pas... t'as vraiment gagné ? :o");
 				}					
 			}
 		}

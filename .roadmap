@@ -59,8 +59,8 @@ V   Tâche terminée
         >   Créer une méthode dans le MainController pour faire pop un monstre à une position aléatoire au bord de l'écran
     V   Gérer le déplacement automatique des monstres
 *   Mobs pop de début de vague
-    _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
-    _   Déléguer la dilution du pop dans le temps, à une fonction ou une classe
+    V   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
+    V   Déléguer la dilution du pop dans le temps, à une fonction ou une classe
 *   Points de vie
     V   Afficher les barres de vie (personnage et monstre)
     V   Gérer les PV du personnage --> perte de PV quand un monstre touche le personnage
@@ -78,8 +78,8 @@ V   Tâche terminée
     _   Lorsque le joueur gagne un niveau, il gagne également un nombre fixe de points de compétence utilisables dans l'onglet "entraînement" du magasin
     _   L'XP nécessaire par niveau, sera calculée, comme les prix des améliorations, sur une suite basée sur celle de Fibonacci : Un = U(n-1) + U(n-2)
 *   Conditions de fin de vague
-    _   Défaite (PV joueur <= 0)
-    _   Victoire (Tous les monstres de la vague ont pop, et il n'y en a plus un seul en jeu)
+    V   Défaite (PV joueur <= 0)
+    V   Victoire (Tous les monstres de la vague ont pop, et il n'y en a plus un seul en jeu)
 *   Rapport de fin de vague
     _   Créer le template HTML et la feuille de style CSS de la popup
     _   Affichage des valeurs calculées

@@ -12,11 +12,15 @@ class MV_GameInitializer {
 			game: {
 				money: 0,
 				xp: 0,
-				level: 1,
+				wave_number: 1,
 				save_slot: 1,
 				clip_ammo: CLIP_SIZE,
 				kills_count: 0,
 				health_points: CHARACTER_MAX_LIFE,
+				wave_pop: {
+					timeouts: null,
+					elapsed: 0
+				},
 				waiting_counter: {
 					shot: 0,
 					dash: 0,
