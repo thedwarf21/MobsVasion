@@ -24,7 +24,7 @@ body {
 	bottom: 0.5vh;
 	right: 2vh;
 	color: white;
-	font-size: 5vh;
+	font-size: 4.5vh;
 }
 
 .bullets {
@@ -62,7 +62,7 @@ body {
     font-size: 2.4vh;
     font-family: sans-serif;
     font-weight: bold;
-    width: 15vh;
+    max-width: 35vh;
 }
 
 .button-mapped {
