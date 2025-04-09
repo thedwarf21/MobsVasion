@@ -122,8 +122,19 @@ class MV_Timer {
 		let shots = MainController.shots;
 
 		for (let monster of monsters) {
-			if (monster.hitbox.checkCollide(character.hitbox))
+			if (monster.hitbox.checkCollide(character.hitbox)) {
 				MainController.scope.game.health_points--;
+				if (!MainController.scope.game.health_points)
+					console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré")
+			}
+			for (let shot of shots) {
+				if (monster.hitbox.checkCollide(shot.hitbox)) {
+					monster.wound(1);
+					shot.remove();
+					if (MainController.monsters.length === 0) // ça va virer, hein... c'est juste pour que vous puissiez tester, en attendant que le reste soit développé
+						MainController.__popMonsterRandomly();
+				}					
+			}
 		}
 	}
 

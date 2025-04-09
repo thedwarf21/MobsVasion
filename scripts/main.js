@@ -22,6 +22,7 @@ const SHOT_SIZE = 5;
 const MONSTER_SIZE = 60;
 const MIN_MONSTER_SPEED = 2;
 const MAX_MONSTER_SPEED = 4;
+const MONSTER_MAX_HEALTH = 5;
 
 const CLIP_SIZE = 9;
 

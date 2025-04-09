@@ -9,7 +9,7 @@
 	position: absolute;
 	bottom: 6.45vh;
   	right: 1.8vh;
-  	width: 8.5vh;
+  	width: 7vh;
   	height: 0.7vh;
 }
 .gauge.primary-reload .progress { background: rgb(54, 181, 28); }
@@ -33,3 +33,13 @@
   	height: 2vh;
 }
 .gauge.character-health-bar .progress { background: rgb(255, 50, 50); }
+
+.gauge.monster-health-bar {
+	position: absolute;
+	top: -2.5vh;
+	left: 0;
+	box-sizing: border-box;
+	width: 100%;
+	height: 1.7vh;
+}
+.gauge.monster-health-bar .progress { background: rgb(255, 50, 50); }
