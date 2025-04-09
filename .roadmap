@@ -56,13 +56,13 @@ V   Tâche terminée
     V   Faire apparaître un monstre
         >   Style CSS d'un monstre
         >   Classe JS gérant un monstre
+        >   Créer une méthode dans le MainController pour faire pop un monstre à une position aléatoire au bord de l'écran
     V   Gérer le déplacement automatique des monstres
 *   Mobs pop de début de vague
     _   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
-    _   Déléguer la dilution du pop à une fonction ou une classe
+    _   Déléguer la dilution du pop dans le temps, à une fonction ou une classe
 *   Points de vie
-    _   Créer un composant ProgressBar réutilisable => propriétés : maxValue, currentValue, barTexture, backgroundTexture (visuellement, LifeBar <> XpBar : texture => background CSS)
-    _   Afficher les barres de vie (personnage et monstre)
+    X   Afficher les barres de vie (personnage et monstre)
     _   Gérer les PV du personnage --> perte de PV quand un monstre touche le personnage
     _   Gérer les PV des monstres --> perte de PV d'un monstre quand un tir le touche
 *   Préférences utilisateur

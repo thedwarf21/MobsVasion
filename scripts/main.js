@@ -90,9 +90,36 @@ class MainController {
 		let character = new MV_Character(MainController.viewport);
 		MainController.addToGameWindow(character);
 
-		let monster = new MV_Monster(MainController.viewport, 50, 50);
-		MainController.addToGameWindow(monster);
+		this.__popMonsterRandomly();
     }
+
+	static __popMonsterRandomly() {
+		let x_monster, y_monster;
+		let max_x_value = MainController.viewport.VIRTUAL_WIDTH - MONSTER_SIZE;
+		let max_y_value = MainController.viewport.VIRTUAL_HEIGHT - MONSTER_SIZE;
+
+		switch ( Math.floor(Math.random() * 4) ) { // selon la bordure choisie aléatoirement pour faire apparaître le monstre
+			case 0: // haut
+				x_monster = MainController.radomValueInRange(0, max_x_value);
+				y_monster = 0;
+				break;
+			case 1: // bas
+				x_monster = MainController.radomValueInRange(0, max_x_value);
+				y_monster = max_y_value;
+				break;
+			case 2: // gauche
+				x_monster = 0;
+				y_monster = MainController.radomValueInRange(0, max_y_value);
+				break;
+			case 3: // droite
+				x_monster = max_x_value;
+				y_monster = MainController.radomValueInRange(0, max_y_value);
+				break;
+		}
+
+		let monster = new MV_Monster(MainController.viewport, x_monster, y_monster);
+		MainController.addToGameWindow(monster);
+	}
 
     static togglePause() { 
         let controls_state = MainController.scope.controls;
@@ -168,5 +195,10 @@ class MainController {
 			});
 		});
 		document.body.appendChild(MainController.parameters_popup);
+	}
+
+
+	static radomValueInRange(min_value, max_value) {
+		return Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
 	}
 }
