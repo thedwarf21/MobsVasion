@@ -79,14 +79,19 @@ class MainController {
 	}
 
 	static __prepareUI() {
-		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage des munitions dans l'UI
+		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage du BUTIN DE VAGUE dans l'UI
+			object: MainController.scope.game,
+			property: "wave_swag"
+		}).addBinding(document.getElementById("wave-swag"), "innerHTML");
+
+		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage des MUNITIONS dans l'UI
 			object: MainController.scope.game,
 			property: "clip_ammo"
 		}).addBinding(document.querySelector(".ammo-display #current"), "innerHTML");
 
 		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, CHARACTER_MAX_LIFE);
 		MainController.addToGameWindow(character_health_bar);
-		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage des munitions dans l'UI
+		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage de la BARRE DE VIE dans l'UI
 			object: MainController.scope.game,
 			property: "health_points",
 			callback: () => {

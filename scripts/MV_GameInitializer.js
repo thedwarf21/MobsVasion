@@ -15,8 +15,8 @@ class MV_GameInitializer {
 				wave_number: 1,
 				save_slot: 1,
 				clip_ammo: CLIP_SIZE,
-				kills_count: 0,
 				health_points: CHARACTER_MAX_LIFE,
+				wave_swag: 0,
 				wave_pop: {
 					timeouts: null,
 					elapsed: 0

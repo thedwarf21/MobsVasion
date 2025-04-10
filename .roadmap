@@ -69,9 +69,9 @@ V   Tâche terminée
     V   Bouton ouvrant la fenêtre de configuration de la manette, si une manette a été reconnue
     X   Ajouter les autres préférences au fur et à mesure des intégration des fonctionnalités correspondantes (possibilité de désactiver la musique et/ou les effets sonores, par exemple)
 *   Gérer l'argent
-    _   Gérer séparément les ressources collectées lors de la vague en cours, des ressources détenues par le joueur, pour mettre en place un malus en cas de défaite
-    _   Afficher l'argent collecté durant la vague en cours, dans l'UI
-    _   Attribution de l'argent au loot de la vague, lorsqu'un monstre rend l'âme
+    V   Gérer séparément les ressources collectées lors de la vague en cours, des ressources détenues par le joueur, pour mettre en place un malus en cas de défaite
+    V   Afficher l'argent collecté durant la vague en cours, dans l'UI
+    X   Attribution de l'argent au loot de la vague, lorsqu'un monstre rend l'âme
     _   Ajout du loot de la vague (avec malus, si défaite) aux ressource du joueur avant d'ouvrir le magasin
 *   Gérer l'XP
     _   Afficher la barre d'XP et le niveau actuel du joueur dans l'UI

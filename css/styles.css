@@ -31,22 +31,44 @@ body {
 	position: absolute;
 	bottom: 1vh;
 	left: -4vh;
+	width: 2vh;
+	height: 3.5vh;
 	background: url('../images/bullets.png');
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 2vh;
-	height: 3.5vh;
 }
 
 .coeur {
 	position: absolute;
 	bottom: 1vh;
 	left: 1vh;
+	width: 3.5vh;
+	height: 3.5vh;
 	background: url('../images/coeur.png');
 	background-size: contain;
 	background-repeat: no-repeat;
-	width: 3.5vh;
-	height: 3.5vh;
+}
+
+.wave-swag-container {
+	position: absolute;
+	top: 1vh;
+	left: 1vh;
+	display: flex;
+	flex-direction: row;
+}
+.money-bag {
+	position: relative;
+	top: 0.7vh;
+	width: 4vh;
+	height: 4vh;
+	background: url('../images/money-bag.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#wave-swag {
+	margin-left: 1.5vh;
+	color: white;
+	font-size: 4.5vh;
 }
 
 /** Popup configuration manette */
