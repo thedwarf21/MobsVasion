@@ -1,0 +1,55 @@
+class WaitingCounters {
+    static applyWavePopScheduling() {
+		let wave_pop_params = MainController.scope.game.wave_pop;
+		
+		if (wave_pop_params.elapsed == wave_pop_params.timeouts[0]) {
+			MainController.popMonsterRandomly();
+			wave_pop_params.timeouts.shift();
+			
+			if (!wave_pop_params.timeouts.length) {
+				MainController.scope.game.wave_pop.timeouts = null;
+			}
+		}
+		wave_pop_params.elapsed++;
+	}
+
+	static decrementWaitingCounters() {
+		let counters_object = MainController.scope.game.waiting_counter;
+		let counters_names_list = Object.keys(counters_object);
+		for (let counter_key of counters_names_list) {
+			if (counters_object[counter_key]) {
+				counters_object[counter_key]--;
+				if (!counters_object[counter_key])
+					WaitingCounters.__performCounterEndAction(counter_key);
+				else WaitingCounters.__performValueChangeAction(counter_key, counters_object[counter_key]);
+			}
+		}
+	}
+
+	static __performValueChangeAction(counter_key, counter_value) {
+		switch(counter_key) {
+			case "clip":
+				MainController.primaryReloadGauge.assignValue(TIMEOUTS.reload_time - counter_value);
+				break;
+			case "dash":
+				MainController.secondaryReloadGauge.assignValue(TIMEOUTS.dash_interval - counter_value);
+				break;
+			default:
+				break;	
+		}
+	}
+
+	static __performCounterEndAction(counter_key) {
+		switch(counter_key) {
+			case "clip":
+				MainController.scope.game.clip_ammo = CLIP_SIZE;
+				MainController.primaryReloadGauge.remove();
+				break;
+			case "dash":
+				MainController.secondaryReloadGauge.remove();
+				break;
+			default:
+				break;	
+		}
+	}
+}
