@@ -1,7 +1,3 @@
-// Alors là, franchement, dans un "vrai" langage objet, j'aurais fait une classe abstraite, avec 
-//   + letsPlay implémentée 
-//   + les méthodes que letsPlay appelle, abstraites : comme ça, ça aurait été utilisable n'importe où, en létat, en héritant de ma classe abstraite, tout en laissant toute liberté dans l'implémentation du code spécifique...
-
 class MV_Timer {
 
 	/**
@@ -20,7 +16,7 @@ class MV_Timer {
 
 		if (!this.controls_state.paused) {
 			if (this.gamepad_mapper)
-				this.__updateControlsObjectFromGamepad();
+				GamepadControls.updateControlsObject();
 			
 			this.__performControlsObjectChanges();
 			this.__testCollides();
@@ -39,14 +35,14 @@ class MV_Timer {
 		this.__applyTouchScreenControls();
 
 		if (this.gamepad_mapper)
-			this.__applyGamepadMenuControls();
+			GamepadControls.applyMenuControls();
 	}
 
 	__performControlsObjectChanges() {
 		let character = MainController.character;
 
 		if (this.__mustReload())
-			this.__launchReloadingAction();
+			this.launchReloadingAction();
 
 		if (this.controls_state.firing_secondary && !MainController.secondaryReloadGauge) {
 			character.dash();
@@ -70,7 +66,7 @@ class MV_Timer {
 		return false;
 	}
 
-	__launchReloadingAction() {
+	launchReloadingAction() {
 		if (!MainController.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
 			MainController.scope.game.waiting_counter.clip = TIMEOUTS.reload_time;
 			
@@ -111,60 +107,6 @@ class MV_Timer {
 		if (!this.controls_state.paused) {
 
 		} else {
-		}
-	}
-
-	/** Contrôles manette */
-	__applyGamepadMenuControls() {
-		this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.pause);
-		if (this.controls_state.paused) {
-			// application des commandes de manettes relatives aux menus (le true en second paramètre indique au mapper qu'il doit exécuter l'action secondaire de la commande)
-			// ex: this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire, true);
-		}
-	}
-	__updateControlsObjectFromGamepad() {
-		this.gamepad_mapper.updateJoysticksStates();
-		this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire);
-		this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.reload);
-		this.__applyJoysticksControls();
-	}
-
-	__applyJoysticksControls() {
-		let character = MainController.character;
-		let leftJoystick = MainController.timer.gamepad_mapper.leftJoystick;
-		let rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
-
-		this.__applyMoveJoystick(leftJoystick, character);
-		if (!MainController.primaryReloadGauge)
-			this.__applyFireJoystick(rightJoystick, character);
-
-		/** */
-		if (rightJoystick.intensity === 0 && !MainController.scope.game.clip_ammo) { // Rechargement automatique si chargeur vide et pas de visée
-			this.__launchReloadingAction();
-		}
-		/** */
-		
-		if (rightJoystick.intensity !== 0) // Le personnage regarde où il vise, ou là où il va s'il ne vise pas
-			character.angle = rightJoystick.angle * 180 / Math.PI;
-		else if (leftJoystick.intensity !== 0)
-			character.angle = leftJoystick.angle * 180 / Math.PI;
-		character.move();
-	}
-
-	__applyMoveJoystick(joystick, character) {
-		character.deltaX = joystick.intensity * CHARACTER_SPEED * Math.cos(joystick.angle);
-		character.deltaY = joystick.intensity * CHARACTER_SPEED * Math.sin(joystick.angle);
-	}
-
-	__applyFireJoystick(joystick, character) {
-		MainController.scope.controls.firing_primary = true;
-		if (joystick.intensity !== 0 && !MainController.scope.game.waiting_counter.shot) {
-			if (MainController.scope.game.clip_ammo) {
-				let shot = character.shoot(SHOT_VELOCITY, joystick.angle);
-				MainUI.addToGameWindow(shot);
-				MainController.scope.game.waiting_counter.shot = TIMEOUTS.shot_interval;
-				MainController.scope.game.clip_ammo--;
-			}  // En isolant ce if, il suffira d'écrire un else pour jouer un son (CLIC !) avertissant l'utilisateur que son chargeur est vide
 		}
 	}
 }
