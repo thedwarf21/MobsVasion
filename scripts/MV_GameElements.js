@@ -106,11 +106,14 @@ class MV_Monster extends MobileGameElement {
     this.move();
   }
 
-  wound(injury_amount) {
+  wound(injury_amount, onMonsterDeath) {
     this.__health_points -= injury_amount;
     this.__life_bar.assignValue(this.__health_points);
-    if (!this.__health_points)
+    if (!this.__health_points) {
       this.remove();
+      if (onMonsterDeath)
+        onMonsterDeath();
+    }
   }
 
   __init() {

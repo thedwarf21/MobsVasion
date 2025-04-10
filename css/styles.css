@@ -52,7 +52,7 @@ body {
 .wave-swag-container {
 	position: absolute;
 	top: 1vh;
-	left: 1vh;
+	right: 2vh;
 	display: flex;
 	flex-direction: row;
 }

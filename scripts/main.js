@@ -23,9 +23,8 @@ const MONSTER_SIZE = 60;
 const MIN_MONSTER_SPEED = 2;
 const MAX_MONSTER_SPEED = 4;
 const MONSTER_MAX_HEALTH = 5;
-
-const MIN_POP_TIMEOUT = 3000;
-const MAX_POP_TIMEOUT = 5000;
+const MIN_MONSTER_SWAG = 1;
+const MAX_MONSTER_SWAG = 3;
 const MOBS_PER_WAVE = 3;
 
 const CLIP_SIZE = 9;

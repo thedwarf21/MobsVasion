@@ -146,10 +146,13 @@ class MV_Timer {
 			}
 			for (let shot of shots) {
 				if (monster.hitbox.checkCollide(shot.hitbox)) {
-					monster.wound(1);
 					shot.remove();
-					if (!MainController.scope.game.wave_pop.timeouts && MainController.monsters.length === 0)
-						console.info("J'y crois pas... t'as vraiment gagné ? :o");
+					monster.wound(1, () => {
+						let monster_swag = MainController.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
+						MainController.scope.game.wave_swag += monster_swag;
+						if (!MainController.scope.game.wave_pop.timeouts && MainController.monsters.length === 0)
+							console.info("J'y crois pas... t'as vraiment gagné ? :o");
+					});
 				}					
 			}
 		}
