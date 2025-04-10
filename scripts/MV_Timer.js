@@ -129,7 +129,7 @@ class MV_Timer {
 			MainController.scope.game.waiting_counter.clip = TIMEOUTS.reload_time;
 			
 			let gauge = new MV_Gauge("primary-reload", TIMEOUTS.reload_time, 0);
-			MainController.addToGameWindow(gauge);
+			MainUI.addToGameWindow(gauge);
 		}
 	}
 
@@ -215,7 +215,7 @@ class MV_Timer {
 		if (joystick.intensity !== 0 && !MainController.scope.game.waiting_counter.shot) {
 			if (MainController.scope.game.clip_ammo) {
 				let shot = character.shoot(SHOT_VELOCITY, joystick.angle);
-				MainController.addToGameWindow(shot);
+				MainUI.addToGameWindow(shot);
 				MainController.scope.game.waiting_counter.shot = TIMEOUTS.shot_interval;
 				MainController.scope.game.clip_ammo--;
 			}  // En isolant ce if, il suffira d'écrire un else pour jouer un son (CLIC !) avertissant l'utilisateur que son chargeur est vide

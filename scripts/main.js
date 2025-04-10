@@ -68,7 +68,7 @@ class MainController {
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
 		MV_GameInitializer.prepareGame(MainController);
-		MainController.__prepareUI();
+		MainUI.prepareUI();
 		MainController.timer.letsPlay();
         MainController.__startWave();
 	}
@@ -76,64 +76,11 @@ class MainController {
     static init() {
     }
 
-	static addToGameWindow(element) {
-		let game = document.getElementById("game-window");
-		game.appendChild(element);
-	}
-
-	static __prepareUI() {
-		// Butin de vague
-		new RS_Binding({
-			object: MainController.scope.game,
-			property: "wave_swag"
-		}).addBinding(document.getElementById("wave-swag"), "innerHTML");
-
-		// Munitions
-		new RS_Binding({
-			object: MainController.scope.game,
-			property: "clip_ammo"
-		}).addBinding(document.querySelector(".ammo-display #current"), "innerHTML");
-
-		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
-
-		// Barre de vie personnage
-		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, MainController.scope.game.health_points);
-		MainController.addToGameWindow(character_health_bar);
-		new RS_Binding({
-			object: MainController.scope.game,
-			property: "health_points",
-			callback: () => { character_health_bar.assignValue(MainController.scope.game.health_points); }
-		});
-
-		// Barre d'XP
-		let xp_bar = new MV_Gauge("xp-bar", MV_GameScope.levelUpAt(), MainController.scope.game.current_level_xp);
-		MainController.addToGameWindow(xp_bar);
-		new RS_Binding({
-			object: MainController.scope.game,
-			property: "current_level_xp",
-			callback: () => { xp_bar.assignValue(MainController.scope.game.current_level_xp); }
-		});
-		new RS_Binding({
-			object: MainController.scope.game,
-			property: "player_level",
-			callback: () => { 
-				document.querySelector(".player-level").innerHTML = MainController.scope.game.player_level; 
-				xp_bar.assignValue(MainController.scope.game.current_level_xp);
-			}
-		});
-	}
-
-    static __clearGameWindow() {
-        let character = MainController.character;
-		if (character)
-			character.remove();
-    }
-
     static __startWave() {
-		MainController.__clearGameWindow();
+		MainUI.clearGameWindow();
 
 		let character = new MV_Character(MainController.viewport);
-		MainController.addToGameWindow(character);
+		MainUI.addToGameWindow(character);
 
 		MainController.__popLevelMonsters();
     }
@@ -174,7 +121,7 @@ class MainController {
 		}
 
 		let monster = new MV_Monster(MainController.viewport, x_monster, y_monster);
-		MainController.addToGameWindow(monster);
+		MainUI.addToGameWindow(monster);
 	}
 
     static togglePause() { 
@@ -185,31 +132,7 @@ class MainController {
 		// Mise du jeu en pause par l'utilisateur => ouverture des préférences utilisateur, sinon => reprise du jeu demandée par utilisateur => fermer toutes les popups
 		if (controls_state.paused) {
 			ParametersPopup.show(was_paused);
-		} else MainController.__closeAllPopups();
-	}
-
-	static refreshAllHitboxesVisibility() {
-		for (let hitbox of MainController.hitboxes)
-			hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
-	}
-
-	static __closeAllPopups() {
-		let gamepadControlsUI = MainController.scope.gamepadControlsUI;
-		
-		if (gamepadControlsUI)
-			gamepadControlsUI.closeModal();
-		
-		if (MainController.parameters_popup)
-			MainController.__closePopup(MainController.parameters_popup);
-
-		if (MainController.lobby_popup)
-			MainController.__closePopup(MainController.lobby_popup);
-	}
-
-	static __closePopup(rs_dialog_instance) {
-		rs_dialog_instance.closeModal(()=> {
-			rs_dialog_instance = null;
-		});
+		} else MainUI.closeAllPopups();
 	}
 
 

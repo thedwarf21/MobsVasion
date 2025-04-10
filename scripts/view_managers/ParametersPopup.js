@@ -22,7 +22,7 @@ class ParametersPopup {
             object: MainController.scope.game,
             property: "showHitboxes"
         }).addBinding(MainController.parameters_popup.querySelector("#show_hitboxes"), "checked", "change", function() {
-            MainController.refreshAllHitboxesVisibility();
+            MainUI.refreshAllHitboxesVisibility();
         });
     }
 
