@@ -2,6 +2,7 @@
 .gauge {
 	border: 0.5vh ridge #dbdbdb;
 	padding: 0.2vh;
+	z-index: 1;
 }
 .gauge .progress { height: 100%; }
 
@@ -31,6 +32,7 @@
 	left: 6vh;
 	width: 60vh;
   	height: 2vh;
+	opacity: 0.75;
 }
 .gauge.character-health-bar .progress { background: rgb(255, 50, 50); }
 
@@ -50,5 +52,6 @@
 	left: 6vh;
 	width: 60vh;
   	height: 2vh;
+	opacity: 0.75;
 }
-.gauge.xp-bar .progress { background: rgb(163, 255, 110); }
+.gauge.xp-bar .progress { background: rgb(93, 255, 0); }

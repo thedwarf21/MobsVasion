@@ -25,6 +25,7 @@ body {
 	right: 2vh;
 	color: white;
 	font-size: 4.5vh;
+	z-index: 1;
 }
 
 .bullets {
@@ -47,6 +48,7 @@ body {
 	background: url('../images/coeur.png');
 	background-size: contain;
 	background-repeat: no-repeat;
+	z-index: 1;
 }
 
 .wave-swag-container {
@@ -55,6 +57,7 @@ body {
 	right: 2vh;
 	display: flex;
 	flex-direction: row;
+	z-index: 1;
 }
 .money-bag {
 	position: relative;
@@ -82,6 +85,7 @@ body {
 	color: #1ca200;
 	font-size: 3.05vh;
 	background: radial-gradient(circle at center, transparent 0%, green);
+	z-index: 1;
 }
 
 /** Popup configuration manette */
