@@ -83,6 +83,7 @@ V   Tâche terminée
 *   Rapport de fin de vague
     _   Créer le template HTML et la feuille de style CSS de la popup
     _   Affichage des valeurs calculées
+    _   Ouverture automatique du rapport de fin de vague
 *   Magasin
     _   Programmer l'ouverture du magasin après fermeture par le joueur du rapport de fin de vague
     _   Alimenter la propriété de paramétrage, dans le scope du MainController (liste d'objets JSON "shop" dans le GameInitializer)

@@ -178,13 +178,19 @@ class MainController {
 	}
 
     static togglePause() { 
-        let controls_state = MainController.scope.controls;
-        controls_state.paused = !controls_state.paused;
+		let controls_state = MainController.scope.controls;
+		let was_paused = controls_state.paused;  // --> permet de savoir s'il faut ou non désactiver la pause, au moment de fermer la fenêtre
+		controls_state.paused = !controls_state.paused;
         
 		// Mise du jeu en pause par l'utilisateur => ouverture des préférences utilisateur, sinon => reprise du jeu demandée par utilisateur => fermer toutes les popups
 		if (controls_state.paused) {
-			MainController.showParametersPopup();
+			ParametersPopup.show(was_paused);
 		} else MainController.__closeAllPopups();
+	}
+
+	static refreshAllHitboxesVisibility() {
+		for (let hitbox of MainController.hitboxes)
+			hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
 	}
 
 	static __closeAllPopups() {
@@ -204,53 +210,6 @@ class MainController {
 		rs_dialog_instance.closeModal(()=> {
 			rs_dialog_instance = null;
 		});
-	}
-
-    static showParametersPopup() {
-		let was_paused = MainController.scope.controls.paused;  // --> permet de savoir s'il faut ou non désactiver la pause, au moment de fermer la fenêtre
-		MainController.scope.controls.paused = true;
-		MainController.parameters_popup = new RS_Dialog("report_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", function() {
-			if(!MainController.timer.gamepad_mapper)
-				MainController.parameters_popup.querySelector("#btn_gamepad_controls").remove();
-			
-            // Binding option affichage ou non des hitbox
-			new RS_Binding({
-				object: MainController.scope.game,
-				property: "showHitboxes"
-			}).addBinding(MainController.parameters_popup.querySelector("#show_hitboxes"), "checked", "change", function() {
-				for (let hitbox of MainController.hitboxes)
-					hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
-			});
-
-			/* Pour le momment, le son n'est pas encore géré => code provisoirement désactivé
-
-            // Binding option sons on/off
-			new RS_Binding({
-				object: MainController.scope.game,
-				property: "sound_fx_on"
-			}).addBinding(MainController.parameters_popup.querySelector("#sound_fx_on"), "checked", "change");
-
-			// Binding option musique on/off
-			new RS_Binding({
-				object: MainController.scope.game,
-				property: "music_on"
-			}).addBinding(MainController.parameters_popup.querySelector("#music_on"), "checked", "change", function() {
-				if (MainController.scope.game.music_on) {
-					let music_loop_filename = was_paused ? GAME_MUSIC : SHOP_MUSIC; // si le jeu était en pause avant ouverture des paramètres, c'est qu'on est dans le magasin, sinon on est en jeu => musique différente
-					MainController.audio_manager.startMusicLoop(music_loop_filename);
-				} else MainController.audio_manager.stopMusicLoop();
-			});
-            
-            */
-
-			MainController.parameters_popup.querySelector("#btn_close").addEventListener("click", ()=> {
-				MainController.parameters_popup.closeModal();
-				MainController.parameters_popup = null;
-				if (!was_paused)
-					MainController.scope.controls.paused = false;
-			});
-		});
-		document.body.appendChild(MainController.parameters_popup);
 	}
 
 
