@@ -11,7 +11,9 @@ class MV_GameInitializer {
 		return {
 			game: {
 				money: 0,
-				xp: 0,
+				knowledge_points: 0,
+				current_level_xp: 0,
+				player_level: 0,
 				wave_number: 1,
 				save_slot: 1,
 				clip_ammo: CLIP_SIZE,

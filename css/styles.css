@@ -71,6 +71,19 @@ body {
 	font-size: 4.5vh;
 }
 
+.player-level {
+	position: absolute;
+	top: 1vh;
+	left: 1vh;
+	height: 3.5vh;
+	width: 3.5vh;
+	border-radius: 50%;
+	text-align: center;
+	color: #1ca200;
+	font-size: 3.05vh;
+	background: radial-gradient(circle at center, transparent 0%, green);
+}
+
 /** Popup configuration manette */
  .control-item-container {
     display: flex;

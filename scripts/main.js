@@ -18,6 +18,9 @@ const CHARACTER_MAX_LIFE = 50;
 
 const SHOT_VELOCITY = 30;
 const SHOT_SIZE = 5;
+const CLIP_SIZE = 9;
+
+const DASH_LENGTH = 125;
 
 const MONSTER_SIZE = 60;
 const MIN_MONSTER_SPEED = 2;
@@ -27,9 +30,10 @@ const MIN_MONSTER_SWAG = 1;
 const MAX_MONSTER_SWAG = 3;
 const MOBS_PER_WAVE = 3;
 
-const CLIP_SIZE = 9;
-
-const DASH_LENGTH = 125;
+const XP_PER_MONSTER = 1;
+const BASE_LEVEL_UP_XP = 3;
+const LEVEL_UP_XP_COEF = 2;
+const KP_PER_LEVEL = 1;
 
 const TIMEOUTS = {
 	dash_interval: 75,
@@ -78,27 +82,45 @@ class MainController {
 	}
 
 	static __prepareUI() {
-		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage du BUTIN DE VAGUE dans l'UI
+		// Butin de vague
+		new RS_Binding({
 			object: MainController.scope.game,
 			property: "wave_swag"
 		}).addBinding(document.getElementById("wave-swag"), "innerHTML");
 
-		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage des MUNITIONS dans l'UI
+		// Munitions
+		new RS_Binding({
 			object: MainController.scope.game,
 			property: "clip_ammo"
 		}).addBinding(document.querySelector(".ammo-display #current"), "innerHTML");
 
-		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, CHARACTER_MAX_LIFE);
+		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
+
+		// Barre de vie personnage
+		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, MainController.scope.game.health_points);
 		MainController.addToGameWindow(character_health_bar);
-		new RS_Binding({  // Enregistrement de la mise à jour auto de l'affichage de la BARRE DE VIE dans l'UI
+		new RS_Binding({
 			object: MainController.scope.game,
 			property: "health_points",
-			callback: () => {
-				character_health_bar.assignValue(MainController.scope.game.health_points);
-			}
-		})
+			callback: () => { character_health_bar.assignValue(MainController.scope.game.health_points); }
+		});
 
-		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
+		// Barre d'XP
+		let xp_bar = new MV_Gauge("xp-bar", MV_GameScope.levelUpAt(), MainController.scope.game.current_level_xp);
+		MainController.addToGameWindow(xp_bar);
+		new RS_Binding({
+			object: MainController.scope.game,
+			property: "current_level_xp",
+			callback: () => { xp_bar.assignValue(MainController.scope.game.current_level_xp); }
+		});
+		new RS_Binding({
+			object: MainController.scope.game,
+			property: "player_level",
+			callback: () => { 
+				document.querySelector(".player-level").innerHTML = MainController.scope.game.player_level; 
+				xp_bar.assignValue(MainController.scope.game.current_level_xp);
+			}
+		});
 	}
 
     static __clearGameWindow() {
@@ -232,7 +254,22 @@ class MainController {
 	}
 
 
+	/** Fonctions utilitaires */
 	static radomValueInRange(min_value, max_value) {
 		return Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
+	}
+	
+	static getFibonacciValue(level_0_value, coef, level) {
+		let prev_values = [];
+		for (let i=0; i<level+1; i++) {
+			let value;
+			if (i == 0)
+				value = level_0_value;
+			else if (i == 1)
+				value = level_0_value * coef;
+			else value = prev_values[0] + prev_values[1];
+			prev_values.unshift(value);
+		}
+		return prev_values.shift();
 	}
 }

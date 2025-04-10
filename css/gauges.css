@@ -43,3 +43,12 @@
 	height: 1.7vh;
 }
 .gauge.monster-health-bar .progress { background: rgb(255, 50, 50); }
+
+.gauge.xp-bar {
+	position: absolute;
+	top: 1vh;
+	left: 6vh;
+	width: 60vh;
+  	height: 2vh;
+}
+.gauge.xp-bar .progress { background: rgb(163, 255, 110); }
