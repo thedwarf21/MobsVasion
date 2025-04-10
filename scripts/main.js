@@ -5,13 +5,6 @@ const WINDOW_HEIGHT = 600;
 // Paramétrage
 const TIME_INTERVAL = 40;
 
-const AUDIO_PATH = "sounds/";
-const SHOP_MUSIC = "";
-const GAME_MUSIC = "";
-const SOUND_LIB = {
-};
-const DEFAULT_AUDIO_LASTING_TIME = 1000;
-
 const CHARACTER_SIZE = 50;
 const CHARACTER_SPEED = 5;
 const CHARACTER_MAX_LIFE = 50;
@@ -50,6 +43,13 @@ const GAMEPAD_ACTION_CODES = {
 	reload: "REL"
 };
 
+const AUDIO_PATH = "sounds/";
+const SHOP_MUSIC = "";
+const GAME_MUSIC = "";
+const SOUND_LIB = {
+};
+const DEFAULT_AUDIO_LASTING_TIME = 1000;
+
 var debug = false;
 
 //-------------- Controller princpal --------------
@@ -73,27 +73,15 @@ class MainController {
         MainController.__startWave();
 	}
 
-    static init() {
-    }
-
-    static __startWave() {
-		MainUI.clearGameWindow();
-
-		let character = new MV_Character(MainController.viewport);
-		MainUI.addToGameWindow(character);
-
-		MainController.__popLevelMonsters();
-    }
-
-	static __popLevelMonsters() {
-		MainController.scope.game.wave_pop.timeouts = [];
-		
-		let timeout = TIMEOUTS.before_pop;
-		let mobsNumber = MainController.scope.game.wave_number * MOBS_PER_WAVE; 
-		for (let i=0; i<mobsNumber; i++) {
-			MainController.scope.game.wave_pop.timeouts.push(timeout);
-			timeout += MainController.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
-		}
+    static togglePause() { 
+		let controls_state = MainController.scope.controls;
+		let was_paused = controls_state.paused;  // --> permet de savoir s'il faut ou non désactiver la pause, au moment de fermer la fenêtre
+		controls_state.paused = !controls_state.paused;
+        
+		// Mise du jeu en pause par l'utilisateur => ouverture des préférences utilisateur, sinon => reprise du jeu demandée par utilisateur => fermer toutes les popups
+		if (controls_state.paused) {
+			ParametersPopup.show(was_paused);
+		} else MainUI.closeAllPopups();
 	}
 
 	static popMonsterRandomly() {
@@ -124,17 +112,25 @@ class MainController {
 		MainUI.addToGameWindow(monster);
 	}
 
-    static togglePause() { 
-		let controls_state = MainController.scope.controls;
-		let was_paused = controls_state.paused;  // --> permet de savoir s'il faut ou non désactiver la pause, au moment de fermer la fenêtre
-		controls_state.paused = !controls_state.paused;
-        
-		// Mise du jeu en pause par l'utilisateur => ouverture des préférences utilisateur, sinon => reprise du jeu demandée par utilisateur => fermer toutes les popups
-		if (controls_state.paused) {
-			ParametersPopup.show(was_paused);
-		} else MainUI.closeAllPopups();
-	}
+    static __startWave() {
+		MainUI.clearGameWindow();
 
+		let character = new MV_Character(MainController.viewport);
+		MainUI.addToGameWindow(character);
+
+		MainController.__scheduleLevelMonstersPop();
+    }
+
+	static __scheduleLevelMonstersPop() {
+		MainController.scope.game.wave_pop.timeouts = [];
+		
+		let timeout = TIMEOUTS.before_pop;
+		let mobsNumber = MainController.scope.game.wave_number * MOBS_PER_WAVE; 
+		for (let i=0; i<mobsNumber; i++) {
+			MainController.scope.game.wave_pop.timeouts.push(timeout);
+			timeout += MainController.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
+		}
+	}
 
 	/** Fonctions utilitaires */
 	static radomValueInRange(min_value, max_value) {
