@@ -37,7 +37,7 @@ class MV_GameInitializer {
 				downPressed: false,
 				rightPressed: false,
 				leftPressed: false,
-				paused: true,
+				paused: false,
 				firing_primary: false,
 				firing_secondary: false,
 				reloading: false
@@ -111,8 +111,8 @@ class MV_GameInitializer {
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
-			
 			controller.timer.gamepad_mapper = gamepad;
+			
 			let was_paused = controls.paused;
 			controls.paused = true;
 			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, ()=> { controls.paused = was_paused; });

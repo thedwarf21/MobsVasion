@@ -388,25 +388,25 @@ class GamepadJoystick {
  * @class      GamepadConfigUI
  */
 class GamepadConfigUI {
-	constructor(game_controls_mapper) {
+	constructor(game_controls_mapper, onPopupClose) {
 		this.controls_mapper = game_controls_mapper;
-		this.show();
+		this.show(onPopupClose);
 	}
 
-	show() {
+	show(onPopupClose) {
 		this.popup = new RS_Dialog("gamepad_config", "Configuration de la manette", [], [], [], false, 
 								  "tpl_gamepad_config.html", ()=> {
 			let container = this.popup.querySelector("#controls-gui-container");
 			for (let i=0; i<this.controls_mapper.controls.length; i++) {
 				container.appendChild(this.__getConfigInterfaceItem(i));
 			}
-			this.popup.querySelector("#btn_close").addEventListener("click", ()=> { this.closeModal() });
+			this.popup.querySelector("#btn_close").addEventListener("click", ()=> { this.closeModal(onPopupClose) });
 			document.body.appendChild(this.popup);
 		});
 	}
 
-	closeModal() {
-		this.popup.closeModal();
+	closeModal(onPopupClose) {
+		this.popup.closeModal(onPopupClose);
 	}
 
 	__getConfigInterfaceItem(control_index) {
