@@ -80,6 +80,15 @@ V   Tâche terminée
 *   Conditions de fin de vague
     V   Défaite (PV joueur <= 0)
     V   Victoire (Tous les monstres de la vague ont pop, et il n'y en a plus un seul en jeu)
+*   Feedback audiovisuel
+    V   Animation de pop pour les monstres
+    _   Munitions en rouge quand à 0
+    _   Effet visuel de santé faible (calque alpha rouge)
+    _   Son joué durant l'animation de pop d'un monstre
+    _   Son de déclic du percuteur frappant une chambre vide, lorsqu'un coup devrait partir mais que le chargeur est vide
+    _   Son avertissant du passage en-dessous du seuil de santé faible (en plus du visuel)
+    _   Son de tir
+    _   Son d'esquive
 *   Rapport de fin de vague
     _   Créer le template HTML et la feuille de style CSS de la popup
     _   Affichage des valeurs calculées
@@ -94,8 +103,7 @@ V   Tâche terminée
     _   Tactile
 *   UX
     _   Gérer les sauvegardes
-    _   Améliorer le rendu visuel (utiliser des images, des effets, etc.)
-    _   Ajouter l'audio
+    _   Ajouter la musique
 
 *   Fignolage
 

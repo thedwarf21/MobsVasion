@@ -43,6 +43,13 @@ const GAMEPAD_ACTION_CODES = {
 	reload: "REL"
 };
 
+const ANIMATIONS = {
+	monster_pop: {
+		css_class: "pop-animation",
+		duration: 1000
+	}
+};
+
 const AUDIO_PATH = "sounds/";
 const SHOP_MUSIC = "";
 const GAME_MUSIC = "";
@@ -108,8 +115,20 @@ class MainController {
 				break;
 		}
 
-		let monster = new MV_Monster(MainController.viewport, x_monster, y_monster);
-		MainUI.addToGameWindow(monster);
+		MainController.__performMonsterPop(x_monster, y_monster);
+	}
+
+	static __performMonsterPop(x_monster, y_monster) {
+		let animation = ANIMATIONS.monster_pop;
+		MainUI.addToGameWindow( 
+			new MV_AnimatedFrame(MainController.viewport, 
+				x_monster, y_monster, MONSTER_SIZE, MONSTER_SIZE, 
+				animation.css_class, animation.duration, ()=> {
+					let monster = new MV_Monster(MainController.viewport, x_monster, y_monster);
+					MainUI.addToGameWindow(monster);
+				}
+			) 
+		);
 	}
 
     static __startWave() {
