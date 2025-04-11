@@ -27,6 +27,9 @@ body {
 	font-size: 4.5vh;
 	z-index: 1;
 }
+.ammo-display #current.out {
+	color: rgb(255, 21, 21);
+}
 
 .bullets {
 	position: absolute;

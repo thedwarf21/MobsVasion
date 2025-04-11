@@ -14,10 +14,16 @@ class MainUI {
     }
 
     static __prepareAmmoAutoRefresh() {
+		let html_element = document.querySelector(".ammo-display #current");
         new RS_Binding({
 			object: MainController.scope.game,
-			property: "clip_ammo"
-		}).addBinding(document.querySelector(".ammo-display #current"), "innerHTML");
+			property: "clip_ammo",
+			callback: () => {
+				if (!MainController.scope.game.clip_ammo)
+					html_element.classList.add("out");
+				else html_element.classList.remove("out");
+			}
+		}).addBinding(html_element, "innerHTML");
 		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
     }
 
