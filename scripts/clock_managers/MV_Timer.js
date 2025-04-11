@@ -76,22 +76,33 @@ class MV_Timer {
 	}
 
 	__testCollides() {
-		let character = MainController.character;
 		let monsters = MainController.monsters;
-		let shots = MainController.shots;
 
 		for (let monster of monsters) {
-			if (monster.hitbox.checkCollide(character.hitbox)) {
-				MainController.scope.game.health_points--;
-				if (!MainController.scope.game.health_points)
-					console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré")
-			}
-			for (let shot of shots) {
-				if (monster.hitbox.checkCollide(shot.hitbox)) {
-					shot.remove();
-					monster.wound(1, MV_GameScope.monsterSlayed);
-				}					
-			}
+			this.__performMonsterAttacks(monster);
+			this.__performMonsterWounds(monster);
+		}
+	}
+
+	__performMonsterAttacks(monster) {
+		let character = MainController.character;
+
+		if (monster.hitbox.checkCollide(character.hitbox)) {
+			MainController.scope.game.health_points--;
+			MainUI.checkPanicMode();
+
+			if (!MainController.scope.game.health_points)
+				console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré")
+		}
+	}
+
+	__performMonsterWounds(monster) {
+		let shots = MainController.shots;
+		for (let shot of shots) {
+			if (monster.hitbox.checkCollide(shot.hitbox)) {
+				shot.remove();
+				monster.wound(1, MV_GameScope.monsterSlayed);
+			}					
 		}
 	}
 

@@ -6,6 +6,49 @@ class MainUI {
         MainUI.__prepareLevelAndXpAutoRefresh( MainUI.__createXpBar() );
 	}
 
+    static clearGameWindow() {
+        let character = MainController.character;
+		if (character)
+			character.remove();
+    }
+
+	static addToGameWindow(element) {
+		let game = document.getElementById("game-window");
+		game.appendChild(element);
+	}
+
+	static refreshAllHitboxesVisibility() {
+		for (let hitbox of MainController.hitboxes)
+			hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
+	}
+
+	static closeAllPopups() {
+		let gamepadControlsUI = MainController.scope.gamepadControlsUI;
+		
+		if (gamepadControlsUI)
+			gamepadControlsUI.closeModal();
+		
+		if (MainController.parameters_popup)
+			MainController.__closePopup(MainController.parameters_popup);
+
+		if (MainController.lobby_popup)
+			MainController.__closePopup(MainController.lobby_popup);
+	}
+
+	static checkPanicMode() {
+		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * CHARACTER_MAX_LIFE;
+		let panic_element = MainController.panicModeHtmlElement;
+		
+		if (!panic_element && MainController.scope.game.health_points <= panic_threshold) {
+			panic_element = document.createElement("DIV");
+			panic_element.classList.add("panic-mode");
+			document.body.prepend(panic_element);
+		}
+
+		if (panic_element && MainController.scope.game.health_points > panic_threshold)
+			panic_element.remove();
+	}
+
     static __prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
 			object: MainController.scope.game,
@@ -62,35 +105,6 @@ class MainUI {
 			}
 		});
     }
-
-    static clearGameWindow() {
-        let character = MainController.character;
-		if (character)
-			character.remove();
-    }
-
-	static addToGameWindow(element) {
-		let game = document.getElementById("game-window");
-		game.appendChild(element);
-	}
-
-	static refreshAllHitboxesVisibility() {
-		for (let hitbox of MainController.hitboxes)
-			hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
-	}
-
-	static closeAllPopups() {
-		let gamepadControlsUI = MainController.scope.gamepadControlsUI;
-		
-		if (gamepadControlsUI)
-			gamepadControlsUI.closeModal();
-		
-		if (MainController.parameters_popup)
-			MainController.__closePopup(MainController.parameters_popup);
-
-		if (MainController.lobby_popup)
-			MainController.__closePopup(MainController.lobby_popup);
-	}
 
 	static __closePopup(rs_dialog_instance) {
 		rs_dialog_instance.closeModal(()=> {

@@ -91,6 +91,21 @@ body {
 	z-index: 1;
 }
 
+.panic-mode {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(ellipse at center, transparent 65%, rgba(255, 0, 0, 0.5));
+
+	transition: all 0.15s linear;
+	animation: panic-mode 0.4s linear infinite;
+}
+@keyframes panic-mode {
+    0% { background: radial-gradient(ellipse at center, transparent 65%, rgba(255, 0, 0, 0.5)); }
+	25% { background: radial-gradient(ellipse at center, transparent 50%, rgba(255, 0, 0, 0.5)); }
+	50% { background: radial-gradient(ellipse at center, transparent 65%, rgba(255, 0, 0, 0.5)); }
+ }
+
 /** Popup configuration manette */
  .control-item-container {
     display: flex;

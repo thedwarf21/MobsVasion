@@ -50,6 +50,8 @@ const ANIMATIONS = {
 	}
 };
 
+const PANIC_MODE_THRESHOLD_RATIO = 0.2;
+
 const AUDIO_PATH = "sounds/";
 const SHOP_MUSIC = "";
 const GAME_MUSIC = "";
@@ -71,6 +73,7 @@ class MainController {
 
 	static get primaryReloadGauge() 	{ return document.querySelector(".gauge.primary-reload"); }
 	static get secondaryReloadGauge() 	{ return document.querySelector(".gauge.secondary-reload"); }
+	static get panicModeHtmlElement()	{ return document.querySelector(".panic-mode"); }
 
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
