@@ -25,5 +25,6 @@ class MV_GameScope {
 
     static waveDefeated() {
         console.info("J'y crois pas... t'as vraiment gagné ? :o");
+        MainUI.endOfWave();
     }
 }

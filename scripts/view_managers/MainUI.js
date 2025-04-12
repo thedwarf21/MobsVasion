@@ -11,8 +11,13 @@ class MainUI {
 		if (character)
 			character.remove();
 
-		for (let puddle of MainController.bloodPuddles)
-			puddle.remove();
+		let puddle_elements = MainController.bloodPuddles;
+		for (let i = puddle_elements.length; i>0; i--)
+			puddle_elements[i-1].remove();
+
+		let monstre_elements = MainController.monsters;
+		for (let i = monstre_elements.length; i>0; i--)
+			monstre_elements[i-1].remove();
 
 		let game = document.getElementById("game-window");
 		let soil_index = MainController.radomValueInRange(0, 2);
@@ -55,6 +60,16 @@ class MainUI {
 
 		if (panic_element && MainController.scope.game.health_points > panic_threshold)
 			panic_element.remove();
+	}
+
+	static endOfWave() {
+		MainController.startWave();
+		/*MainController.scope.controls.paused = true;
+		setTimeout(()=> {
+			MainController.startWave();
+			MainController.scope.controls.paused = false;
+		}, 5000);*/
+
 	}
 
     static __prepareWaveSwagAutoRefresh() {
@@ -110,6 +125,7 @@ class MainUI {
 			callback: () => { 
 				document.querySelector(".player-level").innerHTML = MainController.scope.game.player_level; 
 				xp_bar.assignValue(MainController.scope.game.current_level_xp);
+				xp_bar.setMaxValue(MV_GameScope.levelUpAt());
 			}
 		});
     }

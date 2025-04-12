@@ -91,8 +91,10 @@ class MV_Timer {
 			MainController.scope.game.health_points--;
 			MainUI.checkPanicMode();
 
-			if (!MainController.scope.game.health_points)
-				console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré")
+			if (!MainController.scope.game.health_points) {
+				console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré");
+				MainUI.endOfWave();
+			}
 		}
 	}
 

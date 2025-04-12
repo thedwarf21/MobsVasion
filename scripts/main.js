@@ -92,7 +92,7 @@ class MainController {
 		MV_GameInitializer.prepareGame(MainController);
 		MainUI.prepareUI();
 		MainController.timer.letsPlay();
-        MainController.__startWave();
+        MainController.startWave();
 	}
 
     static togglePause() { 
@@ -133,6 +133,17 @@ class MainController {
 		MainController.__performMonsterPop(x_monster, y_monster);
 	}
 
+    static startWave() {
+		MainController.scope.game.clip_ammo = CLIP_SIZE;
+		MainUI.clearGameWindow();
+		WaitingCounters.clear();
+
+		let character = new MV_Character(MainController.viewport);
+		MainUI.addToGameWindow(character);
+
+		MainController.__scheduleLevelMonstersPop();
+    }
+
 	static __performMonsterPop(x_monster, y_monster) {
 		let animation = ANIMATIONS.monster_pop;
 		MainUI.addToGameWindow( 
@@ -146,16 +157,8 @@ class MainController {
 		);
 	}
 
-    static __startWave() {
-		MainUI.clearGameWindow();
-
-		let character = new MV_Character(MainController.viewport);
-		MainUI.addToGameWindow(character);
-
-		MainController.__scheduleLevelMonstersPop();
-    }
-
 	static __scheduleLevelMonstersPop() {
+		MainController.scope.game.wave_pop.elapsed = 0;
 		MainController.scope.game.wave_pop.timeouts = [];
 		
 		let timeout = TIMEOUTS.before_pop;

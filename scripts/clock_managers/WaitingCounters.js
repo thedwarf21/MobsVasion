@@ -26,6 +26,13 @@ class WaitingCounters {
 		}
 	}
 
+	static clear() {
+		let counters_object = MainController.scope.game.waiting_counter;
+		let counters_names_list = Object.keys(counters_object);
+		for (let counter_key of counters_names_list)
+			counters_object[counter_key] = 0;
+	}
+
 	static __performValueChangeAction(counter_key, counter_value) {
 		switch(counter_key) {
 			case "clip":
