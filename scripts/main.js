@@ -30,6 +30,7 @@ const LEVEL_UP_XP_COEF = 2;
 const KP_PER_LEVEL = 1;
 
 const BLOOD_SPLASH_LENGTH = 60;
+const FIRE_SIZE = 30;
 
 const TIMEOUTS = {
 	dash_interval: 75,

@@ -12,8 +12,11 @@ class MV_Character extends MobileGameElement {
         let self_center_y = this.y + CHARACTER_SIZE/2;
         let cos_angle = Math.cos(direction_angle);
         let sin_angle = Math.sin(direction_angle);
-        let shot_start_x = self_center_x + CHARACTER_SIZE * cos_angle;
-        let shot_start_y = self_center_y + CHARACTER_SIZE * sin_angle;
+        let shot_start_x = self_center_x + CHARACTER_SIZE/2 * cos_angle;
+        let shot_start_y = self_center_y + CHARACTER_SIZE/2 * sin_angle;
+    //TODO    RESOUDRE CE PUTAIN DE BUG DE POSITIONNEMENT DE MERDE !!!!    
+        this.__showFire(shot_start_x, shot_start_y);
+        
         let deltaX = velocity * cos_angle;
         let deltaY = velocity * sin_angle;
         return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
@@ -41,6 +44,20 @@ class MV_Character extends MobileGameElement {
         this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
         this.style.top = this.viewport.getCssValue(this.y);
         this.style.left = this.viewport.getCssValue(this.x);
+    }
+
+    __showFire(x, y) {
+        let weapon_flame = document.createElement("DIV");
+        weapon_flame.classList.add("fire");
+
+        weapon_flame.style.left = this.viewport.getCssValue(x);
+        weapon_flame.style.top = this.viewport.getCssValue(y - FIRE_SIZE/2);
+        weapon_flame.style.transform = `rotate(${this.angle}deg)`;
+        MainUI.addToGameWindow(weapon_flame);
+
+        setTimeout(()=> {
+            weapon_flame.remove();
+        }, 50);
     }
   }
   customElements.define('mv-js-character', MV_Character, { extends: 'div' });

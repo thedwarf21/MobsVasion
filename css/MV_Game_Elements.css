@@ -51,6 +51,16 @@
 	z-index: 0;
 }
 
+.fire {
+	position: absolute;
+	width: 5vh;
+	height: 5vh;
+	background: url("../images/fire.png");
+    background-size: contain;
+  	background-repeat: no-repeat;
+	transform-origin: 0 50%;
+}
+
 
 /** Animations */
 .animation-container { position: absolute; }
