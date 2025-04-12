@@ -22,7 +22,7 @@ body {
 
 .ath-background {
 	position: absolute;
-	z-index: 1;
+	z-index: 9;
 	width: 100%;
 	height: 100%;
 	background: linear-gradient(to bottom, rgba(0,0,0,.4) 6%, transparent 8%, transparent 92%, rgba(0,0,0,.4) 94%);
@@ -34,7 +34,7 @@ body {
 	right: 2vh;
 	color: white;
 	font-size: 4.5vh;
-	z-index: 1;
+	z-index: 9;
 }
 .ammo-display #current.out {
 	color: rgb(255, 21, 21);
@@ -60,7 +60,7 @@ body {
 	background: url('../images/coeur.png');
 	background-size: contain;
 	background-repeat: no-repeat;
-	z-index: 1;
+	z-index: 9;
 }
 
 .wave-swag-container {
@@ -69,7 +69,7 @@ body {
 	right: 2vh;
 	display: flex;
 	flex-direction: row;
-	z-index: 1;
+	z-index: 9;
 }
 .money-bag {
 	position: relative;
@@ -97,7 +97,7 @@ body {
 	color: #1ca200;
 	font-size: 3.05vh;
 	background: radial-gradient(circle at center, transparent 0%, green);
-	z-index: 1;
+	z-index: 9;
 }
 
 .panic-mode {

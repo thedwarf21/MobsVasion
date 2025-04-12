@@ -2,6 +2,7 @@
 	position: absolute;
 	height: 8.3vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_vaisseau_px)  */
 	width: 8.3vh;
+	z-index: 1;
 }
 .character .spinning-image {
     width: 100%;
@@ -24,6 +25,7 @@
 	position: absolute;
 	height: 10vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_vaisseau_px)  */
 	width: 10vh;
+	z-index: 1
 }
 .monster .spinning-image {
 	width: 100%;
@@ -46,6 +48,7 @@
 	height: 4vh;
 	background-size: contain;
   	background-repeat: no-repeat;
+	z-index: 0;
 }
 
 
@@ -73,20 +76,26 @@
 	position: absolute;
 	width: 0vh;
 	height: 0vh;
-	transform-origin: center;
+	transform-origin: 0 50%;
 
-	/******* à virer après ********/
-	top: 15vh;
-	left: 15vh;
-	transform: rotate(45deg);
 	clip-path: polygon(0% 50%, 100% 100%, 100% 0%);
-	
-	background: radial-gradient(ellipse at left, rgba(255,0,0,1),transparent 80%);
+	background: radial-gradient(ellipse at left, rgba(255,0,0,0.8),transparent 80%);
 
-	transition: all 0.5s linear;
+	transition: width 0.5s linear;
 	animation: blood-splash 0.5s cubic-bezier(.11,1.05,.63,.98);
 }
 @keyframes blood-splash {
-	0% { width: 0; height: 0; }
+	0% { width: 0; height: 4vh; }
 	100% { width: 10vh; height: 4vh; }
+}
+
+.shocked {
+	transition: transform 0.5s linear;
+	animation: shake 0.5s cubic-bezier(.11,1.05,.63,.98) infinite;
+}
+@keyframes shake {
+	0% { transform: translateX(-0.1vh) rotate(29deg); }
+	25% { transform: translateX(0.1vh) rotate(-139deg); }
+	50% { transform: translateY(-0.1vh) rotate(173deg); }
+	100% { transform: translateY(0.1vh) rotate(-52deg); }
 }

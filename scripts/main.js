@@ -12,6 +12,7 @@ const CHARACTER_MAX_LIFE = 50;
 const SHOT_VELOCITY = 30;
 const SHOT_SIZE = 5;
 const CLIP_SIZE = 9;
+const WOUND_SHOCK_TIME = 500;
 
 const DASH_LENGTH = 125;
 
@@ -27,6 +28,8 @@ const XP_PER_MONSTER = 1;
 const BASE_LEVEL_UP_XP = 3;
 const LEVEL_UP_XP_COEF = 2;
 const KP_PER_LEVEL = 1;
+
+const BLOOD_SPLASH_LENGTH = 60;
 
 const TIMEOUTS = {
 	dash_interval: 75,

@@ -29,10 +29,10 @@ class MainUI {
 			gamepadControlsUI.closeModal();
 		
 		if (MainController.parameters_popup)
-			MainController.__closePopup(MainController.parameters_popup);
+			MainUI.__closePopup(MainController.parameters_popup);
 
 		if (MainController.lobby_popup)
-			MainController.__closePopup(MainController.lobby_popup);
+			MainUI.__closePopup(MainController.lobby_popup);
 	}
 
 	static checkPanicMode() {

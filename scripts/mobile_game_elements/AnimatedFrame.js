@@ -1,10 +1,10 @@
 class MV_AnimatedFrame extends MobileGameElement {
-    constructor(viewport, x, y, virtualWidth, virtualHeight, animationCssClass, animationDuration, onAnimationEnd) {
+    constructor(viewport, x, y, width, height, animationCssClass, animationDuration, onAnimationEnd) {
         super(viewport, x ,y);
         this.classList.add("animation-container");
 
-        this.style.width = this.viewport.getCssValue(virtualWidth);
-        this.style.height = this.viewport.getCssValue(virtualHeight);
+        this.style.width = this.viewport.getCssValue(width);
+        this.style.height = this.viewport.getCssValue(height);
 
         this.__addAnimationElement(animationCssClass);
         setTimeout(() => { this.__animationEnded(onAnimationEnd) }, animationDuration);
