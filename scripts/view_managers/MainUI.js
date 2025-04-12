@@ -10,6 +10,14 @@ class MainUI {
         let character = MainController.character;
 		if (character)
 			character.remove();
+
+		for (let puddle of MainController.bloodPuddles)
+			puddle.remove();
+
+		let game = document.getElementById("game-window");
+		let soil_index = MainController.radomValueInRange(0, 2);
+		game.style.background = `url("../images/soil_${SOILS[ soil_index ]}.png")`;
+		game.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
     }
 
 	static addToGameWindow(element) {

@@ -78,12 +78,14 @@ class MV_Monster extends MobileGameElement {
         let x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(rad_angle) );
         let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(rad_angle) );
     
-        let blood_splash = new MV_AnimatedFrame( this.viewport, x_splash, y_splash, 0, 0, "blood-splash", 500, ()=> {
-            blood_splash.remove();
-            let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);
-            let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(rad_angle);
-            this.__createBloodPuddle(x_puddle, y_puddle);
-        });
+        let blood_splash = new MV_AnimatedFrame( this.viewport, x_splash, y_splash, 0, 0, 
+            ANIMATIONS.blood_splash.css_class, ANIMATIONS.blood_splash.duration, ()=> {
+                blood_splash.remove();
+                let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);
+                let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(rad_angle);
+                this.__createBloodPuddle(x_puddle, y_puddle);
+            }
+        );
         blood_splash.style.transform = `rotate(${this.angle}deg)`;
         MainUI.addToGameWindow(blood_splash);
     }

@@ -51,8 +51,15 @@ const ANIMATIONS = {
 	monster_pop: {
 		css_class: "pop-animation",
 		duration: 1000
+	},
+	blood_splash: {
+		css_class: "blood-splash",
+		duration: 500
 	}
 };
+
+const SOILS = ["desert", "ice", "marble"];
+const SOIL_BG_SIZE = ["15vh", "100vh", "30vh"];
 
 const PANIC_MODE_THRESHOLD_RATIO = 0.2;
 
@@ -70,10 +77,11 @@ var debug = false;
 // => pas d'instanciation de cette classe
 class MainController {
 
-    static get character() 	{ return document.querySelector(".character"); }
-	static get shots()		{ return document.getElementsByClassName("shot"); }
-	static get monsters() 	{ return document.getElementsByClassName("monster"); }
-	static get hitboxes()	{ return document.getElementsByClassName("hitbox"); }
+    static get character() 		{ return document.querySelector(".character"); }
+	static get shots()			{ return document.getElementsByClassName("shot"); }
+	static get monsters() 		{ return document.getElementsByClassName("monster"); }
+	static get hitboxes()		{ return document.getElementsByClassName("hitbox"); }
+	static get bloodPuddles()	{ return document.getElementsByClassName("blood-puddle"); }
 
 	static get primaryReloadGauge() 	{ return document.querySelector(".gauge.primary-reload"); }
 	static get secondaryReloadGauge() 	{ return document.querySelector(".gauge.secondary-reload"); }
