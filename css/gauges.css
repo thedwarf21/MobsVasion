@@ -43,7 +43,7 @@
 	box-sizing: border-box;
 	width: 100%;
 	height: 1.2vh;
-	border: 0.3vh ridge #c1a6a6;
+	border: 0.3vh ridge black;
 	padding: 0;
 }
 .gauge.monster-health-bar .progress { background: rgb(255, 50, 50); }
