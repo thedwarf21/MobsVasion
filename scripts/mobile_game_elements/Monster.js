@@ -39,7 +39,7 @@ class MV_Monster extends MobileGameElement {
         this.__setRadomSpeed(MIN_MONSTER_SPEED, MAX_MONSTER_SPEED);
         this.__addLifeBar();
         this.addImageElt("spinning-image");
-        this.addVisualHitBox();
+        this.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
   
     __setRadomSpeed(min_value, max_value) {

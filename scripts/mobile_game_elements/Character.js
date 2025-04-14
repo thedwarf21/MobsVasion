@@ -36,7 +36,7 @@ class MV_Character extends MobileGameElement {
     
         this.__centerPosition();
         this.addImageElt("spinning-image");
-        this.addVisualHitBox();
+        this.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
   
     __centerPosition() {

@@ -211,7 +211,7 @@ class MobileGameElement extends HTMLDivElement {
 	/**
 	 * Ajoute un élément permettant de visualiser la hitbox de l'élément
 	 */
-	addVisualHitBox() {
+	addVisualHitBox(isVisible) {
 		let div = document.createElement("DIV");
 		div.classList.add("hitbox");
 	
@@ -228,7 +228,7 @@ class MobileGameElement extends HTMLDivElement {
 		div.style.margin = this.viewport.getCssValue(margin);
 		div.style.height = cssSize;
 		div.style.width = cssSize;
-		div.style.opacity = "0"; // Afficher/cacher selon paramétrage utilisateur
+		div.style.opacity = isVisible ? "1" : "0"; // Afficher/cacher selon paramétrage utilisateur
 		this.appendChild(div);
 	}
 
