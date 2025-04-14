@@ -1,0 +1,23 @@
+.control-item-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 2vh;
+    margin-left: 5vh;
+    margin-right: 5vh;
+}
+
+.control-name {
+    font-size: 2.4vh;
+    font-family: sans-serif;
+    font-weight: bold;
+    max-width: 35vh;
+}
+
+.button-mapped {
+    font-size: 2.1vh;
+    font-family: monospace;
+    width: 28vh;
+}
+
+.pref-title { width: 20%; }
+.pref-value { width: 50%; }
