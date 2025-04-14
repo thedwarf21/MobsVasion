@@ -20,12 +20,7 @@ class MV_GameScope {
 		MainController.scope.game.wave_swag += monster_swag;
 		MV_GameScope.addXp(XP_PER_MONSTER);
 		if (!MainController.scope.game.wave_pop.timeouts && MainController.monsters.length === 0)
-			MV_GameScope.waveDefeated();
-    }
-
-    static waveDefeated() {
-        console.info("J'y crois pas... t'as vraiment gagné ? :o");
-        MainUI.endOfWave();
+			MV_GameScope.__waveDefeated();
     }
 
     static characterHit(damage) {
@@ -39,8 +34,21 @@ class MV_GameScope {
 		MainUI.checkPanicMode();
 
         if (!MainController.scope.game.health_points) {
-            console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré");
-            MainUI.endOfWave();
+            MV_GameScope.__waveLost();
         }
+    }
+
+    static __waveDefeated() {
+        console.info("J'y crois pas... t'as vraiment gagné ? :o");
+        MainController.scope.game.wave_number++;
+        MainUI.endOfWave();
+    }
+
+    static __waveLost() {
+        console.info("On dirait bien que tu es mort...");
+        MainController.scope.game.health_points = CHARACTER_MAX_LIFE;
+        MainController.scope.game.wave_number = 1;
+        MainUI.checkPanicMode();
+        MainUI.endOfWave();
     }
 }

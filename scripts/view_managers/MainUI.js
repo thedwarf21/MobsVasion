@@ -62,7 +62,7 @@ class MainUI {
 			panic_element.remove();
 	}
 
-	static endOfWave() {
+	static endOfWave(isVictory) {
 		MainController.startWave();
 	}
 
