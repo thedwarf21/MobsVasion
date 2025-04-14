@@ -1,3 +1,21 @@
+/** Commun (surcharges et enrichissements du style de rs_dialog.css) */
+.modal-button {
+    width: 20vh;
+    height: 5vh;
+    margin-bottom: 1vh;
+    
+    border: none;
+    border-radius: 1vh;
+    background: linear-gradient(to bottom, #1c93ae, #042831);
+    box-shadow: 0 0 .5vh rgba(0 0 0 / 1);
+    
+    font-size: 2.5vh;
+    color: white;
+}
+.modal-button:active { box-shadow: inset 0 0 0.5vh rgb(0, 0, 0); }
+.modal-button:hover { text-shadow: 0 0 0.5vh rgb(255, 255, 255); }
+
+/** UI configuration manette */
 .control-item-container {
     display: flex;
     justify-content: space-between;
@@ -19,5 +37,11 @@
     width: 28vh;
 }
 
+/** UI parmètres */
 .pref-title { width: 20%; }
 .pref-value { width: 50%; }
+
+#btn_gamepad_controls {
+    width: 35vh;
+    margin-left: 20vh;
+}
