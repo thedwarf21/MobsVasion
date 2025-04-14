@@ -54,7 +54,7 @@ const ANIMATIONS = {
 	},
 	blood_splash: {
 		css_class: "blood-splash",
-		duration: 500
+		duration: 250
 	}
 };
 
