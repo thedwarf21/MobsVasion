@@ -79,8 +79,10 @@
 
 /*** Contenu de la boîte de dialogue ***/
 .rs-modal-content {
-  background-color: white;
-  color: black;
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(0.5vh);
+  color: white;
+  text-shadow: 0.1vh 0.1vh black;
   font-size: 2vh;
   border-radius: 0 0 5px 5px;
   

@@ -111,7 +111,7 @@ V   Tâche terminée
     _   Tactile
 *   UX
     X   Viseuls du jeu
-    _   Style général des popup (boutons, mise en page commune => RS_Dialog)
+    V   Style général des popup (boutons, mise en page commune)
     _   Gérer les sauvegardes
     _   Ajouter la musique
 
