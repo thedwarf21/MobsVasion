@@ -64,12 +64,6 @@ class MainUI {
 
 	static endOfWave() {
 		MainController.startWave();
-		/*MainController.scope.controls.paused = true;
-		setTimeout(()=> {
-			MainController.startWave();
-			MainController.scope.controls.paused = false;
-		}, 5000);*/
-
 	}
 
     static __prepareWaveSwagAutoRefresh() {

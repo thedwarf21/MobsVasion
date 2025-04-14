@@ -27,4 +27,20 @@ class MV_GameScope {
         console.info("J'y crois pas... t'as vraiment gagné ? :o");
         MainUI.endOfWave();
     }
+
+    static characterHit(damage) {
+        let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
+            ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
+            ()=> { flash_effect.remove(); }
+        );
+        MainUI.addToGameWindow(flash_effect);
+
+        MainController.scope.game.health_points -= damage;
+		MainUI.checkPanicMode();
+
+        if (!MainController.scope.game.health_points) {
+            console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré");
+            MainUI.endOfWave();
+        }
+    }
 }

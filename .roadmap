@@ -84,7 +84,7 @@ V   Tâche terminée
     V   Animation de pop pour les monstres
     V   Munitions en rouge quand à 0
     V   Effet visuel de santé faible (calque alpha rouge)
-    _   Effet visuel quand un monstre est "au contact" du joueur, lui occasionnant des dégats.
+    V   Effet visuel quand un monstre est "au contact" du joueur, lui occasionnant des dégats.
     _   Son joué durant l'animation de pop d'un monstre
     _   Son de déclic du percuteur frappant une chambre vide, lorsqu'un coup devrait partir mais que le chargeur est vide
     _   Son avertissant du passage en-dessous du seuil de santé faible (en plus du visuel)

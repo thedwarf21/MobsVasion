@@ -23,6 +23,7 @@ const MONSTER_MAX_HEALTH = 5;
 const MIN_MONSTER_SWAG = 1;
 const MAX_MONSTER_SWAG = 3;
 const MOBS_PER_WAVE = 3;
+const MONSTER_STRENGTH = 1;
 
 const XP_PER_MONSTER = 1;
 const BASE_LEVEL_UP_XP = 3;
@@ -55,6 +56,10 @@ const ANIMATIONS = {
 	blood_splash: {
 		css_class: "blood-splash",
 		duration: 250
+	},
+	hit_effect: {
+		css_class: "flash",
+		duration: 250,
 	}
 };
 

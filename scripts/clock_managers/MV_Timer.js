@@ -88,13 +88,7 @@ class MV_Timer {
 		let character = MainController.character;
 
 		if (monster.hitbox.checkCollide(character.hitbox)) {
-			MainController.scope.game.health_points--;
-			MainUI.checkPanicMode();
-
-			if (!MainController.scope.game.health_points) {
-				console.info("On dirait bien que tu es mort... mais pour l'instant, c'est pas géré");
-				MainUI.endOfWave();
-			}
+			MV_GameScope.characterHit(MONSTER_STRENGTH);
 		}
 	}
 

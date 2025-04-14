@@ -88,7 +88,7 @@
 	height: 4vh;
 	transform-origin: 0 50%;
 	clip-path: polygon(0% 50%, 100% 100%, 100% 0%);
-	animation: blood-splash 0.25s cubic-bezier(0.09, 0.36, 0.25, 1) infinite;
+	animation: blood-splash 0.25s cubic-bezier(0.09, 0.36, 0.25, 1);
 }
 @keyframes blood-splash {
 	0% {  background-image: radial-gradient(circle at left, rgba(255,0,0,0.8) 10%, transparent 20%); }
@@ -105,12 +105,25 @@
 }
 
 .shocked {
-	transition: transform 0.5s linear;
-	animation: shake 0.5s cubic-bezier(.11,1.05,.63,.98) infinite;
+	transition: transform 0.125s linear;
+	animation: shake 0.5s linear;
 }
 @keyframes shake {
 	0% { transform: translateX(-0.1vh) rotate(29deg); }
 	25% { transform: translateX(0.1vh) rotate(-139deg); }
 	50% { transform: translateY(-0.1vh) rotate(173deg); }
 	100% { transform: translateY(0.1vh) rotate(-52deg); }
+}
+
+.flash {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	background-color: red;
+	transition: opacity 0.25s linear;
+	animation: flash 0.25s linear;
+	z-index: 2;
+}@keyframes flash {
+	0% { opacity: 0.1; }
+	100% { opacity: 0; }
 }
