@@ -21,7 +21,7 @@ class MainUI {
 
 		let game = document.getElementById("game-window");
 		let soil_index = MainController.radomValueInRange(0, 2);
-		game.style.background = `url("../images/soil_${SOILS[ soil_index ]}.png")`;
+		game.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
 		game.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
     }
 
