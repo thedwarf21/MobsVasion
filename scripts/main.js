@@ -140,11 +140,22 @@ class MainController {
 
     static startWave() {
 		MainController.scope.game.clip_ammo = CLIP_SIZE;
+		MainController.scope.controls.paused = true; //TODO à retirer quand la popup de rapport de fin de vague sera en place 
 		MainUI.clearGameWindow();
 		WaitingCounters.clear();
+		MainController.scope.controls.paused = false; //TODO à retirer quand la popup de rapport de fin de vague sera en place
 
-		let character = new MV_Character(MainController.viewport);
-		MainUI.addToGameWindow(character);
+		let pop_animation = new MV_AnimatedFrame(
+			MainController.viewport, 
+			( MainController.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE ) / 2, 
+			( MainController.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE ) / 2, 
+			CHARACTER_SIZE, CHARACTER_SIZE, ANIMATIONS.monster_pop.css_class, ANIMATIONS.monster_pop.duration, 
+			()=> {
+				let character = new MV_Character(MainController.viewport);
+				MainUI.addToGameWindow(character);
+			}
+		);
+		MainUI.addToGameWindow(pop_animation);
 
 		MainController.__scheduleLevelMonstersPop();
     }

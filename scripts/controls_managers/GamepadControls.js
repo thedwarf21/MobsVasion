@@ -8,10 +8,12 @@ class GamepadControls {
 		}
 	}
 	static updateControlsObject() {
-		MainController.timer.gamepad_mapper.updateJoysticksStates();
-		MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire);
-		MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.reload);
-		GamepadControls.__applyJoysticksControls();
+		if ( MainController.character ) {
+			MainController.timer.gamepad_mapper.updateJoysticksStates();
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire);
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.reload);
+			GamepadControls.__applyJoysticksControls();
+		}
 	}
 
 	static __applyJoysticksControls() {

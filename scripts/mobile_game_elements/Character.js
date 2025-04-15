@@ -14,7 +14,7 @@ class MV_Character extends MobileGameElement {
         let sin_angle = Math.sin(direction_angle);
         let shot_start_x = self_center_x + CHARACTER_SIZE/2 * cos_angle;
         let shot_start_y = self_center_y + CHARACTER_SIZE/2 * sin_angle;
-    //TODO    RESOUDRE CE PUTAIN DE BUG DE POSITIONNEMENT DE MERDE !!!!    
+ 
         this.__showFire(shot_start_x, shot_start_y);
         
         let deltaX = velocity * cos_angle;
