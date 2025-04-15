@@ -66,9 +66,9 @@ class MV_Monster extends MobileGameElement {
 
     __shock(WOUND_SHOCK_TIME) {
         this.__shocked = true;
-        this.rotate_element.classList.add("shocked");
+        this.classList.add("shocked");
         setTimeout(()=> {
-            this.rotate_element.classList.remove("shocked");
+            this.classList.remove("shocked");
             this.__shocked = false;
         }, WOUND_SHOCK_TIME);
     }

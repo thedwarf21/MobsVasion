@@ -62,10 +62,17 @@
 	animation: shake 0.5s linear;
 }
 @keyframes shake {
-	0% { transform: translateX(-0.1vh) rotate(29deg); }
-	25% { transform: translateX(0.1vh) rotate(-139deg); }
-	50% { transform: translateY(-0.1vh) rotate(173deg); }
-	100% { transform: translateY(0.1vh) rotate(-52deg); }
+	0% { transform: translateX(0.4vh); }
+	10% { transform: translateY(-0.5vh); }
+	20% { transform: translateX(-0.6vh); }
+	30% { transform: translateX(0.8vh); }
+	40% { transform: translateY(-0.7vh); }
+	50% { transform: translateX(0.5vh); }
+	60% { transform: translateY(0.5vh); }
+	70% { transform: translateY(-0.6vh); }
+	80% { transform: translateX(0.4vh); }
+	90% { transform: translateY(0.7vh); }
+	100% { transform: translateX(-0.8vh); }
 }
 
 .flash {
