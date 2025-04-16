@@ -68,7 +68,7 @@ class MainUI {
     static __prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
 			object: MainController.scope.game,
-			property: "wave_swag"
+			property: "money"
 		}).addBinding(document.getElementById("wave-swag"), "innerHTML");
     }
 

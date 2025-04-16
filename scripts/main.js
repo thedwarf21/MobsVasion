@@ -63,6 +63,8 @@ const ANIMATIONS = {
 	}
 };
 
+const HP_PRICE = 5;
+
 const SOILS = ["desert", "ice", "marble"];
 const SOIL_BG_SIZE = ["15vh", "100vh", "30vh"];
 

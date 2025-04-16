@@ -17,7 +17,7 @@ class MV_GameScope {
 
     static monsterSlayed() {
         let monster_swag = MainController.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
-		MainController.scope.game.wave_swag += monster_swag;
+		MainController.scope.game.money += monster_swag;
 		MV_GameScope.addXp(XP_PER_MONSTER);
 		if (!MainController.scope.game.wave_pop.timeouts && MainController.monsters.length === 0)
 			MV_GameScope.__waveDefeated();
@@ -46,9 +46,21 @@ class MV_GameScope {
 
     static __waveLost() {
         console.info("On dirait bien que tu es mort...");
-        MainController.scope.game.health_points = CHARACTER_MAX_LIFE;
+        
+        MV_GameScope.__characterRescueFees();
         MainController.scope.game.wave_number = 1;
         MainUI.checkPanicMode();
         MainUI.endOfWave();
+    }
+
+    static __characterRescueFees() {
+        let scope = MainController.scope.game;
+        if (CHARACTER_MAX_LIFE > scope.money * HP_PRICE) {
+            scope.health_points = scope.money * HP_PRICE;
+            scope.money = 0;
+        } else {
+            scope.health_points = CHARACTER_MAX_LIFE;
+            scope.money -= CHARACTER_MAX_LIFE / HP_PRICE;
+        }
     }
 }
