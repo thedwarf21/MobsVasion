@@ -11,8 +11,11 @@
     font-size: 2.5vh;
     color: white;
 }
-.modal-button:active { box-shadow: inset 0 0 0.5vh rgb(0, 0, 0); }
-.modal-button:hover { text-shadow: 0 0 0.5vh rgb(255, 255, 255); }
+.modal-button:active { box-shadow: inset 0 0 0.5vh 0.1vh rgb(0, 0, 0); }
+.modal-button:hover { 
+    text-shadow: 0 0 0.7vh rgb(255, 255, 255);
+    background: linear-gradient(to bottom, #2e98b0, #0c2d35); 
+}
 
 .modal-line {
     margin: 2vh;
