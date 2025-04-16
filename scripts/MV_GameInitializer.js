@@ -64,13 +64,14 @@ class MV_GameInitializer {
 	static __addKeyListeners(controller) {
 		let controls = controller.scope.controls;
 		window.addEventListener('keydown', function(e) {
-			if (e.key == "s")
+			let key = e.key.toLowerCase();
+			if (key == "s")
 				controls.downPressed = true;
-			else if (e.key == "z")
+			else if (key == "z")
 				controls.upPressed = true;
-			else if (e.key == "q")
+			else if (key == "q")
 				controls.leftPressed = true;
-			else if (e.key == "d")
+			else if (key == "d")
 				controls.rightPressed = true;
 			else if (e.code == "Space")
 				controls.firing_secondary = true;
@@ -78,13 +79,14 @@ class MV_GameInitializer {
 				controller.togglePause();
 		});
 		window.addEventListener('keyup', function(e) {
-			if (e.key == "s")
+			let key = e.key.toLowerCase();
+			if (key == "s")
 				controls.downPressed = false;
-			if (e.key == "z")
+			if (key == "z")
 				controls.upPressed = false;
-			if (e.key == "q")
+			if (key == "q")
 				controls.leftPressed = false;
-			if (e.key == "d")
+			if (key == "d")
 				controls.rightPressed = false;
 			if (e.code == "Space")
 				controls.firing_secondary = false;
