@@ -48,7 +48,7 @@
 /*** Titre de la fenêtre ***/
 .rs-modal-title {
   font-size: 2.5vh;
-  background-color: #002e39;
+  background: linear-gradient(to bottom, #005468, #002e39);
   color: white;
   border-radius: 5px 5px 0 0;
 
