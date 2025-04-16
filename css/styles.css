@@ -18,6 +18,7 @@ body {
 	overflow: hidden;
 	background: url('../images/soil_desert.png');
 	background-size: 15vh;
+	cursor: crosshair;
 }
 
 .ath-background {
