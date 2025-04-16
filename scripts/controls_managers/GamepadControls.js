@@ -32,7 +32,7 @@ class GamepadControls {
 	}
 
 	static __applyMoveJoystick(joystick, character) {
-		if (!KeyboardAndMouseControls.hasMoveControls()) {
+		if (joystick.intensity !== 0) {
 			character.angle = joystick.angle * 180 / Math.PI;
 			character.deltaX = joystick.intensity * CHARACTER_SPEED * Math.cos(joystick.angle);
 			character.deltaY = joystick.intensity * CHARACTER_SPEED * Math.sin(joystick.angle);
