@@ -1,5 +1,6 @@
 class MV_Character extends MobileGameElement {
     __image_elt;
+    aiming_angle;
   
     constructor(viewport) {
         super(viewport);
@@ -7,19 +8,38 @@ class MV_Character extends MobileGameElement {
         this.__init();
     }
   
-    shoot(velocity, direction_angle) {
-        let self_center_x = this.x + CHARACTER_SIZE/2;
-        let self_center_y = this.y + CHARACTER_SIZE/2;
-        let cos_angle = Math.cos(direction_angle);
-        let sin_angle = Math.sin(direction_angle);
-        let shot_start_x = self_center_x + CHARACTER_SIZE/2 * cos_angle;
-        let shot_start_y = self_center_y + CHARACTER_SIZE/2 * sin_angle;
+    shoot() {
+        if (!MainController.scope.game.waiting_counter.shot) {
+			if (MainController.scope.game.clip_ammo) {
+				let shot = this.__createShot();
+				MainUI.addToGameWindow(shot);
+				MainController.scope.game.waiting_counter.shot = TIMEOUTS.shot_interval;
+				MainController.scope.game.clip_ammo--;
+			}  // En isolant ce if, il suffira d'écrire un else pour jouer un son (CLIC !) avertissant l'utilisateur que son chargeur est vide, d'où l'imbrication
+		}
+    }
+
+    __createShot() {
+        let aiming_rad_angle = this.aiming_angle * Math.PI / 180;
+        let center_spot = this.centralSpotPosition();
+        let cos_angle = Math.cos(aiming_rad_angle);
+        let sin_angle = Math.sin(aiming_rad_angle);
+
+        let shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
+        let shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;
  
         this.__showFire(shot_start_x, shot_start_y);
         
-        let deltaX = velocity * cos_angle;
-        let deltaY = velocity * sin_angle;
+        let deltaX = SHOT_VELOCITY * cos_angle;
+        let deltaY = SHOT_VELOCITY * sin_angle;
         return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
+    }
+
+    centralSpotPosition() {
+        return {
+            x: this.x + CHARACTER_SIZE/2,
+            y: this.y + CHARACTER_SIZE/2
+        };
     }
   
     dash() {
@@ -27,19 +47,26 @@ class MV_Character extends MobileGameElement {
         this.deltaY = DASH_LENGTH * Math.sin(this.angle * Math.PI / 180);
         this.move();
     }
+
+    applyAngles() {
+        if (MainController.scope.controls.firing_primary) {
+            this.__rotate(this.aiming_angle);
+        }
+    }
   
     __init() {
         this.angle = 0;
         this.deltaX = 0;
         this.deltaY = 0;
         this.pixel_size = CHARACTER_SIZE;
+        this.aiming_angle = 0;
     
-        this.__centerPosition();
+        this.__moveCenter();
         this.addImageElt("spinning-image");
         this.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
   
-    __centerPosition() {
+    __moveCenter() {
         this.x = (this.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE) / 2;
         this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
         this.style.top = this.viewport.getCssValue(this.y);
@@ -52,7 +79,7 @@ class MV_Character extends MobileGameElement {
 
         weapon_flame.style.left = this.viewport.getCssValue(x);
         weapon_flame.style.top = this.viewport.getCssValue(y - FIRE_SIZE/2);
-        weapon_flame.style.transform = `rotate(${this.angle}deg)`;
+        weapon_flame.style.transform = `rotate(${this.aiming_angle}deg)`;
         MainUI.addToGameWindow(weapon_flame);
 
         setTimeout(()=> {

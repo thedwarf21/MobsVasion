@@ -31,7 +31,7 @@ class MV_Timer {
 	}
 
 	__updateControlsObject() {
-		this.__applyKeyboardControls();
+		KeyboardAndMouseControls.applyControlsObject();
 		this.__applyTouchScreenControls();
 
 		if (this.gamepad_mapper)
@@ -40,9 +40,22 @@ class MV_Timer {
 
 	__performControlsObjectChanges() {
 		let character = MainController.character;
+		if (character)
+			this.__characterActions(character);
 
+		for (let shot of MainController.shots)
+			shot.move(true);
+
+		for (let monster of MainController.monsters)
+			monster.follow(character);
+	}
+
+	__characterActions(character) {
 		if (this.__mustReload())
 			this.launchReloadingAction();
+
+		if (this.controls_state.firing_primary && !MainController.primaryReloadGauge)
+			character.shoot();
 
 		if (this.controls_state.firing_secondary && !MainController.secondaryReloadGauge) {
 			character.dash();
@@ -50,12 +63,6 @@ class MV_Timer {
 			MainController.scope.game.waiting_counter.dash = TIMEOUTS.dash_interval;
 			MainController.character.appendChild(new MV_Gauge("secondary-reload", TIMEOUTS.dash_interval, 0));
 		}
-
-		for (let shot of MainController.shots)
-			shot.move(true);
-
-		for (let monster of MainController.monsters)
-			monster.follow(character);
 	}
 
 	__mustReload() {
@@ -102,14 +109,7 @@ class MV_Timer {
 		}
 	}
 
-	/** Contrôles clavier et écran tactile */
-	__applyKeyboardControls() {
-		if (!this.controls_state.paused) {
-
-		} else {
-		}
-	}
-
+	/** Contrôles clavier et écran tactile => seront déplacés dans des classes dédiées */
 	__applyTouchScreenControls() {
 		if (!this.controls_state.paused) {
 

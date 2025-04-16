@@ -98,7 +98,7 @@ V   Tâche terminée
     _   navigation menu
     _   validation item menu
 *   Rapport de fin de vague
-    X   Créer le template HTML et la feuille de style CSS de la popup
+    _   Créer le template HTML et la feuille de style CSS de la popup
     _   Affichage des valeurs calculées
     _   Ouverture automatique du rapport de fin de vague
 *   Magasin
@@ -107,7 +107,7 @@ V   Tâche terminée
     _   Créer le template HTML et la feuille de style CSS de la popup magasin
     _   Mettre en place les mécanismes automatisés de calculs et mise à jour de L'UI (suite à un achat: -ressources joueur, recalcul et maj affichage item acheté -> next lvl)
 *   Commandes
-    _   Clavier + Souris
+    X   Clavier + Souris (reste un bug, lorsqu'une manette est connectée)
     _   Tactile
 *   UX
     X   Viseuls du jeu

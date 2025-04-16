@@ -22,34 +22,28 @@ class GamepadControls {
 		let rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
 
 		GamepadControls.__applyMoveJoystick(leftJoystick, character);
-		if (!MainController.primaryReloadGauge)
-			GamepadControls.__applyFireJoystick(rightJoystick, character);
+		GamepadControls.__applyFireJoystick(rightJoystick, character);
 
 		if (rightJoystick.intensity === 0 && !MainController.scope.game.clip_ammo) { // Rechargement automatique si chargeur vide et pas de visée
 			MainController.timer.launchReloadingAction();
 		}
 		
-		if (rightJoystick.intensity !== 0) // Le personnage regarde où il vise, ou là où il va s'il ne vise pas
-			character.angle = rightJoystick.angle * 180 / Math.PI;
-		else if (leftJoystick.intensity !== 0)
-			character.angle = leftJoystick.angle * 180 / Math.PI;
-		character.move();
+		character.applyAngles();
 	}
 
 	static __applyMoveJoystick(joystick, character) {
-		character.deltaX = joystick.intensity * CHARACTER_SPEED * Math.cos(joystick.angle);
-		character.deltaY = joystick.intensity * CHARACTER_SPEED * Math.sin(joystick.angle);
+		if (!KeyboardAndMouseControls.hasMoveControls()) {
+			character.angle = joystick.angle * 180 / Math.PI;
+			character.deltaX = joystick.intensity * CHARACTER_SPEED * Math.cos(joystick.angle);
+			character.deltaY = joystick.intensity * CHARACTER_SPEED * Math.sin(joystick.angle);
+			character.move();
+		}
 	}
 
 	static __applyFireJoystick(joystick, character) {
-		MainController.scope.controls.firing_primary = true;
-		if (joystick.intensity !== 0 && !MainController.scope.game.waiting_counter.shot) {
-			if (MainController.scope.game.clip_ammo) {
-				let shot = character.shoot(SHOT_VELOCITY, joystick.angle);
-				MainUI.addToGameWindow(shot);
-				MainController.scope.game.waiting_counter.shot = TIMEOUTS.shot_interval;
-				MainController.scope.game.clip_ammo--;
-			}  // En isolant ce if, il suffira d'écrire un else pour jouer un son (CLIC !) avertissant l'utilisateur que son chargeur est vide
+		if (joystick.intensity !== 0) {
+			MainController.scope.controls.firing_primary = true;
+			character.aiming_angle = joystick.angle * 180 / Math.PI;
 		}
 	}
 }

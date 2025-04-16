@@ -82,6 +82,8 @@ var debug = false;
 // => pas d'instanciation de cette classe
 class MainController {
 
+    static get game_window() { return document.getElementById("game-window"); }
+
     static get character() 		{ return document.querySelector(".character"); }
 	static get shots()			{ return document.getElementsByClassName("shot"); }
 	static get monsters() 		{ return document.getElementsByClassName("monster"); }

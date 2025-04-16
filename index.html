@@ -32,6 +32,7 @@
     <script type="text/javascript" src="scripts/clock_managers/WaitingCounters.js"></script>
 
     <script type="text/javascript" src="scripts/controls_managers/GamepadControls.js"></script>
+    <script type="text/javascript" src="scripts/controls_managers/KeyboardAndMouseControls.js"></script>
 
     <script type="text/javascript" src="scripts/MV_GameInitializer.js"></script>
     <script type="text/javascript" src="scripts/MV_GameScope.js"></script>
@@ -49,7 +50,7 @@
   </head>
 
   <!-- Corps de la page -->
-  <body onload="MainController.onLoad()">
+  <body onload="MainController.onLoad()" oncontextmenu="return false">
     <div class="game-window" id="game-window">
       <div class="ath-background"></div>
       <div class="ammo-display">  

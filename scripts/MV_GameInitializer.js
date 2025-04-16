@@ -37,6 +37,11 @@ class MV_GameInitializer {
 				downPressed: false,
 				rightPressed: false,
 				leftPressed: false,
+				mousePosition: {
+					x: 0,
+					y: 0
+				},
+				mouse_aiming: false,
 				paused: false,
 				firing_primary: false,
 				firing_secondary: false,
@@ -51,6 +56,7 @@ class MV_GameInitializer {
 		controller.scope = MV_GameInitializer.initial_scope;
 		MV_GameInitializer.__addTouchListeners(controller);
 		MV_GameInitializer.__addKeyListeners(controller);
+		MV_GameInitializer.__addMouseListeners(controller);
 		MV_GameInitializer.__prepareGamepadControls(controller);
         MV_GameInitializer.__createTimer(controller);
 	}
@@ -58,13 +64,13 @@ class MV_GameInitializer {
 	static __addKeyListeners(controller) {
 		let controls = controller.scope.controls;
 		window.addEventListener('keydown', function(e) {
-			if (e.code == "ArrowDown")
+			if (e.key == "s")
 				controls.downPressed = true;
-			else if (e.code == "ArrowUp")
+			else if (e.key == "z")
 				controls.upPressed = true;
-			else if (e.code == "ArrowLeft")
+			else if (e.key == "q")
 				controls.leftPressed = true;
-			else if (e.code == "ArrowRight")
+			else if (e.key == "d")
 				controls.rightPressed = true;
 			else if (e.code == "Space")
 				controls.firing_secondary = true;
@@ -72,23 +78,48 @@ class MV_GameInitializer {
 				controller.togglePause();
 		});
 		window.addEventListener('keyup', function(e) {
-			if (e.code == "ArrowDown")
+			if (e.key == "s")
 				controls.downPressed = false;
-			if (e.code == "ArrowUp")
+			if (e.key == "z")
 				controls.upPressed = false;
-			if (e.code == "ArrowLeft")
+			if (e.key == "q")
 				controls.leftPressed = false;
-			if (e.code == "ArrowRight")
+			if (e.key == "d")
 				controls.rightPressed = false;
 			if (e.code == "Space")
 				controls.firing_secondary = false;
 		});
+	}
 
-		// penser à ajouter un listener de clic, pour le tir principal
+	static __addMouseListeners(controller) {
+		let controls = controller.scope.controls;
+		window.addEventListener('mousemove', (e)=> {
+			controls.mousePosition = { 
+				x: e.clientX / MainController.game_window.clientWidth * MainController.viewport.VIRTUAL_WIDTH, 
+				y: e.clientY / MainController.game_window.clientHeight * MainController.viewport.VIRTUAL_HEIGHT 
+			}; 
+		});
+		window.addEventListener('mousedown', (e)=> { 
+			if ([1, 3].includes(e.buttons)) {
+				controls.firing_primary = true;
+				controls.mouse_aiming = true;
+			}
+			if ([2, 3].includes(e.buttons))
+				controls.reloading = true;
+		});
+		window.addEventListener('mouseup', (e)=> {
+			if ([0, 2].includes(e.buttons)) {
+				controls.firing_primary = false;
+				controls.mouse_aiming = false;
+			}
+			if ([0, 1].includes(e.buttons))
+				controls.reloading = false;
+		});
 	}
 
 	static clearGamepadControlsState(controls_state) {
-		controls_state.firing_primary = false;
+		if (!MainController.scope.controls.mouse_aiming)
+			controls_state.firing_primary = false;
 		controls_state.firing_secondary = false;
 		controls_state.reloading = false;
 	}

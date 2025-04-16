@@ -19,15 +19,14 @@ class MainUI {
 		for (let i = monstre_elements.length; i>0; i--)
 			monstre_elements[i-1].remove();
 
-		let game = document.getElementById("game-window");
+		let game = MainController.game_window;
 		let soil_index = MainController.radomValueInRange(0, 2);
 		game.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
 		game.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
     }
 
 	static addToGameWindow(element) {
-		let game = document.getElementById("game-window");
-		game.appendChild(element);
+		MainController.game_window.appendChild(element);
 	}
 
 	static refreshAllHitboxesVisibility() {

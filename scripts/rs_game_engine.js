@@ -189,10 +189,11 @@ class MobileGameElement extends HTMLDivElement {
 		this.__rotate();
 	}
 
-	__rotate() {
+	__rotate(forced_angle) {
 		if (this.angle >= 360) this.angle -= 360;
     	if (this.angle < 0) this.angle += 360;
-    	this.rotate_element.style.transform = "rotateZ(" + this.angle + "deg)";
+
+    	this.rotate_element.style.transform = `rotateZ(${ forced_angle ? forced_angle : this.angle }deg)`;
 	}
   
 	/**
