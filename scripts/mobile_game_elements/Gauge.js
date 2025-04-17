@@ -2,14 +2,21 @@ class MV_Gauge extends HTMLDivElement {
     __progress_element;
     __max_value;
 
-    constructor(css_class_name, max_value, initial_value) {
+    constructor() {
         super();
         this.classList.add("gauge");
-        this.classList.add(css_class_name);
-
-        this.__max_value = max_value;
-        
         this.__createProgressElement();
+    }
+
+    static create(css_class_name, max_value, initial_value) {
+        let new_object = new MV_Gauge();
+        new_object.setup(css_class_name, max_value, initial_value);
+        return new_object;
+    }
+
+    setup(css_class_name, max_value, initial_value) {
+        this.classList.add(css_class_name);
+        this.__max_value = max_value;
         this.assignValue(initial_value);
     }
 

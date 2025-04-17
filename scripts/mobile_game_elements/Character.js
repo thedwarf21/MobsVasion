@@ -5,7 +5,32 @@ class MV_Character extends MobileGameElement {
     constructor(viewport) {
         super(viewport);
         this.classList.add("character");
-        this.__init();
+    }
+
+    static create(viewport) {
+        let new_object = new MV_Character();
+        new_object.setup(viewport);
+        new_object.__init();
+        return new_object;
+    }
+  
+    __init() {
+        this.angle = 0;
+        this.deltaX = 0;
+        this.deltaY = 0;
+        this.pixel_size = CHARACTER_SIZE;
+        this.aiming_angle = 0;
+    
+        this.__moveCenter();
+        this.addImageElt("spinning-image");
+        this.addVisualHitBox(MainController.scope.game.showHitboxes);
+    }
+  
+    __moveCenter() {
+        this.x = (this.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE) / 2;
+        this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
+        this.style.top = this.viewport.getCssValue(this.y);
+        this.style.left = this.viewport.getCssValue(this.x);
     }
   
     shoot() {
@@ -32,7 +57,7 @@ class MV_Character extends MobileGameElement {
         
         let deltaX = SHOT_VELOCITY * cos_angle;
         let deltaY = SHOT_VELOCITY * sin_angle;
-        return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
+        return MV_Shot.create(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
     }
 
     centralSpotPosition() {
@@ -52,25 +77,6 @@ class MV_Character extends MobileGameElement {
         if (MainController.scope.controls.firing_primary) {
             this.__rotate(this.aiming_angle);
         }
-    }
-  
-    __init() {
-        this.angle = 0;
-        this.deltaX = 0;
-        this.deltaY = 0;
-        this.pixel_size = CHARACTER_SIZE;
-        this.aiming_angle = 0;
-    
-        this.__moveCenter();
-        this.addImageElt("spinning-image");
-        this.addVisualHitBox(MainController.scope.game.showHitboxes);
-    }
-  
-    __moveCenter() {
-        this.x = (this.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE) / 2;
-        this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
-        this.style.top = this.viewport.getCssValue(this.y);
-        this.style.left = this.viewport.getCssValue(this.x);
     }
 
     __showFire(x, y) {

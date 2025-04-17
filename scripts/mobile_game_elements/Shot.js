@@ -1,7 +1,17 @@
 class MV_Shot extends MobileGameElement {
-    constructor(viewport, x, y, deltaX, deltaY) {
-        super(viewport, x ,y);
+    constructor() {
+        super();
         this.classList.add("shot");
+    }
+
+    static create(viewport, x, y, deltaX, deltaY) {
+        let new_object = new MV_Shot();
+        new_object.setup(viewport, x, y, deltaX, deltaY);
+        return new_object;
+    }
+
+    setup(viewport, x, y, deltaX, deltaY) {
+        super.setup(viewport, x ,y);
         this.deltaX = deltaX;
         this.deltaY = deltaY;
     }

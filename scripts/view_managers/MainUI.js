@@ -87,7 +87,7 @@ class MainUI {
     }
 
     static __createLifeBar() {
-		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, MainController.scope.game.health_points);
+		let character_health_bar = MV_Gauge.create("character-health-bar", CHARACTER_MAX_LIFE, MainController.scope.game.health_points);
 		MainUI.addToGameWindow(character_health_bar);
         return character_health_bar;
     }
@@ -101,7 +101,7 @@ class MainUI {
     }
 
     static __createXpBar() {
-		let xp_bar = new MV_Gauge("xp-bar", MV_GameScope.levelUpAt(), MainController.scope.game.current_level_xp);
+		let xp_bar = MV_Gauge.create("xp-bar", MV_GameScope.levelUpAt(), MainController.scope.game.current_level_xp);
 		MainUI.addToGameWindow(xp_bar);
         return xp_bar;
     }

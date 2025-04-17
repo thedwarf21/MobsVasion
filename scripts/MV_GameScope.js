@@ -24,7 +24,7 @@ class MV_GameScope {
     }
 
     static characterHit(damage) {
-        let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
+        let flash_effect = MV_AnimatedFrame.create( MainController.viewport, 0, 0, 0, 0, 
             ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
             ()=> { flash_effect.remove(); }
         );

@@ -61,7 +61,7 @@ class MV_Timer {
 			character.dash();
 			this.controls_state.firing_secondary = false;
 			MainController.scope.game.waiting_counter.dash = TIMEOUTS.dash_interval;
-			MainController.character.appendChild(new MV_Gauge("secondary-reload", TIMEOUTS.dash_interval, 0));
+			MainController.character.appendChild(MV_Gauge.create("secondary-reload", TIMEOUTS.dash_interval, 0));
 		}
 	}
 
@@ -77,7 +77,7 @@ class MV_Timer {
 		if (!MainController.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
 			MainController.scope.game.waiting_counter.clip = TIMEOUTS.reload_time;
 			
-			let gauge = new MV_Gauge("primary-reload", TIMEOUTS.reload_time, 0);
+			let gauge = MV_Gauge.create("primary-reload", TIMEOUTS.reload_time, 0);
 			MainUI.addToGameWindow(gauge);
 		}
 	}

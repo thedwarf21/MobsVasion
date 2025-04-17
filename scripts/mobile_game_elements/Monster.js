@@ -8,7 +8,13 @@ class MV_Monster extends MobileGameElement {
     constructor(viewport, x, y) {
         super(viewport, x, y);
         this.classList.add("monster");
-        this.__init();
+    }
+    
+    static create(viewport, x, y) {
+        let new_object = new MV_Monster();
+        new_object.setup(viewport, x, y);
+        new_object.__init();
+        return new_object;
     }
   
     follow(character) {
@@ -47,7 +53,7 @@ class MV_Monster extends MobileGameElement {
     }
   
     __addLifeBar() {
-        this.__life_bar = new MV_Gauge("monster-health-bar", MONSTER_MAX_HEALTH, this.__health_points);
+        this.__life_bar = MV_Gauge.create("monster-health-bar", MONSTER_MAX_HEALTH, this.__health_points);
         this.appendChild(this.__life_bar);
     }
 
@@ -78,7 +84,7 @@ class MV_Monster extends MobileGameElement {
         let x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(rad_angle) );
         let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(rad_angle) );
     
-        let blood_splash = new MV_AnimatedFrame( this.viewport, x_splash, y_splash, 0, 0, 
+        let blood_splash = MV_AnimatedFrame.create( this.viewport, x_splash, y_splash, 0, 0, 
             ANIMATIONS.blood_splash.css_class, ANIMATIONS.blood_splash.duration, ()=> {
                 blood_splash.remove();
                 let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);

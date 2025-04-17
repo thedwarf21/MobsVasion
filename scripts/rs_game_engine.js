@@ -108,50 +108,38 @@ class RS_ViewPortCompatibility {
 	}
 }
 
-/**
- * Classe mère des éléments mobiles du jeu
- */
+/** Classe mère des éléments mobiles du jeu */
 class MobileGameElement extends HTMLDivElement {
+	x               = null;		// propriété top, en coordonnées virtuelles (CV)
+	y               = null;		// propriété left, en CV
+	deltaX          = null;		// déplacement en CV sur l'axe X du prochain mouvement
+	deltaY          = null;		// déplacement en CV sur l'axe Y du prochain mouvement
+	angle			= null; 	// orientation de l'élément, en degrés
+	pixel_size      = null;		// taille de l'élément, en pixels virtuels
+	viewport		= null;		// instance de RS_ViewPortCompatibility chargée de la conversion CV => pourcentage de la hauteur/largeur de l'écran (selon paramétrage de l'objet)
+	rotate_element	= null;  	// Sert à cibler un sous-élément du DOM, afin que seul ce noeud pivote. =this, par defaut.
+  
 
-	/*** Propriétés devant être initialisés pour que l'objet fonctionne correctement ***/
-	x               = null;
-	y               = null;
-	deltaX          = null;
-	deltaY          = null;
-	angle			= null;
-	pixel_size      = null;
-	viewport		= null;
-	rotate_element	= null;
-  
-	/**
-	 * Constructeur par défaut de tous les composants mobiles du jeu
-	 * Les coordonnées passées en paramètre sont les coordonnées d'apparition
-	 *
-	 * @param      {object}  viewport  Instance de RS_ViewPortCompatibility
-	 * @param      {number}  x       Optionnel: Abscisses en pixels virtuels du coin supérieur gauche de l'élément contenant l'image du vaisseau
-	 * @param      {number}  y       Optionnel: Ordonnées en pixels virtuels du coin supérieur gauche de l'élément contenant l'image du vaisseau
-	 */
-	constructor(viewport, x, y) {
-	  	super();
-	  	this.classList.add("game");
-		this.rotate_element = this;  // Sert à cibler un sous-élément DOM dans une classe enfant (avoue, sans le commentaire, elle t'aurait fait buguer, cette ligne)
-	  
-	  	if (!viewport) {
-			console.error("MobileGameElement.constructor : le paramètre viewport est obligatoire");
-			return;
-	  	}
-	  	if (!viewport instanceof RS_ViewPortCompatibility) {
-			console.error("MobileGameElement.constructor : le paramètre viewport doit être une instance de RS_ViewPortCompatibility");
-			return;
-	  	}
-  
-	  	// Certains éléments initialisent eux-mêmes leurs coordonnées. Les paramètres peuvent donc être absents.
+	constructor() {
+		super();
+		this.classList.add("game");
+	  	this.rotate_element = this;
+  	}
+
+	static create(viewport, x, y) {
+		let new_object = new MobileGameElement();
+		new_object.setup(viewport, x, y);
+		return new_object;
+	}
+
+	setup(viewport, x, y) {
 	  	this.viewport = viewport;
-	  	if (x != undefined && y != undefined) {
+	  	
+		if (x != undefined && y != undefined) {
 			this.x = x;
 			this.y = y;
-			this.style.left = viewport.getCssValue(this.x);
-			this.style.top = viewport.getCssValue(this.y);
+			this.style.left = viewport.getCssValue(x);
+			this.style.top = viewport.getCssValue(y);
 	  	}
 	}
   
@@ -169,7 +157,7 @@ class MobileGameElement extends HTMLDivElement {
 		// true  --> suppression de l'élément
 		// false --> bloquer
 	  	let window_height = this.viewport.VIRTUAL_HEIGHT,
-		 	 window_width = this.viewport.VIRTUAL_WIDTH;
+		 	window_width = this.viewport.VIRTUAL_WIDTH;
 	  	if (removeOnScreenLeave) {
 			if (this.y > window_height || this.y < -this.pixel_size || this.x > window_width || this.x < -this.pixel_size) 
 		  		this.remove();

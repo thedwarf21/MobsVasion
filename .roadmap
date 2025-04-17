@@ -13,6 +13,7 @@ x   Sous-tâche en cours
 V   Tâche terminée
 >   Sous-tâche terminée
 
+
 *   Pause et menus
     V   Mise en place de pause/unpause et de la commande
         >   Modification du GenericGamepadAdapter
@@ -20,7 +21,7 @@ V   Tâche terminée
     V   Affichage de la pause/reprise
         >   Pause => affiche la popup de préférences utilisateur (voir plus bas), qui pourra également être ouverte depuis le magasin
         >   Unpause => fermeture et destruction de toutes les popups ouvertes au moment de l'action
-    _   Gérer la manette dans les menus (à voir plus tard => je vois comment faire, mais je préfère attendre d'avoir plusieurs menus, pour gérer tous les cas dès le départ et ne pas avoir à y revenir)
+    X   Gérer la manette dans les menus
 *   Personnage
     V   Créer et afficher le personnage
         >   Style CSS du personnage
@@ -107,7 +108,7 @@ V   Tâche terminée
     _   Créer le template HTML et la feuille de style CSS de la popup magasin
     _   Mettre en place les mécanismes automatisés de calculs et mise à jour de L'UI (suite à un achat: -ressources joueur, recalcul et maj affichage item acheté -> next lvl)
 *   Commandes
-    X   Clavier + Souris (reste un bug, lorsqu'une manette est connectée)
+    V   Clavier + Souris
     _   Tactile
 *   UX
     X   Viseuls du jeu

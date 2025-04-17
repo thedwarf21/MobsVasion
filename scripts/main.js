@@ -149,13 +149,13 @@ class MainController {
 		WaitingCounters.clear();
 		MainController.scope.controls.paused = false; //TODO à retirer quand la popup de rapport de fin de vague sera en place
 
-		let pop_animation = new MV_AnimatedFrame(
+		let pop_animation = MV_AnimatedFrame.create(
 			MainController.viewport, 
 			( MainController.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE ) / 2, 
 			( MainController.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE ) / 2, 
 			CHARACTER_SIZE, CHARACTER_SIZE, ANIMATIONS.monster_pop.css_class, ANIMATIONS.monster_pop.duration, 
 			()=> {
-				let character = new MV_Character(MainController.viewport);
+				let character = MV_Character.create(MainController.viewport);
 				MainUI.addToGameWindow(character);
 			}
 		);
@@ -167,10 +167,10 @@ class MainController {
 	static __performMonsterPop(x_monster, y_monster) {
 		let animation = ANIMATIONS.monster_pop;
 		MainUI.addToGameWindow( 
-			new MV_AnimatedFrame(MainController.viewport, 
+			MV_AnimatedFrame.create(MainController.viewport, 
 				x_monster, y_monster, MONSTER_SIZE, MONSTER_SIZE, 
 				animation.css_class, animation.duration, ()=> {
-					let monster = new MV_Monster(MainController.viewport, x_monster, y_monster);
+					let monster = MV_Monster.create(MainController.viewport, x_monster, y_monster);
 					MainUI.addToGameWindow(monster);
 				}
 			) 
