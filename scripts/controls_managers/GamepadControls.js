@@ -8,7 +8,7 @@ class GamepadControls {
 		}
 	}
 	static updateControlsObject() {
-		if ( MainController.character ) {
+		if ( MainController.UI.character ) {
 			MainController.timer.gamepad_mapper.updateJoysticksStates();
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire);
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.reload);
@@ -17,7 +17,7 @@ class GamepadControls {
 	}
 
 	static __applyJoysticksControls() {
-		let character = MainController.character;
+		let character = MainController.UI.character;
 		let leftJoystick = MainController.timer.gamepad_mapper.leftJoystick;
 		let rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
 

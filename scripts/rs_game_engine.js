@@ -111,9 +111,7 @@ class RS_ViewPortCompatibility {
 /**
  * Classe mère des éléments mobiles du jeu
  */
-class MobileGameElement extends HTMLDivElement {
-
-	/*** Propriétés devant être initialisés pour que l'objet fonctionne correctement ***/
+class MobileGameElement {
 	x               = null;
 	y               = null;
 	deltaX          = null;
@@ -121,20 +119,13 @@ class MobileGameElement extends HTMLDivElement {
 	angle			= null;
 	pixel_size      = null;
 	viewport		= null;
+	root_element 	= null;
 	rotate_element	= null;
-  
-	/**
-	 * Constructeur par défaut de tous les composants mobiles du jeu
-	 * Les coordonnées passées en paramètre sont les coordonnées d'apparition
-	 *
-	 * @param      {object}  viewport  Instance de RS_ViewPortCompatibility
-	 * @param      {number}  x       Optionnel: Abscisses en pixels virtuels du coin supérieur gauche de l'élément contenant l'image du vaisseau
-	 * @param      {number}  y       Optionnel: Ordonnées en pixels virtuels du coin supérieur gauche de l'élément contenant l'image du vaisseau
-	 */
+
 	constructor(viewport, x, y) {
-	  	super();
-	  	this.classList.add("game");
-		this.rotate_element = this;  // Sert à cibler un sous-élément DOM dans une classe enfant (avoue, sans le commentaire, elle t'aurait fait buguer, cette ligne)
+		this.root_element = document.createElement("DIV");
+	  	this.root_element.classList.add("game");
+		this.rotate_element = this.root_element;  // Sert à cibler un sous-élément DOM dans une classe enfant (avoue, sans le commentaire, elle t'aurait fait buguer, cette ligne)
 	  
 	  	if (!viewport) {
 			console.error("MobileGameElement.constructor : le paramètre viewport est obligatoire");
@@ -150,29 +141,29 @@ class MobileGameElement extends HTMLDivElement {
 	  	if (x != undefined && y != undefined) {
 			this.x = x;
 			this.y = y;
-			this.style.left = viewport.getCssValue(this.x);
-			this.style.top = viewport.getCssValue(this.y);
+			this.root_element.style.left = viewport.getCssValue(this.x);
+			this.root_element.style.top = viewport.getCssValue(this.y);
 	  	}
 	}
   
 	/**
 	 * Fonction de déplacement de base
 	 *
-	 * @param      {boolean}  removeOnScreenLeave  move(true) => à sa sortie de l'écran, l'élément est supprimé du DOM
+	 * @param      {boolean}  onScreenLeave  hook sortie d'écran, shuntant le comportement par défaut
 	 */
-	move(removeOnScreenLeave) {
+	move(onScreenLeave) {
 		this.y += this.deltaY;
 		this.x += this.deltaX;
 		
-		// Gestion de l'arriver en bordure d'écran selon removeOnScreenLeave
+		// Gestion de l'arriver en bordure d'écran selon onScreenLeave
 		//------------------------------------------------------------------
-		// true  --> suppression de l'élément
-		// false --> bloquer
+		// function  --> exécuter la fonction
+		// undefined --> bloquer en bordure
 	  	let window_height = this.viewport.VIRTUAL_HEIGHT,
 		 	 window_width = this.viewport.VIRTUAL_WIDTH;
-	  	if (removeOnScreenLeave) {
-			if (this.y > window_height || this.y < -this.pixel_size || this.x > window_width || this.x < -this.pixel_size) 
-		  		this.remove();
+	  	if (onScreenLeave) {
+			if (this.y > window_height || this.y < -this.pixel_size || this.x > window_width || this.x < -this.pixel_size)
+				onScreenLeave();
 	  	} else {
 			if (this.y + this.pixel_size > window_height) 
 				this.y = window_height - this.pixel_size;
@@ -184,8 +175,8 @@ class MobileGameElement extends HTMLDivElement {
 				this.x = 0;
 		}
 
-	  	this.style.top = this.viewport.getCssValue(this.y);
-	  	this.style.left = this.viewport.getCssValue(this.x);
+	  	this.root_element.style.top = this.viewport.getCssValue(this.y);
+	  	this.root_element.style.left = this.viewport.getCssValue(this.x);
 		this.__rotate();
 	}
 
@@ -230,7 +221,7 @@ class MobileGameElement extends HTMLDivElement {
 		div.style.height = cssSize;
 		div.style.width = cssSize;
 		div.style.opacity = isVisible ? "1" : "0"; // Afficher/cacher selon paramétrage utilisateur
-		this.appendChild(div);
+		this.root_element.appendChild(div);
 	}
 
 	/**
@@ -241,7 +232,7 @@ class MobileGameElement extends HTMLDivElement {
 	addImageElt(css_class_name) {
 		this.__image_elt = document.createElement("DIV");
 		this.__image_elt.classList.add(css_class_name);
-		this.appendChild(this.__image_elt);
+		this.root_element.appendChild(this.__image_elt);
 	
 		this.rotate_element = this.__image_elt;
 	}
@@ -252,7 +243,7 @@ class MobileGameElement extends HTMLDivElement {
 	 * @param {boolean} makeVisible 
 	 */
 	setHitboxDisplay(makeVisible) { 
-		this.querySelector(".hitbox").style.opacity = makeVisible ? "1" : "0";
+		this.root_element.querySelector(".hitbox").style.opacity = makeVisible ? "1" : "0";
 	}
   
 	/**
@@ -276,7 +267,6 @@ class MobileGameElement extends HTMLDivElement {
 	 */
 	set hitbox(value) { console.error("La propriété hitbox de MobileGameElement est en lecture seule."); }
 }
-customElements.define('div-game-element', MobileGameElement, { extends: 'div' });
 
 /**
  * Couche d'abstraction permettant d'interfacer des contrôles à l'API native Gamepad.

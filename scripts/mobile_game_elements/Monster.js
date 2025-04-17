@@ -7,7 +7,7 @@ class MV_Monster extends MobileGameElement {
   
     constructor(viewport, x, y) {
         super(viewport, x, y);
-        this.classList.add("monster");
+        this.root_element.classList.add("monster");
         this.__init();
     }
   
@@ -48,12 +48,13 @@ class MV_Monster extends MobileGameElement {
   
     __addLifeBar() {
         this.__life_bar = new MV_Gauge("monster-health-bar", MONSTER_MAX_HEALTH, this.__health_points);
-        this.appendChild(this.__life_bar);
+        this.root_element.appendChild(this.__life_bar.root_element);
     }
 
     __dieOrBleed(onMonsterDeath) {
         if (!this.__health_points) {
-            this.remove();
+            this.root_element.remove();
+
             this.__createBloodPuddle(this.x + MONSTER_SIZE/2, this.y + MONSTER_SIZE/2, true);
 
             if (onMonsterDeath) 
@@ -66,9 +67,9 @@ class MV_Monster extends MobileGameElement {
 
     __shock(WOUND_SHOCK_TIME) {
         this.__shocked = true;
-        this.classList.add("shocked");
+        this.root_element.classList.add("shocked");
         setTimeout(()=> {
-            this.classList.remove("shocked");
+            this.root_element.classList.remove("shocked");
             this.__shocked = false;
         }, WOUND_SHOCK_TIME);
     }
@@ -80,14 +81,14 @@ class MV_Monster extends MobileGameElement {
     
         let blood_splash = new MV_AnimatedFrame( this.viewport, x_splash, y_splash, 0, 0, 
             ANIMATIONS.blood_splash.css_class, ANIMATIONS.blood_splash.duration, ()=> {
-                blood_splash.remove();
+                blood_splash.root_element.remove();
                 let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);
                 let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(rad_angle);
                 this.__createBloodPuddle(x_puddle, y_puddle);
             }
         );
-        blood_splash.style.transform = `rotate(${this.angle}deg)`;
-        MainUI.addToGameWindow(blood_splash);
+        blood_splash.root_element.style.transform = `rotate(${this.angle}deg)`;
+        MainController.UI.addToGameWindow(blood_splash.root_element);
     }
 
     __createBloodPuddle(x_puddle, y_puddle, isBig) {
@@ -102,7 +103,6 @@ class MV_Monster extends MobileGameElement {
             puddle_element.style.width = this.viewport.getCssValue(MONSTER_SIZE);
             puddle_element.style.height = this.viewport.getCssValue(MONSTER_SIZE);
         }
-        MainUI.addToGameWindow(puddle_element);
+        MainController.UI.addToGameWindow(puddle_element);
     }
 }
-customElements.define('mv-js-monster', MV_Monster, { extends: 'div' });

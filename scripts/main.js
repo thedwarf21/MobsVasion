@@ -84,22 +84,10 @@ var debug = false;
 // => pas d'instanciation de cette classe
 class MainController {
 
-    static get game_window() { return document.getElementById("game-window"); }
-
-    static get character() 		{ return document.querySelector(".character"); }
-	static get shots()			{ return document.getElementsByClassName("shot"); }
-	static get monsters() 		{ return document.getElementsByClassName("monster"); }
-	static get hitboxes()		{ return document.getElementsByClassName("hitbox"); }
-	static get bloodPuddles()	{ return document.getElementsByClassName("blood-puddle"); }
-
-	static get primaryReloadGauge() 	{ return document.querySelector(".gauge.primary-reload"); }
-	static get secondaryReloadGauge() 	{ return document.querySelector(".gauge.secondary-reload"); }
-	static get panicModeHtmlElement()	{ return document.querySelector(".panic-mode"); }
-
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
 		MV_GameInitializer.prepareGame(MainController);
-		MainUI.prepareUI();
+		MainController.UI = new MainUI();
 		MainController.timer.letsPlay();
         MainController.startWave();
 	}
@@ -112,7 +100,7 @@ class MainController {
 		// Mise du jeu en pause par l'utilisateur => ouverture des préférences utilisateur, sinon => reprise du jeu demandée par utilisateur => fermer toutes les popups
 		if (controls_state.paused) {
 			ParametersPopup.show(was_paused);
-		} else MainUI.closeAllPopups();
+		} else MainController.UI.closeAllPopups();
 	}
 
 	static popMonsterRandomly() {
@@ -145,7 +133,7 @@ class MainController {
     static startWave() {
 		MainController.scope.game.clip_ammo = CLIP_SIZE;
 		MainController.scope.controls.paused = true; //TODO à retirer quand la popup de rapport de fin de vague sera en place 
-		MainUI.clearGameWindow();
+		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
 		MainController.scope.controls.paused = false; //TODO à retirer quand la popup de rapport de fin de vague sera en place
 
@@ -156,24 +144,26 @@ class MainController {
 			CHARACTER_SIZE, CHARACTER_SIZE, ANIMATIONS.monster_pop.css_class, ANIMATIONS.monster_pop.duration, 
 			()=> {
 				let character = new MV_Character(MainController.viewport);
-				MainUI.addToGameWindow(character);
+				MainController.UI.character = character;
+				MainController.UI.addToGameWindow(character.root_element);
 			}
 		);
-		MainUI.addToGameWindow(pop_animation);
+		MainController.UI.addToGameWindow(pop_animation.root_element);
 
 		MainController.__scheduleLevelMonstersPop();
     }
 
 	static __performMonsterPop(x_monster, y_monster) {
 		let animation = ANIMATIONS.monster_pop;
-		MainUI.addToGameWindow( 
-			new MV_AnimatedFrame(MainController.viewport, 
+		MainController.UI.addToGameWindow( 
+			new MV_AnimatedFrame( MainController.viewport, 
 				x_monster, y_monster, MONSTER_SIZE, MONSTER_SIZE, 
 				animation.css_class, animation.duration, ()=> {
 					let monster = new MV_Monster(MainController.viewport, x_monster, y_monster);
-					MainUI.addToGameWindow(monster);
+					MainController.UI.monsters.push(monster);
+					MainController.UI.addToGameWindow(monster.root_element);
 				}
-			) 
+			).root_element
 		);
 	}
 
