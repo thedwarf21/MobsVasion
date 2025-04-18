@@ -162,7 +162,6 @@ class MainController {
 	}
 
     static startWave() {
-		console.log("coucou");
 		MainController.scope.game.clip_ammo = CLIP_SIZE;
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
