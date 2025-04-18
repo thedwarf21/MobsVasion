@@ -98,8 +98,7 @@ V   Tâche terminée
     _   navigation menu
     _   validation item menu
 *   Rapport de fin de vague
-    _   Créer le template HTML et la feuille de style CSS de la popup
-    _   Affichage des valeurs calculées
+    X   Créer le template HTML et la feuille de style CSS de la popup
     _   Ouverture automatique du rapport de fin de vague
 *   Magasin
     _   Programmer l'ouverture du magasin après fermeture par le joueur du rapport de fin de vague
