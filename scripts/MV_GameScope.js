@@ -19,19 +19,19 @@ class MV_GameScope {
         let monster_swag = MainController.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
 		MainController.scope.game.money += monster_swag;
 		MV_GameScope.addXp(XP_PER_MONSTER);
-		if (!MainController.scope.game.wave_pop.timeouts && MainController.monsters.length === 0)
+		if (!MainController.scope.game.wave_pop.timeouts && MainController.UI.monsters.length === 0)
 			MV_GameScope.__waveDefeated();
     }
 
     static characterHit(damage) {
-        let flash_effect = MV_AnimatedFrame.create( MainController.viewport, 0, 0, 0, 0, 
+        let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
             ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
-            ()=> { flash_effect.remove(); }
+            ()=> { flash_effect.root_element.remove(); }
         );
-        MainUI.addToGameWindow(flash_effect);
+        MainController.UI.addToGameWindow(flash_effect.root_element);
 
         MainController.scope.game.health_points -= damage;
-		MainUI.checkPanicMode();
+		MainController.UI.checkPanicMode();
 
         if (!MainController.scope.game.health_points) {
             MV_GameScope.__waveLost();
@@ -41,7 +41,7 @@ class MV_GameScope {
     static __waveDefeated() {
         console.info("J'y crois pas... t'as vraiment gagné ? :o");
         MainController.scope.game.wave_number++;
-        MainUI.endOfWave();
+        MainController.UI.endOfWave();
     }
 
     static __waveLost() {
@@ -49,8 +49,8 @@ class MV_GameScope {
         
         MV_GameScope.__characterRescueFees();
         MainController.scope.game.wave_number = 1;
-        MainUI.checkPanicMode();
-        MainUI.endOfWave();
+        MainController.UI.checkPanicMode();
+        MainController.UI.endOfWave();
     }
 
     static __characterRescueFees() {
@@ -62,5 +62,8 @@ class MV_GameScope {
             scope.health_points = CHARACTER_MAX_LIFE;
             scope.money -= CHARACTER_MAX_LIFE / HP_PRICE;
         }
+
+        if (!scope.health_points)
+            scope.health_points = 1;
     }
 }

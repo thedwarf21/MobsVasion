@@ -96,8 +96,8 @@ class MV_GameInitializer {
 		let controls = controller.scope.controls;
 		window.addEventListener('mousemove', (e)=> {
 			controls.mousePosition = { 
-				x: e.clientX / MainController.game_window.clientWidth * MainController.viewport.VIRTUAL_WIDTH, 
-				y: e.clientY / MainController.game_window.clientHeight * MainController.viewport.VIRTUAL_HEIGHT 
+				x: e.clientX / MainController.UI.game_window.clientWidth * MainController.viewport.VIRTUAL_WIDTH, 
+				y: e.clientY / MainController.UI.game_window.clientHeight * MainController.viewport.VIRTUAL_HEIGHT 
 			}; 
 		});
 		window.addEventListener('mousedown', (e)=> { 

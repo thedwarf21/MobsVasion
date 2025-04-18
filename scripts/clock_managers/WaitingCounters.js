@@ -36,10 +36,10 @@ class WaitingCounters {
 	static __performValueChangeAction(counter_key, counter_value) {
 		switch(counter_key) {
 			case "clip":
-				MainController.primaryReloadGauge.assignValue(TIMEOUTS.reload_time - counter_value);
+				MainController.UI.primaryReloadGauge.assignValue(TIMEOUTS.reload_time - counter_value);
 				break;
 			case "dash":
-				MainController.secondaryReloadGauge.assignValue(TIMEOUTS.dash_interval - counter_value);
+				MainController.UI.secondaryReloadGauge.assignValue(TIMEOUTS.dash_interval - counter_value);
 				break;
 			default:
 				break;	
@@ -50,10 +50,12 @@ class WaitingCounters {
 		switch(counter_key) {
 			case "clip":
 				MainController.scope.game.clip_ammo = CLIP_SIZE;
-				MainController.primaryReloadGauge.remove();
+				MainController.UI.primaryReloadGauge.root_element.remove();
+				MainController.UI.primaryReloadGauge = null;
 				break;
 			case "dash":
-				MainController.secondaryReloadGauge.remove();
+				MainController.UI.secondaryReloadGauge.root_element.remove();
+				MainController.UI.secondaryReloadGauge = null;
 				break;
 			default:
 				break;	

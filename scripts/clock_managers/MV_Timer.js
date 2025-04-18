@@ -39,14 +39,20 @@ class MV_Timer {
 	}
 
 	__performControlsObjectChanges() {
-		let character = MainController.character;
+		let character = MainController.UI.character;
 		if (character)
 			this.__characterActions(character);
 
-		for (let shot of MainController.shots)
-			shot.move(true);
+		let shots = MainController.UI.shots;
+		for (let i = shots.length - 1; i >= 0; i--) {
+			let shot = shots[i];
+			shot.move(()=> {
+				shots.splice(i, 1);
+				shot.root_element.remove();
+			});
+		} 
 
-		for (let monster of MainController.monsters)
+		for (let monster of MainController.UI.monsters)
 			monster.follow(character);
 	}
 
@@ -54,14 +60,16 @@ class MV_Timer {
 		if (this.__mustReload())
 			this.launchReloadingAction();
 
-		if (this.controls_state.firing_primary && !MainController.primaryReloadGauge)
+		if (this.controls_state.firing_primary && !MainController.UI.primaryReloadGauge)
 			character.shoot();
 
-		if (this.controls_state.firing_secondary && !MainController.secondaryReloadGauge) {
+		if (this.controls_state.firing_secondary && !MainController.UI.secondaryReloadGauge) {
 			character.dash();
 			this.controls_state.firing_secondary = false;
 			MainController.scope.game.waiting_counter.dash = TIMEOUTS.dash_interval;
-			MainController.character.appendChild(MV_Gauge.create("secondary-reload", TIMEOUTS.dash_interval, 0));
+			let gauge = new MV_Gauge("secondary-reload", TIMEOUTS.dash_interval, 0);
+			MainController.UI.secondaryReloadGauge = gauge;
+			MainController.UI.character.root_element.appendChild( gauge.root_element );
 		}
 	}
 
@@ -74,37 +82,46 @@ class MV_Timer {
 	}
 
 	launchReloadingAction() {
-		if (!MainController.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
+		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
 			MainController.scope.game.waiting_counter.clip = TIMEOUTS.reload_time;
 			
-			let gauge = MV_Gauge.create("primary-reload", TIMEOUTS.reload_time, 0);
-			MainUI.addToGameWindow(gauge);
+			let gauge = new MV_Gauge("primary-reload", TIMEOUTS.reload_time, 0);
+			MainController.UI.primaryReloadGauge = gauge;
+			MainController.UI.addToGameWindow(gauge.root_element);
 		}
 	}
 
 	__testCollides() {
-		let monsters = MainController.monsters;
+		let monsters = MainController.UI.monsters;
 
-		for (let monster of monsters) {
+		for (let i = monsters.length - 1; i >= 0; i--) {
+			let monster = monsters[i];
 			this.__performMonsterAttacks(monster);
-			this.__performMonsterWounds(monster);
+			this.__performMonsterWounds(i, monster);
 		}
 	}
 
 	__performMonsterAttacks(monster) {
-		let character = MainController.character;
+		let character = MainController.UI.character;
 
 		if (monster.hitbox.checkCollide(character.hitbox)) {
 			MV_GameScope.characterHit(MONSTER_STRENGTH);
 		}
 	}
 
-	__performMonsterWounds(monster) {
-		let shots = MainController.shots;
-		for (let shot of shots) {
+	__performMonsterWounds(index, monster) {
+		let shots = MainController.UI.shots;
+		
+		for (let i = shots.length - 1; i >=0; i--) {
+			let shot = shots[i];
+
 			if (monster.hitbox.checkCollide(shot.hitbox)) {
-				shot.remove();
-				monster.wound(1, MV_GameScope.monsterSlayed);
+				shots.splice(i, 1);
+				shot.root_element.remove();
+				monster.wound(1, ()=> {
+					MainController.UI.monsters.splice(index, 1);
+					MV_GameScope.monsterSlayed();
+				});
 			}					
 		}
 	}

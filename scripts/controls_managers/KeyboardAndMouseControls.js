@@ -1,7 +1,7 @@
 class KeyboardAndMouseControls {
 
     static applyControlsObject() {
-        let character = MainController.character;
+        let character = MainController.UI.character;
 		if ( character ) {
             const absurd_value = 1000;
             let angle = absurd_value;
