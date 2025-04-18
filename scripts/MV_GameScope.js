@@ -19,7 +19,7 @@ class MV_GameScope {
         let monster_swag = MainController.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
 		MainController.scope.game.money += monster_swag;
 		MV_GameScope.addXp(XP_PER_MONSTER);
-		if (!MainController.scope.game.wave_pop.timeouts && MainController.UI.monsters.length === 0) //TODO -> fix: détecter une éventuelle animation d'apparition de monstre => pas encore victoire
+		if (MV_GameScope.__isWaveComplete())
 			MV_GameScope.__waveDefeated();
     }
 
@@ -36,6 +36,16 @@ class MV_GameScope {
         if (!MainController.scope.game.health_points) {
             MV_GameScope.__waveLost();
         }
+    }
+
+    static __isWaveComplete() {
+        if (MainController.scope.game.wave_pop.timeouts)
+            return false;
+        if (MainController.UI.monsters.length > 0)
+            return false;
+        if (document.querySelector(".pop-animation"))
+            return false;
+        return true;
     }
 
     static __waveDefeated() {
