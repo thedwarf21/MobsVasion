@@ -388,12 +388,12 @@ class GamepadConfigUI {
 	show(onPopupClose) {
 		this.popup = new RS_Dialog("gamepad_config", "Configuration de la manette", [], [], [], false, 
 								  "tpl_gamepad_config.html", ()=> {
-			let container = this.popup.querySelector("#controls-gui-container");
+			let container = this.popup.root_element.querySelector("#controls-gui-container");
 			for (let i=0; i<this.controls_mapper.controls.length; i++) {
 				container.appendChild(this.__getConfigInterfaceItem(i));
 			}
-			this.popup.querySelector("#btn_close").addEventListener("click", ()=> { this.closeModal(onPopupClose) });
-			document.body.appendChild(this.popup);
+			this.popup.root_element.querySelector("#btn_close").addEventListener("click", ()=> { this.closeModal(onPopupClose) });
+			document.body.appendChild(this.popup.root_element);
 		});
 	}
 

@@ -5,23 +5,23 @@ class ParametersPopup {
             ParametersPopup.__removeUnnecessaryContent();
             ParametersPopup.__bindShowHitboxesOption();
 
-			MainController.parameters_popup.querySelector("#btn_close").addEventListener("click", function() {
+			MainController.parameters_popup.root_element.querySelector("#btn_close").addEventListener("click", function() {
                 ParametersPopup.__close(was_paused);
 			});
 		});
-		document.body.appendChild(MainController.parameters_popup);
+		document.body.appendChild(MainController.parameters_popup.root_element);
 	}
 
     static __removeUnnecessaryContent() {
         if(!MainController.timer.gamepad_mapper)
-            MainController.parameters_popup.querySelector("#btn_gamepad_controls").remove();
+            MainController.parameters_popup.root_element.querySelector("#btn_gamepad_controls").remove();
     }
 
     static __bindShowHitboxesOption() {
         new RS_Binding({
             object: MainController.scope.game,
             property: "showHitboxes"
-        }).addBinding(MainController.parameters_popup.querySelector("#show_hitboxes"), "checked", "change", function() {
+        }).addBinding(MainController.parameters_popup.root_element.querySelector("#show_hitboxes"), "checked", "change", function() {
             MainController.UI.refreshAllHitboxesVisibility();
         });
     }

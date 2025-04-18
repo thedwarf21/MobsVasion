@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------------------------------------
 //                               Boîte de dialogue personnalisée
 //---------------------------------------------------------------------------------------------------
-class RS_Dialog extends HTMLDivElement {
+class RS_Dialog {
 
   /*******************************************************************************************
    * Génère une boîte de dialogue et retourne l'objet destiné à recevoir le contenu          *
@@ -19,12 +19,11 @@ class RS_Dialog extends HTMLDivElement {
    *******************************************************************************************/
   constructor(id, title, bgClassList, containerClassList, classList, showCloseBtn, urlHtmlContent, onAfterContentLoad) {
     
-    // On commence par générer le fond inactivant la fenêtre (onClick = close)
-    super();
-    this.id = id;
-    this.classList.add("rs-modal-bg");
+    this.root_element = document.createElement("DIV");
+    this.root_element.id = id;
+    this.root_element.classList.add("rs-modal-bg");
     for (let classe of bgClassList)
-      this.classList.add(classe);
+      this.root_element.classList.add(classe);
 
     // Ensuite on construit la boîte de dialogue en elle-même
     let popup = document.createElement("DIV");
@@ -66,7 +65,7 @@ class RS_Dialog extends HTMLDivElement {
     }
 
     // Intégration de la boîte de dialogue au corps de document
-    this.appendChild(popup);
+    this.root_element.appendChild(popup);
     setTimeout(()=> { popup.classList.remove("rs-closed") }, 25);
   }
 
@@ -74,7 +73,7 @@ class RS_Dialog extends HTMLDivElement {
    * Fonction fermant la boîte de dialogue *
    *****************************************/
   closeModal(onPopupClosed) {
-    let popup = this.getElementsByClassName("rs-modal")[0];
+    let popup = this.root_element.getElementsByClassName("rs-modal")[0];
     let close_btn_col = popup.getElementsByClassName("rs-close-btn");
     if (close_btn_col.length)
       close_btn_col[0].remove();
@@ -91,52 +90,10 @@ class RS_Dialog extends HTMLDivElement {
   /***************************************************************
    * Accès rapide aux méthodes de manipulation de DOM du content *
    ***************************************************************/
-  appendToContent(elt) { this.getElementsByClassName("rs-modal-content")[0].appendChild(elt); }
-  removeFromContent(elt) { this.getElementsByClassName("rs-modal-content")[0].removeChild(elt); }
-  setContentInnerHTML(html) { this.getElementsByClassName("rs-modal-content")[0].innerHTML = html; }
+  appendToContent(elt) { this.root_element.getElementsByClassName("rs-modal-content")[0].appendChild(elt); }
+  removeFromContent(elt) { this.root_element.getElementsByClassName("rs-modal-content")[0].removeChild(elt); }
+  setContentInnerHTML(html) { this.root_element.getElementsByClassName("rs-modal-content")[0].innerHTML = html; }
 }
-customElements.define('rs-wcl-dialog', RS_Dialog, { extends: 'div' });
-
-/* Usage HTML uniquement */
-/******************************************************************
- * Possibilité de mettre une balise "<rs-dialog-content>" dans la *
- * balise "<rs-dialog>", pour initialiser le contenu directement  *
- * dans le template                                               *
- ******************************************************************/
-class RSWCLDialog extends HTMLElement {
-
-  /*******************************************************************
-   * Constructeur: appeler simplement le constructeur de HTMLElement *
-   *******************************************************************/
-  constructor() { super(); }
-
-  /*************************************************
-   * S'exécute lors de l'ajout du composant au DOM *
-   *************************************************/
-  connectedCallback() {
-    let html_content = this.getElementsByTagName("rs-dialog-content")[0].innerHTML;
-    let shadow = this.attachShadow({ mode: SHADOW_MODE });
-    let id = this.getAttribute("id");
-    let title = this.getAttribute("rs-title");
-    let bgClasses = this.getAttribute("fader-class");
-    let bgClassList = bgClasses ? bgClasses.split(" ") : [];
-    let containerClasses = this.getAttribute("popup-class");
-    let containerClassList = containerClasses ? containerClasses.split(" ") : [];
-    let classes = this.getAttribute("class");
-    let classList = classes ? classes.split(" ") : [];
-    RS_WCL.styleShadow(shadow, 'css/rs_dialog.css');
-    RS_WCL.styleShadow(shadow, 'css/theme.css');
-    let popup = new RS_Dialog(id, title, bgClassList, containerClassList, classList, true);
-    popup.setContentInnerHTML(html_content);
-    shadow.appendChild(popup);
-  }
-
-  appendChild(elt)    { this.shadowRoot.querySelector('.rs-modal-content').appendChild(elt); }
-  removeChild(elt)    { this.shadowRoot.querySelector('.rs-modal-content').removeChild(elt); }
-  get innerHTML()     { return this.shadowRoot.querySelector('.rs-modal-content').innerHTML; }
-  set innerHTML(val)  { this.shadowRoot.querySelector('.rs-modal-content').innerHTML = val; }
-}
-customElements.define('rs-dialog', RSWCLDialog);
 
 /*******************************************************************
  * Génère une boîte de dialogue permettant de figer le code        *
