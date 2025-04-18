@@ -19,7 +19,7 @@ class MV_GameScope {
         let monster_swag = MainController.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
 		MainController.scope.game.money += monster_swag;
 		MV_GameScope.addXp(XP_PER_MONSTER);
-		if (!MainController.scope.game.wave_pop.timeouts && MainController.UI.monsters.length === 0)
+		if (!MainController.scope.game.wave_pop.timeouts && MainController.UI.monsters.length === 0) //TODO -> fix: détecter une éventuelle animation d'apparition de monstre => pas encore victoire
 			MV_GameScope.__waveDefeated();
     }
 
@@ -41,15 +41,17 @@ class MV_GameScope {
     static __waveDefeated() {
         console.info("J'y crois pas... t'as vraiment gagné ? :o");
         MainController.scope.game.wave_number++;
+        WaveReportPopup.show( MainController.getRandomMessage(true), FRIEND_FACES.happy );
         MainController.UI.endOfWave();
     }
 
     static __waveLost() {
         console.info("On dirait bien que tu es mort...");
         
+        MainController.scope.game.wave_number = 1; //TODO à virer quand j'aurai mis le magasin en place
         MV_GameScope.__characterRescueFees();
-        MainController.scope.game.wave_number = 1;
         MainController.UI.checkPanicMode();
+        WaveReportPopup.show( MainController.getRandomMessage(false), FRIEND_FACES.disappointed );
         MainController.UI.endOfWave();
     }
 

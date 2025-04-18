@@ -55,3 +55,15 @@
 #btn_gamepad_controls {
     width: 35vh;
 }
+
+/** UI rapport fin de vague */
+#friend-face {
+    max-height: 35vh;
+    margin-top: 3vh;
+}
+#message {
+    font-size: 3vh;
+    font-weight: bold;
+    margin: 2vh;
+    margin-top: 0;
+}

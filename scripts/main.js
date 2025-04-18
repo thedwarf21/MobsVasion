@@ -63,6 +63,28 @@ const ANIMATIONS = {
 	}
 };
 
+const FRIEND_FACES = {
+	disappointed: "images/friend_disappointed.png",
+	angry: "images/friend_angry.png",
+	happy: "images/friend_happy.png",
+	worried: "images/friend_worried.png"
+};
+
+const NPC_RANDOM_DIALOGS = {
+	victory: [
+		"Bravo ! Tu as encore fait de l'excellent travail. Continue comme ça.",
+		"Ces monstres n'avaient aucune chance face à toi.",
+		"Voilà qui est fait. Rien de tel qu'un peu de ménage pour y voir clair.",
+		"Exterminer ces brutes sanguinaires semble facile, quand on te regarde faire."
+	],
+	defeat: [
+		"Ils étaient trop forts pour toi. Je vais t'aider à reprendre des forces.",
+		"J'espère que tu vas survivre à tes blessures... mais si tu ne survis pas, c'est pas ma faute !",
+		"Ma foi, ça à l'air douloureux...",
+		"À mon tour de me rendre utile... tu as mal quand j'appuies là ? Aïe ! Me tapes pas, j'essaies de t'aider !"
+	]
+}
+
 const HP_PRICE = 5;
 
 const SOILS = ["desert", "ice", "marble"];
@@ -132,10 +154,8 @@ class MainController {
 
     static startWave() {
 		MainController.scope.game.clip_ammo = CLIP_SIZE;
-		MainController.scope.controls.paused = true; //TODO à retirer quand la popup de rapport de fin de vague sera en place 
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
-		MainController.scope.controls.paused = false; //TODO à retirer quand la popup de rapport de fin de vague sera en place
 
 		let pop_animation = new MV_AnimatedFrame(
 			MainController.viewport, 
@@ -196,5 +216,10 @@ class MainController {
 			prev_values.unshift(value);
 		}
 		return prev_values.shift();
+	}
+
+	static getRandomMessage(isVictory) {
+		let random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
+		return random_messages[ MainController.radomValueInRange(0, random_messages.length - 1) ];
 	}
 }
