@@ -72,16 +72,16 @@ const FRIEND_FACES = {
 
 const NPC_RANDOM_DIALOGS = {
 	victory: [
-		"Bravo ! Tu as encore fait de l'excellent travail. Continue comme ça.",
+		"Bravo !<br/>Tu as encore fait de l'excellent travail.<br/>Continue comme ça.",
 		"Ces monstres n'avaient aucune chance face à toi.",
-		"Voilà qui est fait. Rien de tel qu'un peu de ménage pour y voir clair.",
-		"Exterminer ces brutes sanguinaires semble facile, quand on te regarde faire."
+		"Voilà qui est fait.<br/>Rien de tel qu'un peu de ménage pour y voir clair.",
+		"Exterminer ces brutes sanguinaires semble facile, quand on te voit faire."
 	],
 	defeat: [
-		"Ils étaient trop forts pour toi. Je vais t'aider à reprendre des forces.",
-		"J'espère que tu vas survivre à tes blessures... mais si tu ne survis pas, c'est pas ma faute !",
+		"Ils étaient trop forts pour toi.<br/>Je vais t'aider à reprendre des forces.",
+		"J'espère que tu vas survivre à tes blessures...<br/>...mais si tu ne survis pas, c'est pas de ma faute !",
 		"Ma foi, ça à l'air douloureux...",
-		"À mon tour de me rendre utile... tu as mal quand j'appuies là ? Aïe ! Me tapes pas, j'essaies de t'aider !"
+		"À mon tour de me rendre utile...<br/>Tu as mal quand j'appuies là ?<br/>Aïe ! Me tapes pas, j'essaies de t'aider !"
 	]
 }
 
@@ -117,12 +117,21 @@ class MainController {
     static togglePause() { 
 		let controls_state = MainController.scope.controls;
 		let was_paused = controls_state.paused;  // --> permet de savoir s'il faut ou non désactiver la pause, au moment de fermer la fenêtre
-		controls_state.paused = !controls_state.paused;
         
-		// Mise du jeu en pause par l'utilisateur => ouverture des préférences utilisateur, sinon => reprise du jeu demandée par utilisateur => fermer toutes les popups
-		if (controls_state.paused) {
+		if (!was_paused) {   // Mise en pause manuelle => ouverture de la popup paramètres
+			controls_state.paused = true;
 			ParametersPopup.show(was_paused);
-		} else MainController.UI.closeAllPopups();
+		}
+		else if (MainController.report_popup) {   // Possibilité de fermer les popups de rapport et de magasin, via bouton pause
+			WaveReportPopup.__close( MainController.startWave );
+		}
+		else if (MainController.shop_popup) {
+			ShopPopup.__close( MainController.startWave );
+		}
+		else {
+			MainController.UI.closeAllPopups();
+			controls_state.paused = false;
+		}
 	}
 
 	static popMonsterRandomly() {
@@ -153,6 +162,7 @@ class MainController {
 	}
 
     static startWave() {
+		console.log("coucou");
 		MainController.scope.game.clip_ammo = CLIP_SIZE;
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
@@ -169,8 +179,9 @@ class MainController {
 			}
 		);
 		MainController.UI.addToGameWindow(pop_animation.root_element);
-
 		MainController.__scheduleLevelMonstersPop();
+
+		MainController.scope.controls.paused = false;
     }
 
 	static __performMonsterPop(x_monster, y_monster) {

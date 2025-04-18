@@ -52,8 +52,8 @@ class MainUI {
 		if (MainController.parameters_popup)
 			this.__closePopup(MainController.parameters_popup);
 
-		if (MainController.lobby_popup)
-			this.__closePopup(MainController.lobby_popup);
+		if (MainController.shop_popup)
+			this.__closePopup(MainController.shop_popup);
 	}
 
 	checkPanicMode() {
@@ -68,10 +68,6 @@ class MainUI {
 
 		if (panic_element && MainController.scope.game.health_points > panic_threshold)
 			panic_element.remove();
-	}
-
-	endOfWave() {
-		MainController.startWave();
 	}
 
     __prepareWaveSwagAutoRefresh() {

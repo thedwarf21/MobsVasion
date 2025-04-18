@@ -49,20 +49,14 @@ class MV_GameScope {
     }
 
     static __waveDefeated() {
-        console.info("J'y crois pas... t'as vraiment gagné ? :o");
         MainController.scope.game.wave_number++;
-        WaveReportPopup.show( MainController.getRandomMessage(true), FRIEND_FACES.happy );
-        MainController.UI.endOfWave();
+        WaveReportPopup.show( MainController.getRandomMessage(true), FRIEND_FACES.happy, MainController.startWave );
     }
 
     static __waveLost() {
-        console.info("On dirait bien que tu es mort...");
-        
-        MainController.scope.game.wave_number = 1; //TODO à virer quand j'aurai mis le magasin en place
         MV_GameScope.__characterRescueFees();
         MainController.UI.checkPanicMode();
-        WaveReportPopup.show( MainController.getRandomMessage(false), FRIEND_FACES.disappointed );
-        MainController.UI.endOfWave();
+        WaveReportPopup.show( MainController.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
     }
 
     static __characterRescueFees() {
