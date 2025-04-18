@@ -62,5 +62,8 @@ class MV_GameScope {
             scope.health_points = CHARACTER_MAX_LIFE;
             scope.money -= CHARACTER_MAX_LIFE / HP_PRICE;
         }
+
+        if (!scope.health_points)
+            scope.health_points = 1;
     }
 }
