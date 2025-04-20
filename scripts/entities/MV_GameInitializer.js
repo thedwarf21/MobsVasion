@@ -118,13 +118,6 @@ class MV_GameInitializer {
 		});
 	}
 
-	static clearGamepadControlsState(controls_state) {
-		if (!MainController.scope.controls.mouse_aiming)
-			controls_state.firing_primary = false;
-		controls_state.firing_secondary = false;
-		controls_state.reloading = false;
-	}
-
 	static __addTouchListeners(controller) {
 		let controls = controller.scope.controls;
 		// J'ai prévu des joysticks virtuels pour le déplacement et le tir principal 
@@ -153,7 +146,7 @@ class MV_GameInitializer {
 		window.addEventListener('gamepaddisconnected', (event)=> {
 			controller.scope.gamepadControlsUI = null;
 			controller.timer.gamepad_mapper = null;
-			MV_GameInitializer.clearGamepadControlsState(controller.scope.controls);
+			GamepadControls.clearGamepadControlsState(controller.scope.controls);
 			controller.togglePause();
 		});
 	}

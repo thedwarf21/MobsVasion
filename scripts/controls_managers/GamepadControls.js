@@ -1,5 +1,12 @@
 class GamepadControls {
 
+	static clearGamepadControlsState(controls_state) {
+		if (!MainController.scope.controls.mouse_aiming)
+			controls_state.firing_primary = false;
+		controls_state.firing_secondary = false;
+		controls_state.reloading = false;
+	}
+
 	static applyMenuControls() {
 		MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.pause);
 		if (MainController.timer.controls_state.paused) {

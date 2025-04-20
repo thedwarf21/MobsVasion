@@ -26,7 +26,7 @@ class MV_Timer {
 				WaitingCounters.applyWavePopScheduling();
 		}
 
-		MV_GameInitializer.clearGamepadControlsState(this.controls_state);
+		GamepadControls.clearGamepadControlsState(this.controls_state);
 		setTimeout(() => { this.letsPlay(); }, TIME_INTERVAL);
 	}
 
