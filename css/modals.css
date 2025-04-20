@@ -1,15 +1,18 @@
 /** Commun (surcharges et enrichissements du style de rs_dialog.css) */
+input { cursor: pointer; }
 .modal-button {
     width: 20vh;
     height: 5vh;
     
     border: none;
     border-radius: 1vh;
-    background: linear-gradient(to bottom, #1c93ae, #042831);
+    background: linear-gradient(to bottom, #0084a2, #002933);
     box-shadow: 0 0 .5vh rgba(0 0 0 / 1);
     
     font-size: 2.5vh;
     color: white;
+
+    /*cursor: pointer;*/
 }
 .modal-button:active { box-shadow: inset 0 0 0.5vh 0.1vh rgb(0, 0, 0); }
 .modal-button:hover { 
@@ -43,6 +46,7 @@
     font-size: 2.1vh;
     font-family: monospace;
     width: 28vh;
+    cursor: pointer;
 }
 
 /** UI parmètres */
