@@ -1,4 +1,4 @@
-class RS_AudioManager {
+class MV_AudioManager {
 
 	/**
 	 * Constructeur attendant une référence au paramétrage du son

@@ -1,4 +1,4 @@
-class RS_SaveManager {
+class MV_SaveManager {
 
 	get SAVE_FILENAME_PREFIX() { return "mv_save_"; }
 	set SAVE_FILENAME_PREFIX(value) { console.error("RS_SaveManager.SAVE_FILENAME_PREFIX est une constante et ne peut donc pas être modifiée"); }

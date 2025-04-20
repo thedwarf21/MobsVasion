@@ -21,30 +21,37 @@
     <link rel="stylesheet" type="text/css" href="css/rs_toast.css"/>
     
     <!-- Scripts -->
-    <script type="text/javascript" src="scripts/rs_wcl.js"></script>
-    <script type="text/javascript" src="scripts/rs_dialog.js"></script>
-    <script type="text/javascript" src="scripts/rs_toast.js"></script>
-    <script type="text/javascript" src="scripts/rs_game_engine.js"></script>
-    <script type="text/javascript" src="scripts/rs_save_manager.js"></script>
-    <script type="text/javascript" src="scripts/rs_audio_manager.js"></script>
+     <!-- La partie pouvant être importée en l'état dans un autre projet -->
+    <script type="text/javascript" src="scripts/common_tools/rs_wcl.js"></script>
+    <script type="text/javascript" src="scripts/common_tools/rs_dialog.js"></script>
+    <script type="text/javascript" src="scripts/common_tools/rs_toast.js"></script>
+    <script type="text/javascript" src="scripts/common_tools/rs_game_engine.js"></script>
 
+    <!-- Les entités créées pour isoler des problématiques précises, mais taillées sur mesure pour le présent programme -->
+    <script type="text/javascript" src="scripts/entities/MV_SaveManager.js"></script>
+    <script type="text/javascript" src="scripts/entities/MV_AudioManager.js"></script>
+    <script type="text/javascript" src="scripts/entities/MV_GameInitializer.js"></script>
+    <script type="text/javascript" src="scripts/entities/MV_GameScope.js"></script>
+
+    <!-- Gestion des traitements périodiques -->
     <script type="text/javascript" src="scripts/clock_managers/MV_Timer.js"></script>
     <script type="text/javascript" src="scripts/clock_managers/WaitingCounters.js"></script>
 
+    <!-- Gestion des commandes -->
     <script type="text/javascript" src="scripts/controls_managers/GamepadControls.js"></script>
     <script type="text/javascript" src="scripts/controls_managers/KeyboardAndMouseControls.js"></script>
 
-    <script type="text/javascript" src="scripts/MV_GameInitializer.js"></script>
-    <script type="text/javascript" src="scripts/MV_GameScope.js"></script>
-
+    <!-- Constantes globales + MainController -->
     <script type="text/javascript" src="scripts/main.js"></script>
 
+    <!-- Eléments affichés du jeu -->
     <script type="text/javascript" src="scripts/mobile_game_elements/Character.js"></script>
     <script type="text/javascript" src="scripts/mobile_game_elements/Gauge.js"></script>
     <script type="text/javascript" src="scripts/mobile_game_elements/Shot.js"></script>
     <script type="text/javascript" src="scripts/mobile_game_elements/Monster.js"></script>
     <script type="text/javascript" src="scripts/mobile_game_elements/AnimatedFrame.js"></script>
     
+    <!-- Contrôle des différentes vues -->
     <script type="text/javascript" src="scripts/view_managers/MainUI.js"></script>
     <script type="text/javascript" src="scripts/view_managers/ParametersPopup.js"></script>
     <script type="text/javascript" src="scripts/view_managers/ShopPopup.js"></script>
