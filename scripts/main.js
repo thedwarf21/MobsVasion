@@ -232,4 +232,16 @@ class MainController {
 		let random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
 		return random_messages[ MainController.radomValueInRange(0, random_messages.length - 1) ];
 	}
+
+	static intToHumanReadableString(value) {
+		if (value > 10**13)
+			return Math.floor(value / 10**12) + "T";
+		if (value > 10**10)
+			return Math.floor(value / 10**9) + "B";
+		if (value > 10**7)
+			return Math.floor(value / 10**6) + "M";
+		if (value > 10**4)
+			return Math.floor(value / 10**3) + "k";
+		return value;
+	}
 }

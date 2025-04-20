@@ -47,17 +47,34 @@ class MV_GameInitializer {
 				reloading: false
 			},
 			gamepad_mapper: null,
-			shop: [] // définira les articles du magasin (données de calcul du prix et de l'effet en fonction du niveau d'amélioration, ainsi que du libellé pour affichage et d'un identifiant unique)
+			shop: [{
+				name: "Déluge de balles",
+				code: "ASP",
+				description: "Améliorez les systèmes de refroidissement de vos canons pour augmenter la cadence de tirs.",
+				lbl_effect: "Temps de rechargement de l'arme (ms)",
+				max_level: 6,
+				show_multiplicator: TIME_INTERVAL,
+				level_0_effect: 15,
+				upgrade_value: -2,
+				level_1_price: 400,
+				level_2_price_coef : 1.5,
+				current_level: 0
+			}]
 		};
 	}
 
 	static prepareGame(controller) {
 		controller.scope = MV_GameInitializer.initial_scope;
+		MV_GameInitializer.__initShopManager(controller);
 		MV_GameInitializer.__addTouchListeners(controller);
 		MV_GameInitializer.__addKeyListeners(controller);
 		MV_GameInitializer.__addMouseListeners(controller);
 		MV_GameInitializer.__prepareGamepadControls(controller);
         MV_GameInitializer.__createTimer(controller);
+	}
+
+	static __initShopManager(controller) { 
+		controller.shop_manager = new MV_ShopManager( controller.scope.shop );
 	}
 
 	static __addKeyListeners(controller) {

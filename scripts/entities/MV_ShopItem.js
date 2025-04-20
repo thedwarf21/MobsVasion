@@ -1,0 +1,95 @@
+class MV_ShopItem {
+    name;
+    code;
+    description;
+    lbl_effect;
+    max_level;
+    show_multiplicator;
+    level_0_effect;
+    upgrade_value;
+    level_1_price;
+    level_2_price_coef;
+    curernt_level;
+    
+    html_element;
+    price_html_element;
+    effect_html_element;
+
+    constructor(shop_scope_item) {
+        for (let property in shop_scope_item) {
+            this[ property ] = shop_scope_item[ property ];
+        }
+
+        this.__initHtmlElement();
+    }
+
+    refreshHtmlDetails() {
+		this.__refreshPriceElement();
+		this.__refreshEffectElement();
+	}
+
+    __initHtmlElement() {
+		this.html_element = document.createElement("DIV");
+		this.html_element.classList.add("shop-item");
+
+        this.html_element.appendChild( this.__getHtmlElement("shop-item-name", this.name) );
+        this.html_element.appendChild( this.__getHtmlElement("shop-item-desc", this.description) );
+        this.price_html_element = this.__getHtmlElement("shop-item-price");
+        this.html_element.appendChild( this.price_html_element );
+        this.effect_html_element = this.__getHtmlElement("shop-item-effet");
+        this.html_element.appendChild( this.effect_html_element );
+
+        this.refreshHtmlDetails();
+		
+        this.html_element.addEventListener('click', (event)=> {
+			if (this.__isAffordable() && !this.__isMaxed()) {
+				MainController.scope.game.money -= this.__getPrice();
+				this.curernt_level++;
+
+				MainController.shop_manager.refreshAllShopItems(); //TODO le shop_manager du MainController n'existe pas encore
+			}
+		});
+	}
+
+    __getHtmlElement(css_class, content) {
+        let html_element = document.createElement("DIV");
+		html_element.classList.add(css_class);
+		html_element.innerHTML = content ? content : "";
+        return html_element;
+    }
+
+    __refreshPriceElement(isMaxed) {
+        let price = this.__getPrice();
+		
+        if (price > MainController.scope.game.money)
+			this.price_html_element.classList.add("too-expensive");
+
+        if (this.__isMaxed())
+            this.price_html_element.classList.add("maxed");
+		
+        this.price_html_element.innerHTML   = isMaxed
+							                ? "Niveau maximal atteint"
+							                : `<b>Prix:</b> ${MainController.intToHumanReadableString(price)} `;
+    }
+
+    __refreshEffectElement() {
+		let present_val = this.__getEffectValueAtLevel(this.curernt_level);
+		let increased_val = this.__getEffectValueAtLevel(this.curernt_level + 1);
+
+		let displayPresentValue	= this.show_multiplicator 
+							    ? Math.floor(present_val * this.show_multiplicator) 
+							    : present_val;
+		let displayIncreasedValue	= this.show_multiplicator
+							        ? Math.floor(increased_val * this.show_multiplicator)
+							        : increased_val;
+
+        this.effect_html_element.innerHTML = `<b>${this.lbl_effect}:</b> <span class="present-effect">${displayPresentValue}</span>`;
+        if (!this.__isMaxed())
+		    this.effect_html_element.innerHTML += ` >> <span class="increased-effect">${displayIncreasedValue}</span>`;
+    }
+
+    __getEffectValueAtLevel(level)  { return this.level_0_effect + (this.upgrade_value * level); }
+    __getPrice()                    { return MainController.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.curernt_level); }
+    __isAffordable()                { return this.__getPrice() > MainController.scope.game.money; }
+    __isMaxed()                     { return (this.max_level && this.curernt_level == this.max_level); }
+}
