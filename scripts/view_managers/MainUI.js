@@ -16,23 +16,46 @@ class MainUI {
 	}
 
     clearGameWindow() {
-		if (this.character) {
-			this.character.root_element.remove();
-			this.character = null;
-		}
-
-		for (let i = this.bloodPuddles.length - 1; i >= 0; i--)
-			this.bloodPuddles[i].remove();
-
-		for (let i = this.monsters.length - 1; i >= 0; i--) {
-			this.monsters[i].root_element.remove();
-			this.monsters.splice(i, 1);
-		}
+		this.__clearCharacter();
+		this.__clearBloodPuddles();
+		this.__clearMonsters();
+		this.__clearGauges();		
 
 		let soil_index = MainController.radomValueInRange(0, 2);
 		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
 		this.game_window.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
     }
+
+	__clearCharacter() {
+		if (this.character) {
+			this.character.root_element.remove();
+			this.character = null;
+		}
+	}
+
+	__clearBloodPuddles() {
+		for (let i = this.bloodPuddles.length - 1; i >= 0; i--)
+			this.bloodPuddles[i].remove();
+	}
+
+	__clearMonsters() {
+		for (let i = this.monsters.length - 1; i >= 0; i--) {
+			this.monsters[i].root_element.remove();
+			this.monsters.splice(i, 1);
+		}
+	}
+
+	__clearGauges() {
+		if (this.primaryReloadGauge) {
+			this.primaryReloadGauge.root_element.remove();
+			this.primaryReloadGauge = null;
+		}
+
+		if (this.secondaryReloadGauge) {
+			this.secondaryReloadGauge.root_element.remove();
+			this.secondaryReloadGauge = null;
+		}
+	}
 
 	addToGameWindow(element) {
 		this.game_window.appendChild(element);
