@@ -1,4 +1,4 @@
-class MV_Timer {
+class GameClock {
 
 	/**
 	 * Constructeur attendant les références au mapper de manette, ainsi qu'au dictionnaire de contrôles

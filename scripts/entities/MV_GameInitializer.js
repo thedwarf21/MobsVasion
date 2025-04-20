@@ -152,6 +152,6 @@ class MV_GameInitializer {
 	}
 
 	static __createTimer(controller) {
-		controller.timer = new MV_Timer(controller.scope.controls);
+		controller.timer = new GameClock(controller.scope.controls);
 	}
 }
