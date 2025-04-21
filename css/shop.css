@@ -74,9 +74,12 @@
 }
 .shop-item-price.too-expensive,
 .shop-item-price.maxed { 
-    color: red;
-    text-shadow: 0.1vh 0.1vh #ffd146, -0.1vh -0.1vh #ffd146, -0.1vh 0.1vh #ffd146, 0.1vh -0.1vh #ffd146;
     font-weight: bold;
+    text-shadow: none;
+    
+    color: transparent;
+    background:  linear-gradient(to bottom, #4f0000, red);
+    background-clip: text;
 }
 
 .shop-item-effet {
