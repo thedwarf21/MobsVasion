@@ -1,6 +1,7 @@
 class Abilities {
 
-    static getShotInterval() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RAT") ); }
+    static getShotInterval()    { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RAT") ); }
+    static getShotPower()       { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("POW") ); }
 
     static __getShopEntryByCode(code) {
         for (let shop_entry of MainController.scope.shop) {

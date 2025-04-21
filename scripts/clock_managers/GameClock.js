@@ -118,7 +118,7 @@ class GameClock {
 			if (monster.hitbox.checkCollide(shot.hitbox)) {
 				shots.splice(i, 1);
 				shot.root_element.remove();
-				monster.wound(1, ()=> {
+				monster.wound(Abilities.getShotPower(), ()=> {
 					MainController.UI.monsters.splice(index, 1);
 					MV_GameScope.monsterSlayed();
 				});

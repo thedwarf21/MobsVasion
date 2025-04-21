@@ -52,7 +52,7 @@ class MV_Monster extends MobileGameElement {
     }
 
     __dieOrBleed(onMonsterDeath) {
-        if (!this.__health_points) {
+        if (this.__health_points <= 0) {
             this.root_element.remove();
 
             this.__createBloodPuddle(this.x + MONSTER_SIZE/2, this.y + MONSTER_SIZE/2, true);
