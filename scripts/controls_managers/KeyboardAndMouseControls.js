@@ -24,11 +24,8 @@ class KeyboardAndMouseControls {
                 angle = 45;
 
             if (angle != absurd_value) {
-                let rad_angle = character.angle * Math.PI / 180;
                 character.angle = angle;
-                character.deltaX = CHARACTER_SPEED * Math.cos(rad_angle);
-                character.deltaY = CHARACTER_SPEED * Math.sin(rad_angle);
-                character.move();
+                character.walk(angle * Math.PI / 180);
             }
 
             if (MainController.scope.controls.mouse_aiming)

@@ -20,6 +20,13 @@ class MV_Character extends MobileGameElement {
 		}
     }
 
+    walk(rad_angle) {
+        let character_speed = Abilities.getCharacterSpeed();
+        this.deltaX = character_speed * Math.cos(rad_angle);
+        this.deltaY = character_speed * Math.sin(rad_angle);
+        this.move();
+    }
+
     __createShot() {
         let aiming_rad_angle = this.aiming_angle * Math.PI / 180;
         let center_spot = this.centralSpotPosition();

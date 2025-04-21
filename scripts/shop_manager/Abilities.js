@@ -5,6 +5,7 @@ class Abilities {
     static getShotInterval()    { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RAT") ); }
     static getShotPower()       { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("POW") ); }
     static getMaxPlayerHealth() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("CON") ); }
+    static getCharacterSpeed()  { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("AGI") ); }
 
     static setMaxHealthBinding(character_health_bar) {
         let max_health_shop_entry = Abilities.__getShopEntryByCode("CON");
