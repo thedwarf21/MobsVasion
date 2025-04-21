@@ -11,6 +11,7 @@ class MV_GameInitializer {
 		return {
 			game: {
 				money: 0,
+				human_readable_money: "0",
 				knowledge_points: 0,
 				current_level_xp: 0,
 				player_level: 0,
@@ -49,15 +50,64 @@ class MV_GameInitializer {
 			gamepad_mapper: null,
 			shop: [{
 				name: "Déluge de balles",
-				code: "ASP",
-				description: "Améliorez les systèmes de refroidissement de vos canons pour augmenter la cadence de tirs.",
-				lbl_effect: "Temps de rechargement de l'arme (ms)",
-				max_level: 6,
+				code: "RAT",
+				description: "Réduit le recul de l'arme, pour faciliter la visée entre deux coups de feu",
+				lbl_effect: "Temps entre deux coups (ms)",
+				max_level: 10,
 				show_multiplicator: TIME_INTERVAL,
-				level_0_effect: 15,
-				upgrade_value: -2,
-				level_1_price: 400,
+				level_0_effect: TIMEOUTS.shot_interval,
+				upgrade_value: -1,
+				level_1_price: 50,
 				level_2_price_coef : 1.5,
+				current_level: 0
+			}, {
+				name: "Puissance de feu",
+				code: "POW",
+				description: "Modifie l'arme, afin d'en améliorer la puissance de feu",
+				lbl_effect: "Dégats par tir",
+				level_0_effect: 1,
+				upgrade_value: 0.25,
+				level_1_price: 40,
+				level_2_price_coef : 1.75,
+				current_level: 0
+			}, 
+			
+			{
+				name: "Rechargement rapide",
+				code: "RLD",
+				description: "Permet de changer plus rapidement de chargeur",
+				lbl_effect: "Temps de rechargement",
+				max_level: 15,
+				show_multiplicator: TIME_INTERVAL,
+				level_0_effect: TIMEOUTS.reload_time,
+				upgrade_value: -1,
+				current_level: 0
+			}, {
+				name: "Récupération rapide",
+				code: "DAR",
+				description: "Permet de récupérer plus vite d'une esquive",
+				lbl_effect: "Temps de rechargement",
+				max_level: 15,
+				show_multiplicator: TIME_INTERVAL,
+				level_0_effect: TIMEOUTS.dash_interval,
+				upgrade_value: -3,
+				current_level: 0
+			}, {
+				name: "Agilité",
+				code: "AGI",
+				description: "Permet de courir plus vite",
+				lbl_effect: "Vitesse de déplacement",
+				max_level: 10,
+				level_0_effect: CHARACTER_SPEED,
+				upgrade_value: 0.5,
+				current_level: 0
+			}, {
+				name: "Constitution",
+				code: "CON",
+				description: "Permet de mieux encaisser les coups",
+				lbl_effect: "Santé maximale",
+				level_0_effect: CHARACTER_MAX_LIFE,
+				upgrade_value: 10,
 				current_level: 0
 			}]
 		};

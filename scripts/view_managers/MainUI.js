@@ -96,8 +96,21 @@ class MainUI {
     __prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
 			object: MainController.scope.game,
-			property: "money"
-		}).addBinding(document.getElementById("wave-swag"), "innerHTML");
+			property: "human_readable_money",
+			callback: (value)=> {   // MAJ du display de l'argent dans le magasin, si la popup est ouverte 
+				if (MainController.shop_popup) 
+					MainController.shop_popup.root_element.querySelector("#player_money").innerHTML = value;
+			}
+		}).addBinding( document.getElementById("wave-swag"), "innerHTML" );
+
+		new RS_Binding({
+			object: MainController.scope.game,
+			property: "money",
+			callback: (value)=> {
+				MainController.scope.game.human_readable_money = MainController.intToHumanReadableString(value);
+			}
+		});
+
     }
 
     __prepareAmmoAutoRefresh() {
