@@ -71,7 +71,7 @@ class ShopItem {
         MainController.shop_manager.refreshAllShopItems();
     }
 
-    __refreshPriceElement(isMaxed) {
+    __refreshPriceElement() {
         if (!this.__isAffordable())
 			this.price_html_element.classList.add("too-expensive");
         else this.price_html_element.classList.remove("too-expensive"); 
@@ -81,7 +81,7 @@ class ShopItem {
         else this.price_html_element.classList.remove("maxed"); 
         
         let price = this.__getPrice();
-        this.price_html_element.innerHTML   = isMaxed
+        this.price_html_element.innerHTML   = this.__isMaxed()
 							                ? "Niveau maximal atteint"
 							                : `<b>Prix:</b> ${MainController.intToHumanReadableString(price)} `;
     }
