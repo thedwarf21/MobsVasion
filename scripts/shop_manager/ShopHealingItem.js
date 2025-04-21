@@ -16,9 +16,13 @@ class ShopHealingItem {
             this.price_element.classList.add("too-expensive");
         else this.price_element.classList.remove("too-expensive");
 
-        if (this.__isMaxed())
+        if (this.__isMaxed()) {
             this.price_element.classList.add("maxed");
-        else this.price_element.classList.remove("maxed");
+            this.price_element.innerHTML = "Santé déjà au maximum"
+        } else {
+            this.price_element.classList.remove("maxed");
+            this.price_element.innerHTML = this.price;
+        }
     }
 
     __initRootElement(name) {
