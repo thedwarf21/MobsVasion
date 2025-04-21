@@ -9,7 +9,7 @@ class MV_ShopItem {
     upgrade_value;
     level_1_price;
     level_2_price_coef;
-    curernt_level;
+    current_level;
     
     html_element;
     price_html_element;
@@ -32,11 +32,13 @@ class MV_ShopItem {
 		this.html_element = document.createElement("DIV");
 		this.html_element.classList.add("shop-item");
 
-        this.html_element.appendChild( this.__getHtmlElement("shop-item-name", this.name) );
-        this.html_element.appendChild( this.__getHtmlElement("shop-item-desc", this.description) );
-        this.price_html_element = this.__getHtmlElement("shop-item-price");
+        this.html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-name", this.name) );
+        this.html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-desc", this.description) );
+
+        this.price_html_element = MV_ShopItem.getHtmlElement("shop-item-price");
         this.html_element.appendChild( this.price_html_element );
-        this.effect_html_element = this.__getHtmlElement("shop-item-effet");
+
+        this.effect_html_element = MV_ShopItem.getHtmlElement("shop-item-effet");
         this.html_element.appendChild( this.effect_html_element );
 
         this.refreshHtmlDetails();
@@ -44,14 +46,14 @@ class MV_ShopItem {
         this.html_element.addEventListener('click', (event)=> {
 			if (this.__isAffordable() && !this.__isMaxed()) {
 				MainController.scope.game.money -= this.__getPrice();
-				this.curernt_level++;
+				this.current_level++;
 
 				MainController.shop_manager.refreshAllShopItems(); //TODO le shop_manager du MainController n'existe pas encore
 			}
 		});
 	}
 
-    __getHtmlElement(css_class, content) {
+    static getHtmlElement(css_class, content) {
         let html_element = document.createElement("DIV");
 		html_element.classList.add(css_class);
 		html_element.innerHTML = content ? content : "";
@@ -59,22 +61,21 @@ class MV_ShopItem {
     }
 
     __refreshPriceElement(isMaxed) {
-        let price = this.__getPrice();
-		
-        if (price > MainController.scope.game.money)
+        if (!this.__isAffordable())
 			this.price_html_element.classList.add("too-expensive");
-
+        
         if (this.__isMaxed())
             this.price_html_element.classList.add("maxed");
-		
+        
+        let price = this.__getPrice();
         this.price_html_element.innerHTML   = isMaxed
 							                ? "Niveau maximal atteint"
 							                : `<b>Prix:</b> ${MainController.intToHumanReadableString(price)} `;
     }
 
     __refreshEffectElement() {
-		let present_val = this.__getEffectValueAtLevel(this.curernt_level);
-		let increased_val = this.__getEffectValueAtLevel(this.curernt_level + 1);
+		let present_val = this.__getEffectValueAtLevel(this.current_level);
+		let increased_val = this.__getEffectValueAtLevel(this.current_level + 1);
 
 		let displayPresentValue	= this.show_multiplicator 
 							    ? Math.floor(present_val * this.show_multiplicator) 
@@ -89,7 +90,7 @@ class MV_ShopItem {
     }
 
     __getEffectValueAtLevel(level)  { return this.level_0_effect + (this.upgrade_value * level); }
-    __getPrice()                    { return MainController.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.curernt_level); }
-    __isAffordable()                { return this.__getPrice() > MainController.scope.game.money; }
-    __isMaxed()                     { return (this.max_level && this.curernt_level == this.max_level); }
+    __getPrice()                    { return MainController.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.current_level); }
+    __isAffordable()                { return this.__getPrice() <= MainController.scope.game.money; }
+    __isMaxed()                     { return (this.max_level && this.current_level == this.max_level); }
 }

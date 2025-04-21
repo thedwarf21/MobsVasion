@@ -126,3 +126,21 @@ _   Mettre à jour la doc, à chaque étape majeure
 Choix dans le lobby, entre plusieurs armes pour le tir principal   \
 Choix dans le lobby, entre plusieurs armes pour le tir secondaire   |=> facilitation à la création de nouveau contenu
 Définir de nouveaux types de monstres                              /
+
+
+
+------------- EN COURS (shop popup) --------------
+
+V Faire apparaître l'argent et les points de compétence dans l'UI
+V Travailler le visuel du shop-header pour que ce soit intuitif (qu'on voie bien que ce sont deux onglets)
+V Faire apparaître le numéro de la vague dans le bouton de fermeture de la popup
+V Définir toutes les classes CSS d'état (too-expensive, maxed)
+_ Faire fonctionner les items de la salle d'entraînement (il faudra probablement les gérer via une autre classe)
+
+    --      ce serait bien de commit ici ...      --
+_ prise en compte de l'état des items magasin, dans les mécaniques du jeu
+    -- un commit par item magasin, ce serait bien --
+
+_ Revoir la mise en page : 
+    _ à gauche, les items avec juste les noms
+    _ à droite, le détail de l'item survolé (ou focused, avec la manette)

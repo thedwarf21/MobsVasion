@@ -1,52 +1,80 @@
 class MV_ShopManager {
     __shop_items;
+    __shop_items_container;
 
     constructor(shop_scope) {
-        this.__shop_tiems = [];
+        this.__shop_items = [];
         for (let shop_item of shop_scope) {
-            this.__shop_tiems.push( new MV_ShopItem(shop_item) );
+            this.__shop_items.push( new MV_ShopItem(shop_item) );
         }
     }
 
+    setShopItemsContainer(container_element) { this.__shop_items_container = container_element; }
+
 	refreshAllShopItems() {
+        this.__refreshHealingItems();
+
 		for (let shop_item of this.__shop_items)
             shop_item.refreshHtmlDetails();
 	}
 
+    displayMoneyShop() {
+        this.__shop_items_container.innerHTML = "";
+        this.__attachHealingItems();
+        
+        for (let shop_item of this.__shop_items) {
+            if (shop_item.level_1_price)
+                this.__shop_items_container.appendChild(shop_item.html_element);
+        }
+    }
 
-    /* je le garde sous le coude, pour mettre à jour ShopPopup*/
-	show(onPopupShown) {
-		let scope = AH_MainController.scope;
-		scope.controls.paused = true;
-		AH_AudioManager.startMusicLoop(GAME_MUSIC);
+    displayTrainingRoom() {
+        this.__shop_items_container.innerHTML = "";
 
-		// Construction de la popup
-		let popup = new RS_Dialog("shop", "Magasin", [], [], [], false, "tpl_shop.html", function() {
-			popup.querySelector("#player_money").innerHTML = AH_MainController.intToHumanReadableString(scope.game.money) + " Brouzoufs";
+        for (let shop_item of this.__shop_items) {
+            if (!shop_item.level_1_price)
+                this.__shop_items_container.appendChild(shop_item.html_element);
+        }
+    }
 
-			// Parcours des la liste "shop" pour afficher le magasin
-			let itemsContainer = popup.querySelector("#items-container");
-			for (let shopElem of scope.shop) {
-				let shopItem = AH_Shop.__getHtmlShopItem(shopElem);
-				shopElem.htmlElement = shopItem;
-				itemsContainer.appendChild(shopItem);
-			}
+    __attachHealingItems() {
+        this.__shop_items_container.appendChild( this.__getHealingItem("Verre d'eau", 2, 5) );
+        this.__shop_items_container.appendChild( this.__getHealingItem("Repas chaud", 8, 25) );
+    }
 
-			// Libellé et onClick du bouton de fermeture de la popup
-			let closeBtn = popup.querySelector("#btn_close")
-			closeBtn.value = "Affronter vague " + AH_MainController.scope.game.level;
-			closeBtn.addEventListener("click", ()=> {
-				popup.closeModal();
-				AH_SaveManager.saveGame();
-				AH_MainController.startWave();
-			});
+    __getHealingItem(name, price, hp_recover) {
+        let html_element = document.createElement("DIV");
+        html_element.classList.add("shop-item");
+        html_element.classList.add("healing-item");
 
-			// Affichage de la popup
-			document.body.appendChild(popup);
-			
-			// Si une fonction est paramétrée dans onPopupShow, on l'exécute
-			if (onPopupShown)
-				onPopupShown();
-		});
-	}
+        html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-name", name) );
+        html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-desc", `Rend ${hp_recover} points de vie`) );
+
+        let price_element = MV_ShopItem.getHtmlElement("shop-item-price", `<b>Prix:</b> ${price}`);
+        price_element.price = price;
+        html_element.appendChild( price_element );
+
+        html_element.addEventListener('click', ()=> {
+            if (MainController.scope.game.money >= price && MainController.scope.game.health_points < CHARACTER_MAX_LIFE) {
+                MainController.scope.game.money -= price;
+                MainController.scope.game.health_points += hp_recover;
+    
+                if (MainController.scope.game.health_points > CHARACTER_MAX_LIFE)
+                    MainController.scope.game.health_points = CHARACTER_MAX_LIFE;
+
+                MainController.shop_manager.refreshAllShopItems();
+            }
+        });
+
+        return html_element;
+    }
+
+    __refreshHealingItems() {
+        let healing_items_price_element = document.querySelectorAll(".shop-item.healing-item .shop-item-price");
+        for (let price_element of healing_items_price_element) {
+            if (price_element.price > MainController.scope.game.money)
+                price_element.classList.add("too-expensive");
+            else price_element.classList.remove("too-expensive");
+        }
+    }
 }

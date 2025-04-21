@@ -1,12 +1,26 @@
 <div class="dialog-body">
-    <img id="friend-face" src="images/friend_worried.png">
-    <div id="message">
-        Une boutique pour te ravitailler ?<br/><br/>
-        C'est une bonne idée, mais avec la pagaille provoquée par ces monstres en vadrouille, il va d'abord falloir remettre un peu d'ordre, je le crains...
+    <div class="shop-header">
+        <button class="shop-area-button" id="money_selector" onclick="ShopPopup.switchToMoneyShop()">
+            Ravitaillement
+        </button>
+        <button class="shop-area-button" id="knowledge_selector" onclick="ShopPopup.switchToTrainingRoom()">
+            Salle d'entrainement
+        </button>
     </div>
+    <div id="items-container"></div>
 </div>
 
 <!-- Bouton de fermeture -->
 <div class="dialog-footer">
+    <div class="player-goods-display money">
+        <div class="swag"></div>
+        <span id="player_money"></span>
+    </div>
+
 	<input type="button" class="modal-button" value="Fermer" id="btn_close" />
+    
+    <div class="player-goods-display knowledge">
+        <div class="xp-scroll"></div>
+        <span id="knowledge_points"></span>
+    </div>
 </div>
