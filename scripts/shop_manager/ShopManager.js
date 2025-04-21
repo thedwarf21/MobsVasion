@@ -1,4 +1,4 @@
-class MV_ShopManager {
+class ShopManager {
     __shop_items;
     __shop_items_container;
     __healing_items;
@@ -7,7 +7,7 @@ class MV_ShopManager {
         this.__shop_items = [];
         this.__healing_items = [];
         for (let shop_item of shop_scope) {
-            this.__shop_items.push( new MV_ShopItem(shop_item) );
+            this.__shop_items.push( new ShopItem(shop_item) );
         }
     }
 
@@ -40,11 +40,11 @@ class MV_ShopManager {
     }
 
     __attachHealingItems() {
-        let small_heal =  new MV_ShopHealingItem("Verre d'eau", 2, 5);
+        let small_heal =  new ShopHealingItem("Verre d'eau", 2, 5);
         this.__healing_items.push(small_heal);
         this.__shop_items_container.appendChild(small_heal.root_element);
 
-        let large_heal = new MV_ShopHealingItem("Repas chaud", 8, 25);
+        let large_heal = new ShopHealingItem("Repas chaud", 8, 25);
         this.__healing_items.push(large_heal);
         this.__shop_items_container.appendChild(large_heal.root_element);
     }

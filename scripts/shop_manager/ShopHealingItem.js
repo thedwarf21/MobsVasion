@@ -1,4 +1,4 @@
-class MV_ShopHealingItem {
+class ShopHealingItem {
     price;
     hp_recover;
     root_element;
@@ -27,10 +27,10 @@ class MV_ShopHealingItem {
         html_element.classList.add("healing-item");
         this.root_element = html_element;
 
-        html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-name", name) );
-        html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-desc", `Rend ${this.hp_recover} points de vie`) );
+        html_element.appendChild( ShopItem.getHtmlElement("shop-item-name", name) );
+        html_element.appendChild( ShopItem.getHtmlElement("shop-item-desc", `Rend ${this.hp_recover} points de vie`) );
 
-        this.price_element = MV_ShopItem.getHtmlElement("shop-item-price", `<b>Prix:</b> ${this.price}`);
+        this.price_element = ShopItem.getHtmlElement("shop-item-price", `<b>Prix:</b> ${this.price}`);
         html_element.appendChild( this.price_element );
 
         html_element.addEventListener('click', ()=> {

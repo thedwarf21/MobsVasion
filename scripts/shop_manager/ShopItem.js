@@ -1,4 +1,4 @@
-class MV_ShopItem {
+class ShopItem {
     name;
     code;
     description;
@@ -35,13 +35,13 @@ class MV_ShopItem {
 		this.html_element = document.createElement("DIV");
 		this.html_element.classList.add("shop-item");
 
-        this.html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-name", this.name) );
-        this.html_element.appendChild( MV_ShopItem.getHtmlElement("shop-item-desc", this.description) );
+        this.html_element.appendChild( ShopItem.getHtmlElement("shop-item-name", this.name) );
+        this.html_element.appendChild( ShopItem.getHtmlElement("shop-item-desc", this.description) );
 
-        this.price_html_element = MV_ShopItem.getHtmlElement("shop-item-price");
+        this.price_html_element = ShopItem.getHtmlElement("shop-item-price");
         this.html_element.appendChild( this.price_html_element );
 
-        this.effect_html_element = MV_ShopItem.getHtmlElement("shop-item-effet");
+        this.effect_html_element = ShopItem.getHtmlElement("shop-item-effet");
         this.html_element.appendChild( this.effect_html_element );
 
         this.refreshHtmlDetails();

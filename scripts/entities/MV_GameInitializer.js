@@ -122,7 +122,7 @@ class MV_GameInitializer {
 	}
 
 	static __initShopManager(controller) { 
-		controller.shop_manager = new MV_ShopManager( controller.scope.shop );
+		controller.shop_manager = new ShopManager( controller.scope.shop );
 	}
 
 	static __addKeyListeners(controller) {
