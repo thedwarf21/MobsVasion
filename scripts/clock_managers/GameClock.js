@@ -66,8 +66,9 @@ class GameClock {
 		if (this.controls_state.firing_secondary && !MainController.UI.secondaryReloadGauge) {
 			character.dash();
 			this.controls_state.firing_secondary = false;
-			MainController.scope.game.waiting_counter.dash = TIMEOUTS.dash_interval;
-			let gauge = new MV_Gauge("secondary-reload", TIMEOUTS.dash_interval, 0);
+			let dash_interval = Abilities.getSecondaryReloadInterval();
+			MainController.scope.game.waiting_counter.dash = dash_interval;
+			let gauge = new MV_Gauge("secondary-reload", dash_interval, 0);
 			MainController.UI.secondaryReloadGauge = gauge;
 			MainController.UI.character.root_element.appendChild( gauge.root_element );
 		}

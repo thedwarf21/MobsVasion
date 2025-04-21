@@ -39,7 +39,7 @@ class WaitingCounters {
 				MainController.UI.primaryReloadGauge.assignValue(Abilities.getPrimaryReloadInterval() - counter_value);
 				break;
 			case "dash":
-				MainController.UI.secondaryReloadGauge.assignValue(TIMEOUTS.dash_interval - counter_value);
+				MainController.UI.secondaryReloadGauge.assignValue(Abilities.getSecondaryReloadInterval() - counter_value);
 				break;
 			default:
 				break;	
