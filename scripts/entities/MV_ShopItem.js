@@ -11,6 +11,8 @@ class MV_ShopItem {
     level_2_price_coef;
     current_level;
     
+    is_money_priced_item;
+
     html_element;
     price_html_element;
     effect_html_element;
@@ -20,6 +22,7 @@ class MV_ShopItem {
             this[ property ] = shop_scope_item[ property ];
         }
 
+        this.is_money_priced_item = !!this.level_1_price;  // initialisation du flag permettant de différencier les items "Ravitaillement" de "Salle d'entrainement"
         this.__initHtmlElement();
     }
 
@@ -44,13 +47,9 @@ class MV_ShopItem {
         this.refreshHtmlDetails();
 		
         this.html_element.addEventListener('click', (event)=> {
-			if (this.__isAffordable() && !this.__isMaxed()) {
-				MainController.scope.game.money -= this.__getPrice();
-				this.current_level++;
-
-				MainController.shop_manager.refreshAllShopItems(); //TODO le shop_manager du MainController n'existe pas encore
-			}
-		});
+            if (this.__isAffordable() && !this.__isMaxed())
+                this.__performBuying();
+        });
 	}
 
     static getHtmlElement(css_class, content) {
@@ -60,12 +59,23 @@ class MV_ShopItem {
         return html_element;
     }
 
+    __performBuying() {
+        if (this.is_money_priced_item)
+            MainController.scope.game.money -= this.__getPrice();
+        else
+            MainController.scope.game.knowledge_points -= this.__getPrice();
+        this.current_level++;
+        MainController.shop_manager.refreshAllShopItems();
+    }
+
     __refreshPriceElement(isMaxed) {
         if (!this.__isAffordable())
 			this.price_html_element.classList.add("too-expensive");
+        else this.price_html_element.classList.remove("too-expensive"); 
         
         if (this.__isMaxed())
             this.price_html_element.classList.add("maxed");
+        else this.price_html_element.classList.remove("maxed"); 
         
         let price = this.__getPrice();
         this.price_html_element.innerHTML   = isMaxed
@@ -89,8 +99,18 @@ class MV_ShopItem {
 		    this.effect_html_element.innerHTML += ` >> <span class="increased-effect">${displayIncreasedValue}</span>`;
     }
 
+    __isAffordable() {
+        return this.is_money_priced_item 
+            ?  this.__getPrice() <= MainController.scope.game.money 
+            :  !!MainController.scope.game.knowledge_points;
+    }
+
+    __getPrice() { 
+        return this.is_money_priced_item 
+            ?  MainController.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.current_level)
+            :  1; 
+    }
+
     __getEffectValueAtLevel(level)  { return this.level_0_effect + (this.upgrade_value * level); }
-    __getPrice()                    { return MainController.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.current_level); }
-    __isAffordable()                { return this.__getPrice() <= MainController.scope.game.money; }
     __isMaxed()                     { return (this.max_level && this.current_level == this.max_level); }
 }

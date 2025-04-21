@@ -70,27 +70,13 @@ class MV_GameInitializer {
 				level_1_price: 40,
 				level_2_price_coef : 1.75,
 				current_level: 0
-			}, 
-			
-			{
-				name: "Rechargement rapide",
-				code: "RLD",
-				description: "Permet de changer plus rapidement de chargeur",
-				lbl_effect: "Temps de rechargement",
-				max_level: 15,
-				show_multiplicator: TIME_INTERVAL,
-				level_0_effect: TIMEOUTS.reload_time,
-				upgrade_value: -1,
-				current_level: 0
 			}, {
-				name: "Récupération rapide",
-				code: "DAR",
-				description: "Permet de récupérer plus vite d'une esquive",
-				lbl_effect: "Temps de rechargement",
-				max_level: 15,
-				show_multiplicator: TIME_INTERVAL,
-				level_0_effect: TIMEOUTS.dash_interval,
-				upgrade_value: -3,
+				name: "Constitution",
+				code: "CON",
+				description: "Permet de mieux encaisser les coups",
+				lbl_effect: "Santé maximale",
+				level_0_effect: CHARACTER_MAX_LIFE,
+				upgrade_value: 10,
 				current_level: 0
 			}, {
 				name: "Agilité",
@@ -102,12 +88,24 @@ class MV_GameInitializer {
 				upgrade_value: 0.5,
 				current_level: 0
 			}, {
-				name: "Constitution",
-				code: "CON",
-				description: "Permet de mieux encaisser les coups",
-				lbl_effect: "Santé maximale",
-				level_0_effect: CHARACTER_MAX_LIFE,
-				upgrade_value: 10,
+				name: "Rechargement rapide",
+				code: "RLD",
+				description: "Permet de changer plus rapidement de chargeur",
+				lbl_effect: "Temps de rechargement (ms)",
+				max_level: 15,
+				show_multiplicator: TIME_INTERVAL,
+				level_0_effect: TIMEOUTS.reload_time,
+				upgrade_value: -1,
+				current_level: 0
+			}, {
+				name: "Récupération rapide",
+				code: "DAR",
+				description: "Permet de récupérer plus vite d'une esquive",
+				lbl_effect: "Temps de rechargement (ms)",
+				max_level: 15,
+				show_multiplicator: TIME_INTERVAL,
+				level_0_effect: TIMEOUTS.dash_interval,
+				upgrade_value: -3,
 				current_level: 0
 			}]
 		};

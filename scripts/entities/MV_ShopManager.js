@@ -23,7 +23,7 @@ class MV_ShopManager {
         this.__attachHealingItems();
         
         for (let shop_item of this.__shop_items) {
-            if (shop_item.level_1_price)
+            if (shop_item.is_money_priced_item)
                 this.__shop_items_container.appendChild(shop_item.html_element);
         }
     }
@@ -32,7 +32,7 @@ class MV_ShopManager {
         this.__shop_items_container.innerHTML = "";
 
         for (let shop_item of this.__shop_items) {
-            if (!shop_item.level_1_price)
+            if (!shop_item.is_money_priced_item)
                 this.__shop_items_container.appendChild(shop_item.html_element);
         }
     }
