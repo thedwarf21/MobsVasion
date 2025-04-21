@@ -1,7 +1,23 @@
 class Abilities {
 
+    static setCurrentLevel(code, value) { Abilities.__getShopEntryByCode(code).current_level = value; }
+
     static getShotInterval()    { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RAT") ); }
     static getShotPower()       { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("POW") ); }
+    static getMaxPlayerHealth() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("CON") ); }
+
+    static setMaxHealthBinding(character_health_bar) {
+        let max_health_shop_entry = Abilities.__getShopEntryByCode("CON");
+        new RS_Binding({
+            object: max_health_shop_entry,
+            property: "current_level",
+            callback: (value, oldValue) => {
+                let increasement = value - oldValue;
+                character_health_bar.setMaxValue(Abilities.getMaxPlayerHealth());
+                MainController.scope.game.health_points += increasement * max_health_shop_entry.upgrade_value; // propriété health_points bound => refresh affichage jauge
+            }
+        });
+    }
 
     static __getShopEntryByCode(code) {
         for (let shop_entry of MainController.scope.shop) {

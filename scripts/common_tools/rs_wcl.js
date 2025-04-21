@@ -223,11 +223,12 @@ class RS_Binding {
   /* Accesseur et mutateur de la "value" du binding (le mutateur se charge du binding model -> DOM) */
   valueGetter() { return this.value; }
   valueSetter (val) {
+    let oldValue = this.value;
     this.value = val;
     for (let binding of this.elementBindings)
       binding.element[binding.attribute] = val;
     if (this.setterCallback) 
-      this.setterCallback(val);
+      this.setterCallback(val, oldValue);
   }
 
   /********************************************************************************************

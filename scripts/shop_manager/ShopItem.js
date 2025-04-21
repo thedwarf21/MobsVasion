@@ -64,7 +64,10 @@ class ShopItem {
             MainController.scope.game.money -= this.__getPrice();
         else
             MainController.scope.game.knowledge_points -= this.__getPrice();
+        
         this.current_level++;
+        Abilities.setCurrentLevel(this.code, this.current_level);
+
         MainController.shop_manager.refreshAllShopItems();
     }
 

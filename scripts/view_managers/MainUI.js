@@ -80,7 +80,7 @@ class MainUI {
 	}
 
 	checkPanicMode() {
-		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * CHARACTER_MAX_LIFE;
+		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
 		let panic_element = this.panicModeHtmlElement;
 		
 		if (!panic_element && MainController.scope.game.health_points <= panic_threshold) {
@@ -128,7 +128,7 @@ class MainUI {
     }
 
     __createLifeBar() {
-		let character_health_bar = new MV_Gauge("character-health-bar", CHARACTER_MAX_LIFE, MainController.scope.game.health_points);
+		let character_health_bar = new MV_Gauge("character-health-bar", Abilities.getMaxPlayerHealth(), MainController.scope.game.health_points);
 		this.addToGameWindow(character_health_bar.root_element);
         return character_health_bar;
     }
@@ -139,6 +139,7 @@ class MainUI {
 			property: "health_points",
 			callback: () => { character_health_bar.assignValue(MainController.scope.game.health_points); }
 		});
+		Abilities.setMaxHealthBinding(character_health_bar);
     }
 
     __createXpBar() {

@@ -41,8 +41,9 @@ class MV_GameScope {
     static healPlayer(amount) {
         MainController.scope.game.health_points += amount;
 
-        if (MainController.scope.game.health_points > CHARACTER_MAX_LIFE)
-            MainController.scope.game.health_points = CHARACTER_MAX_LIFE;
+        let max_hp = Abilities.getMaxPlayerHealth();
+        if (MainController.scope.game.health_points > max_hp)
+            MainController.scope.game.health_points = max_hp;
     }
 
     static __isWaveComplete() {
@@ -68,12 +69,14 @@ class MV_GameScope {
 
     static __characterRescueFees() {
         let scope = MainController.scope.game;
-        if (CHARACTER_MAX_LIFE > scope.money * HP_PRICE) {
+        let max_hp = Abilities.getMaxPlayerHealth();
+
+        if (max_hp > scope.money * HP_PRICE) {
             scope.health_points = scope.money * HP_PRICE;
             scope.money = 0;
         } else {
-            scope.health_points = CHARACTER_MAX_LIFE;
-            scope.money -= CHARACTER_MAX_LIFE / HP_PRICE;
+            scope.health_points = max_hp;
+            scope.money -= max_hp / HP_PRICE;
         }
 
         if (!scope.health_points)
