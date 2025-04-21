@@ -158,7 +158,7 @@ class MainController {
 				break;
 		}
 
-		MainController.__performMonsterPop(x_monster, y_monster);
+		AnimationsHelper.monsterPop(x_monster, y_monster);
 	}
 
     static startWave() {
@@ -166,36 +166,11 @@ class MainController {
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
 
-		let pop_animation = new MV_AnimatedFrame(
-			MainController.viewport, 
-			( MainController.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE ) / 2, 
-			( MainController.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE ) / 2, 
-			CHARACTER_SIZE, CHARACTER_SIZE, ANIMATIONS.monster_pop.css_class, ANIMATIONS.monster_pop.duration, 
-			()=> {
-				let character = new MV_Character(MainController.viewport);
-				MainController.UI.character = character;
-				MainController.UI.addToGameWindow(character.root_element);
-			}
-		);
-		MainController.UI.addToGameWindow(pop_animation.root_element);
+		AnimationsHelper.characterPop();
 		MainController.__scheduleLevelMonstersPop();
 
 		MainController.scope.controls.paused = false;
     }
-
-	static __performMonsterPop(x_monster, y_monster) {
-		let animation = ANIMATIONS.monster_pop;
-		MainController.UI.addToGameWindow( 
-			new MV_AnimatedFrame( MainController.viewport, 
-				x_monster, y_monster, MONSTER_SIZE, MONSTER_SIZE, 
-				animation.css_class, animation.duration, ()=> {
-					let monster = new MV_Monster(MainController.viewport, x_monster, y_monster);
-					MainController.UI.monsters.push(monster);
-					MainController.UI.addToGameWindow(monster.root_element);
-				}
-			).root_element
-		);
-	}
 
 	static __scheduleLevelMonstersPop() {
 		MainController.scope.game.wave_pop.elapsed = 0;
@@ -208,6 +183,52 @@ class MainController {
 			timeout += MainController.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
 		}
 	}
+
+
+    static monsterSlayed() {
+        let monster_swag = MainController.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
+		MainController.scope.game.money += monster_swag;
+		XpBarHelper.addXp(XP_PER_MONSTER);
+		if (MainController.__isWaveComplete())
+			MainController.__waveDefeated();
+    }
+	
+    static waveLost() {
+        MainController.__characterRescueFees();
+        MainController.UI.checkPanicMode();
+        WaveReportPopup.show( MainController.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
+    }
+
+    static __characterRescueFees() {
+        let scope = MainController.scope.game;
+        let max_hp = Abilities.getMaxPlayerHealth();
+
+        if (max_hp > scope.money * HP_PRICE) {
+            scope.health_points = scope.money * HP_PRICE;
+            scope.money = 0;
+        } else {
+            scope.health_points = max_hp;
+            scope.money -= max_hp / HP_PRICE;
+        }
+
+        if (!scope.health_points)
+            scope.health_points = 1;
+    }
+
+    static __isWaveComplete() {
+        if (MainController.scope.game.wave_pop.timeouts)
+            return false;
+        if (MainController.UI.monsters.length > 0)
+            return false;
+        if (document.querySelector(".pop-animation"))
+            return false;
+        return true;
+    }
+
+    static __waveDefeated() {
+        MainController.scope.game.wave_number++;
+        WaveReportPopup.show( MainController.getRandomMessage(true), FRIEND_FACES.happy, MainController.startWave );
+    }
 
 	/** Fonctions utilitaires */
 	static radomValueInRange(min_value, max_value) {

@@ -77,27 +77,23 @@ class MV_Monster extends MobileGameElement {
     __bleed() {
         let rad_angle = this.angle * Math.PI / 180;
         let x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(rad_angle) );
-        let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(rad_angle) );
-    
-        let blood_splash = new MV_AnimatedFrame( this.viewport, x_splash, y_splash, 0, 0, 
-            ANIMATIONS.blood_splash.css_class, ANIMATIONS.blood_splash.duration, ()=> {
-                blood_splash.root_element.remove();
-                let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);
-                let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(rad_angle);
-                this.__createBloodPuddle(x_puddle, y_puddle);
-            }
-        );
-        blood_splash.root_element.style.transform = `rotate(${this.angle}deg)`;
-        MainController.UI.addToGameWindow(blood_splash.root_element);
+        let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(rad_angle) );  
+        let x_puddle = this.x + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);
+        let y_puddle = this.y + BLOOD_SPLASH_LENGTH * Math.sin(rad_angle);  
+        AnimationsHelper.bloodSplash(x_splash, y_splash, this.angle, ()=> {
+            this.__createBloodPuddle(x_puddle, y_puddle, false);
+        });
     }
 
-    __createBloodPuddle(x_puddle, y_puddle, isBig) {
+    
+
+    __createBloodPuddle(x, y, isBig) {
         let puddle_element = document.createElement("DIV");
         puddle_element.classList.add("blood-puddle");
         
         puddle_element.style.backgroundImage = `url("../images/blood_puddle_${MainController.radomValueInRange(0, 5)}.png")`;
-        puddle_element.style.left = this.viewport.getCssValue(x_puddle);
-        puddle_element.style.top = this.viewport.getCssValue(y_puddle);
+        puddle_element.style.left = this.viewport.getCssValue(x);
+        puddle_element.style.top = this.viewport.getCssValue(y);
         
         if (isBig) {
             puddle_element.style.width = this.viewport.getCssValue(MONSTER_SIZE);

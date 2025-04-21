@@ -107,7 +107,8 @@ class GameClock {
 		let character = MainController.UI.character;
 
 		if (monster.hitbox.checkCollide(character.hitbox)) {
-			MV_GameScope.characterHit(MONSTER_STRENGTH);
+			AnimationsHelper.hitEffect();
+			HealthBarHelper.characterHit(MONSTER_STRENGTH);
 		}
 	}
 
@@ -122,7 +123,7 @@ class GameClock {
 				shot.root_element.remove();
 				monster.wound(Abilities.getShotPower(), ()=> {
 					MainController.UI.monsters.splice(index, 1);
-					MV_GameScope.monsterSlayed();
+					MainController.monsterSlayed();
 				});
 			}					
 		}

@@ -143,7 +143,7 @@ class MainUI {
     }
 
     __createXpBar() {
-		let xp_bar = new MV_Gauge("xp-bar", MV_GameScope.levelUpAt(), MainController.scope.game.current_level_xp);
+		let xp_bar = new MV_Gauge("xp-bar", XpBarHelper.levelUpAt(), MainController.scope.game.current_level_xp);
 		this.addToGameWindow(xp_bar.root_element);
         return xp_bar;
     }
@@ -160,7 +160,7 @@ class MainUI {
 			callback: () => { 
 				document.querySelector(".player-level").innerHTML = MainController.scope.game.player_level; 
 				xp_bar.assignValue(MainController.scope.game.current_level_xp);
-				xp_bar.setMaxValue(MV_GameScope.levelUpAt());
+				xp_bar.setMaxValue(XpBarHelper.levelUpAt());
 			}
 		});
     }

@@ -41,7 +41,7 @@ class ShopHealingItem {
         html_element.addEventListener('click', ()=> {
             if (this.__isAffordable() && !this.__isMaxed()) {
                 MainController.scope.game.money -= this.price;
-                MV_GameScope.healPlayer( this.hp_recover );
+                HealthBarHelper.healPlayer( this.hp_recover );
 
                 MainController.shop_manager.refreshAllShopItems();
             }
