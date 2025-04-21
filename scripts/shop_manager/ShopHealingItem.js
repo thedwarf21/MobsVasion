@@ -36,6 +36,7 @@ class ShopHealingItem {
 
         this.price_element = ShopItem.getHtmlElement("shop-item-price", `<b>Prix:</b> ${this.price}`);
         html_element.appendChild( this.price_element );
+        this.refresh();
 
         html_element.addEventListener('click', ()=> {
             if (this.__isAffordable() && !this.__isMaxed()) {
