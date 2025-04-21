@@ -57,8 +57,8 @@ class MV_GameInitializer {
 				show_multiplicator: TIME_INTERVAL,
 				level_0_effect: TIMEOUTS.shot_interval,
 				upgrade_value: -1,
-				level_1_price: 50,
-				level_2_price_coef : 1.5,
+				level_1_price: 80,
+				level_2_price_coef : 1.75,
 				current_level: 0
 			}, {
 				name: "Puissance de feu",
@@ -66,7 +66,7 @@ class MV_GameInitializer {
 				description: "Modifie l'arme, afin d'en améliorer la puissance de feu",
 				lbl_effect: "Dégats par tir",
 				level_0_effect: 1,
-				upgrade_value: 0.25,
+				upgrade_value: 0.2,
 				level_1_price: 40,
 				level_2_price_coef : 1.75,
 				current_level: 0
@@ -83,29 +83,29 @@ class MV_GameInitializer {
 				code: "AGI",
 				description: "Permet de courir plus vite",
 				lbl_effect: "Vitesse de déplacement",
-				max_level: 10,
+				max_level: 24,
 				level_0_effect: CHARACTER_SPEED,
-				upgrade_value: 0.5,
+				upgrade_value: 0.25,
 				current_level: 0
 			}, {
 				name: "Rechargement rapide",
 				code: "RLD",
 				description: "Permet de changer plus rapidement de chargeur",
 				lbl_effect: "Temps de rechargement (ms)",
-				max_level: 10,
+				max_level: 20,
 				show_multiplicator: TIME_INTERVAL,
 				level_0_effect: TIMEOUTS.reload_time,
-				upgrade_value: -2,
+				upgrade_value: -1,
 				current_level: 0
 			}, {
 				name: "Récupération rapide",
 				code: "DAR",
 				description: "Permet de récupérer plus vite d'une esquive",
 				lbl_effect: "Temps de rechargement (ms)",
-				max_level: 15,
+				max_level: 25,
 				show_multiplicator: TIME_INTERVAL,
 				level_0_effect: TIMEOUTS.dash_interval,
-				upgrade_value: -3,
+				upgrade_value: -2,
 				current_level: 0
 			}]
 		};
