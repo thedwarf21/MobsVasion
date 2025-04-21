@@ -83,7 +83,7 @@ class ShopItem {
         let price = this.__getPrice();
         this.price_html_element.innerHTML   = this.__isMaxed()
 							                ? "Niveau maximal atteint"
-							                : `<b>Prix:</b> ${MainController.intToHumanReadableString(price)} `;
+							                : `<b>Prix:</b> ${MV_Tools.intToHumanReadableString(price)} `;
     }
 
     __refreshEffectElement() {
@@ -110,7 +110,7 @@ class ShopItem {
 
     __getPrice() { 
         return this.is_money_priced_item 
-            ?  MainController.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.current_level)
+            ?  MV_Tools.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.current_level)
             :  1; 
     }
 

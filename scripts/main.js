@@ -141,20 +141,20 @@ class MainController {
 
 		switch ( Math.floor(Math.random() * 4) ) { // selon la bordure choisie aléatoirement pour faire apparaître le monstre
 			case 0: // haut
-				x_monster = MainController.radomValueInRange(0, max_x_value);
+				x_monster = MV_Tools.radomValueInRange(0, max_x_value);
 				y_monster = 0;
 				break;
 			case 1: // bas
-				x_monster = MainController.radomValueInRange(0, max_x_value);
+				x_monster = MV_Tools.radomValueInRange(0, max_x_value);
 				y_monster = max_y_value;
 				break;
 			case 2: // gauche
 				x_monster = 0;
-				y_monster = MainController.radomValueInRange(0, max_y_value);
+				y_monster = MV_Tools.radomValueInRange(0, max_y_value);
 				break;
 			case 3: // droite
 				x_monster = max_x_value;
-				y_monster = MainController.radomValueInRange(0, max_y_value);
+				y_monster = MV_Tools.radomValueInRange(0, max_y_value);
 				break;
 		}
 
@@ -180,13 +180,13 @@ class MainController {
 		let mobsNumber = MainController.scope.game.wave_number * MOBS_PER_WAVE; 
 		for (let i=0; i<mobsNumber; i++) {
 			MainController.scope.game.wave_pop.timeouts.push(timeout);
-			timeout += MainController.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
+			timeout += MV_Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
 		}
 	}
 
 
     static monsterSlayed() {
-        let monster_swag = MainController.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
+        let monster_swag = MV_Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
 		MainController.scope.game.money += monster_swag;
 		XpBarHelper.addXp(XP_PER_MONSTER);
 		if (MainController.__isWaveComplete())
@@ -196,7 +196,7 @@ class MainController {
     static waveLost() {
         MainController.__characterRescueFees();
         MainController.UI.checkPanicMode();
-        WaveReportPopup.show( MainController.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
+        WaveReportPopup.show( MV_Tools.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
     }
 
     static __characterRescueFees() {
@@ -227,42 +227,6 @@ class MainController {
 
     static __waveDefeated() {
         MainController.scope.game.wave_number++;
-        WaveReportPopup.show( MainController.getRandomMessage(true), FRIEND_FACES.happy, MainController.startWave );
+        WaveReportPopup.show( MV_Tools.getRandomMessage(true), FRIEND_FACES.happy, MainController.startWave );
     }
-
-	/** Fonctions utilitaires */
-	static radomValueInRange(min_value, max_value) {
-		return Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
-	}
-	
-	static getFibonacciValue(level_0_value, coef, level) {
-		let prev_values = [];
-		for (let i=0; i<level+1; i++) {
-			let value;
-			if (i == 0)
-				value = level_0_value;
-			else if (i == 1)
-				value = level_0_value * coef;
-			else value = prev_values[0] + prev_values[1];
-			prev_values.unshift(value);
-		}
-		return prev_values.shift();
-	}
-
-	static getRandomMessage(isVictory) {
-		let random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
-		return random_messages[ MainController.radomValueInRange(0, random_messages.length - 1) ];
-	}
-
-	static intToHumanReadableString(value) {
-		if (value > 10**13)
-			return Math.floor(value / 10**12) + "T";
-		if (value > 10**10)
-			return Math.floor(value / 10**9) + "B";
-		if (value > 10**7)
-			return Math.floor(value / 10**6) + "M";
-		if (value > 10**4)
-			return Math.floor(value / 10**3) + "k";
-		return value;
-	}
 }
