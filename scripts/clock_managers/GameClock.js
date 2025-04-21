@@ -83,9 +83,10 @@ class GameClock {
 
 	launchReloadingAction() {
 		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
-			MainController.scope.game.waiting_counter.clip = TIMEOUTS.reload_time;
+			let reload_time = Abilities.getPrimaryReloadInterval();
+			MainController.scope.game.waiting_counter.clip = reload_time;
 			
-			let gauge = new MV_Gauge("primary-reload", TIMEOUTS.reload_time, 0);
+			let gauge = new MV_Gauge("primary-reload", reload_time, 0);
 			MainController.UI.primaryReloadGauge = gauge;
 			MainController.UI.addToGameWindow(gauge.root_element);
 		}

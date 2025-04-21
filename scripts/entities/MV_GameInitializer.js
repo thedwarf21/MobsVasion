@@ -92,10 +92,10 @@ class MV_GameInitializer {
 				code: "RLD",
 				description: "Permet de changer plus rapidement de chargeur",
 				lbl_effect: "Temps de rechargement (ms)",
-				max_level: 15,
+				max_level: 10,
 				show_multiplicator: TIME_INTERVAL,
 				level_0_effect: TIMEOUTS.reload_time,
-				upgrade_value: -1,
+				upgrade_value: -2,
 				current_level: 0
 			}, {
 				name: "Récupération rapide",

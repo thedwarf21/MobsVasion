@@ -36,7 +36,7 @@ class WaitingCounters {
 	static __performValueChangeAction(counter_key, counter_value) {
 		switch(counter_key) {
 			case "clip":
-				MainController.UI.primaryReloadGauge.assignValue(TIMEOUTS.reload_time - counter_value);
+				MainController.UI.primaryReloadGauge.assignValue(Abilities.getPrimaryReloadInterval() - counter_value);
 				break;
 			case "dash":
 				MainController.UI.secondaryReloadGauge.assignValue(TIMEOUTS.dash_interval - counter_value);
