@@ -38,6 +38,13 @@ class MV_GameScope {
         }
     }
 
+    static healPlayer(amount) {
+        MainController.scope.game.health_points += amount;
+
+        if (MainController.scope.game.health_points > CHARACTER_MAX_LIFE)
+            MainController.scope.game.health_points = CHARACTER_MAX_LIFE;
+    }
+
     static __isWaveComplete() {
         if (MainController.scope.game.wave_pop.timeouts)
             return false;
