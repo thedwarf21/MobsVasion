@@ -21,7 +21,7 @@ class MainUI {
 		this.__clearMonsters();
 		this.__clearGauges();		
 
-		let soil_index = MV_Tools.radomValueInRange(0, 2);
+		let soil_index = Tools.radomValueInRange(0, 2);
 		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
 		this.game_window.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
     }
@@ -107,7 +107,7 @@ class MainUI {
 			object: MainController.scope.game,
 			property: "money",
 			callback: (value)=> {
-				MainController.scope.game.human_readable_money = MV_Tools.intToHumanReadableString(value);
+				MainController.scope.game.human_readable_money = Tools.intToHumanReadableString(value);
 			}
 		});
 

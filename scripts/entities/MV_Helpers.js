@@ -17,7 +17,7 @@ class XpBarHelper {
     }
 
     static levelUpAt() {
-        return MV_Tools.getFibonacciValue(BASE_LEVEL_UP_XP, LEVEL_UP_XP_COEF, MainController.scope.game.player_level);
+        return Tools.getFibonacciValue(BASE_LEVEL_UP_XP, LEVEL_UP_XP_COEF, MainController.scope.game.player_level);
     }
 }
 
@@ -103,7 +103,7 @@ class AnimationsHelper {
 
 
 /** Fonctions utilitaires */
-class MV_Tools {
+class Tools {
 	static radomValueInRange(min_value, max_value) {
 		return Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
 	}
@@ -124,7 +124,7 @@ class MV_Tools {
 
 	static getRandomMessage(isVictory) {
 		let random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
-		return random_messages[ MV_Tools.radomValueInRange(0, random_messages.length - 1) ];
+		return random_messages[ Tools.radomValueInRange(0, random_messages.length - 1) ];
 	}
 
 	static intToHumanReadableString(value) {

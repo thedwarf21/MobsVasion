@@ -141,20 +141,20 @@ class MainController {
 
 		switch ( Math.floor(Math.random() * 4) ) { // selon la bordure choisie aléatoirement pour faire apparaître le monstre
 			case 0: // haut
-				x_monster = MV_Tools.radomValueInRange(0, max_x_value);
+				x_monster = Tools.radomValueInRange(0, max_x_value);
 				y_monster = 0;
 				break;
 			case 1: // bas
-				x_monster = MV_Tools.radomValueInRange(0, max_x_value);
+				x_monster = Tools.radomValueInRange(0, max_x_value);
 				y_monster = max_y_value;
 				break;
 			case 2: // gauche
 				x_monster = 0;
-				y_monster = MV_Tools.radomValueInRange(0, max_y_value);
+				y_monster = Tools.radomValueInRange(0, max_y_value);
 				break;
 			case 3: // droite
 				x_monster = max_x_value;
-				y_monster = MV_Tools.radomValueInRange(0, max_y_value);
+				y_monster = Tools.radomValueInRange(0, max_y_value);
 				break;
 		}
 
@@ -180,13 +180,13 @@ class MainController {
 		let mobsNumber = MainController.scope.game.wave_number * MOBS_PER_WAVE; 
 		for (let i=0; i<mobsNumber; i++) {
 			MainController.scope.game.wave_pop.timeouts.push(timeout);
-			timeout += MV_Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
+			timeout += Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
 		}
 	}
 
 
     static monsterSlayed() {
-        let monster_swag = MV_Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
+        let monster_swag = Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
 		MainController.scope.game.money += monster_swag;
 		XpBarHelper.addXp(XP_PER_MONSTER);
 		if (MainController.__isWaveComplete())
@@ -196,7 +196,7 @@ class MainController {
     static waveLost() {
         MainController.__characterRescueFees();
         MainController.UI.checkPanicMode();
-        WaveReportPopup.show( MV_Tools.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
+        WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
     }
 
     static __characterRescueFees() {
@@ -227,6 +227,6 @@ class MainController {
 
     static __waveDefeated() {
         MainController.scope.game.wave_number++;
-        WaveReportPopup.show( MV_Tools.getRandomMessage(true), FRIEND_FACES.happy, MainController.startWave );
+        WaveReportPopup.show( Tools.getRandomMessage(true), FRIEND_FACES.happy, MainController.startWave );
     }
 }

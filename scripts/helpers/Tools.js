@@ -1,4 +1,4 @@
-class MV_Tools {
+class Tools {
 	static radomValueInRange(min_value, max_value) {
 		return Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
 	}
@@ -19,7 +19,7 @@ class MV_Tools {
 
 	static getRandomMessage(isVictory) {
 		let random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
-		return random_messages[ MV_Tools.radomValueInRange(0, random_messages.length - 1) ];
+		return random_messages[ Tools.radomValueInRange(0, random_messages.length - 1) ];
 	}
 
 	static intToHumanReadableString(value) {

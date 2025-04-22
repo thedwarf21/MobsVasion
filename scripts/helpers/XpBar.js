@@ -1,5 +1,5 @@
 class XpBarHelper {
-    
+
     static create() {
 		return new MV_Gauge("xp-bar", XpBarHelper.levelUpAt(), MainController.scope.game.current_level_xp);
     }
@@ -17,6 +17,6 @@ class XpBarHelper {
     }
 
     static levelUpAt() {
-        return MV_Tools.getFibonacciValue(BASE_LEVEL_UP_XP, LEVEL_UP_XP_COEF, MainController.scope.game.player_level);
+        return Tools.getFibonacciValue(BASE_LEVEL_UP_XP, LEVEL_UP_XP_COEF, MainController.scope.game.player_level);
     }
 }

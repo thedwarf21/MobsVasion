@@ -91,7 +91,7 @@ class MV_Monster extends MobileGameElement {
         let puddle_element = document.createElement("DIV");
         puddle_element.classList.add("blood-puddle");
         
-        puddle_element.style.backgroundImage = `url("../images/blood_puddle_${MV_Tools.radomValueInRange(0, 5)}.png")`;
+        puddle_element.style.backgroundImage = `url("../images/blood_puddle_${Tools.radomValueInRange(0, 5)}.png")`;
         puddle_element.style.left = this.viewport.getCssValue(x);
         puddle_element.style.top = this.viewport.getCssValue(y);
         
