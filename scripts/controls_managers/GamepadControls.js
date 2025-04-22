@@ -1,5 +1,29 @@
 class GamepadControls {
 
+	static prepareControls(controller) {
+		window.addEventListener('gamepadconnected', (event)=> {
+			console.log("Manette connectée");
+
+			let controls = controller.scope.controls;
+			let gamepad = new GamepadGenericAdapter();
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
+			controller.timer.gamepad_mapper = gamepad;
+			
+			let was_paused = controls.paused;
+			controls.paused = true;
+			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, ()=> { controls.paused = was_paused; });
+		});
+
+		window.addEventListener('gamepaddisconnected', (event)=> {
+			controller.scope.gamepadControlsUI = null;
+			controller.timer.gamepad_mapper = null;
+			GamepadControls.clearGamepadControlsState(controller.scope.controls);
+			controller.togglePause();
+		});
+	}
+
 	static clearGamepadControlsState(controls_state) {
 		if (!MainController.scope.controls.mouse_aiming)
 			controls_state.firing_primary = false;

@@ -114,106 +114,15 @@ class MV_GameInitializer {
 	static prepareGame(controller) {
 		controller.scope = MV_GameInitializer.initial_scope;
 		MV_GameInitializer.__initShopManager(controller);
-		MV_GameInitializer.__addTouchListeners(controller);
-		MV_GameInitializer.__addKeyListeners(controller);
-		MV_GameInitializer.__addMouseListeners(controller);
-		MV_GameInitializer.__prepareGamepadControls(controller);
+		TouchScreenControls.addListeners(controller);
+		KeyboardAndMouseControls.addKeyListeners(controller);
+		KeyboardAndMouseControls.addMouseListeners(controller);
+		GamepadControls.prepareControls(controller);
         MV_GameInitializer.__createTimer(controller);
 	}
 
 	static __initShopManager(controller) { 
 		controller.shop_manager = new ShopManager( controller.scope.shop );
-	}
-
-	static __addKeyListeners(controller) {
-		let controls = controller.scope.controls;
-		window.addEventListener('keydown', function(e) {
-			let key = e.key.toLowerCase();
-			if (key == "s")
-				controls.downPressed = true;
-			else if (key == "z")
-				controls.upPressed = true;
-			else if (key == "q")
-				controls.leftPressed = true;
-			else if (key == "d")
-				controls.rightPressed = true;
-			else if (e.code == "Space")
-				controls.firing_secondary = true;
-			else if (e.code == "KeyP") 
-				controller.togglePause();
-		});
-		window.addEventListener('keyup', function(e) {
-			let key = e.key.toLowerCase();
-			if (key == "s")
-				controls.downPressed = false;
-			if (key == "z")
-				controls.upPressed = false;
-			if (key == "q")
-				controls.leftPressed = false;
-			if (key == "d")
-				controls.rightPressed = false;
-			if (e.code == "Space")
-				controls.firing_secondary = false;
-		});
-	}
-
-	static __addMouseListeners(controller) {
-		let controls = controller.scope.controls;
-		window.addEventListener('mousemove', (e)=> {
-			controls.mousePosition = { 
-				x: e.clientX / MainController.UI.game_window.clientWidth * MainController.viewport.VIRTUAL_WIDTH, 
-				y: e.clientY / MainController.UI.game_window.clientHeight * MainController.viewport.VIRTUAL_HEIGHT 
-			}; 
-		});
-		window.addEventListener('mousedown', (e)=> { 
-			if ([1, 3].includes(e.buttons)) {
-				controls.firing_primary = true;
-				controls.mouse_aiming = true;
-			}
-			if ([2, 3].includes(e.buttons))
-				controls.reloading = true;
-		});
-		window.addEventListener('mouseup', (e)=> {
-			if ([0, 2].includes(e.buttons)) {
-				controls.firing_primary = false;
-				controls.mouse_aiming = false;
-			}
-			if ([0, 1].includes(e.buttons))
-				controls.reloading = false;
-		});
-	}
-
-	static __addTouchListeners(controller) {
-		let controls = controller.scope.controls;
-		// J'ai prévu des joysticks virtuels pour le déplacement et le tir principal 
-		// => idéalement, il faudrait délèguer la responsabilité de générer des informations exploitables (angle + force, au lieu de coordonnées de tapstart + coordonnées actuelles)
-		// et dans un format homogène à celui retourné par GamepadGenericAdapter pour les joysticks, de manière à mutualiser le traitement
-
-		document.querySelector('.hud .pause').addEventListener('click', function(e) { controller.togglePause(); });
-	}
-
-	static __prepareGamepadControls(controller) {
-		window.addEventListener('gamepadconnected', (event)=> {
-			console.log("Manette connectée");
-
-			let controls = controller.scope.controls;
-			let gamepad = new GamepadGenericAdapter();
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
-			controller.timer.gamepad_mapper = gamepad;
-			
-			let was_paused = controls.paused;
-			controls.paused = true;
-			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, ()=> { controls.paused = was_paused; });
-		});
-
-		window.addEventListener('gamepaddisconnected', (event)=> {
-			controller.scope.gamepadControlsUI = null;
-			controller.timer.gamepad_mapper = null;
-			GamepadControls.clearGamepadControlsState(controller.scope.controls);
-			controller.togglePause();
-		});
 	}
 
 	static __createTimer(controller) {

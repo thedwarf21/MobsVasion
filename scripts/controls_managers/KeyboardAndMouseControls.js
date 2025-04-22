@@ -1,4 +1,62 @@
 class KeyboardAndMouseControls {
+    
+    static addKeyListeners(controller) {
+		let controls = controller.scope.controls;
+		window.addEventListener('keydown', function(e) {
+			let key = e.key.toLowerCase();
+			if (key == "s")
+				controls.downPressed = true;
+			else if (key == "z")
+				controls.upPressed = true;
+			else if (key == "q")
+				controls.leftPressed = true;
+			else if (key == "d")
+				controls.rightPressed = true;
+			else if (e.code == "Space")
+				controls.firing_secondary = true;
+			else if (e.code == "KeyP") 
+				controller.togglePause();
+		});
+		window.addEventListener('keyup', function(e) {
+			let key = e.key.toLowerCase();
+			if (key == "s")
+				controls.downPressed = false;
+			if (key == "z")
+				controls.upPressed = false;
+			if (key == "q")
+				controls.leftPressed = false;
+			if (key == "d")
+				controls.rightPressed = false;
+			if (e.code == "Space")
+				controls.firing_secondary = false;
+		});
+	}
+
+	static addMouseListeners(controller) {
+		let controls = controller.scope.controls;
+		window.addEventListener('mousemove', (e)=> {
+			controls.mousePosition = { 
+				x: e.clientX / MainController.UI.game_window.clientWidth * MainController.viewport.VIRTUAL_WIDTH, 
+				y: e.clientY / MainController.UI.game_window.clientHeight * MainController.viewport.VIRTUAL_HEIGHT 
+			}; 
+		});
+		window.addEventListener('mousedown', (e)=> { 
+			if ([1, 3].includes(e.buttons)) {
+				controls.firing_primary = true;
+				controls.mouse_aiming = true;
+			}
+			if ([2, 3].includes(e.buttons))
+				controls.reloading = true;
+		});
+		window.addEventListener('mouseup', (e)=> {
+			if ([0, 2].includes(e.buttons)) {
+				controls.firing_primary = false;
+				controls.mouse_aiming = false;
+			}
+			if ([0, 1].includes(e.buttons))
+				controls.reloading = false;
+		});
+	}
 
     static applyControlsObject() {
         let character = MainController.UI.character;
