@@ -21,7 +21,7 @@ class ShopHealingItem {
             this.price_element.innerHTML = "Santé déjà au maximum"
         } else {
             this.price_element.classList.remove("maxed");
-            this.price_element.innerHTML = this.price;
+            this.price_element.innerHTML = `<b>Prix:</b> ${this.price}`;
         }
     }
 
