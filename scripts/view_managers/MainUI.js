@@ -11,8 +11,8 @@ class MainUI {
 		this.monsters = [];
 		this.__prepareWaveSwagAutoRefresh();
 		this.__prepareAmmoAutoRefresh();
-		this.__prepareLifeBarAutoRefresh( this.__createLifeBar() );
-        this.__prepareLevelAndXpAutoRefresh( this.__createXpBar() );
+		this.__prepareLifeBarAutoRefresh( HealthBarHelper.create() );
+        this.__prepareLevelAndXpAutoRefresh( XpBarHelper.create() );
 	}
 
     clearGameWindow() {
@@ -127,13 +127,9 @@ class MainUI {
 		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
     }
 
-    __createLifeBar() {
-		let character_health_bar = new MV_Gauge("character-health-bar", Abilities.getMaxPlayerHealth(), MainController.scope.game.health_points);
-		this.addToGameWindow(character_health_bar.root_element);
-        return character_health_bar;
-    }
-
     __prepareLifeBarAutoRefresh(character_health_bar) {
+		this.addToGameWindow(character_health_bar.root_element);
+
 		new RS_Binding({
 			object: MainController.scope.game,
 			property: "health_points",
@@ -142,13 +138,9 @@ class MainUI {
 		Abilities.setMaxHealthBinding(character_health_bar);
     }
 
-    __createXpBar() {
-		let xp_bar = new MV_Gauge("xp-bar", XpBarHelper.levelUpAt(), MainController.scope.game.current_level_xp);
-		this.addToGameWindow(xp_bar.root_element);
-        return xp_bar;
-    }
-
     __prepareLevelAndXpAutoRefresh(xp_bar) {
+		this.addToGameWindow(xp_bar.root_element);
+		
 		new RS_Binding({
 			object: MainController.scope.game,
 			property: "current_level_xp",

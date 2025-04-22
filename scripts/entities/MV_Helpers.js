@@ -1,5 +1,9 @@
 /** Gestionnaire d'XP */
 class XpBarHelper {
+    static create() {
+		return new MV_Gauge("xp-bar", XpBarHelper.levelUpAt(), MainController.scope.game.current_level_xp);
+    }
+
     static addXp(xp_amount) {
         let level_up_at = XpBarHelper.levelUpAt();
         let game_scope = MainController.scope.game;
@@ -20,6 +24,10 @@ class XpBarHelper {
 
 /** Gestionnaire de santé du joueur */
 class HealthBarHelper {
+    static create() {
+        return new MV_Gauge("character-health-bar", Abilities.getMaxPlayerHealth(), MainController.scope.game.health_points);
+    }
+
     static characterHit(damage) {
         MainController.scope.game.health_points -= damage;
 		MainController.UI.checkPanicMode();
