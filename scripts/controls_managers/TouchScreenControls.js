@@ -8,4 +8,12 @@ class TouchScreenControls {
 
 		document.querySelector('.hud .pause').addEventListener('click', function(e) { controller.togglePause(); });
 	}
+
+	/** Contrôles clavier et écran tactile => seront déplacés dans des classes dédiées */
+	static applyControls() {
+		if (!MainController.scope.controls.paused) {
+
+		} else {
+		}
+	}
 }

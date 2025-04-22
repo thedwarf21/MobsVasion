@@ -26,13 +26,13 @@ class GameClock {
 				WaitingCounters.applyWavePopScheduling();
 		}
 
-		GamepadControls.clearGamepadControlsState(this.controls_state);
+		GamepadControls.clearState(this.controls_state);
 		setTimeout(() => { this.letsPlay(); }, TIME_INTERVAL);
 	}
 
 	__updateControlsObject() {
 		KeyboardAndMouseControls.applyControlsObject();
-		this.__applyTouchScreenControls();
+		TouchScreenControls.applyControls();
 
 		if (this.gamepad_mapper)
 			GamepadControls.applyMenuControls();
@@ -126,14 +126,6 @@ class GameClock {
 					MainController.monsterSlayed();
 				});
 			}					
-		}
-	}
-
-	/** Contrôles clavier et écran tactile => seront déplacés dans des classes dédiées */
-	__applyTouchScreenControls() {
-		if (!this.controls_state.paused) {
-
-		} else {
 		}
 	}
 }

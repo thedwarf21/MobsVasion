@@ -19,12 +19,12 @@ class GamepadControls {
 		window.addEventListener('gamepaddisconnected', (event)=> {
 			controller.scope.gamepadControlsUI = null;
 			controller.timer.gamepad_mapper = null;
-			GamepadControls.clearGamepadControlsState(controller.scope.controls);
+			GamepadControls.clearState(controller.scope.controls);
 			controller.togglePause();
 		});
 	}
 
-	static clearGamepadControlsState(controls_state) {
+	static clearState(controls_state) {
 		if (!MainController.scope.controls.mouse_aiming)
 			controls_state.firing_primary = false;
 		controls_state.firing_secondary = false;
