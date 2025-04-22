@@ -1,5 +1,4 @@
 class MV_Character extends MobileGameElement {
-    __image_elt;
     aiming_angle;
   
     constructor(viewport) {
