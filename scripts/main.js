@@ -195,7 +195,6 @@ class MainController {
 	
     static waveLost() {
         MainController.__characterRescueFees();
-        MainController.UI.checkPanicMode();
         WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
     }
 

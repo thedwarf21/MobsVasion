@@ -6,7 +6,6 @@ class HealthBarHelper {
 
     static characterHit(damage) {
         MainController.scope.game.health_points -= damage;
-		MainController.UI.checkPanicMode();
 
         if (MainController.scope.game.health_points <= 0) {
             MainController.waveLost();

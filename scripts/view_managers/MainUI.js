@@ -79,20 +79,6 @@ class MainUI {
 			this.__closePopup(MainController.shop_popup);
 	}
 
-	checkPanicMode() {
-		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
-		let panic_element = this.panicModeHtmlElement;
-		
-		if (!panic_element && MainController.scope.game.health_points <= panic_threshold) {
-			panic_element = document.createElement("DIV");
-			panic_element.classList.add("panic-mode");
-			document.body.prepend(panic_element);
-		}
-
-		if (panic_element && MainController.scope.game.health_points > panic_threshold)
-			panic_element.remove();
-	}
-
     __prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
 			object: MainController.scope.game,
@@ -133,10 +119,27 @@ class MainUI {
 		new RS_Binding({
 			object: MainController.scope.game,
 			property: "health_points",
-			callback: () => { character_health_bar.assignValue(MainController.scope.game.health_points); }
+			callback: () => { 
+				character_health_bar.assignValue(MainController.scope.game.health_points); 
+				this.__checkPanicMode();
+			}
 		});
 		Abilities.setMaxHealthBinding(character_health_bar);
     }
+
+	__checkPanicMode() {
+		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
+		let panic_element = this.panicModeHtmlElement;
+		
+		if (!panic_element && MainController.scope.game.health_points <= panic_threshold) {
+			panic_element = document.createElement("DIV");
+			panic_element.classList.add("panic-mode");
+			document.body.prepend(panic_element);
+		}
+
+		if (panic_element && MainController.scope.game.health_points > panic_threshold)
+			panic_element.remove();
+	}
 
     __prepareLevelAndXpAutoRefresh(xp_bar) {
 		this.addToGameWindow(xp_bar.root_element);
