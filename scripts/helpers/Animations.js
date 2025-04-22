@@ -1,0 +1,53 @@
+class AnimationsHelper {
+    
+    static hitEffect() {
+        let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
+            ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
+            ()=> { flash_effect.root_element.remove(); }
+        );
+
+        MainController.UI.addToGameWindow(flash_effect.root_element);
+    } 
+    
+    static characterPop() {
+        let pop_animation = new MV_AnimatedFrame(
+            MainController.viewport, 
+            ( MainController.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE ) / 2, 
+            ( MainController.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE ) / 2, 
+            CHARACTER_SIZE, CHARACTER_SIZE, ANIMATIONS.monster_pop.css_class, ANIMATIONS.monster_pop.duration, 
+            ()=> {
+                let character = new MV_Character(MainController.viewport);
+                MainController.UI.character = character;
+                MainController.UI.addToGameWindow(character.root_element);
+            }
+        );
+
+		MainController.UI.addToGameWindow(pop_animation.root_element);
+    }
+
+    static monsterPop(x, y) {
+		let animation = ANIMATIONS.monster_pop;
+        let pop_animation = new MV_AnimatedFrame( MainController.viewport, 
+            x, y, MONSTER_SIZE, MONSTER_SIZE, 
+            animation.css_class, animation.duration, ()=> {
+                let monster = new MV_Monster(MainController.viewport, x, y);
+                MainController.UI.monsters.push(monster);
+                MainController.UI.addToGameWindow(monster.root_element);
+            }
+        );
+
+		MainController.UI.addToGameWindow(pop_animation.root_element);
+	}
+
+    static bloodSplash(x, y, angle, onAmimationEnd) {
+        let blood_splash = new MV_AnimatedFrame( MainController.viewport, x, y, 0, 0, 
+            ANIMATIONS.blood_splash.css_class, ANIMATIONS.blood_splash.duration, ()=> {
+                blood_splash.root_element.remove();
+                if (onAmimationEnd) 
+                    onAmimationEnd();
+            }
+        );
+        blood_splash.root_element.style.transform = `rotate(${angle}deg)`;
+        MainController.UI.addToGameWindow(blood_splash.root_element);
+    }
+}
