@@ -1,33 +1,60 @@
 class ParametersPopup extends AbstractPopup {
+    rs_dialog_instance;
 
-    static show() {
-		MainController.parameters_popup = new RS_Dialog("parameters_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", function() {
-            ParametersPopup.__removeUnnecessaryContent();
-            ParametersPopup.__bindShowHitboxesOption();
+    constructor() {
+        super();
+    }
 
-			MainController.parameters_popup.root_element.querySelector("#btn_close").addEventListener("click", function() {
+    show() {
+        this.rs_dialog_instance = new RS_Dialog("parameters_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", ()=> {
+            this.__removeUnnecessaryContent();
+            this.__bindShowHitboxesOption();
+
+			this.__querySelector("#btn_close").addEventListener("click", ()=> {
                 MainController.popups_stack.pop();
 			});
 		});
-		document.body.appendChild(MainController.parameters_popup.root_element);
+        
+		document.body.appendChild(this.rs_dialog_instance.root_element);
+		MainController.parameters_popup = this.rs_dialog_instance;
 	}
 
-    static __removeUnnecessaryContent() {
+    __removeUnnecessaryContent() {
         if(!MainController.timer.gamepad_mapper)
-            MainController.parameters_popup.root_element.querySelector("#btn_gamepad_controls").remove();
+            this.__querySelector("#btn_gamepad_controls").remove();
     }
 
-    static __bindShowHitboxesOption() {
+    __bindShowHitboxesOption() {
         new RS_Binding({
             object: MainController.scope.game,
             property: "showHitboxes"
-        }).addBinding(MainController.parameters_popup.root_element.querySelector("#show_hitboxes"), "checked", "change", function() {
+        }).addBinding(this.__querySelector("#show_hitboxes"), "checked", "change", ()=> {
             MainController.UI.refreshAllHitboxesVisibility();
         });
     }
 
-    static close() {
-        MainController.parameters_popup.closeModal();
-        MainController.parameters_popup = null;
+    /*********  AbstractPopup methods implementation  *********/
+    navigateUp() {
+
+    }
+
+    navigateDown() {
+        
+    }
+
+    navigateLeft() {
+        
+    }
+
+    navigateRight() {
+
+    }
+
+    trigger(item_ident) {
+        
+    }
+
+    __registerMenuItems() {
+
     }
 }

@@ -7,8 +7,11 @@ class PopupsStack {
 
     push(popup_manager) {
         MainController.scope.controls.paused = true;
-        popup_manager.show(); 
-        return this.__popups.unshift(popup_manager); 
+        
+        let popup = new popup_manager();
+        popup.show(); 
+        
+        return this.__popups.unshift(popup);
     }
 
     pop() { 
@@ -30,10 +33,34 @@ class AbstractPopup {
     constructor() {
         if (this.constructor === AbstractPopup)
             throw new TypeError('Abstract class "AbstractPopup" cannot be instantiated, directly');
+
+        this.gamepad_navigation = new GamepadMenuNavigation();
+        this.__registerMenuItems();
     }
 
-    static close() { throw new Error(`${this.name}.close(): implementation is mandatory`); }
+    close() {
+        this.__checkRequiredProperties();
+        this.rs_dialog_instance.closeModal();
+        this.rs_dialog_instance = null;
+    }
 
+    __querySelector(selector) {
+        this.__checkRequiredProperties();
+        return this.rs_dialog_instance.root_element.querySelector(selector);
+    }
+
+    __checkRequiredProperties() {
+        if (!this.rs_dialog_instance)
+            throw new Error(`A "rs_dialog_instance" property is needed for this feature to work`);
+    }
+
+    /** Méthodes abstraites **/
+    navigateUp()            { throw new Error(`Implementing ${this.name}.navigateUp() is mandatory`); }
+    navigateDown()          { throw new Error(`Implementing ${this.name}.navigateDown() is mandatory`); }
+    navigateLeft()          { throw new Error(`Implementing ${this.name}.navigateLeft() is mandatory`); }
+    navigateRight()         { throw new Error(`Implementing ${this.name}.navigateRight() is mandatory`); }
+    trigger(item_ident)     { throw new Error(`Implementing ${this.name}.trigger(item_ident) is mandatory`); }
+    __registerMenuItems()   { throw new Error(`Implementing ${this.name}.__registerMenuItems() is mandatory`); }
 }
 
 /**
@@ -49,17 +76,15 @@ class GamepadMenuNavigation {
         this.menu_items = [];
     }
 
-    registerMenuItem(item_position, html_element, onValidate) {
+    registerMenuItem(item_ident, html_element, onValidate) {
         this.menu_items.push({
-            page : item_position.page,
-            line : item_position.line,
-            column : item_position.column,
+            id : item_ident,
             html_element : html_element,
             onValidate : onValidate
         });
     }
 
-    triggerActiveItemAction() {
+    triggerActiveItem() {
         for (menu_item of this.menu_items) {
             if (this.__isActive(menu_item)) {
                 menu_item.onValidate();
@@ -81,8 +106,7 @@ class GamepadMenuNavigation {
     }
 
     __isActive(menu_item) {
-        return menu_item.page === this.active_item.page
-            && menu_item.line === this.active_item.line
+        return menu_item.line === this.active_item.line
             && menu_item.column === this.active_item.column;
     }
     

@@ -1,56 +1,86 @@
 class ShopPopup extends AbstractPopup {
-    static show() {
-		MainController.shop_popup = new RS_Dialog("shop_dialog", "Pense à faire le plein, avant d'y retourner", [], [], [], false, "tpl_shop.html", function() {  
-            let this_popup_dom = MainController.shop_popup.root_element;
+    rs_dialog_instance;
 
-            let shop_items_container = this_popup_dom.querySelector("#items-container"); 
+    constructor() {
+        super();
+    }
+
+    show() {
+        this.rs_dialog_instance = new RS_Dialog("shop_dialog", "Pense à faire le plein, avant d'y retourner", [], [], [], false, "tpl_shop.html", ()=> {  
+            
+            let shop_items_container = this.__querySelector("#items-container"); 
             MainController.shop_manager.setShopItemsContainer( shop_items_container );
 			
-            ShopPopup.switchToMoneyShop();
+            this.switchToMoneyShop();
             MainController.shop_manager.refreshAllShopItems();
 
-            ShopPopup.__initMoneyDisplay();
-            ShopPopup.__initKnowledgeDisplay();
+            this.__initMoneyDisplay();
+            this.__initKnowledgeDisplay();
 
-            let close_button = this_popup_dom.querySelector("#btn_close");
+            let close_button = this.__querySelector("#btn_close");
             close_button.value = `Vague ${MainController.scope.game.wave_number}`;
-			close_button.addEventListener("click", function() {
-                ShopPopup.close();
+			close_button.addEventListener("click", ()=> {
+                this.close();
 			});
 		});
-		document.body.appendChild(MainController.shop_popup.root_element);
+
+		document.body.appendChild(this.rs_dialog_instance.root_element);
+		MainController.shop_popup = this.rs_dialog_instance;
 	}
 
-    static switchToMoneyShop() {
+    switchToMoneyShop() {
         MainController.shop_manager.displayMoneyShop();
-        MainController.shop_popup.root_element.querySelector("#money_selector").classList.add("active");
-        MainController.shop_popup.root_element.querySelector("#knowledge_selector").classList.remove("active");
+        this.__querySelector("#money_selector").classList.add("active");
+        this.__querySelector("#knowledge_selector").classList.remove("active");
     }
 
-    static switchToTrainingRoom() {
+    switchToTrainingRoom() {
         MainController.shop_manager.displayTrainingRoom();
-        MainController.shop_popup.root_element.querySelector("#money_selector").classList.remove("active");
-        MainController.shop_popup.root_element.querySelector("#knowledge_selector").classList.add("active");
+        this.__querySelector("#money_selector").classList.remove("active");
+        this.__querySelector("#knowledge_selector").classList.add("active");
     }
 
-    static close() {
-        MainController.shop_popup.closeModal();
-        MainController.shop_popup = null;
-        MainController.startWave();
-    }
-
-    static __initMoneyDisplay() {
-        let player_money_element = MainController.shop_popup.root_element.querySelector("#player_money");
-        player_money_element.innerHTML = MainController.scope.game.human_readable_money;
+    __initMoneyDisplay() {
+        this.__querySelector("#player_money").innerHTML = MainController.scope.game.human_readable_money;
         // Binding géré dans MainUI.__prepareWaveSwagAutoRefresh()
     }
 
-    static __initKnowledgeDisplay() {
-        let knowledge_element = MainController.shop_popup.root_element.querySelector("#knowledge_points");
+    __initKnowledgeDisplay() {
+        let knowledge_element = this.__querySelector("#knowledge_points");
         knowledge_element.innerHTML = MainController.scope.game.knowledge_points;
         new RS_Binding({
             object: MainController.scope.game,
             property: "knowledge_points"
         }).addBinding(knowledge_element, "innerHTML");
+    }
+
+    /*********  AbstractPopup methods implementation  *********/
+    close() {
+        super.close();
+        MainController.startWave();
+    }
+    
+    navigateUp() {
+
+    }
+
+    navigateDown() {
+        
+    }
+
+    navigateLeft() {
+        
+    }
+
+    navigateRight() {
+
+    }
+
+    trigger(item_ident) {
+        
+    }
+
+    __registerMenuItems() {
+
     }
 }
