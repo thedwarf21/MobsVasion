@@ -78,6 +78,7 @@ class AbstractPopup {
     }
 
     /** Méthodes abstraites **/
+    show()                  { throw new Error(`Implementing ${this.name}.show() is mandatory`); }
     navigateUp()            { throw new Error(`Implementing ${this.name}.navigateUp() is mandatory`); }
     navigateDown()          { throw new Error(`Implementing ${this.name}.navigateDown() is mandatory`); }
     navigateLeft()          { throw new Error(`Implementing ${this.name}.navigateLeft() is mandatory`); }
