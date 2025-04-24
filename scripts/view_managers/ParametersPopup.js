@@ -9,10 +9,6 @@ class ParametersPopup extends AbstractPopup {
         this.rs_dialog_instance = new RS_Dialog("parameters_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", ()=> {
             this.__removeUnnecessaryContent();
             this.__bindShowHitboxesOption();
-
-			this.__querySelector("#btn_close").addEventListener("click", ()=> {
-                MainController.popups_stack.pop();
-			});
 		});
         
 		document.body.appendChild(this.rs_dialog_instance.root_element);

@@ -42,9 +42,15 @@ class GamepadControls {
 	static applyMenuControls() {
 		MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.pause);
 
-		let active_menu = MainController.timer.getActiveMenu();
-		if (MainController.timer.isSomeMenuOpened()) { 
-			// on va avoir besoin d'un classe pour abstraire la navigation ;)
+		let active_popup = MainController.popups_stack.activePopup();
+		if (active_popup) {
+			let controls_state = MainController.scope.controls.gamepad_menu_nav;
+			if (controls_state.up) 			active_popup.navigateUp();
+			if (controls_state.down) 		active_popup.navigateDown();
+			if (controls_state.left) 		active_popup.navigateLeft();
+			if (controls_state.right) 		active_popup.navigateRight();
+			if (controls_state.validate) 	active_popup.trigger();
+			if (controls_state.cancel) 		active_popup.close();
 		}
 	}
 	

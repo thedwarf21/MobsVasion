@@ -41,10 +41,6 @@ class GameClock {
 		}
 	}
 
-	isSomeMenuOpened() {
-		return MainController.timer.controls_state.paused;
-	}
-
 	__updateControlsObject() {
 		KeyboardAndMouseControls.applyControlsObject();
 		TouchScreenControls.applyControls();

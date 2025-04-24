@@ -17,11 +17,7 @@ class ShopPopup extends AbstractPopup {
             this.__initMoneyDisplay();
             this.__initKnowledgeDisplay();
 
-            let close_button = this.__querySelector("#btn_close");
-            close_button.value = `Vague ${MainController.scope.game.wave_number}`;
-			close_button.addEventListener("click", ()=> {
-                this.close();
-			});
+            this.__querySelector("#btn_close").value = `Vague ${MainController.scope.game.wave_number}`;
 		});
 
 		document.body.appendChild(this.rs_dialog_instance.root_element);
@@ -74,10 +70,6 @@ class ShopPopup extends AbstractPopup {
 
     navigateRight() {
 
-    }
-
-    trigger(item_ident) {
-        
     }
 
     __registerMenuItems() {

@@ -21,6 +21,6 @@
 
 <!-- Bouton de fermeture -->
 <div class="dialog-footer">
-	<input type="button" class="modal-button" value="Fermer" id="btn_close" />
+	<input type="button" class="modal-button" value="Fermer" id="btn_close" onclick="MainController.popups_stack.pop()" />
 	<input type="button" class="modal-button" value="Paramétrer la manette" id="btn_gamepad_controls" onclick="MainController.scope.gamepadControlsUI.show();" />
 </div>
