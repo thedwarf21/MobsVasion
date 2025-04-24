@@ -25,10 +25,21 @@ class PopupsStack {
     }
 }
 
+class AbstractPopup {
+    
+    constructor() {
+        if (this.constructor === AbstractPopup)
+            throw new TypeError('Abstract class "AbstractPopup" cannot be instantiated, directly');
+    }
 
+    static close() { throw new Error(`${this.name}.close(): implementation is mandatory`); }
 
-//!!! wave_report, cas particulier : c'est une modale d'info, pas un menu => l'action validate doit invoquer sa feneture, si cette fenêtre est ouverte
+}
 
+/**
+ * Le mieux (plus souple) sera d'embarquer un gestionnaire de navigation par popup.
+ * 
+ */
 class GamepadMenuNavigation {
     active_item;    // structure de données, permettant d'identifier l'élément actuellement actif
     menu_items;     // liste des éléments navigables, associés à leur position (page, line, column)
@@ -62,8 +73,6 @@ class GamepadMenuNavigation {
 
     
 
-
-
     __defaultActiveItem() {
         return {
             line: 0,
@@ -76,4 +85,6 @@ class GamepadMenuNavigation {
             && menu_item.line === this.active_item.line
             && menu_item.column === this.active_item.column;
     }
+    
+    __getActivePopup() { return MainController.popups_stack.activePopup(); }
 }

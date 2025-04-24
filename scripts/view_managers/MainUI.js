@@ -68,12 +68,8 @@ class MainUI {
 
 	closeAllPopups() {
 		let gamepadControlsUI = MainController.scope.gamepadControlsUI;
-		
 		if (gamepadControlsUI)
 			gamepadControlsUI.closeModal();
-		
-		/*if (MainController.shop_popup)
-			this.__closePopup(MainController.shop_popup);*/
 
 		MainController.popups_stack.closeAll();
 	}
@@ -158,13 +154,6 @@ class MainUI {
 			}
 		});
     }
-
-	__closePopup(rs_dialog_instance) {
-		rs_dialog_instance.closeModal(()=> {
-			rs_dialog_instance = null;
-		});
-	}
-
 	
 	get game_window() 			{ return document.getElementById("game-window"); }
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }

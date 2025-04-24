@@ -44,8 +44,7 @@ class GamepadControls {
 
 		let active_menu = MainController.timer.getActiveMenu();
 		if (MainController.timer.isSomeMenuOpened()) { 
-			// on va avoir besoin d'un classe pour abstraire la navigation ;) 
-			// mais pour ça, il faut identifier la popup active (au premier plan), pour aiguiller les commandes	
+			// on va avoir besoin d'un classe pour abstraire la navigation ;)
 		}
 	}
 	

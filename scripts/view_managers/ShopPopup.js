@@ -1,4 +1,4 @@
-class ShopPopup {
+class ShopPopup extends AbstractPopup {
     static show() {
 		MainController.shop_popup = new RS_Dialog("shop_dialog", "Pense à faire le plein, avant d'y retourner", [], [], [], false, "tpl_shop.html", function() {  
             let this_popup_dom = MainController.shop_popup.root_element;

@@ -1,4 +1,4 @@
-class ParametersPopup {
+class ParametersPopup extends AbstractPopup {
 
     static show() {
 		MainController.parameters_popup = new RS_Dialog("parameters_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", function() {
@@ -26,7 +26,7 @@ class ParametersPopup {
         });
     }
 
-    static close(was_paused) {
+    static close() {
         MainController.parameters_popup.closeModal();
         MainController.parameters_popup = null;
     }
