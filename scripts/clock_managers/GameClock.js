@@ -30,6 +30,21 @@ class GameClock {
 		setTimeout(() => { this.letsPlay(); }, TIME_INTERVAL);
 	}
 
+	launchReloadingAction() {
+		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
+			let reload_time = Abilities.getPrimaryReloadInterval();
+			MainController.scope.game.waiting_counter.clip = reload_time;
+			
+			let gauge = new MV_Gauge("primary-reload", reload_time, 0);
+			MainController.UI.primaryReloadGauge = gauge;
+			MainController.UI.addToGameWindow(gauge.root_element);
+		}
+	}
+
+	isSomeMenuOpened() {
+		return MainController.timer.controls_state.paused;
+	}
+
 	__updateControlsObject() {
 		KeyboardAndMouseControls.applyControlsObject();
 		TouchScreenControls.applyControls();
@@ -80,17 +95,6 @@ class GameClock {
 		if (!this.controls_state.firing_primary && !MainController.scope.game.clip_ammo)
 			return true;
 		return false;
-	}
-
-	launchReloadingAction() {
-		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
-			let reload_time = Abilities.getPrimaryReloadInterval();
-			MainController.scope.game.waiting_counter.clip = reload_time;
-			
-			let gauge = new MV_Gauge("primary-reload", reload_time, 0);
-			MainController.UI.primaryReloadGauge = gauge;
-			MainController.UI.addToGameWindow(gauge.root_element);
-		}
 	}
 
 	__testCollides() {

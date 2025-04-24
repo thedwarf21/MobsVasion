@@ -45,7 +45,15 @@ class MV_GameInitializer {
 				paused: false,
 				firing_primary: false,
 				firing_secondary: false,
-				reloading: false
+				reloading: false,
+				gamepad_menu_nav: {
+					left: false,
+					right: false,
+					up: false,
+					down: false,
+					validate: false,
+					cancel: false
+				}
 			},
 			gamepad_mapper: null,
 			shop: [{
@@ -113,6 +121,7 @@ class MV_GameInitializer {
 
 	static prepareGame(controller) {
 		controller.scope = MV_GameInitializer.initial_scope;
+		MV_GameInitializer.__initPopupsStack(controller);
 		MV_GameInitializer.__initShopManager(controller);
 		TouchScreenControls.addListeners(controller);
 		KeyboardAndMouseControls.addKeyListeners(controller);
@@ -123,6 +132,10 @@ class MV_GameInitializer {
 
 	static __initShopManager(controller) { 
 		controller.shop_manager = new ShopManager( controller.scope.shop );
+	}
+
+	static __initPopupsStack(controller) { 
+		controller.popups_stack = new PopupsStack();
 	}
 
 	static __createTimer(controller) {

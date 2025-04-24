@@ -1,5 +1,5 @@
 class ShopPopup {
-    static show(onShopClose) {
+    static show() {
 		MainController.shop_popup = new RS_Dialog("shop_dialog", "Pense à faire le plein, avant d'y retourner", [], [], [], false, "tpl_shop.html", function() {  
             let this_popup_dom = MainController.shop_popup.root_element;
 
@@ -15,7 +15,7 @@ class ShopPopup {
             let close_button = this_popup_dom.querySelector("#btn_close");
             close_button.value = `Vague ${MainController.scope.game.wave_number}`;
 			close_button.addEventListener("click", function() {
-                ShopPopup.__close(onShopClose);
+                ShopPopup.close();
 			});
 		});
 		document.body.appendChild(MainController.shop_popup.root_element);
@@ -33,12 +33,10 @@ class ShopPopup {
         MainController.shop_popup.root_element.querySelector("#knowledge_selector").classList.add("active");
     }
 
-    static __close(onShopClose) {
+    static close() {
         MainController.shop_popup.closeModal();
         MainController.shop_popup = null;
-        
-        if (onShopClose)
-            onShopClose();
+        MainController.startWave();
     }
 
     static __initMoneyDisplay() {

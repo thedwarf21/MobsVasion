@@ -72,11 +72,10 @@ class MainUI {
 		if (gamepadControlsUI)
 			gamepadControlsUI.closeModal();
 		
-		if (MainController.parameters_popup)
-			this.__closePopup(MainController.parameters_popup);
+		/*if (MainController.shop_popup)
+			this.__closePopup(MainController.shop_popup);*/
 
-		if (MainController.shop_popup)
-			this.__closePopup(MainController.shop_popup);
+		MainController.popups_stack.closeAll();
 	}
 
     __prepareWaveSwagAutoRefresh() {

@@ -2,13 +2,21 @@ class GamepadControls {
 
 	static prepareControls(controller) {
 		window.addEventListener('gamepadconnected', (event)=> {
-			console.log("Manette connectée");
+			console.info("Manette connectée");
 
 			let controls = controller.scope.controls;
 			let gamepad = new GamepadGenericAdapter();
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
+
+			let menu_controls = controls.gamepad_menu_nav;
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_up, "Menu : haut", ()=> { menu_controls.up = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_down, "Menu : bas", ()=> { menu_controls.down = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_left, "Menu : gauche", ()=> { menu_controls.left = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_right, "Menu : droite", ()=> { menu_controls.right = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_validate, "Menu : valider", ()=> { menu_controls.validate = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_cancel, "Menu : annuler", ()=> { menu_controls.cancel = true; });
 			controller.timer.gamepad_mapper = gamepad;
 			
 			let was_paused = controls.paused;
@@ -33,11 +41,14 @@ class GamepadControls {
 
 	static applyMenuControls() {
 		MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.pause);
-		if (MainController.timer.controls_state.paused) {
-			// application des commandes de manettes relatives aux menus (le true en second paramètre indique au mapper qu'il doit exécuter l'action secondaire de la commande)
-			// ex: this.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire, true);
+
+		let active_menu = MainController.timer.getActiveMenu();
+		if (MainController.timer.isSomeMenuOpened()) { 
+			// on va avoir besoin d'un classe pour abstraire la navigation ;) 
+			// mais pour ça, il faut identifier la popup active (au premier plan), pour aiguiller les commandes	
 		}
 	}
+	
 	static updateControlsObject() {
 		if ( MainController.UI.character ) {
 			MainController.timer.gamepad_mapper.updateJoysticksStates();

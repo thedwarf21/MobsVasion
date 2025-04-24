@@ -1,12 +1,12 @@
 class ParametersPopup {
-    static show(was_paused) {
-		MainController.scope.controls.paused = true;
+
+    static show() {
 		MainController.parameters_popup = new RS_Dialog("parameters_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", function() {
             ParametersPopup.__removeUnnecessaryContent();
             ParametersPopup.__bindShowHitboxesOption();
 
 			MainController.parameters_popup.root_element.querySelector("#btn_close").addEventListener("click", function() {
-                ParametersPopup.__close(was_paused);
+                MainController.popups_stack.pop();
 			});
 		});
 		document.body.appendChild(MainController.parameters_popup.root_element);
@@ -26,10 +26,8 @@ class ParametersPopup {
         });
     }
 
-    static __close(was_paused) {
+    static close(was_paused) {
         MainController.parameters_popup.closeModal();
         MainController.parameters_popup = null;
-        if (!was_paused)
-            MainController.scope.controls.paused = false;
     }
 }

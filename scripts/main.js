@@ -45,7 +45,13 @@ const TIMEOUTS = {
 const GAMEPAD_ACTION_CODES = {
     pause: "PAU",
     secondary_fire: "SEC",
-	reload: "REL"
+	reload: "REL",
+	menu_up: "MNU",
+	menu_down: "MND",
+	menu_left: "MNL",
+	menu_right: "MNR",
+	menu_validate: "MNV",
+	menu_cancel: "MNC"
 };
 
 const ANIMATIONS = {
@@ -116,22 +122,13 @@ class MainController {
 
     static togglePause() { 
 		let controls_state = MainController.scope.controls;
-		let was_paused = controls_state.paused;  // --> permet de savoir s'il faut ou non désactiver la pause, au moment de fermer la fenêtre
+		let was_paused = controls_state.paused;
         
-		if (!was_paused) {   // Mise en pause manuelle => ouverture de la popup paramètres
-			controls_state.paused = true;
-			ParametersPopup.show(was_paused);
-		}
-		else if (MainController.report_popup) {   // Possibilité de fermer les popups de rapport et de magasin, via bouton pause
+		if (!was_paused)   						// Mise en pause manuelle => ouverture de la popup paramètres
+			MainController.popups_stack.push(ParametersPopup);
+		else if (MainController.report_popup) 	// Possibilité de fermer la popup de rapport de fin de vague, via bouton pause (workflow particulier => gestion à part)
 			WaveReportPopup.__close( MainController.startWave );
-		}
-		else if (MainController.shop_popup) {
-			ShopPopup.__close( MainController.startWave );
-		}
-		else {
-			MainController.UI.closeAllPopups();
-			controls_state.paused = false;
-		}
+		else MainController.UI.closeAllPopups();
 	}
 
 	static popMonsterRandomly() {
@@ -168,8 +165,6 @@ class MainController {
 
 		AnimationsHelper.characterPop();
 		MainController.__scheduleLevelMonstersPop();
-
-		MainController.scope.controls.paused = false;
     }
 
 	static __scheduleLevelMonstersPop() {
@@ -195,7 +190,7 @@ class MainController {
 	
     static waveLost() {
         MainController.__characterRescueFees();
-        WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed, MainController.startWave );
+        WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed );
     }
 
     static __characterRescueFees() {
@@ -226,6 +221,6 @@ class MainController {
 
     static __waveDefeated() {
         MainController.scope.game.wave_number++;
-        WaveReportPopup.show( Tools.getRandomMessage(true), FRIEND_FACES.happy, MainController.startWave );
+        WaveReportPopup.show( Tools.getRandomMessage(true), FRIEND_FACES.happy );
     }
 }

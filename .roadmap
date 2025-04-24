@@ -22,6 +22,11 @@ V   Tâche terminée
         >   Pause => affiche la popup de préférences utilisateur (voir plus bas), qui pourra également être ouverte depuis le magasin
         >   Unpause => fermeture et destruction de toutes les popups ouvertes au moment de l'action
     X   Gérer la manette dans les menus
+        V   Ajouter les propriétés d'états nécessaires dans scope.controls (GameInitializer.initial_scope)
+        V   Enregistrer les actions de commandes de menus, mettant à jour scope.controls, dans GamepadControls.prepareControls
+        X   Gérer les commandes pour trigger les actions, dans GamepadControls.applyMenuControls
+        _   Monter une classe intermédiaire, utilisée par GamepadControls.applyMenuControls, pour s'interfacer avec le menu actuellement ouvert
+        _   Utiliser cette classe intermédiaire, pour paramétrer la navigation par manette, dans chacune des popup.
 *   Personnage
     V   Créer et afficher le personnage
         >   Style CSS du personnage
@@ -103,10 +108,23 @@ V   Tâche terminée
     V   Contenu dynamique du rapport
     V   Mécanisme de mise en pause automatique
 *   Magasin
-    V    Programmer l'ouverture du magasin après fermeture par le joueur du rapport de fin de vague
-    X   Alimenter la propriété de paramétrage, dans le scope du MainController (liste d'objets JSON "shop" dans le GameInitializer)
-    X   Créer le template HTML et la feuille de style CSS de la popup magasin
-    _   Mettre en place les mécanismes automatisés de calculs et mise à jour de L'UI (suite à un achat: -ressources joueur, recalcul et maj affichage item acheté -> next lvl)
+    V   Programmer l'ouverture du magasin après fermeture par le joueur du rapport de fin de vague
+    V   Alimenter la propriété de paramétrage, dans le scope du MainController (liste d'objets JSON "shop" dans le GameInitializer)
+    V   Créer le template HTML et la feuille de style CSS de la popup magasin
+    V   Mettre en place les mécanismes automatisés de calculs et mise à jour de L'UI (suite à un achat: -ressources joueur, recalcul et maj affichage item acheté -> next lvl)
+    V   Faire apparaître l'argent et les points de compétence dans l'UI
+    V   Travailler le visuel du shop-header pour que ce soit intuitif (qu'on voie bien que ce sont deux onglets)
+    V   Faire apparaître le numéro de la vague dans le bouton de fermeture de la popup
+    V   Prise en compte de l'état des items magasin, dans les mécaniques du jeu
+    _   Revoir la mise en page, pour être plus Mobile-friendly : 
+        _   à gauche, les items avec juste les noms (div scrollable, parce que je vais en rajouter)
+        _   à droite, le détail de l'item survolé (ou focused, avec la manette)
+    _   Nouveaux items dans le magasin
+        _   ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
+        _   ajouter l'item "Chargeur haute capacité" => augmentation des munitions dans le chargeur
+        _   ajouter l'item "Tenue matelassée" => ajout d'une armure, absorbant les dégâts, mais ralentissant légèrement les déplacement (bah oui, c'est moins pratique pour bouger)
+            _   gérer la nouvelle jauge, et les données qui vont avec
+            _   ne pas oublier de gérer l'effet de ralentissement
 *   Commandes
     V   Clavier + Souris
     _   Tactile
@@ -126,23 +144,3 @@ _   Mettre à jour la doc, à chaque étape majeure
 Choix dans le lobby, entre plusieurs armes pour le tir principal   \
 Choix dans le lobby, entre plusieurs armes pour le tir secondaire   |=> facilitation à la création de nouveau contenu
 Définir de nouveaux types de monstres                              /
-
-
-
-------------- EN COURS (shop popup) --------------
-
-V Faire apparaître l'argent et les points de compétence dans l'UI
-V Travailler le visuel du shop-header pour que ce soit intuitif (qu'on voie bien que ce sont deux onglets)
-V Faire apparaître le numéro de la vague dans le bouton de fermeture de la popup
-V Définir toutes les classes CSS d'état (too-expensive, maxed)
-V Faire fonctionner les items de la salle d'entraînement
-V prise en compte de l'état des items magasin, dans les mécaniques du jeu
-_ Revoir la mise en page, pour être plus Mobile-friendly : 
-    _ à gauche, les items avec juste les noms (div scrollable, parce que je vais en rajouter)
-    _ à droite, le détail de l'item survolé (ou focused, avec la manette)
-_ Nouveaux items dans le magasin
-    _ ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
-    _ ajouter l'item "Chargeur haute capacité" => augmentation des munitions dans le chargeur
-    _ ajouter l'item "Tenue matelassée" => ajout d'une armure, absorbant les dégâts, mais ralentissant légèrement les déplacement (bah oui, c'est moins pratique pour bouger)
-        _ gérer la nouvelle jauge, et les données qui vont avec
-        _ ne pas oublier de gérer l'effet de ralentissement
