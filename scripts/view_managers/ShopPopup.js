@@ -57,19 +57,19 @@ class ShopPopup extends AbstractPopup {
     }
     
     navigateUp() {
-
+        console.info("ShopPopup: up");
     }
 
     navigateDown() {
-        
+        console.info("ShopPopup: down");
     }
 
     navigateLeft() {
-        
+        console.info("ShopPopup: left");
     }
 
     navigateRight() {
-
+        console.info("ShopPopup: right");
     }
 
     __registerMenuItems() {

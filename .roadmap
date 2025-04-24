@@ -24,9 +24,9 @@ V   Tâche terminée
     X   Gérer la manette dans les menus
         V   Ajouter les propriétés d'états nécessaires dans scope.controls (GameInitializer.initial_scope)
         V   Enregistrer les actions de commandes de menus, mettant à jour scope.controls, dans GamepadControls.prepareControls
-        X   Gérer les commandes pour trigger les actions, dans GamepadControls.applyMenuControls
-        _   Monter une classe intermédiaire, utilisée par GamepadControls.applyMenuControls, pour s'interfacer avec le menu actuellement ouvert
-        _   Utiliser cette classe intermédiaire, pour paramétrer la navigation par manette, dans chacune des popup.
+        V   Gérer les commandes pour trigger les actions, dans GamepadControls.applyMenuControls
+        V   Monter une classe intermédiaire, utilisée par GamepadControls.applyMenuControls, pour s'interfacer avec le menu actuellement ouvert
+        _   Implémentation des méthodes abstraites de AbstractPopup dans ShopPopup et ParamtersPopup
 *   Personnage
     V   Créer et afficher le personnage
         >   Style CSS du personnage

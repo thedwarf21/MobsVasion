@@ -31,23 +31,19 @@ class ParametersPopup extends AbstractPopup {
 
     /*********  AbstractPopup methods implementation  *********/
     navigateUp() {
-
+        console.info("ParametersPopup: up");
     }
 
     navigateDown() {
-        
+        console.info("ParametersPopup: down");
     }
 
     navigateLeft() {
-        
+        console.info("ParametersPopup: left");
     }
 
     navigateRight() {
-
-    }
-
-    trigger(item_ident) {
-        
+        console.info("ParametersPopup: right");
     }
 
     __registerMenuItems() {

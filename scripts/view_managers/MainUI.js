@@ -68,8 +68,10 @@ class MainUI {
 
 	closeAllPopups() {
 		let gamepadControlsUI = MainController.scope.gamepadControlsUI;
-		if (gamepadControlsUI)
+		if (gamepadControlsUI) {
 			gamepadControlsUI.closeModal();
+			MainController.scope.controls.paused = false;
+		}
 
 		MainController.popups_stack.closeAll();
 	}

@@ -37,6 +37,9 @@ class GamepadControls {
 			controls_state.firing_primary = false;
 		controls_state.firing_secondary = false;
 		controls_state.reloading = false;
+
+		for (let key in controls_state.gamepad_menu_nav)
+			controls_state.gamepad_menu_nav[ key ] = false;
 	}
 
 	static applyMenuControls() {
@@ -44,13 +47,21 @@ class GamepadControls {
 
 		let active_popup = MainController.popups_stack.activePopup();
 		if (active_popup) {
-			let controls_state = MainController.scope.controls.gamepad_menu_nav;
-			if (controls_state.up) 			active_popup.navigateUp();
-			if (controls_state.down) 		active_popup.navigateDown();
-			if (controls_state.left) 		active_popup.navigateLeft();
-			if (controls_state.right) 		active_popup.navigateRight();
-			if (controls_state.validate) 	active_popup.trigger();
-			if (controls_state.cancel) 		active_popup.close();
+
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_up);
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_down);
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_left);
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_right);
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_validate);
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_cancel);
+			
+			let menu_controls = MainController.scope.controls.gamepad_menu_nav;
+			if (menu_controls.up) 			active_popup.navigateUp();
+			if (menu_controls.down) 		active_popup.navigateDown();
+			if (menu_controls.left) 		active_popup.navigateLeft();
+			if (menu_controls.right) 		active_popup.navigateRight();
+			if (menu_controls.validate) 	active_popup.trigger();
+			if (menu_controls.cancel) 		active_popup.close();
 		}
 	}
 	
