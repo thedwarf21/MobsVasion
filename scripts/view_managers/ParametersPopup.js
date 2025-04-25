@@ -61,11 +61,4 @@ class ParametersPopup extends AbstractPopup {
         let new_active_ident = `${new_col}_${active_item_position.line}`;
         this.__setActiveItem(new_active_ident);
     }
-
-    __registerMenuItems() {
-        let navigable_elements = this.__querySelectorAll("[nav-ident]");
-        for (let html_element of navigable_elements) {
-            this.__registerMenuItem(html_element.getAttribute("nav-ident"), html_element);
-        }
-    }
 }

@@ -3,9 +3,10 @@ class ShopPopup extends AbstractPopup {
 
     constructor() {
         super();
+        this.active_item_id = "0_0";
     }
 
-    show() {
+    show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog("shop_dialog", "Pense à faire le plein, avant d'y retourner", [], [], [], false, "tpl_shop.html", ()=> {  
             
             let shop_items_container = this.__querySelector("#items-container"); 
@@ -18,6 +19,9 @@ class ShopPopup extends AbstractPopup {
             this.__initKnowledgeDisplay();
 
             this.__querySelector("#btn_close").value = `Vague ${MainController.scope.game.wave_number}`;
+
+            if (onPopupOpened)
+                onPopupOpened();
 		});
 
 		document.body.appendChild(this.rs_dialog_instance.root_element);
@@ -57,22 +61,48 @@ class ShopPopup extends AbstractPopup {
     }
     
     navigateUp() {
-        console.info("ShopPopup: up");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_line = active_item_position.line - 1;
+        let new_active_ident = `${active_item_position.column}_${new_line}`;
+        this.__setActiveItem(new_active_ident);
+
+        if (active_item_position.line == 2)
+            this.__setActiveItem(`${active_item_position.column + 2}_${new_line}`);
     }
 
     navigateDown() {
-        console.info("ShopPopup: down");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_line = active_item_position.line + 1;
+        let new_column = new_line < 2 ? active_item_position.column : 0;
+        let new_active_ident = `${new_column}_${new_line}`;
+        this.__setActiveItem(new_active_ident);
     }
 
     navigateLeft() {
-        console.info("ShopPopup: left");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_col = active_item_position.column - 1;
+        let new_active_ident = `${new_col}_${active_item_position.line}`;
+        
+        if (new_col == 1)
+            this.switchToMoneyShop();
+
+        this.__setActiveItem(new_active_ident);
     }
 
     navigateRight() {
-        console.info("ShopPopup: right");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_col = active_item_position.column + 1;
+        let new_active_ident = `${new_col}_${active_item_position.line}`;
+        
+        if (new_col == 2)
+            this.switchToTrainingRoom();
+        this.__setActiveItem(new_active_ident);
     }
 
-    __registerMenuItems() {
-
+    __registerMenuItems() { 
+        super.__registerMenuItems();
+        this.switchToTrainingRoom();
+        super.__registerMenuItems();
+        this.switchToMoneyShop();
     }
 }

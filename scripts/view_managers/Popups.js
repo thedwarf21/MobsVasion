@@ -11,7 +11,7 @@ class PopupsStack {
         let popup = new popup_manager();
         popup.show(()=> {
             popup.__registerMenuItems();
-            popup.refreshActiveState();
+            popup.__getActiveItem().html_element.classList.add("active");
         }); 
         
         return this.__popups.unshift(popup);
@@ -58,13 +58,6 @@ class AbstractPopup {
             active_item.onValidate(); 
     }
 
-    refreshActiveState() {
-        let currently_active_element = this.__querySelector(".active");
-        if (currently_active_element)
-            currently_active_element.classList.remove("active");
-        this.__getActiveItem().html_element.classList.add("active");
-    }
-
     __getLineAndColumnNumbers() {
         let position = this.active_item_id.split("_");
         return {
@@ -74,9 +67,11 @@ class AbstractPopup {
     }
 
     __setActiveItem(new_active_ident) {
-        if (this.__querySelector(`[nav-ident='${new_active_ident}']`))
+        if (this.__querySelector(`[nav-ident='${new_active_ident}']`)) {
+            this.__getActiveItem().html_element.classList.remove("active");
             this.active_item_id = new_active_ident;
-        this.refreshActiveState();
+            this.__getActiveItem().html_element.classList.add("active");
+        }
     }
 
     __getActiveItem() {
@@ -111,11 +106,17 @@ class AbstractPopup {
             this.active_item_id = item_ident;
     }
 
+    __registerMenuItems() { 
+        let navigable_elements = this.__querySelectorAll("[nav-ident]");
+        for (let html_element of navigable_elements) {
+            this.__registerMenuItem(html_element.getAttribute("nav-ident"), html_element);
+        } 
+    }
+
     /** Méthodes abstraites **/
     show(onPopupOpened)     { throw new Error(`Implementing ${this.name}.show() is mandatory`); }
     navigateUp()            { throw new Error(`Implementing ${this.name}.navigateUp() is mandatory`); }
     navigateDown()          { throw new Error(`Implementing ${this.name}.navigateDown() is mandatory`); }
     navigateLeft()          { throw new Error(`Implementing ${this.name}.navigateLeft() is mandatory`); }
     navigateRight()         { throw new Error(`Implementing ${this.name}.navigateRight() is mandatory`); }
-    __registerMenuItems()   { throw new Error(`Implementing ${this.name}.__registerMenuItems() is mandatory`); }
 }

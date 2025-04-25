@@ -6,6 +6,9 @@ class ShopManager {
     constructor(shop_scope) {
         this.__shop_items = [];
         this.__healing_items = [];
+        
+        this.__createHealingItems();
+
         for (let shop_item of shop_scope) {
             this.__shop_items.push( new ShopItem(shop_item) );
         }
@@ -39,14 +42,17 @@ class ShopManager {
         }
     }
 
-    __attachHealingItems() {
+    __createHealingItems() {        
         let small_heal =  new ShopHealingItem("Verre d'eau", 2, 5, "0_0");
         this.__healing_items.push(small_heal);
-        this.__shop_items_container.appendChild(small_heal.root_element);
 
         let large_heal = new ShopHealingItem("Repas chaud", 8, 25, "1_0");
         this.__healing_items.push(large_heal);
-        this.__shop_items_container.appendChild(large_heal.root_element);
+    }
+
+    __attachHealingItems() {
+        for (let healing_item of this.__healing_items)
+            this.__shop_items_container.appendChild(healing_item.root_element);
     }
 
     __refreshHealingItems() {
