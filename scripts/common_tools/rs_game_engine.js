@@ -345,7 +345,7 @@ class GamepadControl {
 	}
 
 	__isButtonPressed(gamepad) {
-		return this.buttonIndex && gamepad.buttons[this.buttonIndex].pressed;
+		return this.buttonIndex != undefined && gamepad.buttons[this.buttonIndex].pressed;
 	}
 
 	__isExecutionPossible() {
