@@ -10,6 +10,7 @@ class ShopItem {
     level_1_price;
     level_2_price_coef;
     current_level;
+    nav_id;
     
     is_money_priced_item;
 
@@ -34,6 +35,7 @@ class ShopItem {
     __initHtmlElement() {
 		this.html_element = document.createElement("DIV");
 		this.html_element.classList.add("shop-item");
+        this.html_element.setAttribute("nav-ident", this.nav_id);
 
         this.html_element.appendChild( ShopItem.getHtmlElement("shop-item-name", this.name) );
         this.html_element.appendChild( ShopItem.getHtmlElement("shop-item-desc", this.description) );

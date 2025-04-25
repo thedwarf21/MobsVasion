@@ -5,10 +5,10 @@ class ShopHealingItem {
     price_element;
 
 
-    constructor(name, price, hp_recover) {
+    constructor(name, price, hp_recover, nav_id) {
         this.price = price;
         this.hp_recover = hp_recover;
-        this.__initRootElement(name);
+        this.__initRootElement(name, nav_id);
     }
 
     refresh() {
@@ -25,10 +25,11 @@ class ShopHealingItem {
         }
     }
 
-    __initRootElement(name) {
+    __initRootElement(name, nav_id) {
         let html_element = document.createElement("DIV");
         html_element.classList.add("shop-item");
         html_element.classList.add("healing-item");
+        html_element.setAttribute("nav-ident", nav_id);
         this.root_element = html_element;
 
         html_element.appendChild( ShopItem.getHtmlElement("shop-item-name", name) );

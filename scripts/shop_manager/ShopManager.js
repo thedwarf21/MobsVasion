@@ -40,11 +40,11 @@ class ShopManager {
     }
 
     __attachHealingItems() {
-        let small_heal =  new ShopHealingItem("Verre d'eau", 2, 5);
+        let small_heal =  new ShopHealingItem("Verre d'eau", 2, 5, "0_0");
         this.__healing_items.push(small_heal);
         this.__shop_items_container.appendChild(small_heal.root_element);
 
-        let large_heal = new ShopHealingItem("Repas chaud", 8, 25);
+        let large_heal = new ShopHealingItem("Repas chaud", 8, 25, "1_0");
         this.__healing_items.push(large_heal);
         this.__shop_items_container.appendChild(large_heal.root_element);
     }
