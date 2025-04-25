@@ -22,10 +22,10 @@ V   Tâche terminée
         >   Pause => affiche la popup de préférences utilisateur (voir plus bas), qui pourra également être ouverte depuis le magasin
         >   Unpause => fermeture et destruction de toutes les popups ouvertes au moment de l'action
     X   Gérer la manette dans les menus
-        V   Ajouter les propriétés d'états nécessaires dans scope.controls (GameInitializer.initial_scope)
-        V   Enregistrer les actions de commandes de menus, mettant à jour scope.controls, dans GamepadControls.prepareControls
-        V   Gérer les commandes pour trigger les actions, dans GamepadControls.applyMenuControls
-        V   Monter une classe intermédiaire, utilisée par GamepadControls.applyMenuControls, pour s'interfacer avec le menu actuellement ouvert
+        >   Ajouter les propriétés d'états nécessaires dans scope.controls (GameInitializer.initial_scope)
+        >   Enregistrer les actions de commandes de menus, mettant à jour scope.controls, dans GamepadControls.prepareControls
+        >   Gérer les commandes pour trigger les actions, dans GamepadControls.applyMenuControls
+        >   Monter une classe intermédiaire, utilisée par GamepadControls.applyMenuControls, pour s'interfacer avec le menu actuellement ouvert
         _   Implémentation des méthodes abstraites de AbstractPopup dans ShopPopup et ParamtersPopup
 *   Personnage
     V   Créer et afficher le personnage
@@ -128,14 +128,13 @@ V   Tâche terminée
 *   Commandes
     V   Clavier + Souris
     _   Tactile
-*   UX
+*   UI / UX
     X   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
     _   Gérer les sauvegardes
     _   Ajouter la musique
 
 *   Fignolage
-
 X   Tester, au fil de l'eau
 _   Mettre à jour la doc, à chaque étape majeure
 

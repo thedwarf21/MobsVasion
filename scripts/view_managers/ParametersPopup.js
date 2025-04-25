@@ -3,12 +3,16 @@ class ParametersPopup extends AbstractPopup {
 
     constructor() {
         super();
+        this.active_item_id = "0_0";
     }
 
-    show() {
+    show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog("parameters_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", ()=> {
             this.__removeUnnecessaryContent();
             this.__bindShowHitboxesOption();
+
+            if (onPopupOpened)
+                onPopupOpened();
 		});
         
 		document.body.appendChild(this.rs_dialog_instance.root_element);
@@ -31,22 +35,37 @@ class ParametersPopup extends AbstractPopup {
 
     /*********  AbstractPopup methods implementation  *********/
     navigateUp() {
-        console.info("ParametersPopup: up");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_line = active_item_position.line - 1;
+        let new_active_ident = `0_${new_line}`;
+        this.__setActiveItem(new_active_ident);
     }
 
     navigateDown() {
-        console.info("ParametersPopup: down");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_line = active_item_position.line + 1;
+        let new_active_ident = `0_${new_line}`;
+        this.__setActiveItem(new_active_ident);
     }
 
     navigateLeft() {
-        console.info("ParametersPopup: left");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_col = active_item_position.column - 1;
+        let new_active_ident = `${new_col}_${active_item_position.line}`;
+        this.__setActiveItem(new_active_ident);
     }
 
     navigateRight() {
-        console.info("ParametersPopup: right");
+        let active_item_position = this.__getLineAndColumnNumbers();
+        let new_col = active_item_position.column + 1;
+        let new_active_ident = `${new_col}_${active_item_position.line}`;
+        this.__setActiveItem(new_active_ident);
     }
 
     __registerMenuItems() {
-
+        let navigable_elements = this.__querySelectorAll("[nav-ident]");
+        for (let html_element of navigable_elements) {
+            this.__registerMenuItem(html_element.getAttribute("nav-ident"), html_element);
+        }
     }
 }

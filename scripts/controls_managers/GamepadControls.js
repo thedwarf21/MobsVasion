@@ -11,12 +11,12 @@ class GamepadControls {
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
 
 			let menu_controls = controls.gamepad_menu_nav;
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_up, "Menu : haut", ()=> { menu_controls.up = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_down, "Menu : bas", ()=> { menu_controls.down = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_left, "Menu : gauche", ()=> { menu_controls.left = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_right, "Menu : droite", ()=> { menu_controls.right = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_validate, "Menu : valider", ()=> { menu_controls.validate = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_cancel, "Menu : annuler", ()=> { menu_controls.cancel = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_up, 		"Menu : haut", 		()=> { menu_controls.up = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_down, 	"Menu : bas", 		()=> { menu_controls.down = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_left, 	"Menu : gauche", 	()=> { menu_controls.left = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_right, 	"Menu : droite", 	()=> { menu_controls.right = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_validate, "Menu : valider", 	()=> { menu_controls.validate = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_cancel, 	"Menu : annuler", 	()=> { menu_controls.cancel = true; });
 			controller.timer.gamepad_mapper = gamepad;
 			
 			let was_paused = controls.paused;
@@ -61,7 +61,7 @@ class GamepadControls {
 			if (menu_controls.left) 		active_popup.navigateLeft();
 			if (menu_controls.right) 		active_popup.navigateRight();
 			if (menu_controls.validate) 	active_popup.trigger();
-			if (menu_controls.cancel) 		active_popup.close();
+			if (menu_controls.cancel) 		MainController.popups_stack.pop();
 		}
 	}
 	

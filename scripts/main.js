@@ -38,8 +38,8 @@ const TIMEOUTS = {
 	shot_interval: 13,
 	reload_time: 35,
 	before_pop: 25,
-	min_pop_interval: 60,
-	max_pop_interval: 100
+	min_pop_interval: 25,
+	max_pop_interval: 50
 };
 
 const GAMEPAD_ACTION_CODES = {

@@ -9,7 +9,10 @@ class PopupsStack {
         MainController.scope.controls.paused = true;
         
         let popup = new popup_manager();
-        popup.show(); 
+        popup.show(()=> {
+            popup.__registerMenuItems();
+            popup.refreshActiveState();
+        }); 
         
         return this.__popups.unshift(popup);
     }
@@ -38,7 +41,7 @@ class AbstractPopup {
         if (this.constructor === AbstractPopup)
             throw new TypeError('Abstract class "AbstractPopup" cannot be instantiated, directly');
 
-        this.__registerMenuItems();
+        this.navigable_items = [];
     }
 
     close() {
@@ -47,18 +50,49 @@ class AbstractPopup {
         this.rs_dialog_instance = null;
     }
 
-    trigger() { 
-        for (let menu_item of this.navigable_items) {
-            if (menu_item.id === this.active_item_id) {
-                menu_item.onValidate();
-                return;
-            }
-        }
+    trigger() {
+        let active_item = this.__getActiveItem();
+        active_item.html_element.click();
+
+        if (active_item.onValidate)
+            active_item.onValidate(); 
+    }
+
+    refreshActiveState() {
+        let currently_active_element = this.__querySelector(".active");
+        if (currently_active_element)
+            currently_active_element.classList.remove("active");
+        this.__getActiveItem().html_element.classList.add("active");
+    }
+
+    __getLineAndColumnNumbers() {
+        let position = this.active_item_id.split("_");
+        return {
+            column: parseInt(position[0]),
+            line: parseInt(position[1])
+        };
+    }
+
+    __setActiveItem(new_active_ident) {
+        if (this.__querySelector(`[nav-ident='${new_active_ident}']`))
+            this.active_item_id = new_active_ident;
+        this.refreshActiveState();
+    }
+
+    __getActiveItem() {
+        for (let menu_item of this.navigable_items)
+            if(menu_item.id === this.active_item_id)
+                return menu_item;
     }
 
     __querySelector(selector) {
         this.__checkRequiredProperties();
         return this.rs_dialog_instance.root_element.querySelector(selector);
+    }
+
+    __querySelectorAll(selector) {
+        this.__checkRequiredProperties();
+        return this.rs_dialog_instance.root_element.querySelectorAll(selector);
     }
 
     __checkRequiredProperties() {
@@ -78,7 +112,7 @@ class AbstractPopup {
     }
 
     /** Méthodes abstraites **/
-    show()                  { throw new Error(`Implementing ${this.name}.show() is mandatory`); }
+    show(onPopupOpened)     { throw new Error(`Implementing ${this.name}.show() is mandatory`); }
     navigateUp()            { throw new Error(`Implementing ${this.name}.navigateUp() is mandatory`); }
     navigateDown()          { throw new Error(`Implementing ${this.name}.navigateDown() is mandatory`); }
     navigateLeft()          { throw new Error(`Implementing ${this.name}.navigateLeft() is mandatory`); }
