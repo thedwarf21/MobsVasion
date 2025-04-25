@@ -44,7 +44,7 @@ class ParametersPopup extends AbstractPopup {
     navigateDown() {
         let active_item_position = this.__getLineAndColumnNumbers();
         let new_line = active_item_position.line + 1;
-        let new_active_ident = `0_${new_line}`;
+        let new_active_ident = `1_${new_line}`;
         this.__setActiveItem(new_active_ident);
     }
 
