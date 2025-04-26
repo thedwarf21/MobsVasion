@@ -1,26 +1,26 @@
 <div class="dialog-body">
 
-	<!-- Attribut "checked" synchronisé à MainController.scope.game.music_on => à activer lorsque l'option sera gérée
-	<div class="report-line">
-		<div class="report-text pref-title"><b>Musique:</b></div>
-		<input type="checkbox" class="pref-value" id="music_on" />
-	</div-->
+	<div class="modal-line">
+		<div class="pref-title"><b>Musique:</b></div>
+		<input type="checkbox" class="pref-value" id="music_on" nav-ident="0_0" />
+		<!-- Attribut "checked" synchronisé à MainController.audio_manger.sound_settings.music_on -->
+	</div>
 
-	<!-- Attribut "checked" synchronisé à MainController.scope.game.sound_fx_on => à activer lorsque l'option sera gérée
-	<div class="report-line">
-		<div class="report-text pref-title"><b>Effets sonores:</b></div>
-		<input type="checkbox" class="pref-value" id="sound_fx_on" />
-	</div-->
+	<div class="modal-line">
+		<div class="pref-title"><b>Effets sonores:</b></div>
+		<input type="checkbox" class="pref-value" id="sound_fx_on" nav-ident="0_1" />
+		<!-- Attribut "checked" synchronisé à MainController.audio_manger.sound_settings.sound_fx_on -->
+	</div>
 
 	<div class="modal-line">
 		<div class="pref-title"><b>Afficher les hitbox:</b></div>
-		<input type="checkbox" class="pref-value" id="show_hitboxes" nav-ident="0_0" />
+		<input type="checkbox" class="pref-value" id="show_hitboxes" nav-ident="0_2" />
 		<!-- Attribut "checked" synchronisé à MainController.scope.game.showHitboxes -->
 	</div>
 </div>
 
 <!-- Bouton de fermeture -->
 <div class="dialog-footer">
-	<input type="button" class="modal-button" value="Fermer" id="btn_close" nav-ident="0_1" onclick="MainController.popups_stack.pop()" />
-	<input type="button" class="modal-button" value="Paramétrer la manette" id="btn_gamepad_controls" nav-ident="1_1" onclick="MainController.scope.gamepadControlsUI.show();" />
+	<input type="button" class="modal-button" value="Fermer" id="btn_close" nav-ident="0_3" onclick="MainController.popups_stack.pop()" />
+	<input type="button" class="modal-button" value="Paramétrer la manette" id="btn_gamepad_controls" nav-ident="1_3" onclick="MainController.scope.gamepadControlsUI.show();" />
 </div>

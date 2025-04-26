@@ -9,7 +9,7 @@ class ParametersPopup extends AbstractPopup {
     show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog("parameters_dialog", "Paramètres utilisateur", [], [], [], false, "tpl_parameters.html", ()=> {
             this.__removeUnnecessaryContent();
-            this.__bindShowHitboxesOption();
+            this.__bindOptions();
 
             if (onPopupOpened)
                 onPopupOpened();
@@ -24,12 +24,28 @@ class ParametersPopup extends AbstractPopup {
             this.__querySelector("#btn_gamepad_controls").remove();
     }
 
-    __bindShowHitboxesOption() {
+    __bindOptions() {
         new RS_Binding({
             object: MainController.scope.game,
             property: "showHitboxes"
         }).addBinding(this.__querySelector("#show_hitboxes"), "checked", "change", ()=> {
             MainController.UI.refreshAllHitboxesVisibility();
+            JuiceHelper.emptyClipPercussion();
+        });
+        
+        new RS_Binding({
+            object: MainController.audio_manager.sound_settings,
+            property: "music_on"
+        }).addBinding(this.__querySelector("#music_on"), "checked", "change", ()=> {
+            MainController.audio_manager.stopMusic();
+            JuiceHelper.emptyClipPercussion();
+        });
+        
+        new RS_Binding({
+            object: MainController.audio_manager.sound_settings,
+            property: "sound_fx_on"
+        }).addBinding(this.__querySelector("#sound_fx_on"), "checked", "change", ()=> {
+            JuiceHelper.emptyClipPercussion();
         });
     }
 
@@ -44,7 +60,8 @@ class ParametersPopup extends AbstractPopup {
     navigateDown() {
         let active_item_position = this.__getLineAndColumnNumbers();
         let new_line = active_item_position.line + 1;
-        let new_active_ident = `1_${new_line}`;
+        let new_col = new_line === 3 ? 1 : 0;
+        let new_active_ident = `${new_col}_${new_line}`;
         this.__setActiveItem(new_active_ident);
     }
 

@@ -39,7 +39,8 @@ class MV_AudioManager {
 		if (audio_player) {
 			this.loops.push({
 				id: sound_lib_entry.loop_id,
-				audio_player: audio_player
+				audio_player: audio_player,
+				is_music: is_music
 			});
 		}
 	}
@@ -57,6 +58,17 @@ class MV_AudioManager {
 				loop.audio_player.remove();
 				this.loops.splice(i, 1);
 				return;
+			}
+		}
+	}
+
+	stopMusic() {
+		for (let i = this.loops.length - 1; i >= 0; i--) {
+			let loop = this.loops[i];
+			if (loop.is_music) {
+				loop.audio_player.pause();
+				loop.audio_player.remove();
+				this.loops.splice(i, 1);
 			}
 		}
 	}
