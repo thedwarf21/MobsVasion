@@ -197,6 +197,8 @@ class MainController {
 		XpBarHelper.addXp(XP_PER_MONSTER);
 		if (MainController.__isWaveComplete())
 			MainController.__waveDefeated();
+
+		JuiceHelper.monsterSlayed();
     }
 	
     static waveLost() {

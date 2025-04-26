@@ -54,6 +54,7 @@ class JuiceHelper {
         MainController.UI.addToGameWindow(flash_effect.root_element);
     }
 
+
     static checkPanicMode() {
         let panic_element = document.querySelector(".panic-mode");
 		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
@@ -71,6 +72,7 @@ class JuiceHelper {
             MainController.audio_manager.stopAudioLoop(SOUND_LIB.low_hp_loop.loop_id); 
         }
     }
+
 
     static monsterPop(x, y) {
 		let animation = ANIMATIONS.monster_pop;
@@ -98,4 +100,6 @@ class JuiceHelper {
         blood_splash.root_element.style.transform = `rotate(${angle}deg)`;
         MainController.UI.addToGameWindow(blood_splash.root_element);
     }
+
+    static monsterSlayed() { MainController.audio_manager.playAudio(SOUND_LIB.kill, false); }
 }
