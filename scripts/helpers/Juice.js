@@ -1,4 +1,4 @@
-class AnimationsHelper {
+class JuiceHelper {
     
     static hitEffect() {
         let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 

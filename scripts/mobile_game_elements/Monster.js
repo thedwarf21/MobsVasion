@@ -79,7 +79,7 @@ class MV_Monster extends MobileGameElement {
         let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(rad_angle) );  
         let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);
         let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(rad_angle);  
-        AnimationsHelper.bloodSplash(x_splash, y_splash, this.angle, ()=> {
+        JuiceHelper.bloodSplash(x_splash, y_splash, this.angle, ()=> {
             this.__createBloodPuddle(x_puddle, y_puddle, false);
         });
     }

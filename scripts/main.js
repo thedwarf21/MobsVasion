@@ -167,7 +167,7 @@ class MainController {
 				break;
 		}
 
-		AnimationsHelper.monsterPop(x_monster, y_monster);
+		JuiceHelper.monsterPop(x_monster, y_monster);
 	}
 
     static startWave() {
@@ -175,7 +175,7 @@ class MainController {
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
 
-		AnimationsHelper.characterPop();
+		JuiceHelper.characterPop();
 		MainController.__scheduleLevelMonstersPop();
     }
 

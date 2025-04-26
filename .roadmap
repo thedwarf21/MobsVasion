@@ -92,8 +92,8 @@ V   Tâche terminée
     V   Effet visuel quand un monstre est "au contact" du joueur, lui occasionnant des dégats.
     _   Affichage du nomnre de points de vie sous la forme "{PV restants} / {max}"
 *   Feedback auditif
-    _   portail de pop
-    _   percussion chambre vide
+    V   portail de pop
+    X   percussion chambre vide
     _   passage en santé faible
     _   tir
     _   esquive

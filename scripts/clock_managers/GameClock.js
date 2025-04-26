@@ -107,7 +107,7 @@ class GameClock {
 		let character = MainController.UI.character;
 
 		if (monster.hitbox.checkCollide(character.hitbox)) {
-			AnimationsHelper.hitEffect();
+			JuiceHelper.hitEffect();
 			HealthBarHelper.characterHit(MONSTER_STRENGTH);
 		}
 	}
