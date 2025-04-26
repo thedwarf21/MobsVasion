@@ -27,22 +27,6 @@ class MV_Character extends MobileGameElement {
         this.move();
     }
 
-    __createShot() {
-        let aiming_rad_angle = this.aiming_angle * Math.PI / 180;
-        let center_spot = this.centralSpotPosition();
-        let cos_angle = Math.cos(aiming_rad_angle);
-        let sin_angle = Math.sin(aiming_rad_angle);
-
-        let shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
-        let shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;
- 
-        JuiceHelper.shoot(shot_start_x, shot_start_y, this.aiming_angle);
-        
-        let deltaX = SHOT_VELOCITY * cos_angle;
-        let deltaY = SHOT_VELOCITY * sin_angle;
-        return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
-    }
-
     centralSpotPosition() {
         return {
             x: this.x + CHARACTER_SIZE/2,
@@ -54,6 +38,8 @@ class MV_Character extends MobileGameElement {
         this.deltaX = DASH_LENGTH * Math.cos(this.angle * Math.PI / 180);
         this.deltaY = DASH_LENGTH * Math.sin(this.angle * Math.PI / 180);
         this.move();
+
+        JuiceHelper.dashSound();
     }
 
     applyAngles() {
@@ -79,5 +65,21 @@ class MV_Character extends MobileGameElement {
         this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
         this.root_element.style.top = this.viewport.getCssValue(this.y);
         this.root_element.style.left = this.viewport.getCssValue(this.x);
+    }
+
+    __createShot() {
+        let aiming_rad_angle = this.aiming_angle * Math.PI / 180;
+        let center_spot = this.centralSpotPosition();
+        let cos_angle = Math.cos(aiming_rad_angle);
+        let sin_angle = Math.sin(aiming_rad_angle);
+
+        let shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
+        let shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;
+ 
+        JuiceHelper.shoot(shot_start_x, shot_start_y, this.aiming_angle);
+        
+        let deltaX = SHOT_VELOCITY * cos_angle;
+        let deltaY = SHOT_VELOCITY * sin_angle;
+        return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
     }
 }
