@@ -22,11 +22,19 @@ class ShopPopup extends AbstractPopup {
 
             if (onPopupOpened)
                 onPopupOpened();
+
+            JuiceHelper.startShopMusic();
 		});
 
 		document.body.appendChild(this.rs_dialog_instance.root_element);
 		MainController.shop_popup = this.rs_dialog_instance;
 	}
+
+    close() {
+        JuiceHelper.stopShopMusic();
+        super.close();
+        MainController.startWave();
+    }
 
     switchToMoneyShop() {
         MainController.shop_manager.displayMoneyShop();
@@ -55,10 +63,6 @@ class ShopPopup extends AbstractPopup {
     }
 
     /*********  AbstractPopup methods implementation  *********/
-    close() {
-        super.close();
-        MainController.startWave();
-    }
     
     navigateUp() {
         let active_item_position = this.__getLineAndColumnNumbers();

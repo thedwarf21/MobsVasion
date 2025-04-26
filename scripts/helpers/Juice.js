@@ -79,6 +79,8 @@ class JuiceHelper {
     static popupClosing() { MainController.audio_manager.playAudio(SOUND_LIB.popup_close, false); }
     static popupNavigate() { MainController.audio_manager.playAudio(SOUND_LIB.popup_navigate, false); }
     static popupValidate() { MainController.audio_manager.playAudio(SOUND_LIB.popup_validate, false); }
+    static startShopMusic() { MainController.audio_manager.startAudioLoop(SOUND_LIB.shop_music, true); }
+    static stopShopMusic() { MainController.audio_manager.stopAudioLoop(SOUND_LIB.shop_music.loop_id); }
 
 
     static monsterPop(x, y) {
