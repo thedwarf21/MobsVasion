@@ -10,7 +10,9 @@ class Abilities {
     static getSecondaryReloadInterval() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DAR") ); }
 
     static setMaxHealthBinding(character_health_bar) {
+        let html_element = document.querySelector(".health-display #total");
         let max_health_shop_entry = Abilities.__getShopEntryByCode("CON");
+
         new RS_Binding({
             object: max_health_shop_entry,
             property: "current_level",
@@ -18,6 +20,8 @@ class Abilities {
                 let increasement = value - oldValue;
                 character_health_bar.setMaxValue(Abilities.getMaxPlayerHealth());
                 MainController.scope.game.health_points += increasement * max_health_shop_entry.upgrade_value; // propriété health_points bound => refresh affichage jauge
+                
+                html_element.innerHTML = Abilities.getMaxPlayerHealth();
             }
         });
     }

@@ -64,6 +64,15 @@ body {
 	z-index: 9;
 }
 
+.health-display {
+	position: absolute;
+	bottom: 0.5vh;
+	left: 69vh;
+	color: white;
+	font-size: 3.5vh;
+	z-index: 9;
+}
+
 .wave-swag-container {
 	position: absolute;
 	top: 1vh;
