@@ -36,6 +36,11 @@ class JuiceHelper {
     static emptyClipPercussion() { MainController.audio_manager.playAudio(SOUND_LIB.empty_clip, false); }
 
     static dashSound() { MainController.audio_manager.playAudio(SOUND_LIB.dash, false); }
+
+    static levelUp() {
+        //TODO : prévoir un effet visuel, sur l'affichage du niveau du joueur, en haut à gauche
+        MainController.audio_manager.playAudio(SOUND_LIB.level_up, false);
+    }
     
     static hitEffect() {
         let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 

@@ -13,6 +13,8 @@ class XpBarHelper {
             game_scope.current_level_xp -= level_up_at;
             game_scope.player_level++;
             game_scope.knowledge_points += KP_PER_LEVEL;
+
+            JuiceHelper.levelUp();
         }
     }
 
