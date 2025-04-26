@@ -54,6 +54,8 @@ class JuiceHelper {
         MainController.UI.addToGameWindow(flash_effect.root_element);
     }
 
+    static playerDied() { MainController.audio_manager.playAudio(SOUND_LIB.lose, false); }
+
 
     static checkPanicMode() {
         let panic_element = document.querySelector(".panic-mode");

@@ -204,6 +204,7 @@ class MainController {
     static waveLost() {
         MainController.__characterRescueFees();
         WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed );
+		JuiceHelper.playerDied();
     }
 
     static __characterRescueFees() {
