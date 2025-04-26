@@ -102,18 +102,18 @@ const AUDIO_PATH = "sounds/";
 const SHOP_MUSIC = "shop-music.mp3";
 const GAME_MUSIC = "";
 const SOUND_LIB = {
-	portal: "portal.mp3",
-	shot: "shot.mp3",
-	empty_clip: "enmpty-gun-shot.mp3",
-	dash: "dash.mp3",
-	kill: "daying-monster.mp3",
-	level_up: "level-up.mp3",
-	low_hp_loop: "heartbeat-loop.mp3",
-	lose: "lose.mp3",
-	popup_open: "popup-open.mp3",
-	popup_navigate: "popup-navigate.mp3",
-	popup_validate: "popup-validate.mp3",
-	popup_close: "popup-close.mp3"
+	portal: 		{ file: "portal.mp3", 	duration: 2000 },
+	shot: 			{ file: "shot.mp3" },
+	empty_clip: 	{ file: "empty-gun-shot.mp3" },
+	dash: 			{ file: "dash.mp3" },
+	kill: 			{ file: "dying-monster.mp3" },
+	level_up:   	{ file: "level-up.mp3", duration: 2000 },
+	low_hp_loop:	{ file:  "heartbeat-loop.mp3" },
+	lose: 			{ file: "lose.mp3", 	duration: 1500 },
+	popup_open: 	{ file: "popup-open.mp3" },
+	popup_navigate: { file: "popup-navigate.mp3" },
+	popup_validate: { file: "popup-validate.mp3" },
+	popup_close: 	{ file: "popup-close.mp3" }
 };
 const DEFAULT_AUDIO_LASTING_TIME = 1000;
 

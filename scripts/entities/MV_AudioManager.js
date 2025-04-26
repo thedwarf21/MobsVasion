@@ -7,7 +7,7 @@ class MV_AudioManager {
 	 */
 	constructor(sound_settings) {
 		this.sound_settings = sound_settings;
-		this.audio_player = undefined;
+		this.loops = [];
 	}
 
 	/**
@@ -15,49 +15,81 @@ class MV_AudioManager {
 	 *
 	 * @param      {string}  filename      	 Nom du fichier audio
 	 * @param      {number}  lasting_time  	 Durée de vie de la balise audio (en fonction du son envoyé)
-	 * @param      {boolean} is_music      	 Permet d'identifier effets sonores et musiques
+	 * @param      {boolean} is_music      	 Permet de différencier effets sonores et musiques (pour application des paramètres)
 	 */
 	playAudio(filename, lasting_time, is_music) {
-		let can_play = is_music 
-					 ? this.sound_settings.music_on 
-					 : this.sound_settings.sound_fx_on;
-		if (can_play) {
-			this.audio_player = document.createElement("AUDIO");
-			this.audio_player.src = AUDIO_PATH + filename;
-			document.body.appendChild(this.audio_player);
-			this.audio_player.play().catch((error)=> { console.error(error); });
-
-			// On retire la balise audio du DOM, dès lors qu'elle n'est plus utile
+		let audio_player = this.__createAudioTag(filename, is_music, false);
+		
+		if (audio_player) {
 			if (!lasting_time)
 				lasting_time = DEFAULT_AUDIO_LASTING_TIME;
-			setTimeout(()=> this.audio_player.remove(), lasting_time);	
+			setTimeout(()=> audio_player.remove(), lasting_time);
 		}
 	}
 
 	/**
-	 * Lance une musique d'ambiance, en boucle
+	 * Lance une boucle sonore
 	 *
-	 * @param		{string}  filename        Le nom du fichier
+	 * @param		{string}  filename        	Le nom du fichier
+	 * @param      	{boolean} is_music      	Permet de différencier effets sonores et musiques (pour application des paramètres)
+	 * @param      	{string}  loop_id      		Permet d'identifier formellement une boucle audio
 	 */
-	startMusicLoop(filename) {
-		if (this.sound_settings.music_on) {
-			this.stopMusicLoop();
-			this.audio_player = document.createElement("AUDIO");
-			this.audio_player.src = AUDIO_PATH + filename;
-			this.audio_player.loop = true;
-			document.body.appendChild(this.audio_player);
-			this.audio_player.play().catch((error)=> { console.error(error); });
-			AH_MainController.scope.music_player = audio_player;
+	startAudioLoop(filename, is_music, loop_id) {
+		let audio_player = this.__createAudioTag(filename, is_music, true);
+
+		if (audio_player) {
+			this.loops.push({
+				id: loop_id,
+				audio_player: audio_player
+			});
 		}
 	}
 
 	/**
 	 * Arrête la musique et supprime le lecteur du DOM
+	 *
+	 * @param		{string}  loop_id  Permet d'identifier formellement une boucle audio
 	 */
-	stopMusicLoop() {
-		if (this.audio_player) {
-			this.audio_player.pause();
-			this.audio_player.remove();
+	stopAudioLoop(loop_id) {
+		for (let i=0; i<this.loops.length; i++) {
+			let loop = this.loops[i];
+			if (loop.id === loop_id) {
+				loop.audio_player.pause();
+				loop.audio_player.remove();
+				this.loops.splice(i, 1);
+				return;
+			}
 		}
+	}
+
+	/**
+	 * Crée, initialise, ajoute au DOM, et retourne une balise audio (ou undefined, si le paramétrage ne le permet pas)
+	 * 
+	 * @param {string} 		filename 
+	 * @param {boolean} 	is_music 
+	 * @param {boolean} 	is_loop
+	 */
+	__createAudioTag(filename, is_music, is_loop) {
+		if (!this.__canBePlayed(is_music))
+			return;
+		
+		let audio_player = document.createElement("AUDIO");
+		audio_player.src = AUDIO_PATH + filename;
+		audio_player.loop = is_loop;
+		document.body.appendChild(audio_player);
+		audio_player.play().catch((error)=> { console.error(error); });
+
+		return audio_player;
+	}
+
+	/**
+	 * Vérifie les paramètres son
+	 * 
+	 * @param {boolean} is_music
+	 */
+	__canBePlayed(is_music) {
+		return is_music 
+			 ? this.sound_settings.music_on 
+			 : this.sound_settings.sound_fx_on;
 	}
 }

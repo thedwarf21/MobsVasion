@@ -133,6 +133,7 @@ class MV_GameInitializer {
 		KeyboardAndMouseControls.addKeyListeners(controller);
 		KeyboardAndMouseControls.addMouseListeners(controller);
 		GamepadControls.prepareControls(controller);
+		MV_GameInitializer.__initAudioManager(controller);
         MV_GameInitializer.__createTimer(controller);
 	}
 
@@ -142,6 +143,13 @@ class MV_GameInitializer {
 
 	static __initPopupsStack(controller) { 
 		controller.popups_stack = new PopupsStack();
+	}
+
+	static __initAudioManager(controller) {
+		controller.audio_manager = new MV_AudioManager({
+			music_on: true,
+			sound_fx_on: true
+		});
 	}
 
 	static __createTimer(controller) {
