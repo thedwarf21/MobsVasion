@@ -32,6 +32,8 @@ class JuiceHelper {
         
         MainController.audio_manager.playAudio(SOUND_LIB.shot, false); 
     }
+
+    static emptyClipPercussion() { MainController.audio_manager.playAudio(SOUND_LIB.empty_clip, false); }
     
     static hitEffect() {
         let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
@@ -40,9 +42,25 @@ class JuiceHelper {
         );
 
         MainController.UI.addToGameWindow(flash_effect.root_element);
-    } 
+    }
 
-    static emptyClipPercussion() { MainController.audio_manager.playAudio(SOUND_LIB.empty_clip, false); }
+    static checkPanicMode() {
+        let panic_element = document.querySelector(".panic-mode");
+		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
+		
+		if (!panic_element && MainController.scope.game.health_points <= panic_threshold) {
+			panic_element = document.createElement("DIV");
+			panic_element.classList.add("panic-mode");
+			document.body.prepend(panic_element);
+
+            MainController.audio_manager.startAudioLoop(SOUND_LIB.low_hp_loop, false);  
+		}
+
+		if (panic_element && MainController.scope.game.health_points > panic_threshold) {
+			panic_element.remove();
+            MainController.audio_manager.stopAudioLoop(SOUND_LIB.low_hp_loop.loop_id); 
+        }
+    }
 
     static monsterPop(x, y) {
 		let animation = ANIMATIONS.monster_pop;

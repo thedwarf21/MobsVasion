@@ -118,7 +118,7 @@ class MainUI {
 			property: "health_points",
 			callback: () => { 
 				character_health_bar.assignValue(MainController.scope.game.health_points); 
-				this.__checkPanicMode();
+				JuiceHelper.checkPanicMode();
 			}
 		});
 		Abilities.setMaxHealthBinding(character_health_bar);
@@ -159,6 +159,5 @@ class MainUI {
 	
 	get game_window() 			{ return document.getElementById("game-window"); }
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
-	get panicModeHtmlElement()	{ return document.querySelector(".panic-mode"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
 }

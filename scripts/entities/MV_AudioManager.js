@@ -30,16 +30,15 @@ class MV_AudioManager {
 	/**
 	 * Lance une boucle sonore
 	 *
-	 * @param	{string}	filename 	Fichier de son à jouer en boucle
-	 * @param	{boolean}	is_music 	Permet de différencier effets sonores et musiques (pour application des paramètres)
-	 * @param	{string}	loop_id 	Permet d'identifier formellement une boucle audio
+	 * @param	{string}	sound_lib_entry	Elément de SOUND_LIB, définissant le fichier audio et la durée du son
+	 * @param	{boolean}	is_music 		Permet de différencier effets sonores et musiques (pour application des paramètres)
 	 */
-	startAudioLoop(filename, is_music, loop_id) {
-		let audio_player = this.__createAudioTag(filename, is_music, true);
+	startAudioLoop(sound_lib_entry, is_music) {
+		let audio_player = this.__createAudioTag(sound_lib_entry.file, is_music, true);
 
 		if (audio_player) {
 			this.loops.push({
-				id: loop_id,
+				id: sound_lib_entry.loop_id,
 				audio_player: audio_player
 			});
 		}
