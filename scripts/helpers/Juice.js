@@ -38,7 +38,10 @@ class JuiceHelper {
     static dashSound() { MainController.audio_manager.playAudio(SOUND_LIB.dash, false); }
 
     static levelUp() {
-        //TODO : prévoir un effet visuel, sur l'affichage du niveau du joueur, en haut à gauche
+        let level_element = document.querySelector(".player-level");
+        level_element.classList.add("level-up");
+        setTimeout(()=> {  level_element.classList.remove("level-up"); }, 1000);
+        
         MainController.audio_manager.playAudio(SOUND_LIB.level_up, false);
     }
     
