@@ -9,13 +9,14 @@ class MV_Character extends MobileGameElement {
   
     shoot() {
         if (!MainController.scope.game.waiting_counter.shot) {
+            MainController.scope.game.waiting_counter.shot = Abilities.getShotInterval();
+            
 			if (MainController.scope.game.clip_ammo) {
 				let shot = this.__createShot();
 				MainController.UI.addToGameWindow(shot.root_element);
                 MainController.UI.shots.push(shot);
-				MainController.scope.game.waiting_counter.shot = Abilities.getShotInterval();
 				MainController.scope.game.clip_ammo--;
-			}  // En isolant ce if, il suffira d'écrire un else pour jouer un son (CLIC !) avertissant l'utilisateur que son chargeur est vide, d'où l'imbrication
+			} else JuiceHelper.emptyClipPercussion();
 		}
     }
 

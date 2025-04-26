@@ -93,7 +93,7 @@ V   Tâche terminée
     _   Affichage du nomnre de points de vie sous la forme "{PV restants} / {max}"
 *   Feedback auditif
     V   portail de pop
-    X   percussion chambre vide
+    V   percussion chambre vide
     _   passage en santé faible
     _   tir
     _   esquive

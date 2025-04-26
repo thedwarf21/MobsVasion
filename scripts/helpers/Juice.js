@@ -1,14 +1,5 @@
 class JuiceHelper {
     
-    static hitEffect() {
-        let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
-            ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
-            ()=> { flash_effect.root_element.remove(); }
-        );
-
-        MainController.UI.addToGameWindow(flash_effect.root_element);
-    } 
-    
     static characterPop() {
         let pop_animation = new MV_AnimatedFrame(
             MainController.viewport, 
@@ -25,6 +16,17 @@ class JuiceHelper {
 		MainController.UI.addToGameWindow(pop_animation.root_element);
         MainController.audio_manager.playAudio(SOUND_LIB.portal, false);
     }
+    
+    static hitEffect() {
+        let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
+            ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
+            ()=> { flash_effect.root_element.remove(); }
+        );
+
+        MainController.UI.addToGameWindow(flash_effect.root_element);
+    } 
+
+    static emptyClipPercussion() { MainController.audio_manager.playAudio(SOUND_LIB.empty_clip, false); }
 
     static monsterPop(x, y) {
 		let animation = ANIMATIONS.monster_pop;
