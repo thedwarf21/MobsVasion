@@ -101,7 +101,7 @@ V   Tâche terminée
     V   mort d'un monstre 
     V   mort du joueur
     V   Ouverture / fermeture popup
-    _   navigation menu
+    V   navigation menu
     _   validation item menu
 *   Rapport de fin de vague
     V   Créer le template HTML et la feuille de style CSS de la popup

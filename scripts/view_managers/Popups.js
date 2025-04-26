@@ -75,6 +75,8 @@ class AbstractPopup {
             this.__getActiveItem().html_element.classList.remove("active");
             this.active_item_id = new_active_ident;
             this.__getActiveItem().html_element.classList.add("active");
+
+            JuiceHelper.popupNavigate();
         }
     }
 
