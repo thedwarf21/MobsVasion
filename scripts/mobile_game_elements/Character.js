@@ -10,7 +10,7 @@ class MV_Character extends MobileGameElement {
     shoot() {
         if (!MainController.scope.game.waiting_counter.shot) {
             MainController.scope.game.waiting_counter.shot = Abilities.getShotInterval();
-            
+
 			if (MainController.scope.game.clip_ammo) {
 				let shot = this.__createShot();
 				MainController.UI.addToGameWindow(shot.root_element);
@@ -36,7 +36,7 @@ class MV_Character extends MobileGameElement {
         let shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
         let shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;
  
-        this.__showFire(shot_start_x, shot_start_y);
+        JuiceHelper.shoot(shot_start_x, shot_start_y, this.aiming_angle);
         
         let deltaX = SHOT_VELOCITY * cos_angle;
         let deltaY = SHOT_VELOCITY * sin_angle;
@@ -80,18 +80,4 @@ class MV_Character extends MobileGameElement {
         this.root_element.style.top = this.viewport.getCssValue(this.y);
         this.root_element.style.left = this.viewport.getCssValue(this.x);
     }
-
-    __showFire(x, y) {
-        let weapon_flame = document.createElement("DIV");
-        weapon_flame.classList.add("fire");
-
-        weapon_flame.style.left = this.viewport.getCssValue(x);
-        weapon_flame.style.top = this.viewport.getCssValue(y - FIRE_SIZE/2);
-        weapon_flame.style.transform = `rotate(${this.aiming_angle}deg)`;
-        MainController.UI.addToGameWindow(weapon_flame);
-
-        setTimeout(()=> {
-            weapon_flame.remove();
-        }, 50);
-    }
-  }
+}

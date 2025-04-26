@@ -16,6 +16,22 @@ class JuiceHelper {
 		MainController.UI.addToGameWindow(pop_animation.root_element);
         MainController.audio_manager.playAudio(SOUND_LIB.portal, false);
     }
+
+    static shoot(x, y, angle) {
+        let weapon_flame = document.createElement("DIV");
+        weapon_flame.classList.add("fire");
+
+        weapon_flame.style.left = MainController.viewport.getCssValue(x);
+        weapon_flame.style.top = MainController.viewport.getCssValue(y - FIRE_SIZE/2);
+        weapon_flame.style.transform = `rotate(${angle}deg)`;
+        MainController.UI.addToGameWindow(weapon_flame);
+
+        setTimeout(()=> {
+            weapon_flame.remove();
+        }, 50);
+        
+        MainController.audio_manager.playAudio(SOUND_LIB.shot, false); 
+    }
     
     static hitEffect() {
         let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
