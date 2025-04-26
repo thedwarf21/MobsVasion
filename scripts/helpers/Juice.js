@@ -78,6 +78,7 @@ class JuiceHelper {
     static popupOpening() { MainController.audio_manager.playAudio(SOUND_LIB.popup_open, false); }
     static popupClosing() { MainController.audio_manager.playAudio(SOUND_LIB.popup_close, false); }
     static popupNavigate() { MainController.audio_manager.playAudio(SOUND_LIB.popup_navigate, false); }
+    static popupValidate() { MainController.audio_manager.playAudio(SOUND_LIB.popup_validate, false); }
 
 
     static monsterPop(x, y) {

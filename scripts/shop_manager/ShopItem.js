@@ -49,8 +49,10 @@ class ShopItem {
         this.refreshHtmlDetails();
 		
         this.html_element.addEventListener('click', (event)=> {
-            if (this.__isAffordable() && !this.__isMaxed())
+            if (this.__isAffordable() && !this.__isMaxed()) {
                 this.__performBuying();
+                JuiceHelper.popupValidate();
+            }
         });
 	}
 

@@ -45,6 +45,8 @@ class ShopHealingItem {
                 HealthBarHelper.healPlayer( this.hp_recover );
 
                 MainController.shop_manager.refreshAllShopItems();
+
+                JuiceHelper.popupValidate();
             }
         });
     }
