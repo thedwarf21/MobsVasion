@@ -11,7 +11,7 @@ class PopupsStack {
         let popup = new popup_manager();
         popup.show(()=> {
             popup.__registerMenuItems();
-            popup.__getActiveItem().html_element.classList.add("active");
+            popup.highlightActiveItem();
         });
 
         JuiceHelper.popupOpening();
@@ -62,6 +62,11 @@ class AbstractPopup {
             active_item.onValidate(); 
     }
 
+    highlightActiveItem() { 
+        if (MainController.timer.gamepad_mapper)
+            this.__getActiveItem().html_element.classList.add("active");
+    }
+
     __getLineAndColumnNumbers() {
         let position = this.active_item_id.split("_");
         return {
@@ -74,7 +79,7 @@ class AbstractPopup {
         if (this.__querySelector(`[nav-ident='${new_active_ident}']`)) {
             this.__getActiveItem().html_element.classList.remove("active");
             this.active_item_id = new_active_ident;
-            this.__getActiveItem().html_element.classList.add("active");
+            this.highlightActiveItem();
 
             JuiceHelper.popupNavigate();
         }

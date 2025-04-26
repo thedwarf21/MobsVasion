@@ -22,6 +22,10 @@ class GamepadControls {
 			let was_paused = controls.paused;
 			controls.paused = true;
 			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, ()=> { controls.paused = was_paused; });
+
+			let active_popup = MainController.popups_stack.activePopup();
+			if (active_popup)
+				active_popup.highlightActiveItem();
 		});
 
 		window.addEventListener('gamepaddisconnected', (event)=> {
