@@ -19,9 +19,9 @@ Le joueur affronte des vagues de monstres. Ce faisant, il obtient de l'expérien
 
 Un magasin d'améliorations, utilisable entre deux vagues de monstres, permet au joueur de se ravitailler et d'améliorer les capacités de son personnage.
 
-L'apparition des monstres de la vague se fait petit à petit (un par un), sur une position aléatoire en bordure d'écran, entre 2.4s et 4s après l'apparition du monstre précédent (valeurs susceptibles de bouger, pour affiner l'expérience de jeu).
+L'apparition des monstres de la vague se fait petit à petit (un par un), sur une position aléatoire en bordure d'écran, entre 1s et 2s après l'apparition du monstre précédent (valeurs susceptibles de bouger, pour affiner l'expérience de jeu).
 
-La vitesse de chaque monstre est fixe, et déterminée aléatoirement lors de son apparition, dans une fourchette de valeurs.
+La vitesse de chaque monstre est fixe, et déterminée aléatoirement lors de son apparition, dans une fourchette de valeurs données.
 
 Chaque monstre se dirige en azimut brutal, dans la direction du joueur.
 
@@ -51,24 +51,22 @@ Le clic droit de la souris permet de recharger l'arme principale.
 
 Pour jouer avec la manette, il faut tout d'abord que celle-ci soit détectée par le jeu.
 
-Pour se faire, il vous suffit de presser n'importe quel bouton de la manette, tandis que le jeu est ouvert. Un fenêtre de configuration de la manette s'ouvrira alors, vous permettant de paramétrer les boutons d'action pour les actions :
+Pour ce faire, il vous suffit de presser n'importe quel bouton de la manette, tandis que le jeu est ouvert. Un fenêtre de configuration de la manette s'ouvrira alors, vous permettant de paramétrer les boutons pour :
 
-* Pause
+* Pause / reprise
 * Dash
 * Rechargement de l'arme principale
-
-À ce jour, la manette n'est pas prise en charge dans les menus, donc il vous faudra garder la souris à proximité, le temps que cette fonctionnalité soit implémentée.
+* Navigation dans les menus
 
 
 ## Bientôt disponible
 
 À venir prochainement :
 
-* Des sons et de la musique
 * La possibilité de sauvegarder/charger une partie (c'est mieux pour un jeu infini)
 * Des commandes tactiles pour jouer sur un smartphone
-* Prise en charge de la manette dans les menus
 * Une intro avec un mini-tutoriel (j'ai déjà un PNJ, autant en profiter)
+* Amélioration de l'interface du magasin (si vous êtes curieux, je décris ce que j'ai en tête dans le fichier .roadmap)
 
 
 À venir en seconde intention :
