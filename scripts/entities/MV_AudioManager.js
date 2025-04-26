@@ -13,16 +13,16 @@ class MV_AudioManager {
 	/**
 	 * Fonction lançant un son dans une balise audio créée à la volée
 	 *
-	 * @param      {string}  filename      	 Nom du fichier audio
-	 * @param      {number}  lasting_time  	 Durée de vie de la balise audio (en fonction du son envoyé)
+	 * @param      {object}  sound_lib_entry Elément de SOUND_LIB, définissant le fichier audio et la durée du son
 	 * @param      {boolean} is_music      	 Permet de différencier effets sonores et musiques (pour application des paramètres)
 	 */
-	playAudio(filename, lasting_time, is_music) {
-		let audio_player = this.__createAudioTag(filename, is_music, false);
+	playAudio(sound_lib_entry, is_music) {
+		let audio_player = this.__createAudioTag(sound_lib_entry.file, is_music, false);
 		
 		if (audio_player) {
-			if (!lasting_time)
-				lasting_time = DEFAULT_AUDIO_LASTING_TIME;
+			let lasting_time = sound_lib_entry.duration 
+							 ? sound_lib_entry.duration 
+							 : DEFAULT_AUDIO_LASTING_TIME;
 			setTimeout(()=> audio_player.remove(), lasting_time);
 		}
 	}
@@ -30,9 +30,9 @@ class MV_AudioManager {
 	/**
 	 * Lance une boucle sonore
 	 *
-	 * @param		{string}  filename        	Le nom du fichier
-	 * @param      	{boolean} is_music      	Permet de différencier effets sonores et musiques (pour application des paramètres)
-	 * @param      	{string}  loop_id      		Permet d'identifier formellement une boucle audio
+	 * @param	{string}	filename 	Fichier de son à jouer en boucle
+	 * @param	{boolean}	is_music 	Permet de différencier effets sonores et musiques (pour application des paramètres)
+	 * @param	{string}	loop_id 	Permet d'identifier formellement une boucle audio
 	 */
 	startAudioLoop(filename, is_music, loop_id) {
 		let audio_player = this.__createAudioTag(filename, is_music, true);

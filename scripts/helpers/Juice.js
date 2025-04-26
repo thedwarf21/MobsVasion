@@ -23,6 +23,7 @@ class AnimationsHelper {
         );
 
 		MainController.UI.addToGameWindow(pop_animation.root_element);
+        MainController.audio_manager.playAudio(SOUND_LIB.portal, false);
     }
 
     static monsterPop(x, y) {
@@ -37,6 +38,7 @@ class AnimationsHelper {
         );
 
 		MainController.UI.addToGameWindow(pop_animation.root_element);
+        MainController.audio_manager.playAudio(SOUND_LIB.portal, false);
 	}
 
     static bloodSplash(x, y, angle, onAmimationEnd) {
