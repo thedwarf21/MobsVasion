@@ -73,7 +73,7 @@ V   Tâche terminée
     V   Gérer les PV des monstres --> perte de PV d'un monstre quand un tir le touche
 *   Préférences utilisateur
     V   Bouton ouvrant la fenêtre de configuration de la manette, si une manette a été reconnue
-    _   Ajouter les autres préférences au fur et à mesure des intégration des fonctionnalités correspondantes (possibilité de désactiver la musique et/ou les effets sonores, par exemple)
+    V   Ajouter les autres préférences au fur et à mesure des intégration des fonctionnalités correspondantes (possibilité de désactiver la musique et/ou les effets sonores, par exemple)
 *   Gérer l'argent
     V   Afficher l'argent détenu par le joueur, dans l'UI
     V   Ajout de l'argent aux ressources du joueur, lorsqu'un monstre rend l'âme

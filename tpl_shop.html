@@ -1,9 +1,9 @@
 <div class="dialog-body">
     <div class="shop-header">
-        <button class="shop-area-button" id="money_selector" onclick="MainController.popups_stack.activePopup().switchToMoneyShop()">
+        <button class="shop-area-button" id="money_selector" onclick="MainController.popups_stack.activePopup().switchToMoneyShop(); JuiceHelper.emptyClipPercussion();">
             Ravitaillement
         </button>
-        <button class="shop-area-button" id="knowledge_selector" onclick="MainController.popups_stack.activePopup().switchToTrainingRoom()">
+        <button class="shop-area-button" id="knowledge_selector" onclick="MainController.popups_stack.activePopup().switchToTrainingRoom(); JuiceHelper.emptyClipPercussion();">
             Salle d'entrainement
         </button>
     </div>
