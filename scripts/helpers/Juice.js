@@ -75,6 +75,10 @@ class JuiceHelper {
         }
     }
 
+    static popupOpening() { MainController.audio_manager.playAudio(SOUND_LIB.popup_open, false); }
+
+    static popupClosing() { MainController.audio_manager.playAudio(SOUND_LIB.popup_close, false); }
+
 
     static monsterPop(x, y) {
 		let animation = ANIMATIONS.monster_pop;

@@ -12,7 +12,9 @@ class PopupsStack {
         popup.show(()=> {
             popup.__registerMenuItems();
             popup.__getActiveItem().html_element.classList.add("active");
-        }); 
+        });
+
+        JuiceHelper.popupOpening();
         
         return this.__popups.unshift(popup);
     }
@@ -21,6 +23,8 @@ class PopupsStack {
         let foreground_popup = this.__popups.shift();
         foreground_popup.close();
         MainController.scope.controls.paused = !!this.__popups.length;
+
+        JuiceHelper.popupClosing();
     }
 
     activePopup() { return this.__popups.length ? this.__popups[0] : null; }
