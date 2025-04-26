@@ -99,9 +99,21 @@ const SOIL_BG_SIZE = ["15vh", "100vh", "30vh"];
 const PANIC_MODE_THRESHOLD_RATIO = 0.2;
 
 const AUDIO_PATH = "sounds/";
-const SHOP_MUSIC = "";
+const SHOP_MUSIC = "shop-music.mp3";
 const GAME_MUSIC = "";
 const SOUND_LIB = {
+	portal: "portal.mp3",
+	shot: "shot.mp3",
+	empty_clip: "enmpty-gun-shot.mp3",
+	dash: "dash.mp3",
+	kill: "daying-monster.mp3",
+	level_up: "level-up.mp3",
+	low_hp_loop: "heartbeat-loop.mp3",
+	lose: "lose.mp3",
+	popup_open: "popup-open.mp3",
+	popup_navigate: "popup-navigate.mp3",
+	popup_validate: "popup-validate.mp3",
+	popup_close: "popup-close.mp3"
 };
 const DEFAULT_AUDIO_LASTING_TIME = 1000;
 

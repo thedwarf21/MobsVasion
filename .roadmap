@@ -21,12 +21,12 @@ V   Tâche terminée
     V   Affichage de la pause/reprise
         >   Pause => affiche la popup de préférences utilisateur (voir plus bas), qui pourra également être ouverte depuis le magasin
         >   Unpause => fermeture et destruction de toutes les popups ouvertes au moment de l'action
-    X   Gérer la manette dans les menus
+    V   Gérer la manette dans les menus
         >   Ajouter les propriétés d'états nécessaires dans scope.controls (GameInitializer.initial_scope)
         >   Enregistrer les actions de commandes de menus, mettant à jour scope.controls, dans GamepadControls.prepareControls
         >   Gérer les commandes pour trigger les actions, dans GamepadControls.applyMenuControls
         >   Monter une classe intermédiaire, utilisée par GamepadControls.applyMenuControls, pour s'interfacer avec le menu actuellement ouvert
-        _   Implémentation des méthodes abstraites de AbstractPopup dans ShopPopup et ParamtersPopup
+        >   Implémentation des méthodes abstraites de AbstractPopup dans ShopPopup et ParamtersPopup
 *   Personnage
     V   Créer et afficher le personnage
         >   Style CSS du personnage
@@ -90,8 +90,9 @@ V   Tâche terminée
     V   Munitions en rouge quand à 0
     V   Effet visuel de santé faible (calque alpha rouge)
     V   Effet visuel quand un monstre est "au contact" du joueur, lui occasionnant des dégats.
+    _   Affichage du nomnre de points de vie sous la forme "{PV restants} / {max}"
 *   Feedback auditif
-    _   pop d'un monstre
+    _   portail de pop
     _   percussion chambre vide
     _   passage en santé faible
     _   tir
