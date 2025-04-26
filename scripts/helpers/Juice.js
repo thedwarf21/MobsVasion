@@ -33,8 +33,8 @@ class JuiceHelper {
         MainController.audio_manager.playAudio(SOUND_LIB.shot, false); 
     }
 
+    static reload() { MainController.audio_manager.playAudio(SOUND_LIB.reload, false); }
     static emptyClipPercussion() { MainController.audio_manager.playAudio(SOUND_LIB.empty_clip, false); }
-
     static dashSound() { MainController.audio_manager.playAudio(SOUND_LIB.dash, false); }
 
     static levelUp() {

@@ -38,6 +38,8 @@ class GameClock {
 			let gauge = new MV_Gauge("primary-reload", reload_time, 0);
 			MainController.UI.primaryReloadGauge = gauge;
 			MainController.UI.addToGameWindow(gauge.root_element);
+
+			JuiceHelper.reload();
 		}
 	}
 

@@ -103,6 +103,7 @@ const SOUND_LIB = {
 	portal: 		{ file: "portal.mp3", 	duration: 2000 },
 	shot: 			{ file: "shot.mp3" },
 	empty_clip: 	{ file: "empty-gun-shot.mp3" },
+	reload: 		{ file: "reload.mp3" },
 	dash: 			{ file: "dash.mp3" },
 	kill: 			{ file: "dying-monster.mp3" },
 	level_up:   	{ file: "level-up.mp3", duration: 2000 },
