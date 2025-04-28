@@ -173,6 +173,6 @@ class MV_GameInitializer {
 					controller.save_manager.loadGame();
 					onInitComplete();
 				}, ()=> { onInitComplete(); });
-		}
+		} else onInitComplete(); // faut que ça démarre quand y a pas de sauvegarde !!!
 	}
 }
