@@ -42,6 +42,15 @@ class ShopManager {
         }
     }
 
+    forceItemLevel(code, value) { this.__getShopItemByCode(code).current_level = value; }
+
+    __getShopItemByCode(code) {
+        for (const shop_item of this.__shop_items) {
+            if (shop_item.code === code)
+                return shop_item;
+        }
+    }
+
     __createHealingItems() {        
         let small_heal =  new ShopHealingItem("Verre d'eau", 2, 5, "0_0");
         this.__healing_items.push(small_heal);

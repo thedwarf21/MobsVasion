@@ -134,6 +134,7 @@ class MV_GameInitializer {
 		KeyboardAndMouseControls.addMouseListeners(controller);
 		GamepadControls.prepareControls(controller);
 		MV_GameInitializer.__initAudioManager(controller);
+		MV_GameInitializer.__initSaveManager(controller);
         MV_GameInitializer.__createTimer(controller);
 	}
 
@@ -150,6 +151,10 @@ class MV_GameInitializer {
 			music_on: true,
 			sound_fx_on: true
 		});
+	}
+
+	static __initSaveManager(controller) {
+		controller.save_manager = new MV_SaveManager(controller);
 	}
 
 	static __createTimer(controller) {

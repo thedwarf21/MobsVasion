@@ -118,7 +118,7 @@ V   Tâche terminée
     V   Travailler le visuel du shop-header pour que ce soit intuitif (qu'on voie bien que ce sont deux onglets)
     V   Faire apparaître le numéro de la vague dans le bouton de fermeture de la popup
     V   Prise en compte de l'état des items magasin, dans les mécaniques du jeu
-    _   Mettre un petit toFixed() dans l'affichage des effets d'une amélioration
+    V   Améliorer l'affichage des effets d'une amélioration
     _   Au survol d'un soin, afficher la "plus-value" dans la barre de vie (accessibilité pour les dyscalculiques et les allergiques au calcul mental)
         _   gérer une progress-bar additionnelle dans la barre de vie
         _   mouseenter / mouseleave => déclencher l'apparition/disparition de la progress-bar additionnelle
@@ -138,7 +138,7 @@ V   Tâche terminée
 *   UI / UX
     V   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
-    _   Gérer les sauvegardes
+    V   Gérer les sauvegardes
     V   Ajouter la musique
 
 *   Fignolage

@@ -1,65 +1,122 @@
+/**
+ * Une sauvegarde contient :
+ * 		- tout scope.game, sauf "wave_pop" et "waiting_counter", qui sont des objets de traitement utilisés en cours de vague
+ * 		- l'état du shop dans un objet sous la formme { shop_item.code: shop_item.current_level }
+ * 		- l'objet sound_settings de l'objet MV_AudioManager (MainController.audio_manager.sound_settings)
+ */
 class MV_SaveManager {
 
 	get SAVE_FILENAME_PREFIX() { return "mv_save_"; }
-	set SAVE_FILENAME_PREFIX(value) { console.error("RS_SaveManager.SAVE_FILENAME_PREFIX est une constante et ne peut donc pas être modifiée"); }
+	set SAVE_FILENAME_PREFIX(value) { console.error("MV_SaveManager.SAVE_FILENAME_PREFIX est en lecture seule"); }
+	get save_name() { return this.SAVE_FILENAME_PREFIX + this.game_scope.save_slot; }
+	set save_name(value) { console.error("MV_SaveManager.save_name est en lecture seule"); }
 
 	/**
-	 * Constructeur attendant les données à sauvegarder (paramétrage et achats dans le jeu)
+	 * Constructeur nécessitant le controller principal, afin d'accéder à toutes les données du jeu soumises à sauvegarde/chargement
 	 * 
-	 * @param  {object}  game_settings 
-	 * @param  {object}  ingame_shop 
+	 * @param  {object}  main_controller
 	 */
-	constructor(game_settings, ingame_shop) {
-		this.game_settings = game_settings;
-		this.ingame_shop = ingame_shop;
+	constructor(main_controller) {
+		this.game_scope = main_controller.scope.game;
+		this.ingame_shop = main_controller.scope.shop;
+		this.shop_manager = main_controller.shop_manager;
+		this.sound_settings = main_controller.audio_manager.sound_settings;
+
+		this.loadGame();
 	}
 
 	/**
 	 * Fonction de sauvegarde de la partie en cours
 	 */
-	saveGame() {
-		let object = {
-			money: this.game_settings.money,
-			level: this.game_settings.level,
-			shop: [],
-			show_hitboxes: this.game_settings.showHitboxes,
-			sound_fx_on: this.game_settings.sound_fx_on,
-			music_on: this.game_settings.music_on
-		};
-		for (let shopElem of this.ingame_shop) {
-			object.shop.push({
-				code: shopElem.code,
-				level: shopElem.level
-			});
-		}
-		localStorage.setItem(this.SAVE_FILENAME_PREFIX + this.game_settings.save_slot, JSON.stringify(object));
+	saveGame(is_silent_save) {
+		const save_object = this.__generateSaveObjet();
+		localStorage.setItem(this.save_name, JSON.stringify(save_object));
+
+		if (!is_silent_save)
+			RS_Toast.show("Partie sauvegardé", 1000);
 	}
 
 	/**
 	 * Fonction permettant de charger une sauvegarde
 	 */
-	loadGame()
-	{
-		let saved_game = JSON.parse(localStorage.getItem(this.SAVE_FILENAME_PREFIX + this.game_settings.save_slot));
-		this.game_settings.money = saved_game.money;
-		this.game_settings.level = saved_game.level;
-		this.game_settings.radial_sensivity = saved_game.radial_sensivity;
-		this.game_settings.showHitboxes = saved_game.show_hitboxes;
-		this.game_settings.sound_fx_on = saved_game.sound_fx_on == undefined ? true : saved_game.sound_fx_on;
-		this.game_settings.music_on = saved_game.music_on == undefined ? true : saved_game.music_on;
-		for (let savedShopElem of saved_game.shop)
-			this.setShopItemLevel(savedShopElem.code, savedShopElem.level);
+	loadGame() {
+		const saved_game = JSON.parse(localStorage.getItem(this.save_name));
+
+		if (saved_game) {
+			this.__loadGameScope(saved_game);
+			this.__loadShop(saved_game);
+			this.__loadSoundSettings(saved_game);	
+		}
+	}
+
+	__loadGameScope(saved_game) {
+		for (const prop in saved_game.game_scope)
+			this.game_scope[prop] = saved_game.game_scope[prop];
+	}
+
+	__loadShop(saved_game) {
+		for (const prop in saved_game.shop) {
+			Abilities.setCurrentLevel(prop, saved_game.shop[prop]);
+			this.shop_manager.forceItemLevel(prop, saved_game.shop[prop]);
+		}
+	}
+
+	__loadSoundSettings(saved_game) {
+		for (const prop in saved_game.sound_settings)
+			this.sound_settings[prop] = saved_game.sound_settings[prop];
 	}
 
 	/**
-	 * Fonction initialisant le niveau d'amélioration d'un élément de magasin, en fonction de son identifiant
-	 * 
-	 * @param {string} code   Identifiant de l'élément du magasin
-	 * @param {number} level  Niveau d'amélioration
+	 * Une sauvegarde contient :
+	 * 		- tout scope.game, sauf "wave_pop" et "waiting_counter", qui sont des objets de traitement utilisés en cours de vague
+	 * 		- l'état du shop dans un objet sous la formme { shop_item.code: shop_item.current_level }
+	 * 		- l'objet sound_settings de l'objet MV_AudioManager (MainController.audio_manager.sound_settings)
 	 */
-	setShopItemLevel(code, level) {
-		for (let shopElem of this.ingame_shop)
-			if (shopElem.code === code)
-				shopElem.level = level;
+	__generateSaveObjet() {
+		const save = { game_scope: {} };
+		
+		this.__gameScopeToObject(save);
+		this.__shopToObject(save);
+		this.__soundSettingsToObject(save);	
+		
+		return save;
+	}
+
+	__gameScopeToObject(save) {
+		const game_properties = Object.keys( this.game_scope ).filter((key) => this.__gameScopePropsFilter(key));
+
+		for (const prop of game_properties)
+			save.game_scope[prop] = this.game_scope[prop];
+	}
+
+	__shopToObject(save) {
+		save.shop = Object.fromEntries(
+			this.ingame_shop.map( 
+				item => [item.code, item.current_level] 
+			)
+		);
+	}
+
+	__soundSettingsToObject(save) {
+		save.sound_settings = {
+			sound_fx_on : this.sound_settings.sound_fx_on,
+			music_on : this.sound_settings.music_on
+		};
+	}
+
+	/**
+	 * Fonction dédiée au filtrage des propriétés de scope.game, dans le cadre de la sauvegarde
+	 * Ceci permet de filtrer les propriétés inutiles ou gênantes (clip_ammo, par exemple)
+	 * 
+	 * @param {string}  key
+	 */
+	__gameScopePropsFilter(key) {
+		const excluded_keys = [	
+			"wave_pop",
+			"waiting_counter",
+			"clip_ammo"
+		];
+
+		return !excluded_keys.includes(key);
 	}
 }

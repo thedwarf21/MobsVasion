@@ -133,7 +133,7 @@ class MainController {
 		MV_GameInitializer.prepareGame(MainController);
 		MainController.UI = new MainUI();
 		MainController.timer.letsPlay();
-        MainController.startWave();
+        MainController.startWave(true);
 	}
 
     static togglePause() { 
@@ -174,7 +174,9 @@ class MainController {
 		JuiceHelper.monsterPop(x_monster, y_monster);
 	}
 
-    static startWave() {
+    static startWave(is_silent_save) {
+		MainController.save_manager.saveGame(is_silent_save);
+
 		MainController.scope.game.clip_ammo = CLIP_SIZE;
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
@@ -208,6 +210,8 @@ class MainController {
 	
     static waveLost() {
         MainController.__characterRescueFees();
+
+		MainController.save_manager.saveGame();
         WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed );
 		JuiceHelper.playerDied();
     }
@@ -240,6 +244,8 @@ class MainController {
 
     static __waveDefeated() {
         MainController.scope.game.wave_number++;
+
+		MainController.save_manager.saveGame();
         WaveReportPopup.show( Tools.getRandomMessage(true), FRIEND_FACES.happy );
     }
 }
