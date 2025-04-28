@@ -28,8 +28,6 @@ class MV_GameInitializer {
 					dash: 0,
 					clip: 0
 				},
-				sound_fx_on: true,
-				music_on: true,
 				showHitboxes: false
 			},
 			controls: {
