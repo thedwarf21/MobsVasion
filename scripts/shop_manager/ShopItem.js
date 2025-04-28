@@ -32,6 +32,13 @@ class ShopItem {
 		this.__refreshEffectElement();
 	}
 
+    static getHtmlElement(css_class, content) {
+        let html_element = document.createElement("DIV");
+		html_element.classList.add(css_class);
+		html_element.innerHTML = content ? content : "";
+        return html_element;
+    }
+
     __initHtmlElement() {
 		this.html_element = document.createElement("DIV");
 		this.html_element.classList.add("shop-item");
@@ -55,13 +62,6 @@ class ShopItem {
             }
         });
 	}
-
-    static getHtmlElement(css_class, content) {
-        let html_element = document.createElement("DIV");
-		html_element.classList.add(css_class);
-		html_element.innerHTML = content ? content : "";
-        return html_element;
-    }
 
     __performBuying() {
         if (this.is_money_priced_item)
@@ -94,12 +94,16 @@ class ShopItem {
 		let present_val = this.__getEffectValueAtLevel(this.current_level);
 		let increased_val = this.__getEffectValueAtLevel(this.current_level + 1);
 
-		let displayPresentValue	= this.show_multiplicator 
-							    ? Math.floor(present_val * this.show_multiplicator) 
-							    : present_val;
-		let displayIncreasedValue	= this.show_multiplicator
-							        ? Math.floor(increased_val * this.show_multiplicator)
-							        : increased_val;
+		let displayPresentValue	= Tools.prepareFloatForDisplay ( 
+                                    ( this.show_multiplicator 
+				                    ? present_val * this.show_multiplicator
+							        : present_val 
+                                    ), this.display_unit || "");
+		let displayIncreasedValue	= Tools.prepareFloatForDisplay (
+                                        ( this.show_multiplicator
+							            ? increased_val * this.show_multiplicator
+							            : increased_val 
+                                        ), this.display_unit || "");
 
         this.effect_html_element.innerHTML = `<b>${this.lbl_effect}:</b> <span class="present-effect">${displayPresentValue}</span>`;
         if (!this.__isMaxed())

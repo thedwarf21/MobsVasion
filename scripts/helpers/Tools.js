@@ -23,14 +23,30 @@ class Tools {
 	}
 
 	static intToHumanReadableString(value) {
-		if (value > 10**13)
-			return Math.floor(value / 10**12) + "T";
-		if (value > 10**10)
-			return Math.floor(value / 10**9) + "B";
-		if (value > 10**7)
-			return Math.floor(value / 10**6) + "M";
-		if (value > 10**4)
-			return Math.floor(value / 10**3) + "k";
-		return value;
+		let display_number = value;
+		let display_unit = "";
+
+		if (value > 10**12) {
+			display_number = value / 10**12;
+			display_unit = "T";
+		} else if (value > 10**9) {
+			display_number = value / 10**9;
+			display_unit = "B";
+		} else if (value > 10**6) {
+			display_number = value / 10**6;
+			display_unit = "M";
+		} else if (value > 10**3){
+			display_number = value / 10**3;
+			display_unit = "k";
+		}
+
+		return Tools.prepareFloatForDisplay(display_number, display_unit);
+	}
+
+	static prepareFloatForDisplay(number, unit) {
+		if (number === Math.floor(number))
+			return number + unit;
+		
+		return number.toFixed(2) + unit;
 	}
 }
