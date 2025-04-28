@@ -10,6 +10,8 @@ class MV_SaveManager {
 	set SAVE_FILENAME_PREFIX(value) { console.error("MV_SaveManager.SAVE_FILENAME_PREFIX est en lecture seule"); }
 	get save_name() { return this.SAVE_FILENAME_PREFIX + this.game_scope.save_slot; }
 	set save_name(value) { console.error("MV_SaveManager.save_name est en lecture seule"); }
+	get last_saved_game() { return JSON.parse(localStorage.getItem(this.save_name)); }
+	set last_saved_game(value) { console.error("MV_SaveManager.last_saved_game est en lecture seule"); }
 
 	/**
 	 * Constructeur nécessitant le controller principal, afin d'accéder à toutes les données du jeu soumises à sauvegarde/chargement
@@ -21,8 +23,6 @@ class MV_SaveManager {
 		this.ingame_shop = main_controller.scope.shop;
 		this.shop_manager = main_controller.shop_manager;
 		this.sound_settings = main_controller.audio_manager.sound_settings;
-
-		this.loadGame();
 	}
 
 	/**
@@ -40,12 +40,12 @@ class MV_SaveManager {
 	 * Fonction permettant de charger une sauvegarde
 	 */
 	loadGame() {
-		const saved_game = JSON.parse(localStorage.getItem(this.save_name));
+		const saved_game = this.last_saved_game;
 
 		if (saved_game) {
 			this.__loadGameScope(saved_game);
 			this.__loadShop(saved_game);
-			this.__loadSoundSettings(saved_game);	
+			this.__loadSoundSettings(saved_game);
 		}
 	}
 

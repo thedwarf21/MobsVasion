@@ -130,10 +130,10 @@ class MainController {
 
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
-		MV_GameInitializer.prepareGame(MainController);
-		MainController.UI = new MainUI();
-		MainController.timer.letsPlay();
-        MainController.startWave(true);
+		MV_GameInitializer.prepareGame(MainController, ()=> {
+			MainController.startWave(true);
+			MainController.scope.controls.paused = false;
+		});
 	}
 
     static togglePause() { 

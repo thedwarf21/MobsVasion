@@ -101,21 +101,21 @@
   justify-content: space-around;
 }
 .rs-btn-action { 
-  margin-bottom: 1.5vh;
-  padding: 1vh;
+  width: 20vh;
+  height: 5vh;
+  
   border: none;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.8);
-  background: linear-gradient(to bottom, #666, #888 60%, #CCC);
-  color: #2d2d2d;
-  border-radius: 5px;
-  font-size: 1.5vh;
-  height: 3vh;
-  cursor: pointer;
+  border-radius: 1vh;
+  background: linear-gradient(to bottom, #0084a2, #002933);
+  box-shadow: 0 0 .5vh rgba(0 0 0 / 1);
+  
+  font-size: 2.5vh;
+  color: white;
 }
 .rs-btn-action:active {
-    transform: translateY(1px);
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 0 0.5vh 0.1vh rgb(0, 0, 0); 
 }
 .rs-btn-action:hover {
-    background: linear-gradient(to bottom, #777, #999 60%, #DDD);
+  text-shadow: 0 0 0.7vh rgb(255, 255, 255);
+  background: linear-gradient(to bottom, #2e98b0, #0c2d35); 
 }

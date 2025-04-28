@@ -40,7 +40,7 @@ class MV_GameInitializer {
 					y: 0
 				},
 				mouse_aiming: false,
-				paused: false,
+				paused: true,
 				firing_primary: false,
 				firing_secondary: false,
 				reloading: false,
@@ -125,7 +125,7 @@ class MV_GameInitializer {
 		};
 	}
 
-	static prepareGame(controller) {
+	static prepareGame(controller, onInitComplete) {
 		controller.scope = MV_GameInitializer.initial_scope;
 		MV_GameInitializer.__initPopupsStack(controller);
 		MV_GameInitializer.__initShopManager(controller);
@@ -134,16 +134,17 @@ class MV_GameInitializer {
 		KeyboardAndMouseControls.addMouseListeners(controller);
 		GamepadControls.prepareControls(controller);
 		MV_GameInitializer.__initAudioManager(controller);
-		MV_GameInitializer.__initSaveManager(controller);
+		MV_GameInitializer.__initMainUI(controller);
         MV_GameInitializer.__createTimer(controller);
-	}
-
-	static __initShopManager(controller) { 
-		controller.shop_manager = new ShopManager( controller.scope.shop );
+		MV_GameInitializer.__initSaveManager(controller, onInitComplete);
 	}
 
 	static __initPopupsStack(controller) { 
 		controller.popups_stack = new PopupsStack();
+	}
+
+	static __initShopManager(controller) { 
+		controller.shop_manager = new ShopManager( controller.scope.shop );
 	}
 
 	static __initAudioManager(controller) {
@@ -153,11 +154,25 @@ class MV_GameInitializer {
 		});
 	}
 
-	static __initSaveManager(controller) {
-		controller.save_manager = new MV_SaveManager(controller);
+	static __initMainUI(controller) {
+		controller.UI = new MainUI();
 	}
 
 	static __createTimer(controller) {
 		controller.timer = new GameClock(controller.scope.controls);
+		controller.timer.letsPlay();
+	}
+
+	static __initSaveManager(controller, onInitComplete) {
+		controller.save_manager = new MV_SaveManager(controller);
+		if (controller.save_manager.last_saved_game) {
+			RS_Confirm(`<div class="modal-line">Nous avons trouvé une sauvegarde.</div>
+						<div class="modal-line">Vous pouvez la charger, ou commencer une nouvelle partie. </div>
+						<div class="modal-line">Attention: commencer une nouvelle partie implique d'écraser la sauvegarde existante.</div>`, 
+						"Gestionnaire de sauvegarde", "Charger", "Nouvelle partie", ()=> {
+					controller.save_manager.loadGame();
+					onInitComplete();
+				}, ()=> { onInitComplete(); });
+		}
 	}
 }

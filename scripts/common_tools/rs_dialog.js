@@ -139,7 +139,7 @@ function RS_Alert(msg, titre, lbl_btn, callback) {
   // Ajout des boutons à la boîte de dialogue et affichage
   div_btn.appendChild(btn);
   popup.appendToContent(div_btn);
-  document.body.appendChild(popup);
+  document.body.appendChild(popup.root_element);
 }
 
 /*********************************************************************************
@@ -157,19 +157,13 @@ function RS_Confirm(question, titre, lbl_yes, lbl_no, fn_yes, fn_no) {
   
   // Ajout de la question au contenu de la popup
   let div_msg = document.createElement("DIV");
-  div_msg.style.height = "calc(100% - 60px)";
-  div_msg.style.display = "flex";
-  div_msg.style.flexDirection = "column";
-  div_msg.style.justifyContent = "space-evenly";
+  div_msg.classList.add("dialog-body");
   div_msg.innerHTML = question;
   popup.appendToContent(div_msg);
 
   // Création de la <div> contenant les boutons
   let div_btn = document.createElement("DIV");
-  div_btn.style.height = "60px";
-  div_btn.style.display = "flex";
-  div_btn.style.flexDirection = "row";
-  div_btn.style.justifyContent = "space-around";
+  div_btn.classList.add("dialog-footer");
 
   // Création du bouton "Oui"
   let btn_yes = document.createElement("INPUT");
@@ -201,5 +195,5 @@ function RS_Confirm(question, titre, lbl_yes, lbl_no, fn_yes, fn_no) {
   div_btn.appendChild(btn_yes);
   div_btn.appendChild(btn_no);
   popup.appendToContent(div_btn);
-  document.body.appendChild(popup);
+  document.body.appendChild(popup.root_element);
 }

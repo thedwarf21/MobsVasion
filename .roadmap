@@ -132,13 +132,16 @@ V   Tâche terminée
         _   ajouter l'item "Tenue matelassée" => ajout d'une armure, absorbant les dégâts, mais ralentissant légèrement les déplacement (bah oui, c'est moins pratique pour bouger)
             _   gérer la nouvelle jauge, et les données qui vont avec
             _   ne pas oublier de gérer l'effet de ralentissement
+*   Sauvegarde automatique
+    V   Sauvegarder automatiquement la partie, à chaque chaque fin de vague, à chaque démarrage de vague (pour que les achats soient enregistrés)
+    V   Chargement automatique de la sauvegarde au démarrage du jeu
+    V   Au démarrage du jeu, proposer au joueur de charger la sauvegarde OU de commencer une nouvelle partie (ce qui écrasera son ancienne sauvegarde)
 *   Commandes
     V   Clavier + Souris
     _   Tactile
 *   UI / UX
     V   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
-    V   Gérer les sauvegardes
     V   Ajouter la musique
 
 *   Fignolage

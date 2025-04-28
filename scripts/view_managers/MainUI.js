@@ -140,8 +140,8 @@ class MainUI {
 			property: "player_level",
 			callback: () => { 
 				document.querySelector(".player-level").innerHTML = MainController.scope.game.player_level; 
-				xp_bar.assignValue(MainController.scope.game.current_level_xp);
 				xp_bar.setMaxValue(XpBarHelper.levelUpAt());
+				xp_bar.assignValue(MainController.scope.game.current_level_xp);
 			}
 		});
     }
