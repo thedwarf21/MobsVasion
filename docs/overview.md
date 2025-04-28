@@ -2,7 +2,13 @@
 
 À mesure que les fonctionnalités arrivent, le projet gagne en complexité (un projet informatique, quoi...).
 
-Je vous propose d'en parcourir les éléments constituants, par thématiques.
+L'architecture logicielle évolue au fil de l'eau, pour intégrer les nouveaux besoin à mesure qu'ils se présentent, c'est à dire potentiellement plusieurs fois par jour. 
+
+C'est pourquoi, il est possible que les diagrammes est explications ci-dessous, ne soient pas tout à fait à jour, et pas suffisamment détaillés à votre goût : j'y reviens régulièrement, mais si je devais le modifier au fur et à mesure, je perdrais un temps considérable.
+
+Merci de votre compréhension.
+
+Pour en revenir à la présentation, je vous propose de parcourir les éléments constituant le projet, par thématiques.
 
 
 ## Genèse
