@@ -33,7 +33,7 @@ class MV_Monster extends MobileGameElement {
         this.deltaX = 0;
         this.deltaY = 0;
         this.pixel_size = MONSTER_SIZE;
-        this.__health_points = MONSTER_MAX_HEALTH;
+        this.__health_points = MonstersInCurerntWave.healthPoints();
     
         this.__setRadomSpeed(MIN_MONSTER_SPEED, MAX_MONSTER_SPEED);
         this.__addLifeBar();
@@ -46,7 +46,7 @@ class MV_Monster extends MobileGameElement {
     }
   
     __addLifeBar() {
-        this.__life_bar = new MV_Gauge("monster-health-bar", MONSTER_MAX_HEALTH, this.__health_points);
+        this.__life_bar = new MV_Gauge("monster-health-bar", this.__health_points, this.__health_points);
         this.root_element.appendChild(this.__life_bar.root_element);
     }
 

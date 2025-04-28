@@ -11,14 +11,14 @@ Au moment de démarrer, j'ai commencé par rassembler des briques logicielles, p
 
 ![image](initial_archi.excalidraw.svg)
 
-Puis, une chose en entrainant une autre, la quasi-totalité de l'architecture a évolué, afin d'accueillir les nouvelles fonctionnalités (vous savez ce que c'est :smirk:)
+Puis, une chose en entrainant une autre, la quasi-totalité de l'architecture a évolué, afin d'accueillir les nouvelles fonctionnalités, sans trop introduire de complexité inutile (si vous êtes développeur, vous savez ce que c'est :smirk:)
 
 Les quatre gros morceaux que j'ai conservés sont les suivants :
 
 
 ### Configuration de la manette
 
-le couple `GamepadGenericAdapter` + `GamepadConfigUI`, me permet d'abstraire l'API native Gamepad, en générant une liste d'actions (avec code à exécuter au déclenchement), puis en mappant ces actions aux boutons de la manette, via l'UI de configuration, dont l'ouverture automatique est déclenchée lorsqu'une manette est détectée.
+le couple `GamepadGenericAdapter` + `GamepadConfigUI`, me permet d'abstraire l'API native Gamepad, en générant une liste d'actions (avec fonction à exécuter au déclenchement), puis en mappant ces actions aux boutons de la manette via l'UI de configuration, dont l'ouverture automatique est déclenchée lorsqu'une manette est détectée.
 
 
 ### ViewPortCompatibility
@@ -28,7 +28,7 @@ Cette classe gère un système de coordonnées virtuelles, et s'occupe de conver
 Pour faire simple : 
 
 * elle assume un axe principal et une dimension virtuelle pour cet axe
-* elle met à jour dynamiquement le ratio de la viewport, afin d'en extrapoler les dimensions virtuelles de l'écran sur l'axe secondaire
+* elle met à jour dynamiquement (à chaque resize) le ratio de la viewport, afin d'en extrapoler les dimensions virtuelles de l'écran sur l'axe secondaire
 * le positionnement est exprimé en pourcentage des dimensions de la viewport sur l'axe principal => si l'axe principal est Y, alors la valeur réelle est exprimée en `vh`
 
 
@@ -36,13 +36,12 @@ Pour faire simple :
 
 Cette classe met en place un callback au niveau du setter de la propriété ciblé. 
 
-La méthode `addBinding` permet ensuite de synchroniser la valeur de ladite propriété avec une propriété d'un élément du DOM, car tel est le comportement du callback implanté par défaut.
+En outre, la méthode `addBinding` permet ensuite de synchroniser la valeur de ladite propriété, avec une propriété d'un élément du DOM, car tel est le comportement du callback implanté par défaut.
 
 La méthode `addBinding` peut être appelée autant de fois que nécessaire sur un object `RS_Binding`.
 
-Il est cependant possible d'enrichir le setter callback par défaut, en alimentant une propriété `callback`, dans l'objet fourni au constructeur de la classe. Ce callback sera ensuite exécuté juste avant les synchronisations avec les éléments de DOM, lorsque la valeur de la propriété est modifiée.
+Il est cependant possible d'enrichir le setter callback par défaut, en alimentant une propriété `callback` dans l'objet fourni au constructeur de la classe. Ce callback sera ensuite exécuté juste avant les synchronisations avec les éléments de DOM, lorsque la valeur de la propriété est modifiée, et recevra en paramètre la nouvelle valeur ainsi que la valeur précédente.
 
-(si je devais réécrire cette classe aujourd'hui, je pense que je le ferais différemment)
 
 ### MobileGameElement
 
@@ -51,19 +50,16 @@ Cette classe sert de "modèle" à toutes les classes gérant des objets affiché
 Elle embarque tout le nécessaire pour gérer les diverses problématiques susceptibles d'être rencontrées :
 
 * Elle gère le positionnement et l'orientation d'un conteneur DOM, qui lui est rattaché (`root_element`)
-* Elle gère la traduction entre les coordonnées virtuelles et le positionnement en CSS (`viewport`)
+* Elle gère la traduction entre les coordonnées virtuelles et le positionnement en CSS (via une instance de `ViewPortCompatibility`)
 * Elle offre la possibilité de n'appliquer les mouvements de rotation, qu'à un élément précis du DOM interne du conteneur (`rotation_element`)
-* Elle permet d'accéder directement à la hitbox
-* Elle embarque le système d'affichage de la hitbox
-
-Ce sera à découper plus tard, mais il n'y a pas d'urgence pour le moment : c'est assez robuste pour ne pas nécessiter d'y revenir à moins de devoir y ajouter une fonctionnalité.
+* Elle permet d'accéder directement à la hitboxn et en embarque le système d'affichage
 
 
 ## Les éléments du jeu
 
 Parmi les briques conçues en amont pour les besoins d'autres projets, on retrouve `MobileGameElement`. 
 
-Cette dernière a quelque peu évolué. En effet, le s'appuyait à l'origine sur `customElements`, mais pour des raisons de compatibilité avec le navigateur Safari, j'ai dû revenir à une solution plus conventionnelle, et choisir d'intégrer l'élément HTML à l'objet plutôt que d'en hériter directement.
+Cette dernière a quelque peu évolué. En effet, elle s'appuyait à l'origine sur `customElements`, mais pour des raisons de compatibilité avec le navigateur Safari, j'ai dû "revoir ma copie", et choisir d'intégrer l'élément HTML à l'objet, plutôt que de faire hériter directement `HtmlDivElement` à la classe.
 
 (C'est dommage, c'était drôlement pratique)
 
@@ -73,7 +69,7 @@ Cette dernière a quelque peu évolué. En effet, le s'appuyait à l'origine sur
 
 `MobileGameElement` gère la rotation, les déplacements, les hitbox, mais aussi et surtout, elle encapsule la conversion des coordonnées virtuelles en positionnement réel dans la vue.
 
-Chacune des 5 classes, encapsule ensuite les propriétés et méthodes qui lui sont propres.
+Chacune des 5 classes, encapsule ensuite les propriétés et méthodes qui lui sont propres (c'est un peu le principe de l'héritage, quand même...)
 
 
 ## Les helpers: des classes statiques qui vous veulent du bien

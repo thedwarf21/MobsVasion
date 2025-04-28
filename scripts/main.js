@@ -19,11 +19,15 @@ const DASH_LENGTH = 125;
 const MONSTER_SIZE = 60;
 const MIN_MONSTER_SPEED = 2;
 const MAX_MONSTER_SPEED = 4;
-const MONSTER_MAX_HEALTH = 5;
 const MIN_MONSTER_SWAG = 1;
 const MAX_MONSTER_SWAG = 3;
-const MOBS_PER_WAVE = 3;
 const MONSTER_STRENGTH = 1;
+
+const MOBS_BASE_HEALTH = 3;
+const MOBS_HP_ADD_PER_WAVE = 0.2;
+
+const MOBS_ON_FIRST_WAVE = 3;
+const MOBS_ADD_PER_WAVE = 1;
 
 const XP_PER_MONSTER = 1;
 const BASE_LEVEL_UP_XP = 3;
@@ -184,7 +188,7 @@ class MainController {
 		MainController.scope.game.wave_pop.timeouts = [];
 		
 		let timeout = TIMEOUTS.before_pop;
-		let mobsNumber = MainController.scope.game.wave_number * MOBS_PER_WAVE; 
+		let mobsNumber = MonstersInCurerntWave.mobsNumber(); 
 		for (let i=0; i<mobsNumber; i++) {
 			MainController.scope.game.wave_pop.timeouts.push(timeout);
 			timeout += Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);

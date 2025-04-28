@@ -67,6 +67,7 @@ V   Tâche terminée
 *   Mobs pop de début de vague
     V   Mettre en place un pop instant de tous les monstres de la vague (vérifier que le compte y est toujours, en testant plusieurs numéros de vague)
     V   Déléguer la dilution du pop dans le temps, à une fonction ou une classe
+    V   Revoir la logique de génération du pop, afin que les PV des monstres augmentent avec le temps, quitte à augmenter leur nombre moins rapidement
 *   Points de vie
     V   Afficher les barres de vie (personnage et monstre)
     V   Gérer les PV du personnage --> perte de PV quand un monstre touche le personnage
@@ -117,8 +118,13 @@ V   Tâche terminée
     V   Travailler le visuel du shop-header pour que ce soit intuitif (qu'on voie bien que ce sont deux onglets)
     V   Faire apparaître le numéro de la vague dans le bouton de fermeture de la popup
     V   Prise en compte de l'état des items magasin, dans les mécaniques du jeu
+    _   Mettre un petit toFixed() dans l'affichage des effets d'une amélioration
+    _   Au survol d'un soin, afficher la "plus-value" dans la barre de vie (accessibilité pour les dyscalculiques et les allergiques au calcul mental)
+        _   gérer une progress-bar additionnelle dans la barre de vie
+        _   mouseenter / mouseleave => déclencher l'apparition/disparition de la progress-bar additionnelle
+        _   gérer cette problématique pour la navigation manette dans le menu
     _   Revoir la mise en page, pour être plus Mobile-friendly : 
-        _   à gauche, les items avec juste les noms (div scrollable, parce que je vais en rajouter)
+        _   à gauche, les items affichés en moins grand, avec juste les noms (div scrollable, parce que je vais en rajouter)
         _   à droite, le détail de l'item survolé (ou focused, avec la manette)
     _   Nouveaux items dans le magasin
         _   ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
@@ -133,7 +139,7 @@ V   Tâche terminée
     V   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
     _   Gérer les sauvegardes
-    _   Ajouter la musique
+    V   Ajouter la musique
 
 *   Fignolage
 X   Tester, au fil de l'eau
