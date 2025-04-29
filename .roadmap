@@ -148,7 +148,7 @@ V   Tâche terminée
 *   Fignolage
 X   Tester, au fil de l'eau
 _   Mettre à jour la doc, à chaque étape majeure
-X   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
+V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
  
 
 ------------ A AJOUTER ENSUITE ------------
