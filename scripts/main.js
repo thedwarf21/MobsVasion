@@ -104,20 +104,36 @@ const PANIC_MODE_THRESHOLD_RATIO = 0.2;
 
 const AUDIO_PATH = "sounds/";
 const SOUND_LIB = {
-	portal: 		{ file: "portal.mp3", 	duration: 2000 },
-	shot: 			{ file: "shot.mp3" },
-	empty_clip: 	{ file: "empty-gun-shot.mp3" },
-	reload: 		{ file: "reload.mp3" },
-	dash: 			{ file: "dash.mp3" },
-	kill: 			{ file: "dying-monster.mp3" },
-	level_up:   	{ file: "level-up.mp3", duration: 2000 },
-	low_hp_loop:	{ file: "heartbeat-loop.mp3", 	loop_id: "panic" },
-	lose: 			{ file: "lose.mp3", 	duration: 1500 },
+	lose: 			{ file: "lose.mp3" },
 	popup_open: 	{ file: "popup-open.mp3" },
 	popup_navigate: { file: "popup-navigate.mp3" },
 	popup_validate: { file: "popup-validate.mp3" },
 	popup_close: 	{ file: "popup-close.mp3" },
-	shop_music:     { file: "shop-music.mp3", 		loop_id: "shop_music" }
+	empty_clip: 	{ file: "empty-gun-shot.mp3" },
+	reload: 		{ file: "reload.mp3" },
+	dash: 			{ file: "dash.mp3" },
+	level_up:   	{ file: "level-up.mp3" },
+	kill: 			{ 
+		file: "dying-monster.mp3",
+		players_number: 3
+	},
+	portal: { 
+		file: "portal.mp3",
+		players_number: 2 
+	},
+	shot: { 
+		file: "shot.mp3", 
+		players_number: 2 
+	},
+	low_hp_loop: { 
+		file: "heartbeat-loop.mp3", 
+		is_loop: true
+	},
+	shop_music:     { 
+		file: "shop-music.mp3",
+		is_loop: true, 
+		is_music: true 
+	}
 };
 const DEFAULT_AUDIO_LASTING_TIME = 1000;
 

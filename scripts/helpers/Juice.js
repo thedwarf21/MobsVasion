@@ -14,7 +14,7 @@ class JuiceHelper {
         );
 
 		MainController.UI.addToGameWindow(pop_animation.root_element);
-        MainController.audio_manager.playAudio(SOUND_LIB.portal, false);
+        MainController.audio_manager.playAudio("portal");
     }
 
     static shoot(x, y, angle) {
@@ -30,19 +30,19 @@ class JuiceHelper {
             weapon_flame.remove();
         }, 50);
         
-        MainController.audio_manager.playAudio(SOUND_LIB.shot, false); 
+        MainController.audio_manager.playAudio("shot"); 
     }
 
-    static reload() { MainController.audio_manager.playAudio(SOUND_LIB.reload, false); }
-    static emptyClipPercussion() { MainController.audio_manager.playAudio(SOUND_LIB.empty_clip, false); }
-    static dashSound() { MainController.audio_manager.playAudio(SOUND_LIB.dash, false); }
+    static reload() { MainController.audio_manager.playAudio("reload"); }
+    static emptyClipPercussion() { MainController.audio_manager.playAudio("empty_clip"); }
+    static dashSound() { MainController.audio_manager.playAudio("dash"); }
 
     static levelUp() {
         let level_element = document.querySelector(".player-level");
         level_element.classList.add("level-up");
         setTimeout(()=> {  level_element.classList.remove("level-up"); }, 1000);
         
-        MainController.audio_manager.playAudio(SOUND_LIB.level_up, false);
+        MainController.audio_manager.playAudio("level_up");
     }
     
     static hitEffect() {
@@ -54,7 +54,7 @@ class JuiceHelper {
         MainController.UI.addToGameWindow(flash_effect.root_element);
     }
 
-    static playerDied() { MainController.audio_manager.playAudio(SOUND_LIB.lose, false); }
+    static playerDied() { MainController.audio_manager.playAudio("lose"); }
 
 
     static checkPanicMode() {
@@ -66,21 +66,21 @@ class JuiceHelper {
 			panic_element.classList.add("panic-mode");
 			document.body.prepend(panic_element);
 
-            MainController.audio_manager.startAudioLoop(SOUND_LIB.low_hp_loop, false);  
+            MainController.audio_manager.playAudio("low_hp_loop");  
 		}
 
 		if (panic_element && MainController.scope.game.health_points > panic_threshold) {
 			panic_element.remove();
-            MainController.audio_manager.stopAudioLoop(SOUND_LIB.low_hp_loop.loop_id); 
+            MainController.audio_manager.stopAudioLoop("low_hp_loop"); 
         }
     }
 
-    static popupOpening() { MainController.audio_manager.playAudio(SOUND_LIB.popup_open, false); }
-    static popupClosing() { MainController.audio_manager.playAudio(SOUND_LIB.popup_close, false); }
-    static popupNavigate() { MainController.audio_manager.playAudio(SOUND_LIB.popup_navigate, false); }
-    static popupValidate() { MainController.audio_manager.playAudio(SOUND_LIB.popup_validate, false); }
-    static startShopMusic() { MainController.audio_manager.startAudioLoop(SOUND_LIB.shop_music, true); }
-    static stopShopMusic() { MainController.audio_manager.stopAudioLoop(SOUND_LIB.shop_music.loop_id); }
+    static popupOpening() { MainController.audio_manager.playAudio("popup_open"); }
+    static popupClosing() { MainController.audio_manager.playAudio("popup_close"); }
+    static popupNavigate() { MainController.audio_manager.playAudio("popup_navigate"); }
+    static popupValidate() { MainController.audio_manager.playAudio("popup_validate"); }
+    static startShopMusic() { MainController.audio_manager.playAudio("shop_music"); }
+    static stopShopMusic() { MainController.audio_manager.stopAudioLoop("shop_music"); }
 
 
     static monsterPop(x, y) {
@@ -95,7 +95,7 @@ class JuiceHelper {
         );
 
 		MainController.UI.addToGameWindow(pop_animation.root_element);
-        MainController.audio_manager.playAudio(SOUND_LIB.portal, false);
+        MainController.audio_manager.playAudio("portal");
 	}
 
     static bloodSplash(x, y, angle, onAmimationEnd) {
@@ -110,5 +110,5 @@ class JuiceHelper {
         MainController.UI.addToGameWindow(blood_splash.root_element);
     }
 
-    static monsterSlayed() { MainController.audio_manager.playAudio(SOUND_LIB.kill, false); }
+    static monsterSlayed() { MainController.audio_manager.playAudio("kill"); }
 }

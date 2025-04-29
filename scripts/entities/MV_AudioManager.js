@@ -7,88 +7,103 @@ class MV_AudioManager {
 	 */
 	constructor(sound_settings) {
 		this.sound_settings = sound_settings;
-		this.loops = [];
+		this.sound_lib = {};
+		
+		for (const key in SOUND_LIB) {
+			const sound_entry = SOUND_LIB[key];
+
+			this.sound_lib[key] = {
+				is_loop: sound_entry.is_loop,
+				is_music: !!sound_entry.is_music,
+				elements: []
+			};
+
+			let players_number = sound_entry.players_number;
+			if (!players_number)
+				players_number = 1;
+			
+			for (let i = 0; i < players_number; i++)
+				this.sound_lib[key].elements.push(this.__createAudioTag(sound_entry.file, sound_entry.is_loop));
+		}
 	}
 
 	/**
 	 * Fonction lançant un son dans une balise audio créée à la volée
 	 *
-	 * @param      {object}  sound_lib_entry Elément de SOUND_LIB, définissant le fichier audio et la durée du son
-	 * @param      {boolean} is_music      	 Permet de différencier effets sonores et musiques (pour application des paramètres)
+	 * @param      {string}  sound_key  Nom de la propriété de SOUND_LIB, définissant le fichier audio et son paramétrage
 	 */
-	playAudio(sound_lib_entry, is_music) {
-		let audio_player = this.__createAudioTag(sound_lib_entry.file, is_music, false);
-		
-		if (audio_player) {
-			let lasting_time = sound_lib_entry.duration 
-							 ? sound_lib_entry.duration 
-							 : DEFAULT_AUDIO_LASTING_TIME;
-			setTimeout(()=> audio_player.remove(), lasting_time);
+	playAudio(sound_key) {
+		let sound_entry = this.sound_lib[sound_key];
+
+		if (!sound_entry) {
+			console.error(`MV_AaudioManager.playAudio() --> son ${sound_key} inconnu.`);
+			return;
 		}
-	}
-
-	/**
-	 * Lance une boucle sonore
-	 *
-	 * @param	{string}	sound_lib_entry	Elément de SOUND_LIB, définissant le fichier audio et la durée du son
-	 * @param	{boolean}	is_music 		Permet de différencier effets sonores et musiques (pour application des paramètres)
-	 */
-	startAudioLoop(sound_lib_entry, is_music) {
-		let audio_player = this.__createAudioTag(sound_lib_entry.file, is_music, true);
-
-		if (audio_player) {
-			this.loops.push({
-				id: sound_lib_entry.loop_id,
-				audio_player: audio_player,
-				is_music: is_music
-			});
+		
+		if (this.__canBePlayed(sound_entry.is_music)) {
+			let audio_element = this.__getAvailableElement(sound_entry);
+			audio_element.currentTime = 0;
+			audio_element.play().catch((error)=> { console.error(error); });
 		}
 	}
 
 	/**
 	 * Arrête la musique et supprime le lecteur du DOM
 	 *
-	 * @param		{string}  loop_id  Permet d'identifier formellement une boucle audio
+	 * @param		{string}  sound_key  Nom de la propriété de SOUND_LIB, définissant le fichier audio et son paramétrage
 	 */
-	stopAudioLoop(loop_id) {
-		for (let i=0; i<this.loops.length; i++) {
-			let loop = this.loops[i];
-			if (loop.id === loop_id) {
-				loop.audio_player.pause();
-				loop.audio_player.remove();
-				this.loops.splice(i, 1);
-				return;
-			}
+	stopAudioLoop(sound_key) {
+		let sound_entry = this.sound_lib[sound_key];
+
+		if (!sound_entry) {
+			console.error(`MV_AaudioManager.playAudio() --> son ${sound_key} inconnu.`);
+			return;
+		}
+
+		sound_entry.elements[0].pause();  // Les boucles audio sont uniques dans le pool
+	}
+
+	/**
+	 * Arrête la lecture de tous les lecteurs audio, répertoriés comme musique
+	 */
+	stopMusic() {
+		for (let key in this.sound_lib) {
+			let sound_entry = this.sound_lib[key];
+			if (sound_entry.is_music)
+				sound_entry.elements[0].pause();    // Les musiques sont toujours des boucles et sont donc uniques dans le pool
 		}
 	}
 
-	stopMusic() {
-		for (let i = this.loops.length - 1; i >= 0; i--) {
-			let loop = this.loops[i];
-			if (loop.is_music) {
-				loop.audio_player.pause();
-				loop.audio_player.remove();
-				this.loops.splice(i, 1);
+	__getAvailableElement(sound_entry) {
+		let max_current_time = 0;
+		let best_choice_index;
+
+		for (let i = 0; i < sound_entry.elements.length; i++) {
+			let element = sound_entry.elements[i];
+			if (element.paused)
+				return element;
+
+			if (element.currentTime > max_current_time) {
+				max_current_time = element.currentTime;
+				best_choice_index = i;
 			}
 		}
+
+		return sound_entry.elements[ best_choice_index ];
 	}
 
 	/**
 	 * Crée, initialise, ajoute au DOM, et retourne une balise audio (ou undefined, si le paramétrage ne le permet pas)
 	 * 
 	 * @param {string} 		filename 
-	 * @param {boolean} 	is_music 
 	 * @param {boolean} 	is_loop
 	 */
-	__createAudioTag(filename, is_music, is_loop) {
-		if (!this.__canBePlayed(is_music))
-			return;
-		
+	__createAudioTag(filename, is_loop) {
 		let audio_player = document.createElement("AUDIO");
 		audio_player.src = AUDIO_PATH + filename;
 		audio_player.loop = is_loop;
+		audio_player.style.display = 'none';
 		document.body.appendChild(audio_player);
-		audio_player.play().catch((error)=> { console.error(error); });
 
 		return audio_player;
 	}
