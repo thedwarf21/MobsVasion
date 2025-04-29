@@ -9,22 +9,7 @@ class MV_AudioManager {
 		this.sound_settings = sound_settings;
 		this.sound_lib = {};
 		
-		for (const key in SOUND_LIB) {
-			const sound_entry = SOUND_LIB[key];
-
-			this.sound_lib[key] = {
-				is_loop: sound_entry.is_loop,
-				is_music: !!sound_entry.is_music,
-				elements: []
-			};
-
-			let players_number = sound_entry.players_number;
-			if (!players_number)
-				players_number = 1;
-			
-			for (let i = 0; i < players_number; i++)
-				this.sound_lib[key].elements.push(this.__createAudioTag(sound_entry.file, sound_entry.is_loop));
-		}
+		this.__initFromConfig(SOUND_LIB);
 	}
 
 	/**
@@ -74,22 +59,41 @@ class MV_AudioManager {
 		}
 	}
 
-	__getAvailableElement(sound_entry) {
-		let max_current_time = 0;
-		let best_choice_index;
+	/**
+	 * Initialise `this.sound_lib` sur la base d'un objet de configuration passé en paramètre
+	 * 
+	 * @param {object} sounds_lib_config  Objet de configuration des sons (chemin, boucle/simple, fx/music, noumbre d'occurrences de lecteur audio)
+	 */
+	__initFromConfig(sounds_lib_config) {
+		for (const key in sounds_lib_config) {
+			const sounds_config_entry = sounds_lib_config[key];
 
-		for (let i = 0; i < sound_entry.elements.length; i++) {
-			let element = sound_entry.elements[i];
-			if (element.paused)
-				return element;
+			this.sound_lib[key] = {
+				is_loop: sounds_config_entry.is_loop,
+				is_music: !!sounds_config_entry.is_music,
+				elements: []
+			};
 
-			if (element.currentTime > max_current_time) {
-				max_current_time = element.currentTime;
-				best_choice_index = i;
-			}
+			this.sound_lib[key].elements = this.__getConfigEntryElements(sounds_config_entry);
 		}
+	}
 
-		return sound_entry.elements[ best_choice_index ];
+	/**
+	 * Instancie et attache au DOM le nombre de lecteurs requis, puis en retourne la liste
+	 * 
+	 * @param {object} sounds_config_entry  Objet de configuration d'un son précis
+	 */
+	__getConfigEntryElements(sounds_config_entry) {
+		let players_number = sounds_config_entry.players_number;
+		let elements = [];
+
+		if (!players_number)
+			players_number = 1;
+		
+		for (let i = 0; i < players_number; i++)
+			elements.push( this.__createAudioTag(sounds_config_entry.file, sounds_config_entry.is_loop) );
+
+		return elements;
 	}
 
 	/**
@@ -117,5 +121,28 @@ class MV_AudioManager {
 		return is_music 
 			 ? this.sound_settings.music_on 
 			 : this.sound_settings.sound_fx_on;
+	}
+
+	/**
+	 * Permet de récupérer l'élément le plus pertinent pour lancer un son, au sein de `sound_entry.elements`
+	 * 
+	 * @param {object} sound_entry  Objet de travail correspondant à un son précis 
+	 */
+	__getAvailableElement(sound_entry) {
+		let max_current_time = 0;
+		let best_choice_index;
+
+		for (let i = 0; i < sound_entry.elements.length; i++) {
+			let element = sound_entry.elements[i];
+			if (element.paused)
+				return element;
+
+			if (element.currentTime > max_current_time) {
+				max_current_time = element.currentTime;
+				best_choice_index = i;
+			}
+		}
+
+		return sound_entry.elements[ best_choice_index ];
 	}
 }
