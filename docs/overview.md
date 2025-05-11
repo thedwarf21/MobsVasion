@@ -17,17 +17,52 @@ Au moment de démarrer, j'ai commencé par rassembler des briques logicielles, p
 
 ![image](initial_archi.excalidraw.svg)
 
+
+## Après 4 semaines
+
 Puis, une chose en entrainant une autre, la quasi-totalité de l'architecture a évolué, afin d'accueillir les nouvelles fonctionnalités, sans trop introduire de complexité inutile (si vous êtes développeur, vous savez ce que c'est :smirk:)
 
-Les quatre gros morceaux que j'ai conservés sont les suivants :
+![image](archi_2.excalidraw.svg)
+
+Le `MainController` déclare et définit tout le paramétrage par défaut, à travers des constantes. En outre, il implémente également l'initialisation du jeu ainsi que des vagues de monstres, de même que les méthodes de détection et de gestion de fins de vagues, qu'il s'agisse de victoires ou de défaites.
+
+Il s'appuie sur la classe statique `MV_GameInitializer` pour initialiser l'objet `scope`, préparer la gestion des contrôles, et instancier les divers objets chargés de  gérer les diverses problématiques : audio, sauvegarde, magasin d'améliorations, popups, gamplay et ATH, et traitements périodiques (`GameClock`).
+
+Les fenêtre modales gérées par `PopupsStack` sont des classes héritant de `AbstractPopup`, qui définit les méthodes invoquées par `PopupsStack`, ainsi que les méthodes permettant de gérer la navigation par manette, dans la fenêtre.
+
+La classe `WaintingCounters` permet de gérer les délais d'attente, dépendant des TIK d'horloge gérés par `GameClock`. De cette manière, ces délais d'attente sont affectés par la mise en pause du jeu, contrairement aux animations pures.
 
 
-### Configuration de la manette
+## L'objet `scope`
+
+Directement rattaché au `MainController`, l'objet `scope` est une banque de données définissant l'état du jeu, à un instant T.
+
+![image](scope_data_structure.excalidraw.svg)
+
+`scope.shop` définit pour chaque article du magasin, le paramétrage nécessaires au calcul des prix et à l'affichage, ainsi que le niveau actuel d'amélioration, pour la partie en cours.
+
+`scope.game` définit l'état actuel de la partie en cours, du point de vue du personnage : ressources du joueur, xp, numéro de la vague en cours, compteurs de délais, etc.
+
+En outre, cette structure contient également le flag de préférences utilisateur concernant l'affichage des hit box, ainsi que les compteurs d'attente en cours, et la planification de l'apparition des monstres de la vague en cours.
+
+`scope.controls` centralise l'état des commandes à l'instant T. Certains de ces états sont mutualisés entre les différents modes de contrôles (`paused`, `firing_primary`, `firing_secondary`, `reloading`). Tous les autres sont chacun lié à un mode de contrôle spécifique.
+
+* Clavier: `upPressed`, `downPressed`, `leftPressed`, `rightPressed`
+* Souris: `mouse_aiming` et structure `mouse_position` (`x`, `y`)
+* Manette dans les menus: structure `gamepad_menu_nav`
+
+
+# Les common_tools
+
+Ce répertoire contient des classes "utilitaires", réutilisables.
+
+
+## Configuration de la manette
 
 le couple `GamepadGenericAdapter` + `GamepadConfigUI`, me permet d'abstraire l'API native Gamepad, en générant une liste d'actions (avec fonction à exécuter au déclenchement), puis en mappant ces actions aux boutons de la manette via l'UI de configuration, dont l'ouverture automatique est déclenchée lorsqu'une manette est détectée.
 
 
-### ViewPortCompatibility
+## ViewPortCompatibility
 
 Cette classe gère un système de coordonnées virtuelles, et s'occupe de convertir ces valeurs de coordonnées en positionnement réel dans la viewport.
 
@@ -38,7 +73,7 @@ Pour faire simple :
 * le positionnement est exprimé en pourcentage des dimensions de la viewport sur l'axe principal => si l'axe principal est Y, alors la valeur réelle est exprimée en `vh`
 
 
-### RS_Binding
+## RS_Binding
 
 Cette classe met en place un callback au niveau du setter de la propriété ciblé. 
 
@@ -49,7 +84,16 @@ La méthode `addBinding` peut être appelée autant de fois que nécessaire sur 
 Il est cependant possible d'enrichir le setter callback par défaut, en alimentant une propriété `callback` dans l'objet fourni au constructeur de la classe. Ce callback sera ensuite exécuté juste avant les synchronisations avec les éléments de DOM, lorsque la valeur de la propriété est modifiée, et recevra en paramètre la nouvelle valeur ainsi que la valeur précédente.
 
 
-### MobileGameElement
+## RS_Dialog et RS_Toast
+
+Ce sont des composants de la RS_WCL (Roquefort Softwares' Web Components Library), un précédent side-project de mon cru.
+
+`RS_Dialog` définit une fenêtre modale, ainsi que des "raccroucis" permettant de surcharger les fonctions `alert` et `confirm` en les remplçant par des instances de `RS_Dialog`.
+
+`RS_Toast` permet d'afficher un toast, c'est à dire un message apparaissant en bas de l'écran, puis disparaissant au bout d'un certain temps.
+
+
+## MobileGameElement
 
 Cette classe sert de "modèle" à toutes les classes gérant des objets affichés à l'écran et soumis à positionnement dynamique. 
 
@@ -61,13 +105,13 @@ Elle embarque tout le nécessaire pour gérer les diverses problématiques susce
 * Elle permet d'accéder directement à la hitboxn et en embarque le système d'affichage
 
 
-## Les éléments du jeu
+# Les éléments du jeu
 
 Parmi les briques conçues en amont pour les besoins d'autres projets, on retrouve `MobileGameElement`. 
 
-Cette dernière a quelque peu évolué. En effet, elle s'appuyait à l'origine sur `customElements`, mais pour des raisons de compatibilité avec le navigateur Safari, j'ai dû "revoir ma copie", et choisir d'intégrer l'élément HTML à l'objet, plutôt que de faire hériter directement `HtmlDivElement` à la classe.
+Cette classe a quelque peu évolué. En effet, elle s'appuyait à l'origine sur `customElements` de l'API native, mais pour des raisons de compatibilité avec le navigateur Safari, j'ai dû "revoir ma copie", et choisir d'intégrer l'élément HTML à l'objet, plutôt que de faire hériter directement `HtmlDivElement` à la classe.
 
-(C'est dommage, c'était drôlement pratique)
+(C'est dommage : c'était drôlement pratique, puisque mes objets de jeu portaient par héritage, les méthodes et propriétés de l'élément de DOM qui les représentaient dans l'UI)
 
 ![image](mobile_game_elements.excalidraw.svg)
 
@@ -78,16 +122,23 @@ Cette dernière a quelque peu évolué. En effet, elle s'appuyait à l'origine s
 Chacune des 5 classes, encapsule ensuite les propriétés et méthodes qui lui sont propres (c'est un peu le principe de l'héritage, quand même...)
 
 
-## Les helpers: des classes statiques qui vous veulent du bien
+# Les helpers: des classes statiques qui vous veulent du bien
 
 Ces classes proposent des méthodes statiques permettant d'abstraire certains traitements, en le encapsulant dans des use cases nommés intelligiblement.
 
 ![image](helpers.excalidraw.svg)
 
-Ainsi, `HealthBarHelper` et `XpBarHelper` permettent de gérer respectivement la santé et l'expérience du joueur, `AnimationHelper` permet de créer des animation d'un simple appel de méthode, et `Tools` propose des fonctions utilitaires (oui, ok... c'est un fourre-tout... mais pas trop plein, vous en conviendrez).
+Ainsi, 
+
+* `HealthBarHelper` et `XpBarHelper` permettent de gérer respectivement la santé et l'expérience du joueur, 
+* `JuiceHelper` permet de créer des animation ainsi que les effets sonores, d'un simple appel de méthode, 
+* `Tools` propose des fonctions utilitaires (oui, ok... c'est un fourre-tout... mais pas trop plein, vous en conviendrez),
+* `MonstersInCurrentWave` expose les méthodes de calculs du nombre de monstres constituant la vague courante, ainsi que de leur santé.
+
+`HealthBarHelper`, `XpBarHelper` et `MonstersInCurrentWave` sont plutôt orientées model, puisqu'elles embarquent de la logique, tandis que `Tools` expose des méthodes de calculs et de conversions généraliste, et `JuiceHelper` abstrait les aspects liés au feedback auditif et visuel.
 
 
-## Le gestionnaire de boutique
+# Le gestionnaire de boutique
 
 Sur cette partie, je me suis fait plaisir en termes de conception :feelsgood:
 
@@ -95,32 +146,49 @@ Les prix et les effets d'un article du magasin, sont calculés en fonction de so
  
 ![image](shop_manager.excalidraw.svg)
 
-La classe `ShopItem` doit donc embarqué tout le nécessaire pour effectuer les calculs.
+La classe `ShopItem` doit donc embarquer tout le nécessaire pour effectuer les calculs.
 
 Une fois créé, un `ShopItem` fait sa vie : il met lui-même ses propres listeners en place.
 
-La classe `ShopHealingItem` permet de gérer les articles de soin. Comme ces articles ne sont pas des améliorations, ils ne sont pas soumis aux même mécaniques que les autres articles du magasin.
+La classe `ShopHealingItem` permet de gérer les articles de soin. Comme ces articles ne sont pas des améliorations, ils ne sont pas soumis aux même mécaniques que les autres articles du magasin, puisqu'ils ne sont pas liés à la liste `scope.shop`.
 
-La classe statique `Abilities` est le helper de la boutique : elle expose des méthodes permettant d'obtenir les valeurs à appliquer en jeu, en fonction du niveau d'amélioration courant, de l'article de boutique correspondant.
-
-
-## Les entities
-
-Pas convaincu par le nom du répertoire... si je trouve un nom plus sympa, je reviendrai dessus.
-
-Pour le moment le `AudioManager` et le `SaveManager` ne sont pas implémentés (je les ai extraits d'un autre projet pour les réadapter ici)
+La classe statique `Abilities` est le helper de la boutique : elle expose des méthodes permettant d'obtenir les valeurs à appliquer en jeu, en fonction du niveau d'amélioration courant du `ShopItem` correspondant.
 
 
-### MV_GameInitializer
+# Les entities
+
+(Pas convaincu par le nom du répertoire... si j'en trouve un nom plus sympa, je reviendrai dessus)
+
+
+## MV_GameInitializer
 
 Comme son nom l'indique, il s'agit de la classe portant toutes les fonctions d'initialisation du jeu :
 
-* Définit l'état par défaut des données internes
-* Instancie les divers objets de gestion (gestionnaire d'horloge, gestionnaire de boutique)
-* Met en place tout le nécessaire à la gestion des commandes du jeu
+* Définit l'état par défaut des données internes (`scope`)
+* Instancie les divers objets de gestion 
+    * gestionnaire d'horloge,
+    * gestionnaire de boutique, 
+    * gestionnaire de fenêtres modales,
+    * gestionnaire audio,
+    * gestionnaire de sauvegardes,
+    * gestionnaire de l'UI principale
+* Met en place tout le nécessaire à la gestion des commandes du jeu, en s'appuyant sur les `controls_managers`
 
 
-## Les gestionnaires de vues
+## MV_AudioManager
+
+Le gestionnaire de sons, s'appuie sur la constante `SOUNDS_LIB`, pour mettre en place un système de pooling d'éléments `<audio>`, et en permettre le pilotage.
+
+Il gère un pool d'éléments `<audio>` pour chaque son, et expose les méthodes nécessaires pour rendre triviale l'utilisation de la bibliothèque de sons et musqiues qu'il encapsule.
+
+`playAudio` permet de jouer un son de la bibliothèque.
+
+`stopAudioLoop` permet d'arrêter un son joué en boucle.
+
+`stopMusic` permet d'arrêter tous les lecteurs identifiés comme référençant un son musical.
+
+
+# Les gestionnaires de vues
 
 Nous avons évidemment la `MainUI`, qui gère l'interface du jeu en tant que tel, ainsi qu'une classe par type de fenêtre modale.
 
@@ -128,43 +196,15 @@ Ces classes tiennent lieu de controllers spécifiques, et gèrent la mise en pla
 
 Exception faite de la `MainUI`, ces classes déclarent toutes une méthode `show`, responsable de la ouverture et de l'initialisation de la fenêtre modale, ainsi que d'une méthode `__close` assurant la fermenture de la popup, ainsi que l'exécution des opérations à effectuer à cette occasion.
 
+En outre, dans le répertoire `view_managers`, on retrouve également le script `Popups.js`, dans lequel sont déclarées les classes `PopupsStack` et `AbstractPopup`, décrites dans le premier chapitre de la présente documentation.
 
-## Les gestionnaires de commandes
 
-Une classe par type de contrôle : clavier et souris sont regroupés car leur usage est associé.
+# Les gestionnaires de commandes
+
+Dans le répertoire `controls_managers`, on trouve une classe par type de contrôle. Clavier et souris sont regroupés dans une seule classe, car leur utilisation est liée.
 
 Dans ces classes, on retrouve :
 
 * l'initialisation des commandes (listeners, sauf pour la manette)
-* la mise à jour de la propriété de scope centralisant l'état des commandes
-* la mise en application dans le jeu, de l'état des commandes
-
-
-## Les gestionnaires d'horloge
-
-C'est un jeu en temps réel, donc beaucoup de traitements sont déclenchés périodiquement :
-
-* déplacement des éléments
-* gestion des collisions
-* etc.
-
-
-### GameClock
-
-La classe `GameClock` a pour rôle d'orchestrer l'exécution de des traitements périodique, et entretient une boucle infinie de ces traitements.
-
-Elle s'appuie sur les classes citées plus haut.
-
-
-### WaitingCounters
-
-Cette classe gère des délais, exprimés en nombre de TIK d'horloge.
-
-Entre autres, elle permet de gérer les barres de rechargement, et l'apparition des monstres de la vague, telle qu'elle a été plannifiée.
-
-
-## MainController
-
-Dans le fichier `main.js`, se trouve le `MainController` ainsi que la déclaration de toutes les constates utilisée dans le jeu.
-
-Le `MainController` en lui-même est assez léger, puisque la plupart des problématiques sont traitées par d'autres classes.
+* la mise à jour des propriétés de `scope.controls` gérant l'état des commandes
+* la mise en application dans le jeu, de l'état des propriétés de `scope.controls`

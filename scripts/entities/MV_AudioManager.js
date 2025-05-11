@@ -33,7 +33,7 @@ class MV_AudioManager {
 	}
 
 	/**
-	 * Arrête la musique et supprime le lecteur du DOM
+	 * Arrête une boucle de son
 	 *
 	 * @param		{string}  sound_key  Nom de la propriété de SOUND_LIB, définissant le fichier audio et son paramétrage
 	 */
