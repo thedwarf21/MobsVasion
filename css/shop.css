@@ -24,12 +24,23 @@
     box-shadow: 0 0 2vh #beccdd;
 }
 
+.shop-items-wrapper {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+}
+
 #items-container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
+    
+    width: 40%;
+    max-height: 35vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
 }
 
 .shop-item {
@@ -40,9 +51,9 @@
     margin: 0.5vh;
     padding: 1vh;
     
-    width: calc(50% - 3vh);
-    height: 15vh;
-    border-radius: 15vh;
+    width: calc(100% - 3vh);
+    height: 5vh;
+    border-radius: 2.5vh;
 
     background: linear-gradient(to bottom, #719097, #243c42);
     box-shadow: 0px 0px .5vh rgba(0, 0, 0, 0.7);
@@ -55,22 +66,34 @@
 .shop-item:active { box-shadow: inset 0 .2vh 1vh black; }
 
 .shop-item-name {
-    font-size: 3.2vh;
+    font-size: 3.5vh;
     font-family: impact;
+}
+
+#item-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    margin: 1vh;
+    width: calc(60% - 2vh);
+    border-radius: 1vh;
+    background: rgba(255 255 255 / 0.2);
 }
 
 .shop-item-desc {
     font-family: sans-serif;
-    font-size: 2vh;
+    font-size: 3.2vh;
+    color: #c9edff;
+
     text-align: center;
-    margin-bottom: 1vh;
     margin-left: 2vh;
     margin-right: 2vh;
 }
 
 .shop-item-price {
     font-family: monospace;
-    font-size: 2.5vh;
+    font-size: 2.9vh;
 }
 .shop-item-price.too-expensive,
 .shop-item-price.maxed { 
@@ -84,8 +107,9 @@
 
 .shop-item-effet {
     margin-bottom: 0.5vh;
-    font-size: 1.75vh;
+    font-size: 2.25vh;
     font-family: sans-serif;
+    color: #fff8d4;
 }
 .present-effect { color: #00c3ff; }
 .increased-effect { color: lime; }

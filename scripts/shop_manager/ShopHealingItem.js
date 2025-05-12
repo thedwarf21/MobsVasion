@@ -3,11 +3,12 @@ class ShopHealingItem {
     hp_recover;
     root_element;
     price_element;
-
+    description_element;
 
     constructor(name, price, hp_recover, nav_id) {
         this.price = price;
         this.hp_recover = hp_recover;
+
         this.__initRootElement(name, nav_id);
     }
 
@@ -26,20 +27,17 @@ class ShopHealingItem {
     }
 
     __initRootElement(name, nav_id) {
-        let html_element = document.createElement("DIV");
-        html_element.classList.add("shop-item");
-        html_element.classList.add("healing-item");
-        html_element.setAttribute("nav-ident", nav_id);
-        this.root_element = html_element;
+        this.root_element = document.createElement("DIV");
+        this.root_element.classList.add("shop-item");
+        this.root_element.classList.add("healing-item");
+        this.root_element.setAttribute("nav-ident", nav_id);
+        this.root_element.appendChild( ShopItem.getHtmlElement("shop-item-name", name) );
 
-        html_element.appendChild( ShopItem.getHtmlElement("shop-item-name", name) );
-        html_element.appendChild( ShopItem.getHtmlElement("shop-item-desc", `Rend ${this.hp_recover} points de vie`) );
-
+        this.description_element = ShopItem.getHtmlElement("shop-item-desc", `Rend ${this.hp_recover} points de vie`);
         this.price_element = ShopItem.getHtmlElement("shop-item-price", `<b>Prix:</b> ${this.price}`);
-        html_element.appendChild( this.price_element );
         this.refresh();
 
-        html_element.addEventListener('click', ()=> {
+        this.root_element.addEventListener('click', ()=> {
             if (this.__isAffordable() && !this.__isMaxed()) {
                 MainController.scope.game.money -= this.price;
                 HealthBarHelper.healPlayer( this.hp_recover );
@@ -48,6 +46,13 @@ class ShopHealingItem {
 
                 JuiceHelper.popupValidate();
             }
+        });
+
+        this.root_element.addEventListener('mouseenter', ()=> {
+            let item_description_container = MainController.shop_manager.shop_item_description_element;
+            item_description_container.innerHTML = "";
+            item_description_container.appendChild( this.description_element );
+            item_description_container.appendChild( this.price_element );
         });
     }
 

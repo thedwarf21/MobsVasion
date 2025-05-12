@@ -63,8 +63,21 @@ class AbstractPopup {
     }
 
     highlightActiveItem() { 
-        if (MainController.timer.gamepad_mapper)
-            this.__getActiveItem().html_element.classList.add("active");
+        if (MainController.timer.gamepad_mapper) {
+            let active_item_html_element = this.__getActiveItem().html_element;
+            active_item_html_element.classList.add("active");
+            active_item_html_element.dispatchEvent(new Event('mouseenter'));
+        }
+    }
+
+    setActiveItem(new_active_ident) {
+        if (this.__querySelector(`[nav-ident='${new_active_ident}']`)) {
+            this.__getActiveItem().html_element.classList.remove("active");
+            this.active_item_id = new_active_ident;
+            this.highlightActiveItem();
+
+            JuiceHelper.popupNavigate();
+        }
     }
 
     __getLineAndColumnNumbers() {
@@ -73,16 +86,6 @@ class AbstractPopup {
             column: parseInt(position[0]),
             line: parseInt(position[1])
         };
-    }
-
-    __setActiveItem(new_active_ident) {
-        if (this.__querySelector(`[nav-ident='${new_active_ident}']`)) {
-            this.__getActiveItem().html_element.classList.remove("active");
-            this.active_item_id = new_active_ident;
-            this.highlightActiveItem();
-
-            JuiceHelper.popupNavigate();
-        }
     }
 
     __getActiveItem() {

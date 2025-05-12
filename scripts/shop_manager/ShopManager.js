@@ -1,7 +1,8 @@
 class ShopManager {
     __shop_items;
-    __shop_items_container;
     __healing_items;
+    __shop_items_container;
+    shop_item_description_element;
 
     constructor(shop_scope) {
         this.__shop_items = [];
@@ -15,6 +16,7 @@ class ShopManager {
     }
 
     setShopItemsContainer(container_element) { this.__shop_items_container = container_element; }
+    setShopItemDescriptionElement(element) { this.shop_item_description_element = element; }
 
 	refreshAllShopItems() {
         this.__refreshHealingItems();
@@ -55,7 +57,7 @@ class ShopManager {
         let small_heal =  new ShopHealingItem("Verre d'eau", 2, 5, "0_0");
         this.__healing_items.push(small_heal);
 
-        let large_heal = new ShopHealingItem("Repas chaud", 8, 25, "1_0");
+        let large_heal = new ShopHealingItem("Repas chaud", 8, 25, "0_1");
         this.__healing_items.push(large_heal);
     }
 

@@ -66,7 +66,7 @@ class MV_GameInitializer {
 				level_1_price: 80,
 				level_2_price_coef : 1.75,
 				current_level: 0,
-				nav_id: "0_1"
+				nav_id: "0_2"
 			}, {
 				name: "Puissance de feu",
 				code: "POW",
@@ -77,7 +77,7 @@ class MV_GameInitializer {
 				level_1_price: 40,
 				level_2_price_coef : 1.75,
 				current_level: 0,
-				nav_id: "1_1"
+				nav_id: "0_3"
 			}, {
 				name: "Constitution",
 				code: "CON",
@@ -86,7 +86,7 @@ class MV_GameInitializer {
 				level_0_effect: CHARACTER_MAX_LIFE,
 				upgrade_value: 10,
 				current_level: 0,
-				nav_id: "2_0"
+				nav_id: "1_0"
 			}, {
 				name: "Agilité",
 				code: "AGI",
@@ -96,7 +96,7 @@ class MV_GameInitializer {
 				level_0_effect: CHARACTER_SPEED,
 				upgrade_value: 0.25,
 				current_level: 0,
-				nav_id: "3_0"
+				nav_id: "1_1"
 			}, {
 				name: "Rechargement rapide",
 				code: "RLD",
@@ -108,7 +108,7 @@ class MV_GameInitializer {
 				level_0_effect: TIMEOUTS.reload_time,
 				upgrade_value: -1,
 				current_level: 0,
-				nav_id: "2_1"
+				nav_id: "1_2"
 			}, {
 				name: "Récupération rapide",
 				code: "DAR",
@@ -120,7 +120,7 @@ class MV_GameInitializer {
 				level_0_effect: TIMEOUTS.dash_interval,
 				upgrade_value: -2,
 				current_level: 0,
-				nav_id: "3_1"
+				nav_id: "1_3"
 			}]
 		};
 	}

@@ -120,9 +120,9 @@ V   Tâche terminée
     V   Faire apparaître le numéro de la vague dans le bouton de fermeture de la popup
     V   Prise en compte de l'état des items magasin, dans les mécaniques du jeu
     V   Améliorer l'affichage des effets d'une amélioration
-    _   Revoir la mise en page, pour être plus Mobile-friendly : 
-        _   à gauche, les items affichés en moins grand, avec juste les noms (div scrollable, parce que je vais en rajouter)
-        _   à droite, le détail de l'item survolé (ou focused, avec la manette)
+    V   Revoir la mise en page, pour être plus Mobile-friendly : 
+        >   à gauche, les items affichés en moins grand, avec juste les noms (div scrollable, parce que je vais en rajouter)
+        >   à droite, le détail de l'item survolé (ou focused, avec la manette)
     _   Au survol d'un soin, afficher la "plus-value" dans la barre de vie (accessibilité pour les dyscalculiques et les allergiques au calcul mental)
         _   gérer une progress-bar additionnelle dans la barre de vie
         _   mouseenter / mouseleave => déclencher l'apparition/disparition de la progress-bar additionnelle

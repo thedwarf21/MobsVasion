@@ -54,7 +54,7 @@ class ParametersPopup extends AbstractPopup {
         let active_item_position = this.__getLineAndColumnNumbers();
         let new_line = active_item_position.line - 1;
         let new_active_ident = `0_${new_line}`;
-        this.__setActiveItem(new_active_ident);
+        this.setActiveItem(new_active_ident);
     }
 
     navigateDown() {
@@ -62,20 +62,20 @@ class ParametersPopup extends AbstractPopup {
         let new_line = active_item_position.line + 1;
         let new_col = new_line === 3 ? 1 : 0;
         let new_active_ident = `${new_col}_${new_line}`;
-        this.__setActiveItem(new_active_ident);
+        this.setActiveItem(new_active_ident);
     }
 
     navigateLeft() {
         let active_item_position = this.__getLineAndColumnNumbers();
         let new_col = active_item_position.column - 1;
         let new_active_ident = `${new_col}_${active_item_position.line}`;
-        this.__setActiveItem(new_active_ident);
+        this.setActiveItem(new_active_ident);
     }
 
     navigateRight() {
         let active_item_position = this.__getLineAndColumnNumbers();
         let new_col = active_item_position.column + 1;
         let new_active_ident = `${new_col}_${active_item_position.line}`;
-        this.__setActiveItem(new_active_ident);
+        this.setActiveItem(new_active_ident);
     }
 }

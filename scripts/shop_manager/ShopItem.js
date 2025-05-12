@@ -15,6 +15,7 @@ class ShopItem {
     is_money_priced_item;
 
     html_element;
+    description_html_element;
     price_html_element;
     effect_html_element;
 
@@ -45,14 +46,10 @@ class ShopItem {
         this.html_element.setAttribute("nav-ident", this.nav_id);
 
         this.html_element.appendChild( ShopItem.getHtmlElement("shop-item-name", this.name) );
-        this.html_element.appendChild( ShopItem.getHtmlElement("shop-item-desc", this.description) );
 
+        this.description_html_element = ShopItem.getHtmlElement("shop-item-desc", this.description);
         this.price_html_element = ShopItem.getHtmlElement("shop-item-price");
-        this.html_element.appendChild( this.price_html_element );
-
         this.effect_html_element = ShopItem.getHtmlElement("shop-item-effet");
-        this.html_element.appendChild( this.effect_html_element );
-
         this.refreshHtmlDetails();
 		
         this.html_element.addEventListener('click', (event)=> {
@@ -60,6 +57,14 @@ class ShopItem {
                 this.__performBuying();
                 JuiceHelper.popupValidate();
             }
+        });
+
+        this.html_element.addEventListener('mouseenter', ()=> {
+            let item_description_container = MainController.shop_manager.shop_item_description_element;
+            item_description_container.innerHTML = "";
+            item_description_container.appendChild( this.description_html_element );
+            item_description_container.appendChild( this.price_html_element );
+            item_description_container.appendChild( this.effect_html_element );
         });
 	}
 

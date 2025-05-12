@@ -7,7 +7,10 @@
             Salle d'entrainement
         </button>
     </div>
-    <div id="items-container"></div>
+    <div class="shop-items-wrapper">
+        <div id="items-container"></div>
+        <div id="item-description"></div>
+    </div>
 </div>
 
 <!-- Bouton de fermeture -->
@@ -17,7 +20,7 @@
         <span id="player_money"></span>
     </div>
 
-	<input type="button" class="modal-button" value="Fermer" id="btn_close" nav-ident="0_2" onclick="MainController.popups_stack.pop()" />
+	<input type="button" class="modal-button" value="Fermer" id="btn_close" onclick="MainController.popups_stack.pop()" />
     
     <div class="player-goods-display knowledge">
         <div class="xp-scroll"></div>

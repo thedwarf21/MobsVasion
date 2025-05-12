@@ -11,6 +11,9 @@ class ShopPopup extends AbstractPopup {
             
             let shop_items_container = this.__querySelector("#items-container"); 
             MainController.shop_manager.setShopItemsContainer( shop_items_container );
+
+            let item_description_element = this.__querySelector("#item-description");
+            MainController.shop_manager.setShopItemDescriptionElement( item_description_element );
 			
             this.switchToMoneyShop();
             MainController.shop_manager.refreshAllShopItems();
@@ -68,18 +71,14 @@ class ShopPopup extends AbstractPopup {
         let active_item_position = this.__getLineAndColumnNumbers();
         let new_line = active_item_position.line - 1;
         let new_active_ident = `${active_item_position.column}_${new_line}`;
-        this.__setActiveItem(new_active_ident);
-
-        if (active_item_position.line == 2)
-            this.__setActiveItem(`${active_item_position.column + 2}_${new_line}`);
+        this.setActiveItem(new_active_ident);
     }
 
     navigateDown() {
         let active_item_position = this.__getLineAndColumnNumbers();
         let new_line = active_item_position.line + 1;
-        let new_column = new_line < 2 ? active_item_position.column : 0;
-        let new_active_ident = `${new_column}_${new_line}`;
-        this.__setActiveItem(new_active_ident);
+        let new_active_ident = `${active_item_position.column}_${new_line}`;
+        this.setActiveItem(new_active_ident);
     }
 
     navigateLeft() {
@@ -87,10 +86,10 @@ class ShopPopup extends AbstractPopup {
         let new_col = active_item_position.column - 1;
         let new_active_ident = `${new_col}_${active_item_position.line}`;
         
-        if (new_col == 1)
+        if (new_col == 0)
             this.switchToMoneyShop();
 
-        this.__setActiveItem(new_active_ident);
+        this.setActiveItem(new_active_ident);
     }
 
     navigateRight() {
@@ -98,9 +97,10 @@ class ShopPopup extends AbstractPopup {
         let new_col = active_item_position.column + 1;
         let new_active_ident = `${new_col}_${active_item_position.line}`;
         
-        if (new_col == 2)
+        if (new_col == 1)
             this.switchToTrainingRoom();
-        this.__setActiveItem(new_active_ident);
+        
+        this.setActiveItem(new_active_ident);
     }
 
     __registerMenuItems() { 
