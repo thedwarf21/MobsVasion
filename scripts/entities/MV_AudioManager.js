@@ -1,9 +1,11 @@
 class MV_AudioManager {
+	sound_settings;
+	sound_lib;
 
 	/**
 	 * Constructeur attendant une référence au paramétrage du son
 	 * 
-	 * @param 	{object} 	sound_settings 	Doit contenir les propriétés booléennes `music_on` et `sound_fx_on` et référencer l'objet qui sera mis à jour par les paramètres utilisateur
+	 * @param 	{object} 	sound_settings 	Doit contenir les propriétés booléennes `music_on` et `sound_fx_on` ainsi que `music_volume` et `sound_fx_volume`
 	 */
 	constructor(sound_settings) {
 		this.sound_settings = sound_settings;
@@ -52,11 +54,31 @@ class MV_AudioManager {
 	 * Arrête la lecture de tous les lecteurs audio, répertoriés comme musique
 	 */
 	stopMusic() {
-		for (let key in this.sound_lib) {
-			let sound_entry = this.sound_lib[key];
-			if (sound_entry.is_music)
-				sound_entry.elements[0].pause();    // Les musiques sont toujours des boucles et sont donc uniques dans le pool
-		}
+		this.__forEachMusic((music_entry) => {
+			music_entry.pause();
+		});
+	}
+
+	/**
+	 * Applique un niveau de volume sonore pour la musique
+	 * 
+	 * @param {number} volume volume à appliquer (0 <= volume <= 1)
+	 */
+	setMusicVolume(volume) {
+		this.__forEachMusic((music_entry) => {
+			music_entry.volume = volume;
+		});
+	}
+
+	/**
+	 * Applique un niveau de volume pour les effets sonores
+	 * 
+	 * @param {number} volume volume à appliquer (0 <= volume <= 1)
+	 */
+	setSoundFxVolume(volume) {
+		this.__forEachSoundFx((sound_fx_entry) => {
+			sound_fx_entry.volume = volume;
+		});
 	}
 
 	/**
@@ -144,5 +166,32 @@ class MV_AudioManager {
 		}
 
 		return sound_entry.elements[ best_choice_index ];
+	}
+
+	/**
+	 * Exécute la fonction `fnDo` pour chaque balise audio du pool, correspondant à une musique
+	 * 
+	 * @param {function} fnDo fonction d'altération de la balise audio
+	 */
+	__forEachMusic(fnDo) {
+		for (let key in this.sound_lib) {
+			let sound_entry = this.sound_lib[key];
+			if (sound_entry.is_music)
+				fnDo(sound_entry.elements[0]);    // Les musiques sont toujours des boucles et sont donc uniques dans le pool
+		}
+	}
+
+	/**
+	 * Exécute la fonction `fnDo` pour chaque balise audio du pool, correspondant à un effet sonore
+	 * 
+	 * @param {function} fnDo fonction d'altération de la balise audio
+	 */
+	__forEachSoundFx(fnDo) {
+		for (let key in this.sound_lib) {
+			let sound_entry = this.sound_lib[key];
+			if (!sound_entry.is_music)
+				for (let audio_element of sound_entry.elements)
+					fnDo(audio_element);
+		}
 	}
 }

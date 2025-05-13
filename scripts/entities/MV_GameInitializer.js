@@ -150,7 +150,9 @@ class MV_GameInitializer {
 	static __initAudioManager(controller) {
 		controller.audio_manager = new MV_AudioManager({
 			music_on: true,
-			sound_fx_on: true
+			sound_fx_on: true,
+			music_volume: 1,
+			sound_fx_volume: 1
 		});
 	}
 
