@@ -78,7 +78,7 @@ V   Tâche terminée
     X   Volumes séparés, pour la musique et les effets sonores
         >   Gérer le contrôle des volumes de musique et d'effets sonores dans MV_AudioManager
         >   Ajouter les préférences utilisateur correspondantes
-        _   Modifier la navigation manette de la fenêtre de préférences
+        >   Modifier la navigation manette de la fenêtre de préférences
         _   Intégrer les niveaux des volumes paramétrés, dans la sauvegarde
 *   Gérer l'argent
     V   Afficher l'argent détenu par le joueur, dans l'UI

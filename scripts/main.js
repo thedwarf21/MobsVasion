@@ -106,7 +106,10 @@ const AUDIO_PATH = "sounds/";
 const SOUND_LIB = {
 	lose: 			{ file: "lose.mp3" },
 	popup_open: 	{ file: "popup-open.mp3" },
-	popup_navigate: { file: "popup-navigate.mp3" },
+	popup_navigate: {
+		file: "popup-navigate.mp3",
+		players_number: 3
+	},
 	popup_validate: { file: "popup-validate.mp3" },
 	popup_close: 	{ file: "popup-close.mp3" },
 	empty_clip: 	{ file: "empty-gun-shot.mp3" },
