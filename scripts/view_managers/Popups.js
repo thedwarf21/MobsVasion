@@ -50,6 +50,7 @@ class AbstractPopup {
 
     close() {
         this.__checkRequiredProperties();
+        this.leaveActiveItem();
         this.rs_dialog_instance.closeModal();
         this.rs_dialog_instance = null;
     }
@@ -70,9 +71,15 @@ class AbstractPopup {
         }
     }
 
+    leaveActiveItem() {
+        let active_item = this.__getActiveItem().html_element;
+        active_item.classList.remove("active");
+        active_item.dispatchEvent(new Event('mouseleave'));
+    }
+
     setActiveItem(new_active_ident) {
         if (this.__querySelector(`[nav-ident='${new_active_ident}']`)) {
-            this.__getActiveItem().html_element.classList.remove("active");
+            this.leaveActiveItem();
             this.active_item_id = new_active_ident;
             this.highlightActiveItem();
 

@@ -1,5 +1,8 @@
 /** Jauges et autres progress bars */
 .gauge {
+	display: flex;
+	flex-direction: row;
+
 	border: 0.5vh ridge #dbdbdb;
 	padding: 0.2vh;
 	z-index: 9;

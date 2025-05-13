@@ -53,6 +53,11 @@ class ShopHealingItem {
             item_description_container.innerHTML = "";
             item_description_container.appendChild( this.description_element );
             item_description_container.appendChild( this.price_element );
+            HealthBarHelper.displayHealingEffect( this.hp_recover );
+        });
+
+        this.root_element.addEventListener('mouseleave', ()=> {
+            HealthBarHelper.displayHealingEffect(0);
         });
     }
 
