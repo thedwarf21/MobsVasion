@@ -47,6 +47,20 @@ class ParametersPopup extends AbstractPopup {
         }).addBinding(this.__querySelector("#sound_fx_on"), "checked", "change", ()=> {
             JuiceHelper.emptyClipPercussion();
         });
+        
+        new RS_Binding({
+            object: MainController.audio_manager.sound_settings,
+            property: "music_volume"
+        }).addBinding(this.__querySelector("#music_volume"), "value", "change", (volume)=> {
+            MainController.audio_manager.setMusicVolume(volume);
+        });
+        
+        new RS_Binding({
+            object: MainController.audio_manager.sound_settings,
+            property: "sound_fx_volume"
+        }).addBinding(this.__querySelector("#sound_fx_volume"), "value", "change", (volume)=> {
+            MainController.audio_manager.setSoundFxVolume(volume);
+        });
     }
 
     /*********  AbstractPopup methods implementation  *********/
