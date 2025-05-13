@@ -22,6 +22,7 @@ class MV_SaveManager {
 		this.game_scope = main_controller.scope.game;
 		this.ingame_shop = main_controller.scope.shop;
 		this.shop_manager = main_controller.shop_manager;
+		this.audio_manager = main_controller.audio_manager;
 		this.sound_settings = main_controller.audio_manager.sound_settings;
 	}
 
@@ -64,6 +65,8 @@ class MV_SaveManager {
 	__loadSoundSettings(saved_game) {
 		for (const prop in saved_game.sound_settings)
 			this.sound_settings[prop] = saved_game.sound_settings[prop];
+		
+		this.audio_manager.applyVolumesSettings();
 	}
 
 	/**
@@ -100,7 +103,9 @@ class MV_SaveManager {
 	__soundSettingsToObject(save) {
 		save.sound_settings = {
 			sound_fx_on : this.sound_settings.sound_fx_on,
-			music_on : this.sound_settings.music_on
+			music_on : this.sound_settings.music_on,
+			sound_fx_volume: this.sound_settings.sound_fx_volume,
+			music_volume: this.sound_settings.music_volume
 		};
 	}
 

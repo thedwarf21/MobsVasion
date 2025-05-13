@@ -82,6 +82,14 @@ class MV_AudioManager {
 	}
 
 	/**
+	 * Applique les niveaux de volumes paramétrés (utilisé lors du chargement d'une sauvegarde)
+	 */
+	applyVolumesSettings() {
+		this.setMusicVolume(this.sound_settings.music_volume);
+		this.setSoundFxVolume(this.sound_settings.sound_fx_volume);
+	}
+
+	/**
 	 * Initialise `this.sound_lib` sur la base d'un objet de configuration passé en paramètre
 	 * 
 	 * @param {object} sounds_lib_config  Objet de configuration des sons (chemin, boucle/simple, fx/music, noumbre d'occurrences de lecteur audio)
