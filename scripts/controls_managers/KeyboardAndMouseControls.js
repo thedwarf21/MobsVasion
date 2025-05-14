@@ -83,7 +83,7 @@ class KeyboardAndMouseControls {
 
             if (angle != absurd_value) {
                 character.angle = angle;
-                character.walk(angle * Math.PI / 180);
+                character.walk();
             }
 
             if (MainController.scope.controls.mouse_aiming)

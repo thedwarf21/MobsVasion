@@ -96,7 +96,7 @@ class GamepadControls {
 	static __applyMoveJoystick(joystick, character) {
 		if (joystick.intensity !== 0) {
 			character.angle = joystick.angle * 180 / Math.PI;
-			character.walk(joystick.angle);
+			character.walk();
 		}
 	}
 

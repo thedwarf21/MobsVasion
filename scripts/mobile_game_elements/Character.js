@@ -20,7 +20,8 @@ class MV_Character extends MobileGameElement {
 		}
     }
 
-    walk(rad_angle) {
+    walk() {
+        const rad_angle = this.angle * Math.PI / 180;
         let character_speed = Abilities.getCharacterSpeed();
         this.deltaX = character_speed * Math.cos(rad_angle);
         this.deltaY = character_speed * Math.sin(rad_angle);
@@ -35,8 +36,9 @@ class MV_Character extends MobileGameElement {
     }
   
     dash() {
-        this.deltaX = DASH_LENGTH * Math.cos(this.angle * Math.PI / 180);
-        this.deltaY = DASH_LENGTH * Math.sin(this.angle * Math.PI / 180);
+        const rad_angle = this.angle * Math.PI / 180;
+        this.deltaX = DASH_LENGTH * Math.cos(rad_angle);
+        this.deltaY = DASH_LENGTH * Math.sin(rad_angle);
         this.move();
 
         JuiceHelper.dashSound();

@@ -146,8 +146,8 @@ V   Tâche terminée
     V   Clavier + Souris
     X   Tactile
         >   Mise en place du HUD
-        x   Gérer le joystick virtuel de déplacement
-        _   Gérer le tir en auto-aim (sinon la HUD va prendre trop de place à l'écran => injouable)
+        >   Gérer le joystick virtuel de déplacement
+        x   Gérer le tir en auto-aim (sinon la HUD va prendre trop de place à l'écran => injouable)
         _   Gérer le dash
         _   Ajouter la détection du mode "tactile", dans le viewport, pour shunter les contrôles souris 
             (la HUD passe au-dessus et pourrait bloquer la propagation des événements, mais quand même... une touche hors HUD serait interprétée comme un clic souris => tir non souhaité)
@@ -156,13 +156,12 @@ V   Tâche terminée
     V   Style général des popup (boutons, mise en page commune)
     V   Ajouter la musique
 
-*   Fignolage
-X   Tester, au fil de l'eau
-_   Mettre à jour la doc, à chaque étape majeure
+*   Optimisations et assainissements
 V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
+_   Passer tous les angles en radian (en degré, c'était pratique pour debug en phase de prototypage, mais ça induit beaucoup de calculs de conversion...)
  
 
------------- A AJOUTER ENSUITE ------------
+------------ À AJOUTER ENSUITE ------------
 Choix dans le lobby, entre plusieurs armes pour le tir principal   \
 Choix dans le lobby, entre plusieurs armes pour le tir secondaire   |=> facilitation à la création de nouveau contenu
 Définir de nouveaux types de monstres                              /
