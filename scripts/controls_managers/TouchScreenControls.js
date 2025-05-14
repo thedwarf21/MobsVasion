@@ -124,8 +124,6 @@ class VirtualJoystick {
 		});
 
 		this.global_element.addEventListener("touchmove", (e)=> {
-			e.preventDefault();
-
 			if (this.start_x === null || this.start_y === null)
 				return;
 
