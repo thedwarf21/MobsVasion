@@ -5,8 +5,7 @@ class TouchScreenControls {
 		const joystick_element = document.querySelector('.hud .virtual-joystick');
 		MainController.virtual_joystick = new VirtualJoystick(joystick_element, joystick_element.querySelector('.stick'));
 
-		document.querySelector('.hud .pause').addEventListener('mousedown', function(e) { 
-			e.stopPropagation(); 	//TODO provisoire: évite de déclencher un tir non souhaité
+		document.querySelector('.hud .pause').addEventListener('touchstart', function(e) {
 			controller.togglePause();
 		});
 
@@ -42,12 +41,11 @@ class TouchScreenControls {
 	}
 
 	static __bindEvents(html_element, on_mouse_down, on_mouse_up) {
-		html_element.addEventListener('mousedown', function(e) { 
-			e.stopPropagation(); 	//TODO provisoire: évite de déclencher un tir non souhaité
+		html_element.addEventListener('touchstart', function(e) {
 			on_mouse_down();
 		});
-		html_element.addEventListener('mouseup', function(e) { on_mouse_up(); });
-		html_element.addEventListener('mouseleave', function(e) { on_mouse_up(); });
+		html_element.addEventListener('touchend', function(e) { on_mouse_up(); });
+		html_element.addEventListener('touchcancel', function(e) { on_mouse_up(); });
 	}
 
 	static __resetControls() {
@@ -116,14 +114,14 @@ class VirtualJoystick {
 	}
 
 	addListeners() {
-		this.global_element.addEventListener("mousedown", (e)=> { 
+		this.global_element.addEventListener("touchstart", (e)=> { 
 			e.stopPropagation();  //TODO provisoire: évite de déclencher un tir non souhaité
 
 			this.start_x = e.clientX;
 			this.start_y = e.clientY;
 		});
 
-		this.global_element.addEventListener("mousemove", (e)=> {
+		this.global_element.addEventListener("touchmove", (e)=> {
 			if (this.start_x === null || this.start_y === null)
 				return;
 
@@ -138,8 +136,8 @@ class VirtualJoystick {
 			this.stick_element.style.transform = `translate(${2 * Math.cos(this.angle)}vh, ${2 * Math.sin(this.angle)}vh)`;
 		});
 
-		this.global_element.addEventListener("mouseup", (e)=> { this.reset(); });
-		this.global_element.addEventListener("mouseleave", (e)=> { this.reset(); });
+		this.global_element.addEventListener("touchend", (e)=> { this.reset(); });
+		this.global_element.addEventListener("touchcancel", (e)=> { this.reset(); });
 	}
 
 	reset() {
