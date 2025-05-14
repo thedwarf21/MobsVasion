@@ -37,7 +37,7 @@ class GamepadControls {
 	}
 
 	static clearState(controls_state) {
-		if (!MainController.scope.controls.mouse_aiming)
+		if (!MainController.scope.controls.mouse_aiming && !MainController.scope.controls.auto_aiming)
 			controls_state.firing_primary = false;
 		controls_state.firing_secondary = false;
 		controls_state.reloading = false;

@@ -40,6 +40,7 @@ class MV_GameInitializer {
 					y: 0
 				},
 				mouse_aiming: false,
+				auto_aiming: false,
 				paused: true,
 				firing_primary: false,
 				firing_secondary: false,

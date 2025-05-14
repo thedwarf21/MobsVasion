@@ -147,8 +147,9 @@ V   Tâche terminée
     X   Tactile
         >   Mise en place du HUD
         >   Gérer le joystick virtuel de déplacement
-        x   Gérer le tir en auto-aim (sinon la HUD va prendre trop de place à l'écran => injouable)
-        _   Gérer le dash
+        >   Gérer le tir en auto-aim (sinon la HUD va prendre trop de place à l'écran => injouable)
+        x   Gérer le dash
+        _   Gérer le reload
         _   Ajouter la détection du mode "tactile", dans le viewport, pour shunter les contrôles souris 
             (la HUD passe au-dessus et pourrait bloquer la propagation des événements, mais quand même... une touche hors HUD serait interprétée comme un clic souris => tir non souhaité)
 *   UI / UX
@@ -159,6 +160,7 @@ V   Tâche terminée
 *   Optimisations et assainissements
 V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
 _   Passer tous les angles en radian (en degré, c'était pratique pour debug en phase de prototypage, mais ça induit beaucoup de calculs de conversion...)
+_   Entité de traduction du MouseEvent.buttons, sous forme de liste de booléens, pour en simplifier l'exploitation
  
 
 ------------ À AJOUTER ENSUITE ------------

@@ -38,6 +38,19 @@ class RS_Hitbox {
 		} else console.error(`Forme de hitbox inconnue: ${this.shape} >>> ${str_notice}`);
 	}
 
+	getDistance(hitbox) {
+		let deltaX = Math.abs(this.x - hitbox.x),
+			deltaY = Math.abs(this.y - hitbox.y);
+		return (deltaX**2 + deltaY**2) ** 0.5;
+	}
+
+	getDirection(hitbox) {
+        let rad_angle = Math.atan( (hitbox.y - this.y) / (hitbox.x - this.x) );
+        return this.x > hitbox.x 
+			 ? rad_angle + Math.PI 
+			 : rad_angle;
+	}
+
 	__checkCircleVsCircle(hitbox) {
 		let deltaX = Math.abs(this.x - hitbox.x),
 			deltaY = Math.abs(this.y - hitbox.y),
