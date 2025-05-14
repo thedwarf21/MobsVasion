@@ -1,11 +1,7 @@
 class TouchScreenControls {
     
 	static addListeners(controller) {
-		let controls = controller.scope.controls;
-		// J'ai prévu des joysticks virtuels pour le déplacement et le tir principal 
-		// => idéalement, il faudrait délèguer la responsabilité de générer des informations exploitables (angle + force, au lieu de coordonnées de tapstart + coordonnées actuelles)
-		// et dans un format homogène à celui retourné par GamepadGenericAdapter pour les joysticks, de manière à mutualiser le traitement
-		
+		const controls = controller.scope.controls;
 		const joystick_element = document.querySelector('.hud .virtual-joystick');
 		MainController.virtual_joystick = new VirtualJoystick(joystick_element, joystick_element.querySelector('.stick'));
 
@@ -14,14 +10,24 @@ class TouchScreenControls {
 			controller.togglePause();
 		});
 
-		const primary_fire_button = document.querySelector('.hud .primary-fire');
-		primary_fire_button.addEventListener('mousedown', function(e) { 
-			e.stopPropagation(); 	//TODO provisoire: évite de déclencher un tir non souhaité
+		TouchScreenControls.__bindEvents(document.querySelector('.hud .primary-fire'), function(e) {
 			controls.firing_primary = true;
 			controls.auto_aiming = true;
+		}, function() { 
+			TouchScreenControls.__resetControls(); 
 		});
-		primary_fire_button.addEventListener('mouseup', function(e) { TouchScreenControls.__resetControls(); });
-		primary_fire_button.addEventListener('mouseleave', function(e) { TouchScreenControls.__resetControls(); });
+
+		TouchScreenControls.__bindEvents(document.querySelector('.hud .secondary-fire'), function(e) {
+			controls.firing_secondary = true;
+		}, function() {
+			controls.firing_secondary = false;
+		});
+
+		TouchScreenControls.__bindEvents(document.querySelector('.hud .reload'), function(e) {
+			controls.reloading = true;
+		}, function() {
+			controls.reloading = false;
+		});
 	}
 
 	/** Contrôles clavier et écran tactile => seront déplacés dans des classes dédiées */
@@ -35,8 +41,18 @@ class TouchScreenControls {
 		}
 	}
 
+	static __bindEvents(html_element, on_mouse_down, on_mouse_up) {
+		html_element.addEventListener('mousedown', function(e) { 
+			e.stopPropagation(); 	//TODO provisoire: évite de déclencher un tir non souhaité
+			on_mouse_down();
+		});
+		html_element.addEventListener('mouseup', function(e) { on_mouse_up(); });
+		html_element.addEventListener('mouseleave', function(e) { on_mouse_up(); });
+	}
+
 	static __resetControls() {
 		let controls = MainController.scope.controls;
+		controls.firing_secondary = false;
 		controls.firing_primary = false;
 		controls.auto_aiming = false;
 	}
