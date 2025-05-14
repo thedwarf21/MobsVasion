@@ -6,6 +6,7 @@ class TouchScreenControls {
 		MainController.virtual_joystick = new VirtualJoystick(joystick_element, joystick_element.querySelector('.stick'));
 
 		document.querySelector('.hud .pause').addEventListener('touchstart', function(e) {
+			e.preventDefault();
 			controller.togglePause();
 		});
 
@@ -42,6 +43,7 @@ class TouchScreenControls {
 
 	static __bindEvents(html_element, on_mouse_down, on_mouse_up) {
 		html_element.addEventListener('touchstart', function(e) {
+			e.preventDefault();
 			on_mouse_down();
 		});
 		html_element.addEventListener('touchend', function(e) { on_mouse_up(); });
@@ -115,18 +117,20 @@ class VirtualJoystick {
 
 	addListeners() {
 		this.global_element.addEventListener("touchstart", (e)=> { 
-			e.stopPropagation();  //TODO provisoire: évite de déclencher un tir non souhaité
+			e.preventDefault();
 
-			this.start_x = e.clientX;
-			this.start_y = e.clientY;
+			this.start_x = e.touches[0].clientX;
+			this.start_y = e.touches[0].clientY;
 		});
 
 		this.global_element.addEventListener("touchmove", (e)=> {
+			e.preventDefault();
+
 			if (this.start_x === null || this.start_y === null)
 				return;
 
-			const delta_x = e.clientX - this.start_x;
-			const delta_y = e.clientY - this.start_y;
+			const delta_x = e.touches[0].clientX - this.start_x;
+			const delta_y = e.touches[0].clientY - this.start_y;
 			
 			this.global_element.style.transform = `translate(${delta_x}px, ${delta_y}px)`;
 			
