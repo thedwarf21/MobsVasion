@@ -144,14 +144,12 @@ V   Tâche terminée
 *   Commandes
     V   Manette
     V   Clavier + Souris
-    X   Tactile
+    V   Tactile
         >   Mise en place du HUD
         >   Gérer le joystick virtuel de déplacement
         >   Gérer le tir en auto-aim (sinon la HUD va prendre trop de place à l'écran => injouable)
         >   Gérer le dash
         >   Gérer le reload
-        _   Ajouter la détection du mode "tactile", dans le viewport, pour shunter les contrôles souris 
-            (la HUD passe au-dessus et pourrait bloquer la propagation des événements, mais quand même... une touche hors HUD serait interprétée comme un clic souris => tir non souhaité)
 *   UI / UX
     V   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
