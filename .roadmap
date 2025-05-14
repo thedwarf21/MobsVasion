@@ -142,8 +142,15 @@ V   Tâche terminée
     V   Chargement automatique de la sauvegarde au démarrage du jeu
     V   Au démarrage du jeu, proposer au joueur de charger la sauvegarde OU de commencer une nouvelle partie (ce qui écrasera son ancienne sauvegarde)
 *   Commandes
+    V   Manette
     V   Clavier + Souris
-    _   Tactile
+    X   Tactile
+        >   Mise en place du HUD
+        x   Gérer le joystick virtuel de déplacement
+        _   Gérer le tir en auto-aim (sinon la HUD va prendre trop de place à l'écran => injouable)
+        _   Gérer le dash
+        _   Ajouter la détection du mode "tactile", dans le viewport, pour shunter les contrôles souris 
+            (la HUD passe au-dessus et pourrait bloquer la propagation des événements, mais quand même... une touche hors HUD serait interprétée comme un clic souris => tir non souhaité)
 *   UI / UX
     V   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
