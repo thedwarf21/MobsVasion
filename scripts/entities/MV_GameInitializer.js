@@ -59,7 +59,7 @@ class MV_GameInitializer {
 				name: "Détecteur de métaux",
 				code: "DET",
 				description: "Cet accessoire te permettra de récupérer plus de pièces sur les monstres",
-				lbl_effect: "Nombre maximum de pièces par monstre",
+				lbl_effect: "Nombre maximum de pièces supplémentaires par monstre",
 				max_level: 5,
 				level_0_effect: 0,
 				upgrade_value: 1,

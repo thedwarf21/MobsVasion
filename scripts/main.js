@@ -218,7 +218,7 @@ class MainController {
 
 
     static monsterSlayed() {
-        const monster_swag = Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
+        const monster_swag = Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG + Abilities.getSwagUpgrade());
 		MainController.scope.game.money += monster_swag;
 		XpBarHelper.addXp(XP_PER_MONSTER);
 		if (MainController.__isWaveComplete())

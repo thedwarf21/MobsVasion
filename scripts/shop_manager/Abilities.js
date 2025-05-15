@@ -8,6 +8,7 @@ class Abilities {
     static getCharacterSpeed()  { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("AGI") ); }
     static getPrimaryReloadInterval()   { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RLD") ); }
     static getSecondaryReloadInterval() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DAR") ); }
+    static getSwagUpgrade()     { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DET") ); }
 
     static setMaxHealthBinding(character_health_bar) {
         const html_element = document.querySelector(".health-display #total");
