@@ -27,7 +27,7 @@
   	height: 1vh;
   	border: 0.1vh solid #9c9de8;
 }
-.gauge.secondary-reload .progress { background: rgb(255, 217, 135); }
+.gauge.secondary-reload .progress { background: rgb(235, 222, 43); }
 
 .gauge.character-health-bar {
 	position: absolute;
