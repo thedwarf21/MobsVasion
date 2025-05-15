@@ -195,10 +195,10 @@ class MobileGameElement {
 	}
 
 	__rotate(forced_angle) {
-		if (this.angle >= 360) this.angle -= 360;
-    	if (this.angle < 0) this.angle += 360;
+		if (this.angle >= Math.PI) this.angle -= 2 * Math.PI;
+    	if (this.angle < -Math.PI) this.angle += 2 * Math.PI;
 
-    	this.rotate_element.style.transform = `rotateZ(${ forced_angle !== undefined ? forced_angle : this.angle }deg)`;
+    	this.rotate_element.style.transform = `rotateZ(${ forced_angle !== undefined ? forced_angle : this.angle }rad)`;
 	}
   
 	/**

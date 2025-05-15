@@ -12,12 +12,11 @@ class MV_Monster extends MobileGameElement {
   
     follow(character) {
         if (!this.__shocked) {
-            let rad_angle = Math.atan( (character.y - this.y) / (character.x - this.x) );
+            this.angle = Math.atan( (character.y - this.y) / (character.x - this.x) );
             if (character.x < this.x)
-                rad_angle += Math.PI;
-            this.angle = rad_angle * 180 / Math.PI;
-            this.deltaX = this.__speed * Math.cos(rad_angle);
-            this.deltaY = this.__speed * Math.sin(rad_angle);
+                this.angle += Math.PI;
+            this.deltaX = this.__speed * Math.cos(this.angle);
+            this.deltaY = this.__speed * Math.sin(this.angle);
             this.move();
         }
     }
@@ -74,11 +73,10 @@ class MV_Monster extends MobileGameElement {
     }
 
     __bleed() {
-        let rad_angle = this.angle * Math.PI / 180;
-        let x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(rad_angle) );
-        let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(rad_angle) );  
-        let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(rad_angle);
-        let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(rad_angle);  
+        let x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(this.angle) );
+        let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(this.angle) );  
+        let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(this.angle);
+        let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(this.angle);  
         JuiceHelper.bloodSplash(x_splash, y_splash, this.angle, ()=> {
             this.__createBloodPuddle(x_puddle, y_puddle, false);
         });

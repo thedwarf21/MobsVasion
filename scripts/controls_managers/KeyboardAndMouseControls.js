@@ -68,21 +68,21 @@ class KeyboardAndMouseControls {
             let angle = absurd_value;
             let controls = MainController.scope.controls;
             if (KeyboardAndMouseControls.__isToLeft(controls))
-                angle = 180;
+                angle = Math.PI;
             else if (KeyboardAndMouseControls.__isToRight(controls))
                 angle = 0;
             else if (KeyboardAndMouseControls.__isToUp(controls))
-                angle = -90;
+                angle = -Math.PI / 2;
             else if (KeyboardAndMouseControls.__isToDown(controls))
-                angle = 90;
+                angle = Math.PI / 2;
             if (KeyboardAndMouseControls.__isToUpLeft(controls))
-                angle = -135;
+                angle = -Math.PI * 3 / 4;
             else if (KeyboardAndMouseControls.__isToUpRight(controls))
-                angle = -45;
+                angle = -Math.PI / 4;
             else if (KeyboardAndMouseControls.__isToDownLeft(controls))
-                angle = 135;
+                angle = Math.PI * 3 / 4;
             else if (KeyboardAndMouseControls.__isToDownRight(controls))
-                angle = 45;
+                angle = Math.PI / 4;
 
             if (angle != absurd_value) {
                 character.angle = angle;
@@ -101,7 +101,7 @@ class KeyboardAndMouseControls {
         if (character_center.x > mouse_position.x)
             rad_angle += Math.PI;
 		
-        character.aiming_angle = rad_angle * 180 / Math.PI;
+        character.aiming_angle = rad_angle;
         character.applyAngles();
     }
 

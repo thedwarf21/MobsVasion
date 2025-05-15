@@ -95,7 +95,7 @@ class GamepadControls {
 
 	static __applyMoveJoystick(joystick, character) {
 		if (joystick.intensity !== 0) {
-			character.angle = joystick.angle * 180 / Math.PI;
+			character.angle = joystick.angle;
 			character.walk();
 		}
 	}
@@ -103,7 +103,7 @@ class GamepadControls {
 	static __applyFireJoystick(joystick, character) {
 		if (joystick.intensity !== 0) {
 			MainController.scope.controls.firing_primary = true;
-			character.aiming_angle = joystick.angle * 180 / Math.PI;
+			character.aiming_angle = joystick.angle;
 		}
 	}
 }

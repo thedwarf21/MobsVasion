@@ -23,7 +23,7 @@ class JuiceHelper {
 
         weapon_flame.style.left = MainController.viewport.getCssValue(x);
         weapon_flame.style.top = MainController.viewport.getCssValue(y - FIRE_SIZE/2);
-        weapon_flame.style.transform = `rotate(${angle}deg)`;
+        weapon_flame.style.transform = `rotate(${angle}rad)`;
         MainController.UI.addToGameWindow(weapon_flame);
 
         setTimeout(()=> {
@@ -106,7 +106,7 @@ class JuiceHelper {
                     onAmimationEnd();
             }
         );
-        blood_splash.root_element.style.transform = `rotate(${angle}deg)`;
+        blood_splash.root_element.style.transform = `rotate(${angle}rad)`;
         MainController.UI.addToGameWindow(blood_splash.root_element);
     }
 

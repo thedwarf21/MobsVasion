@@ -21,10 +21,9 @@ class MV_Character extends MobileGameElement {
     }
 
     walk() {
-        const rad_angle = this.angle * Math.PI / 180;
         let character_speed = Abilities.getCharacterSpeed();
-        this.deltaX = character_speed * Math.cos(rad_angle);
-        this.deltaY = character_speed * Math.sin(rad_angle);
+        this.deltaX = character_speed * Math.cos(this.angle);
+        this.deltaY = character_speed * Math.sin(this.angle);
         this.move();
     }
 
@@ -36,9 +35,8 @@ class MV_Character extends MobileGameElement {
     }
   
     dash() {
-        const rad_angle = this.angle * Math.PI / 180;
-        this.deltaX = DASH_LENGTH * Math.cos(rad_angle);
-        this.deltaY = DASH_LENGTH * Math.sin(rad_angle);
+        this.deltaX = DASH_LENGTH * Math.cos(this.angle);
+        this.deltaY = DASH_LENGTH * Math.sin(this.angle);
         this.move();
 
         JuiceHelper.dashSound();
@@ -70,10 +68,9 @@ class MV_Character extends MobileGameElement {
     }
 
     __createShot() {
-        let aiming_rad_angle = this.aiming_angle * Math.PI / 180;
         let center_spot = this.centralSpotPosition();
-        let cos_angle = Math.cos(aiming_rad_angle);
-        let sin_angle = Math.sin(aiming_rad_angle);
+        let cos_angle = Math.cos(this.aiming_angle);
+        let sin_angle = Math.sin(this.aiming_angle);
 
         let shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
         let shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;

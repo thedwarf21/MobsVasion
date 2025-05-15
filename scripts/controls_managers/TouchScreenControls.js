@@ -73,8 +73,7 @@ class TouchScreenControls {
 		const nearest_monster_hitbox = TouchScreenControls.__nearestMonsterHitbox(character_hitbox);
 
 		if (nearest_monster_hitbox) {
-			const rad_angle = character_hitbox.getDirection( nearest_monster_hitbox );
-			character.aiming_angle = rad_angle * 180 / Math.PI;
+			character.aiming_angle = character_hitbox.getDirection( nearest_monster_hitbox );
 			character.applyAngles();
 		} else character.aiming_angle = character.angle;
 	}
@@ -133,7 +132,7 @@ class VirtualJoystick {
 			this.global_element.style.transform = `translate(${delta_x}px, ${delta_y}px)`;
 			
 			this.angle = Math.atan2(delta_y, delta_x);
-			MainController.UI.character.angle = this.angle * 180 / Math.PI;
+			MainController.UI.character.angle = this.angle;
 
 			this.stick_element.style.transform = `translate(${2 * Math.cos(this.angle)}vh, ${2 * Math.sin(this.angle)}vh)`;
 		});
