@@ -1,17 +1,17 @@
 class Abilities {
 
     static setCurrentLevel(code, value) { Abilities.__getShopEntryByCode(code).current_level = value; }
-
+    
+    static getSwagUpgrade()     { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DET") ); }
+    static getClipSize()        { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("CHC") ); }
     static getShotInterval()    { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RAT") ); }
     static getShotPower()       { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("POW") ); }
     static getMaxPlayerHealth() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("CON") ); }
     static getCharacterSpeed()  { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("AGI") ); }
     static getPrimaryReloadInterval()   { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RLD") ); }
     static getSecondaryReloadInterval() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DAR") ); }
-    static getSwagUpgrade()     { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DET") ); }
 
-    static setMaxHealthBinding(character_health_bar) {
-        const html_element = document.querySelector(".health-display #total");
+    static setMaxHealthBinding(character_health_bar, html_element) {
         const max_health_shop_entry = Abilities.__getShopEntryByCode("CON");
 
         new RS_Binding({
@@ -24,6 +24,16 @@ class Abilities {
                 
                 html_element.innerHTML = Abilities.getMaxPlayerHealth();
             }
+        });
+    }
+
+    static setClipSizeBinding(html_element) {
+        const clip_size_shop_entry = Abilities.__getShopEntryByCode("CHC");
+
+        new RS_Binding({
+            object: clip_size_shop_entry,
+            property: "current_level",
+            callback: () => { html_element.innerHTML = Abilities.getClipSize(); }
         });
     }
 

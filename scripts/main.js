@@ -196,7 +196,7 @@ class MainController {
     static startWave(is_silent_save) {
 		MainController.save_manager.saveGame(is_silent_save);
 
-		MainController.scope.game.clip_ammo = CLIP_SIZE;
+		MainController.scope.game.clip_ammo = Abilities.getClipSize();
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
 

@@ -107,7 +107,8 @@ class MainUI {
 				else html_element.classList.remove("out");
 			}
 		}).addBinding(html_element, "innerHTML");
-		document.querySelector(".ammo-display #total").innerHTML = CLIP_SIZE;
+
+		Abilities.setClipSizeBinding(document.querySelector(".ammo-display #total"));
     }
 
     __prepareLifeBarAutoRefresh(character_health_bar) {
@@ -124,7 +125,7 @@ class MainUI {
 			}
 		}).addBinding(html_element, "innerHTML");
 
-		Abilities.setMaxHealthBinding(character_health_bar);
+		Abilities.setMaxHealthBinding(character_health_bar, document.querySelector(".health-display #total"));
     }
 
     __prepareLevelAndXpAutoRefresh(xp_bar) {

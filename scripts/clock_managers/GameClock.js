@@ -31,7 +31,7 @@ class GameClock {
 	}
 
 	launchReloadingAction() {
-		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
+		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < Abilities.getClipSize()) {
 			const reload_time = Abilities.getPrimaryReloadInterval();
 			MainController.scope.game.waiting_counter.clip = reload_time;
 			

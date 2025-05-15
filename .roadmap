@@ -132,8 +132,8 @@ V   Tâche terminée
         >   mouseenter / mouseleave => déclencher l'apparition/disparition de la progress-bar additionnelle
         >   gérer cette problématique pour la navigation manette dans le menu
     X   Nouveaux items dans le magasin
-        x   ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
-        x   ajouter l'item "Chargeur haute capacité" => augmentation des munitions dans le chargeur
+        >   ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
+        >   ajouter l'item "Chargeur haute capacité" => augmentation des munitions dans le chargeur
         _   ajouter l'item "Tenue matelassée" => ajout d'une armure, absorbant les dégâts, mais ralentissant légèrement les déplacement (bah oui, c'est moins pratique pour bouger)
             _   gérer la nouvelle jauge, et les données qui vont avec
             _   ne pas oublier de gérer l'effet de ralentissement tant que l'armure est là
