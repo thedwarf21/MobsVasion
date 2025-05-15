@@ -7,9 +7,9 @@ class Tools {
 		const prev_values = [];
 		for (let i=0; i<level+1; i++) {
 			let value;
-			if (i == 0)
+			if (i === 0)
 				value = level_0_value;
-			else if (i == 1)
+			else if (i === 1)
 				value = level_0_value * coef;
 			else value = prev_values[0] + prev_values[1];
 			prev_values.unshift(value);

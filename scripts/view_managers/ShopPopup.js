@@ -86,7 +86,7 @@ class ShopPopup extends AbstractPopup {
         const new_col = active_item_position.column - 1;
         const new_active_ident = `${new_col}_${active_item_position.line}`;
         
-        if (new_col == 0)
+        if (new_col === 0)
             this.switchToMoneyShop();
 
         this.setActiveItem(new_active_ident);
@@ -97,7 +97,7 @@ class ShopPopup extends AbstractPopup {
         const new_col = active_item_position.column + 1;
         const new_active_ident = `${new_col}_${active_item_position.line}`;
         
-        if (new_col == 1)
+        if (new_col === 1)
             this.switchToTrainingRoom();
         
         this.setActiveItem(new_active_ident);

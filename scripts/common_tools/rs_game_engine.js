@@ -23,16 +23,16 @@ class RS_Hitbox {
 
 	checkCollide(hitbox) {
 		const str_notice = "veillez à n'initialiser la propriété shape qu'avec les constantes statiques prévues à cet effet.";
-		if (this.shape == RS_Hitbox.SHAPE_CIRCLE) {
-			if (hitbox.shape == RS_Hitbox.SHAPE_CIRCLE)
+		if (this.shape === RS_Hitbox.SHAPE_CIRCLE) {
+			if (hitbox.shape === RS_Hitbox.SHAPE_CIRCLE)
 				return this.__checkCircleVsCircle(hitbox);
-			else if (hitbox.shape == RS_Hitbox.SHAPE_BOX)
+			else if (hitbox.shape === RS_Hitbox.SHAPE_BOX)
 				return this.__checkCircleVsBox(hitbox);
 			else console.error(`Forme de hitbox inconnue: ${hitbox.shape} >>> ${str_notice}`);
-		} else if (this.shape == RS_Hitbox.SHAPE_BOX) {
-			if (hitbox.shape == RS_Hitbox.SHAPE_CIRCLE)
+		} else if (this.shape === RS_Hitbox.SHAPE_BOX) {
+			if (hitbox.shape === RS_Hitbox.SHAPE_CIRCLE)
 				return hitbox.__checkCircleVsBox(this);
-			else if (hitbox.shape == RS_Hitbox.SHAPE_BOX)
+			else if (hitbox.shape === RS_Hitbox.SHAPE_BOX)
 				return this.__checkBoxVsBox(hitbox);
 			else console.error(`Forme de hitbox inconnue: ${hitbox.shape} >>> ${str_notice}`);
 		} else console.error(`Forme de hitbox inconnue: ${this.shape} >>> ${str_notice}`);
@@ -100,13 +100,13 @@ class RS_ViewPortCompatibility {
 	}
 
 	get VIRTUAL_HEIGHT() {
-		if (this.base_axis == "y") 
+		if (this.base_axis === "y") 
 			return this.base_axis_virtual_size;
 		else return this.base_axis_virtual_size / this.screen_ratio;
 	}
 
 	get VIRTUAL_WIDTH() {
-		if (this.base_axis == "y")
+		if (this.base_axis === "y")
 			return this.base_axis_virtual_size * this.screen_ratio;
 		else return this.base_axis_virtual_size;
 	}
@@ -114,7 +114,7 @@ class RS_ViewPortCompatibility {
 	refreshScreenRatio() { this.screen_ratio = window.innerWidth / window.innerHeight; }
 
 	getCssValue(virtual_pixels) {
-		if (this.base_axis == "y") {
+		if (this.base_axis === "y") {
 			return (virtual_pixels * 100 / this.VIRTUAL_HEIGHT) + "vh";
 		}
 		return (virtual_pixels * 100 / this.VIRTUAL_WIDTH) + "vw";
@@ -152,7 +152,7 @@ class MobileGameElement {
 	  	// Certains éléments initialisent eux-mêmes leurs coordonnées. Les paramètres peuvent donc être absents.
 	  	this.viewport = viewport;
 	  	
-		if (x != undefined && y != undefined) {
+		if (x !== undefined && y !== undefined) {
 			this.x = x;
 			this.y = y;
 			this.root_element.style.left = viewport.getCssValue(this.x);
@@ -321,7 +321,7 @@ class GamepadGenericAdapter {
 	static getConnectedGamepad() {
 		const gamepads = navigator.getGamepads();
 		for (const gamepad of gamepads)
-			if (gamepad != null)
+			if (gamepad !== null)
 				return gamepad;
 	}
 }
@@ -358,7 +358,7 @@ class GamepadControl {
 	}
 
 	__isButtonPressed(gamepad) {
-		return this.buttonIndex != undefined && gamepad.buttons[this.buttonIndex].pressed;
+		return this.buttonIndex !== undefined && gamepad.buttons[this.buttonIndex].pressed;
 	}
 
 	__isExecutionPossible() {

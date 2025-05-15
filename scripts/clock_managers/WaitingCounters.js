@@ -2,7 +2,7 @@ class WaitingCounters {
     static applyWavePopScheduling() {
 		const wave_pop_params = MainController.scope.game.wave_pop;
 		
-		if (wave_pop_params.elapsed == wave_pop_params.timeouts[0]) {
+		if (wave_pop_params.elapsed === wave_pop_params.timeouts[0]) {
 			MainController.popMonsterRandomly();
 			wave_pop_params.timeouts.shift();
 			

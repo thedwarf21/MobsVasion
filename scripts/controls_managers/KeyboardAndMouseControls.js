@@ -4,30 +4,30 @@ class KeyboardAndMouseControls {
 		const controls = controller.scope.controls;
 		window.addEventListener('keydown', function(e) {
 			const key = e.key.toLowerCase();
-			if (key == "s")
+			if (key === "s")
 				controls.downPressed = true;
-			else if (key == "z")
+			else if (key === "z")
 				controls.upPressed = true;
-			else if (key == "q")
+			else if (key === "q")
 				controls.leftPressed = true;
-			else if (key == "d")
+			else if (key === "d")
 				controls.rightPressed = true;
-			else if (e.code == "Space")
+			else if (e.code === "Space")
 				controls.firing_secondary = true;
-			else if (e.code == "KeyP") 
+			else if (e.code === "KeyP") 
 				controller.togglePause();
 		});
 		window.addEventListener('keyup', function(e) {
 			const key = e.key.toLowerCase();
-			if (key == "s")
+			if (key === "s")
 				controls.downPressed = false;
-			if (key == "z")
+			if (key === "z")
 				controls.upPressed = false;
-			if (key == "q")
+			if (key === "q")
 				controls.leftPressed = false;
-			if (key == "d")
+			if (key === "d")
 				controls.rightPressed = false;
-			if (e.code == "Space")
+			if (e.code === "Space")
 				controls.firing_secondary = false;
 		});
 	}
@@ -84,7 +84,7 @@ class KeyboardAndMouseControls {
             else if (KeyboardAndMouseControls.__isToDownRight(controls))
                 angle = Math.PI / 4;
 
-            if (angle != absurd_value) {
+            if (angle !== absurd_value) {
                 character.angle = angle;
                 character.walk();
             }

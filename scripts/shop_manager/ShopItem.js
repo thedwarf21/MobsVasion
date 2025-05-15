@@ -126,5 +126,5 @@ class ShopItem {
     }
 
     __getEffectValueAtLevel(level)  { return this.level_0_effect + (this.upgrade_value * level); }
-    __isMaxed()                     { return (this.max_level && this.current_level == this.max_level); }
+    __isMaxed()                     { return (this.max_level && this.current_level === this.max_level); }
 }

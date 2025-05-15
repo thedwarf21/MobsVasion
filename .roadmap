@@ -159,8 +159,8 @@ V   Tâche terminée
 V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
 V   Passer tous les angles en radian (en degré, c'était pratique pour debug en phase de prototypage, mais ça induit beaucoup de calculs de conversion...)
 V   Faire une passe sur les 'let' qui pourraient être des 'const'
-X   Faire une passe sur les '==' qui devraient être des '==='
-_   controls_managers => objets instanciés, inclus dans une propriété dédiée du scope
+V   Faire une passe sur les '==' qui devraient être des '==='
+X   controls_managers => objets instanciés, inclus dans une propriété dédiée du scope
 _   Entité de traduction du MouseEvent.buttons, sous forme de liste de booléens, pour en simplifier l'exploitation
  
 

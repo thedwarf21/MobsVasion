@@ -62,5 +62,5 @@ class ShopHealingItem {
     }
 
     __isAffordable() { return MainController.scope.game.money >= this.price; }
-    __isMaxed() { return MainController.scope.game.health_points == Abilities.getMaxPlayerHealth(); }
+    __isMaxed() { return MainController.scope.game.health_points === Abilities.getMaxPlayerHealth(); }
 }
