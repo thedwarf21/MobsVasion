@@ -81,6 +81,8 @@ class JuiceHelper {
     static popupValidate() { MainController.audio_manager.playAudio("popup_validate"); }
     static startShopMusic() { MainController.audio_manager.playAudio("shop_music"); }
     static stopShopMusic() { MainController.audio_manager.stopAudioLoop("shop_music"); }
+    static startWaveMusic() { MainController.audio_manager.playAudio("wave_music"); }
+    static stopWaveMusic() { MainController.audio_manager.stopAudioLoop("wave_music"); }
 
 
     static monsterPop(x, y) {

@@ -133,7 +133,12 @@ const SOUND_LIB = {
 		is_loop: true
 	},
 	shop_music:     { 
-		file: "shop-music.mp3",
+		file: "Franquefort - Test.m4a",
+		is_loop: true, 
+		is_music: true 
+	},
+	wave_music:     { 
+		file: "Franquefort - Lets Play.m4a",
 		is_loop: true, 
 		is_music: true 
 	}
@@ -201,6 +206,7 @@ class MainController {
 		WaitingCounters.clear();
 
 		JuiceHelper.characterPop();
+		JuiceHelper.startWaveMusic();
 		MainController.__scheduleLevelMonstersPop();
     }
 
@@ -228,6 +234,7 @@ class MainController {
     }
 	
     static waveLost() {
+		JuiceHelper.stopWaveMusic();
         MainController.__characterRescueFees();
 
 		MainController.save_manager.saveGame();
@@ -262,6 +269,7 @@ class MainController {
     }
 
     static __waveDefeated() {
+		JuiceHelper.stopWaveMusic();
         MainController.scope.game.wave_number++;
 
 		MainController.save_manager.saveGame();
