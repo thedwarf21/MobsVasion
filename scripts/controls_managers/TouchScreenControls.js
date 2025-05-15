@@ -101,6 +101,7 @@ class TouchScreenControls {
 class VirtualJoystick {
 	global_element;
 	stick_element;
+	touch_index;
 	start_x;
 	start_y;
 	angle;
@@ -117,17 +118,20 @@ class VirtualJoystick {
 	addListeners() {
 		this.global_element.addEventListener("touchstart", (e)=> { 
 			e.preventDefault();
+			this.touch_index = e.touches.length - 1;
 
-			this.start_x = e.touches[0].clientX;
-			this.start_y = e.touches[0].clientY;
+			const current_touch = e.touches[this.touch_index];
+			this.start_x = current_touch.clientX;
+			this.start_y = current_touch.clientY;
 		});
 
 		this.global_element.addEventListener("touchmove", (e)=> {
 			if (this.start_x === null || this.start_y === null)
 				return;
 
-			const delta_x = e.touches[0].clientX - this.start_x;
-			const delta_y = e.touches[0].clientY - this.start_y;
+			const current_touch = e.touches[this.touch_index];
+			const delta_x = current_touch.clientX - this.start_x;
+			const delta_y = current_touch.clientY - this.start_y;
 			
 			this.global_element.style.transform = `translate(${delta_x}px, ${delta_y}px)`;
 			
@@ -144,6 +148,7 @@ class VirtualJoystick {
 	reset() {
 		this.global_element.style.transform = "";
 		this.stick_element.style.transform = "";
+		this.touch_index = null;
 		this.start_x = null;
 		this.start_y = null;
 		this.angle = null;
