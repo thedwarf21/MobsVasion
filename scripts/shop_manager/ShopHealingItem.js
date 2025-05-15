@@ -42,6 +42,9 @@ class ShopHealingItem {
                 MainController.scope.game.money -= this.price;
                 HealthBarHelper.healPlayer( this.hp_recover );
 
+                this.root_element.dispatchEvent(new Event('mouseleave'));
+                this.root_element.dispatchEvent(new Event('mouseenter'));
+
                 MainController.shop_manager.refreshAllShopItems();
 
                 JuiceHelper.popupValidate();
