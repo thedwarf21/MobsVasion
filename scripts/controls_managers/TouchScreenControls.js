@@ -51,7 +51,7 @@ class TouchScreenControls {
 	}
 
 	static __resetControls() {
-		let controls = MainController.scope.controls;
+		const controls = MainController.scope.controls;
 		controls.firing_secondary = false;
 		controls.firing_primary = false;
 		controls.auto_aiming = false;

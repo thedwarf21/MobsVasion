@@ -5,8 +5,8 @@ class XpBarHelper {
     }
 
     static addXp(xp_amount) {
-        let level_up_at = XpBarHelper.levelUpAt();
-        let game_scope = MainController.scope.game;
+        const level_up_at = XpBarHelper.levelUpAt();
+        const game_scope = MainController.scope.game;
         game_scope.current_level_xp += xp_amount;
         
         if (game_scope.current_level_xp >= level_up_at) {

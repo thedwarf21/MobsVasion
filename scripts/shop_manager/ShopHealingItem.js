@@ -49,7 +49,7 @@ class ShopHealingItem {
         });
 
         this.root_element.addEventListener('mouseenter', ()=> {
-            let item_description_container = MainController.shop_manager.shop_item_description_element;
+            const item_description_container = MainController.shop_manager.shop_item_description_element;
             item_description_container.innerHTML = "";
             item_description_container.appendChild( this.description_element );
             item_description_container.appendChild( this.price_element );

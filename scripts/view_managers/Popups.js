@@ -8,7 +8,7 @@ class PopupsStack {
     push(popup_manager) {
         MainController.scope.controls.paused = true;
         
-        let popup = new popup_manager();
+        const popup = new popup_manager();
         popup.show(()=> {
             popup.__registerMenuItems();
             popup.highlightActiveItem();
@@ -20,7 +20,7 @@ class PopupsStack {
     }
 
     pop() { 
-        let foreground_popup = this.__popups.shift();
+        const foreground_popup = this.__popups.shift();
         foreground_popup.close();
         MainController.scope.controls.paused = !!this.__popups.length;
 
@@ -56,7 +56,7 @@ class AbstractPopup {
     }
 
     trigger() {
-        let active_item = this.__getActiveItem();
+        const active_item = this.__getActiveItem();
         active_item.html_element.click();
 
         if (active_item.onValidate)
@@ -65,14 +65,14 @@ class AbstractPopup {
 
     highlightActiveItem() { 
         if (MainController.timer.gamepad_mapper) {
-            let active_item_html_element = this.__getActiveItem().html_element;
+            const active_item_html_element = this.__getActiveItem().html_element;
             active_item_html_element.classList.add("active");
             active_item_html_element.dispatchEvent(new Event('mouseenter'));
         }
     }
 
     leaveActiveItem() {
-        let active_item = this.__getActiveItem().html_element;
+        const active_item = this.__getActiveItem().html_element;
         active_item.classList.remove("active");
         active_item.dispatchEvent(new Event('mouseleave'));
     }
@@ -88,7 +88,7 @@ class AbstractPopup {
     }
 
     __getLineAndColumnNumbers() {
-        let position = this.active_item_id.split("_");
+        const position = this.active_item_id.split("_");
         return {
             column: parseInt(position[0]),
             line: parseInt(position[1])
@@ -96,7 +96,7 @@ class AbstractPopup {
     }
 
     __getActiveItem() {
-        for (let menu_item of this.navigable_items)
+        for (const menu_item of this.navigable_items)
             if(menu_item.id === this.active_item_id)
                 return menu_item;
     }
@@ -128,8 +128,8 @@ class AbstractPopup {
     }
 
     __registerMenuItems() { 
-        let navigable_elements = this.__querySelectorAll("[nav-ident]");
-        for (let html_element of navigable_elements) {
+        const navigable_elements = this.__querySelectorAll("[nav-ident]");
+        for (const html_element of navigable_elements) {
             this.__registerMenuItem(html_element.getAttribute("nav-ident"), html_element);
         } 
     }

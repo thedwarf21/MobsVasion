@@ -74,31 +74,31 @@ class ParametersPopup extends AbstractPopup {
 
     /*********  AbstractPopup methods implementation  *********/
     navigateUp() {
-        let active_item_position = this.__getLineAndColumnNumbers();
-        let new_line = active_item_position.line - 1;
-        let new_active_ident = `0_${new_line}`;
+        const active_item_position = this.__getLineAndColumnNumbers();
+        const new_line = active_item_position.line - 1;
+        const new_active_ident = `0_${new_line}`;
         this.setActiveItem(new_active_ident);
     }
 
     navigateDown() {
-        let active_item_position = this.__getLineAndColumnNumbers();
-        let new_line = active_item_position.line + 1;
-        let new_col = new_line === this.FOOTER_LINE ? 1 : 0;    // Le bouton de configuration de la manette est prioritaire sur le bouton de fermeture de la fenêtre (UX)
-        let new_active_ident = `${new_col}_${new_line}`;
+        const active_item_position = this.__getLineAndColumnNumbers();
+        const new_line = active_item_position.line + 1;
+        const new_col = new_line === this.FOOTER_LINE ? 1 : 0;    // Le bouton de configuration de la manette est prioritaire sur le bouton de fermeture de la fenêtre (UX)
+        const new_active_ident = `${new_col}_${new_line}`;
         this.setActiveItem(new_active_ident);
     }
 
     navigateLeft() {
-        let active_item_position = this.__getLineAndColumnNumbers();
+        const active_item_position = this.__getLineAndColumnNumbers();
 
         if (active_item_position.line === this.FOOTER_LINE) {  // Navigation dans les boutons de pied de popup
-            let new_col = active_item_position.column - 1;
-            let new_active_ident = `${new_col}_${active_item_position.line}`;
+            const new_col = active_item_position.column - 1;
+            const new_active_ident = `${new_col}_${active_item_position.line}`;
             this.setActiveItem(new_active_ident);
         }
 
         if (this.__isRangeInput(active_item_position.line)) {   // Réglage des volumes
-            let input = this.__getActiveItem().html_element;
+            const input = this.__getActiveItem().html_element;
 
             if (input.value > input.min)
                 this.__setRangeInputValue(input, parseFloat(input.value) - parseFloat(input.step));
@@ -106,16 +106,16 @@ class ParametersPopup extends AbstractPopup {
     }
 
     navigateRight() {
-        let active_item_position = this.__getLineAndColumnNumbers();
+        const active_item_position = this.__getLineAndColumnNumbers();
 
         if (active_item_position.line === this.FOOTER_LINE) {  // Navigation dans les boutons de pied de popup
-            let new_col = active_item_position.column + 1;
-            let new_active_ident = `${new_col}_${active_item_position.line}`;
+            const new_col = active_item_position.column + 1;
+            const new_active_ident = `${new_col}_${active_item_position.line}`;
             this.setActiveItem(new_active_ident);
         }
 
         if (this.__isRangeInput(active_item_position.line)) {   // Réglage des volumes
-            let input = this.__getActiveItem().html_element;
+            const input = this.__getActiveItem().html_element;
             
             if (input.value < input.max)
                 this.__setRangeInputValue(input, parseFloat(input.value) + parseFloat(input.step));

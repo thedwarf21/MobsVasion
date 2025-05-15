@@ -32,10 +32,10 @@ class GameClock {
 
 	launchReloadingAction() {
 		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < CLIP_SIZE) {
-			let reload_time = Abilities.getPrimaryReloadInterval();
+			const reload_time = Abilities.getPrimaryReloadInterval();
 			MainController.scope.game.waiting_counter.clip = reload_time;
 			
-			let gauge = new MV_Gauge("primary-reload", reload_time, 0);
+			const gauge = new MV_Gauge("primary-reload", reload_time, 0);
 			MainController.UI.primaryReloadGauge = gauge;
 			MainController.UI.addToGameWindow(gauge.root_element);
 
@@ -52,20 +52,20 @@ class GameClock {
 	}
 
 	__performControlsObjectChanges() {
-		let character = MainController.UI.character;
+		const character = MainController.UI.character;
 		if (character)
 			this.__characterActions(character);
 
-		let shots = MainController.UI.shots;
+		const shots = MainController.UI.shots;
 		for (let i = shots.length - 1; i >= 0; i--) {
-			let shot = shots[i];
+			const shot = shots[i];
 			shot.move(()=> {
 				shots.splice(i, 1);
 				shot.root_element.remove();
 			});
 		} 
 
-		for (let monster of MainController.UI.monsters)
+		for (const monster of MainController.UI.monsters)
 			monster.follow(character);
 	}
 
@@ -79,9 +79,9 @@ class GameClock {
 		if (this.controls_state.firing_secondary && !MainController.UI.secondaryReloadGauge) {
 			character.dash();
 			this.controls_state.firing_secondary = false;
-			let dash_interval = Abilities.getSecondaryReloadInterval();
+			const dash_interval = Abilities.getSecondaryReloadInterval();
 			MainController.scope.game.waiting_counter.dash = dash_interval;
-			let gauge = new MV_Gauge("secondary-reload", dash_interval, 0);
+			const gauge = new MV_Gauge("secondary-reload", dash_interval, 0);
 			MainController.UI.secondaryReloadGauge = gauge;
 			MainController.UI.character.root_element.appendChild( gauge.root_element );
 		}
@@ -96,17 +96,17 @@ class GameClock {
 	}
 
 	__testCollides() {
-		let monsters = MainController.UI.monsters;
+		const monsters = MainController.UI.monsters;
 
 		for (let i = monsters.length - 1; i >= 0; i--) {
-			let monster = monsters[i];
+			const monster = monsters[i];
 			this.__performMonsterAttacks(monster);
 			this.__performMonsterWounds(i, monster);
 		}
 	}
 
 	__performMonsterAttacks(monster) {
-		let character = MainController.UI.character;
+		const character = MainController.UI.character;
 
 		if (monster.hitbox.checkCollide(character.hitbox)) {
 			JuiceHelper.hitEffect();
@@ -115,10 +115,10 @@ class GameClock {
 	}
 
 	__performMonsterWounds(index, monster) {
-		let shots = MainController.UI.shots;
+		const shots = MainController.UI.shots;
 		
 		for (let i = shots.length - 1; i >=0; i--) {
-			let shot = shots[i];
+			const shot = shots[i];
 
 			if (monster.hitbox.checkCollide(shot.hitbox)) {
 				shots.splice(i, 1);

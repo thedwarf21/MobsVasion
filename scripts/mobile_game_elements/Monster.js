@@ -73,10 +73,10 @@ class MV_Monster extends MobileGameElement {
     }
 
     __bleed() {
-        let x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(this.angle) );
-        let y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(this.angle) );  
-        let x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(this.angle);
-        let y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(this.angle);  
+        const x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(this.angle) );
+        const y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(this.angle) );  
+        const x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(this.angle);
+        const y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(this.angle);  
         JuiceHelper.bloodSplash(x_splash, y_splash, this.angle, ()=> {
             this.__createBloodPuddle(x_puddle, y_puddle, false);
         });
@@ -85,7 +85,7 @@ class MV_Monster extends MobileGameElement {
     
 
     __createBloodPuddle(x, y, isBig) {
-        let puddle_element = document.createElement("DIV");
+        const puddle_element = document.createElement("DIV");
         puddle_element.classList.add("blood-puddle");
         
         puddle_element.style.backgroundImage = `url("../images/blood_puddle_${Tools.radomValueInRange(0, 5)}.png")`;

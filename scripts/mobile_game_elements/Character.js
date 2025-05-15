@@ -12,7 +12,7 @@ class MV_Character extends MobileGameElement {
             MainController.scope.game.waiting_counter.shot = Abilities.getShotInterval();
 
 			if (MainController.scope.game.clip_ammo) {
-				let shot = this.__createShot();
+				const shot = this.__createShot();
 				MainController.UI.addToGameWindow(shot.root_element);
                 MainController.UI.shots.push(shot);
 				MainController.scope.game.clip_ammo--;
@@ -21,7 +21,7 @@ class MV_Character extends MobileGameElement {
     }
 
     walk() {
-        let character_speed = Abilities.getCharacterSpeed();
+        const character_speed = Abilities.getCharacterSpeed();
         this.deltaX = character_speed * Math.cos(this.angle);
         this.deltaY = character_speed * Math.sin(this.angle);
         this.move();
@@ -68,17 +68,17 @@ class MV_Character extends MobileGameElement {
     }
 
     __createShot() {
-        let center_spot = this.centralSpotPosition();
-        let cos_angle = Math.cos(this.aiming_angle);
-        let sin_angle = Math.sin(this.aiming_angle);
+        const center_spot = this.centralSpotPosition();
+        const cos_angle = Math.cos(this.aiming_angle);
+        const sin_angle = Math.sin(this.aiming_angle);
 
-        let shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
-        let shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;
+        const shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
+        const shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;
  
         JuiceHelper.shoot(shot_start_x, shot_start_y, this.aiming_angle);
         
-        let deltaX = SHOT_VELOCITY * cos_angle;
-        let deltaY = SHOT_VELOCITY * sin_angle;
+        const deltaX = SHOT_VELOCITY * cos_angle;
+        const deltaY = SHOT_VELOCITY * sin_angle;
         return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
     }
 }

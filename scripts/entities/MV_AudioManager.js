@@ -20,7 +20,7 @@ class MV_AudioManager {
 	 * @param      {string}  sound_key  Nom de la propriété de SOUND_LIB, définissant le fichier audio et son paramétrage
 	 */
 	playAudio(sound_key) {
-		let sound_entry = this.sound_lib[sound_key];
+		const sound_entry = this.sound_lib[sound_key];
 
 		if (!sound_entry) {
 			console.error(`MV_AaudioManager.playAudio() --> son ${sound_key} inconnu.`);
@@ -28,7 +28,7 @@ class MV_AudioManager {
 		}
 		
 		if (this.__canBePlayed(sound_entry.is_music)) {
-			let audio_element = this.__getAvailableElement(sound_entry);
+			const audio_element = this.__getAvailableElement(sound_entry);
 			audio_element.currentTime = 0;
 			audio_element.play().catch((error)=> { console.error(error); });
 		}
@@ -40,7 +40,7 @@ class MV_AudioManager {
 	 * @param		{string}  sound_key  Nom de la propriété de SOUND_LIB, définissant le fichier audio et son paramétrage
 	 */
 	stopAudioLoop(sound_key) {
-		let sound_entry = this.sound_lib[sound_key];
+		const sound_entry = this.sound_lib[sound_key];
 
 		if (!sound_entry) {
 			console.error(`MV_AaudioManager.playAudio() --> son ${sound_key} inconnu.`);
@@ -114,9 +114,9 @@ class MV_AudioManager {
 	 * @param {object} sounds_config_entry  Objet de configuration d'un son précis
 	 */
 	__getConfigEntryElements(sounds_config_entry) {
+		const elements = [];
+		
 		let players_number = sounds_config_entry.players_number;
-		let elements = [];
-
 		if (!players_number)
 			players_number = 1;
 		
@@ -133,7 +133,7 @@ class MV_AudioManager {
 	 * @param {boolean} 	is_loop
 	 */
 	__createAudioTag(filename, is_loop) {
-		let audio_player = document.createElement("AUDIO");
+		const audio_player = document.createElement("AUDIO");
 		audio_player.src = AUDIO_PATH + filename;
 		audio_player.loop = is_loop;
 		audio_player.style.display = 'none';
@@ -163,7 +163,7 @@ class MV_AudioManager {
 		let best_choice_index;
 
 		for (let i = 0; i < sound_entry.elements.length; i++) {
-			let element = sound_entry.elements[i];
+			const element = sound_entry.elements[i];
 			if (element.paused)
 				return element;
 
@@ -182,8 +182,8 @@ class MV_AudioManager {
 	 * @param {function} fnDo fonction d'altération de la balise audio
 	 */
 	__forEachMusic(fnDo) {
-		for (let key in this.sound_lib) {
-			let sound_entry = this.sound_lib[key];
+		for (const key in this.sound_lib) {
+			const sound_entry = this.sound_lib[key];
 			if (sound_entry.is_music)
 				fnDo(sound_entry.elements[0]);    // Les musiques sont toujours des boucles et sont donc uniques dans le pool
 		}
@@ -195,10 +195,10 @@ class MV_AudioManager {
 	 * @param {function} fnDo fonction d'altération de la balise audio
 	 */
 	__forEachSoundFx(fnDo) {
-		for (let key in this.sound_lib) {
-			let sound_entry = this.sound_lib[key];
+		for (const key in this.sound_lib) {
+			const sound_entry = this.sound_lib[key];
 			if (!sound_entry.is_music)
-				for (let audio_element of sound_entry.elements)
+				for (const audio_element of sound_entry.elements)
 					fnDo(audio_element);
 		}
 	}

@@ -22,26 +22,26 @@ class RS_Dialog {
     this.root_element = document.createElement("DIV");
     this.root_element.id = id;
     this.root_element.classList.add("rs-modal-bg");
-    for (let classe of bgClassList)
+    for (const classe of bgClassList)
       this.root_element.classList.add(classe);
 
     // Ensuite on construit la boîte de dialogue en elle-même
-    let popup = document.createElement("DIV");
+    const popup = document.createElement("DIV");
     popup.id = name + "_container";
     popup.classList.add("rs-modal");
     popup.classList.add("rs-closed");
-    for (let classe of containerClassList)
+    for (const classe of containerClassList)
       popup.classList.add(classe);
 
     // Création et ajout à la boîte de dialogue du header
-    let header = document.createElement("DIV");
+    const header = document.createElement("DIV");
     header.innerHTML = title;
     header.classList.add("rs-modal-title");
     popup.appendChild(header);
     
     // On ajoute un bouton de fermeture de la boîte de dialogue (si besoin)
     if (showCloseBtn) {
-      let btn = document.createElement("INPUT");
+      const btn = document.createElement("INPUT");
       btn.setAttribute("type", "button");
       btn.value = "X";
       btn.classList.add("rs-close-btn");
@@ -50,10 +50,10 @@ class RS_Dialog {
     }
     
     // Création et ajout à la boîte de dialogue de la div de contenu
-    let content = document.createElement("DIV");
+    const content = document.createElement("DIV");
     content.id = name;
     content.classList.add("rs-modal-content");
-    for (let classe of classList)
+    for (const classe of classList)
       content.classList.add(classe);
     popup.appendChild(content);
 
@@ -73,8 +73,8 @@ class RS_Dialog {
    * Fonction fermant la boîte de dialogue *
    *****************************************/
   closeModal(onPopupClosed) {
-    let popup = this.root_element.getElementsByClassName("rs-modal")[0];
-    let close_btn_col = popup.getElementsByClassName("rs-close-btn");
+    const popup = this.root_element.getElementsByClassName("rs-modal")[0];
+    const close_btn_col = popup.getElementsByClassName("rs-close-btn");
     if (close_btn_col.length)
       close_btn_col[0].remove();
     popup.classList.add("rs-closed");
@@ -105,10 +105,10 @@ class RS_Dialog {
  * @param | {Function} | callback | Action différée                *
  *******************************************************************/
 function RS_Alert(msg, titre, lbl_btn, callback) {
-  let popup = new RS_Dialog("confirm_box", titre, [], [], [], false);
+  const popup = new RS_Dialog("confirm_box", titre, [], [], [], false);
   
   // Ajout de la question au contenu de la popup
-  let div_msg = document.createElement("DIV");
+  const div_msg = document.createElement("DIV");
   div_msg.style.height = "calc(100% - 60px)";
   div_msg.style.display = "flex";
   div_msg.style.flexDirection = "column";
@@ -117,14 +117,14 @@ function RS_Alert(msg, titre, lbl_btn, callback) {
   popup.appendToContent(div_msg);
 
   // Création de la <div> contenant les boutons
-  let div_btn = document.createElement("DIV");
+  const div_btn = document.createElement("DIV");
   div_btn.style.height = "60px";
   div_btn.style.display = "flex";
   div_btn.style.flexDirection = "row";
   div_btn.style.justifyContent = "space-around";
 
   // Création du bouton "Oui"
-  let btn = document.createElement("INPUT");
+  const btn = document.createElement("INPUT");
   btn.setAttribute("type", "button");
   btn.classList.add("rs-btn-action");
   btn.classList.add("rs-btn-create");
@@ -153,20 +153,20 @@ function RS_Alert(msg, titre, lbl_btn, callback) {
  * @param | {function} | fn_no    | Fonction à exécuter si "Non"                 *
  *********************************************************************************/
 function RS_Confirm(question, titre, lbl_yes, lbl_no, fn_yes, fn_no) {
-  let popup = new RS_Dialog("confirm_box", titre, [], [], [], false);
+  const popup = new RS_Dialog("confirm_box", titre, [], [], [], false);
   
   // Ajout de la question au contenu de la popup
-  let div_msg = document.createElement("DIV");
+  const div_msg = document.createElement("DIV");
   div_msg.classList.add("dialog-body");
   div_msg.innerHTML = question;
   popup.appendToContent(div_msg);
 
   // Création de la <div> contenant les boutons
-  let div_btn = document.createElement("DIV");
+  const div_btn = document.createElement("DIV");
   div_btn.classList.add("dialog-footer");
 
   // Création du bouton "Oui"
-  let btn_yes = document.createElement("INPUT");
+  const btn_yes = document.createElement("INPUT");
   btn_yes.setAttribute("type", "button");
   btn_yes.classList.add("rs-btn-action");
   btn_yes.classList.add("rs-btn-create");
@@ -179,7 +179,7 @@ function RS_Confirm(question, titre, lbl_yes, lbl_no, fn_yes, fn_no) {
   });
 
   // Création du bouton "Non"
-  let btn_no = document.createElement("INPUT");
+  const btn_no = document.createElement("INPUT");
   btn_no.setAttribute("type", "button");
   btn_no.classList.add("rs-btn-action");
   btn_no.classList.add("rs-btn-suppr");

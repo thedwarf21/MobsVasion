@@ -1,6 +1,6 @@
 class WaitingCounters {
     static applyWavePopScheduling() {
-		let wave_pop_params = MainController.scope.game.wave_pop;
+		const wave_pop_params = MainController.scope.game.wave_pop;
 		
 		if (wave_pop_params.elapsed == wave_pop_params.timeouts[0]) {
 			MainController.popMonsterRandomly();
@@ -14,9 +14,9 @@ class WaitingCounters {
 	}
 
 	static decrementWaitingCounters() {
-		let counters_object = MainController.scope.game.waiting_counter;
-		let counters_names_list = Object.keys(counters_object);
-		for (let counter_key of counters_names_list) {
+		const counters_object = MainController.scope.game.waiting_counter;
+		const counters_names_list = Object.keys(counters_object);
+		for (const counter_key of counters_names_list) {
 			if (counters_object[counter_key]) {
 				counters_object[counter_key]--;
 				if (!counters_object[counter_key])
@@ -27,9 +27,9 @@ class WaitingCounters {
 	}
 
 	static clear() {
-		let counters_object = MainController.scope.game.waiting_counter;
-		let counters_names_list = Object.keys(counters_object);
-		for (let counter_key of counters_names_list)
+		const counters_object = MainController.scope.game.waiting_counter;
+		const counters_names_list = Object.keys(counters_object);
+		for (const counter_key of counters_names_list)
 			counters_object[counter_key] = 0;
 	}
 

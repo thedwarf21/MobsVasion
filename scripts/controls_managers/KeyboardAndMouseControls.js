@@ -1,9 +1,9 @@
 class KeyboardAndMouseControls {
     
     static addKeyListeners(controller) {
-		let controls = controller.scope.controls;
+		const controls = controller.scope.controls;
 		window.addEventListener('keydown', function(e) {
-			let key = e.key.toLowerCase();
+			const key = e.key.toLowerCase();
 			if (key == "s")
 				controls.downPressed = true;
 			else if (key == "z")
@@ -18,7 +18,7 @@ class KeyboardAndMouseControls {
 				controller.togglePause();
 		});
 		window.addEventListener('keyup', function(e) {
-			let key = e.key.toLowerCase();
+			const key = e.key.toLowerCase();
 			if (key == "s")
 				controls.downPressed = false;
 			if (key == "z")
@@ -33,7 +33,7 @@ class KeyboardAndMouseControls {
 	}
 
 	static addMouseListeners(controller) {
-		let controls = controller.scope.controls;
+		const controls = controller.scope.controls;
 		window.addEventListener('mousemove', (e)=> {
 			controls.mousePosition = { 
 				x: e.clientX / MainController.UI.game_window.clientWidth * MainController.viewport.VIRTUAL_WIDTH, 
@@ -62,11 +62,11 @@ class KeyboardAndMouseControls {
 	}
 
     static applyControlsObject() {
-        let character = MainController.UI.character;
+        const character = MainController.UI.character;
 		if ( character && !MainController.scope.controls.paused ) {
+            const controls = MainController.scope.controls;
             const absurd_value = 1000;
             let angle = absurd_value;
-            let controls = MainController.scope.controls;
             if (KeyboardAndMouseControls.__isToLeft(controls))
                 angle = Math.PI;
             else if (KeyboardAndMouseControls.__isToRight(controls))
@@ -95,8 +95,8 @@ class KeyboardAndMouseControls {
 	}
 
     static __applyMouseAiming(character) {
-        let mouse_position = MainController.scope.controls.mousePosition;
-        let character_center = character.centralSpotPosition();
+        const mouse_position = MainController.scope.controls.mousePosition;
+        const character_center = character.centralSpotPosition();
         let rad_angle = Math.atan( (mouse_position.y - character_center.y) / (mouse_position.x - character_center.x) );
         if (character_center.x > mouse_position.x)
             rad_angle += Math.PI;
@@ -106,7 +106,7 @@ class KeyboardAndMouseControls {
     }
 
     static hasMoveControls() {
-        let controls = MainController.scope.controls;
+        const controls = MainController.scope.controls;
         return controls.upPressed || controls.downPressed || controls.upPressed || controls.downPressed; 
     }
 

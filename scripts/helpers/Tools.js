@@ -4,7 +4,7 @@ class Tools {
 	}
 	
 	static getFibonacciValue(level_0_value, coef, level) {
-		let prev_values = [];
+		const prev_values = [];
 		for (let i=0; i<level+1; i++) {
 			let value;
 			if (i == 0)
@@ -18,7 +18,7 @@ class Tools {
 	}
 
 	static getRandomMessage(isVictory) {
-		let random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
+		const random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
 		return random_messages[ Tools.radomValueInRange(0, random_messages.length - 1) ];
 	}
 

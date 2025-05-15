@@ -20,9 +20,8 @@ class ShopItem {
     effect_html_element;
 
     constructor(shop_scope_item) {
-        for (let property in shop_scope_item) {
+        for (const property in shop_scope_item)
             this[ property ] = shop_scope_item[ property ];
-        }
 
         this.is_money_priced_item = !!this.level_1_price;  // initialisation du flag permettant de différencier les items "Ravitaillement" de "Salle d'entrainement"
         this.__initHtmlElement();
@@ -34,7 +33,7 @@ class ShopItem {
 	}
 
     static getHtmlElement(css_class, content) {
-        let html_element = document.createElement("DIV");
+        const html_element = document.createElement("DIV");
 		html_element.classList.add(css_class);
 		html_element.innerHTML = content ? content : "";
         return html_element;
@@ -60,7 +59,7 @@ class ShopItem {
         });
 
         this.html_element.addEventListener('mouseenter', ()=> {
-            let item_description_container = MainController.shop_manager.shop_item_description_element;
+            const item_description_container = MainController.shop_manager.shop_item_description_element;
             item_description_container.innerHTML = "";
             item_description_container.appendChild( this.description_html_element );
             item_description_container.appendChild( this.price_html_element );
@@ -89,26 +88,25 @@ class ShopItem {
             this.price_html_element.classList.add("maxed");
         else this.price_html_element.classList.remove("maxed"); 
         
-        let price = this.__getPrice();
         this.price_html_element.innerHTML   = this.__isMaxed()
 							                ? "Niveau maximal atteint"
-							                : `<b>Prix:</b> ${Tools.intToHumanReadableString(price)} `;
+							                : `<b>Prix:</b> ${Tools.intToHumanReadableString( this.__getPrice() )} `;
     }
 
     __refreshEffectElement() {
-		let present_val = this.__getEffectValueAtLevel(this.current_level);
-		let increased_val = this.__getEffectValueAtLevel(this.current_level + 1);
+		const present_val = this.__getEffectValueAtLevel(this.current_level);
+		const increased_val = this.__getEffectValueAtLevel(this.current_level + 1);
 
-		let displayPresentValue	= Tools.prepareFloatForDisplay ( 
+		const displayPresentValue	= Tools.prepareFloatForDisplay ( 
                                     ( this.show_multiplicator 
-				                    ? present_val * this.show_multiplicator
-							        : present_val 
+				                        ? present_val * this.show_multiplicator
+							            : present_val 
                                     ), this.display_unit || "");
-		let displayIncreasedValue	= Tools.prepareFloatForDisplay (
-                                        ( this.show_multiplicator
+		const displayIncreasedValue	= Tools.prepareFloatForDisplay (
+                                    ( this.show_multiplicator
 							            ? increased_val * this.show_multiplicator
 							            : increased_val 
-                                        ), this.display_unit || "");
+                                    ), this.display_unit || "");
 
         this.effect_html_element.innerHTML = `<b>${this.lbl_effect}:</b> <span class="present-effect">${displayPresentValue}</span>`;
         if (!this.__isMaxed())

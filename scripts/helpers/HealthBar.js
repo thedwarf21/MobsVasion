@@ -16,7 +16,7 @@ class HealthBarHelper {
     static healPlayer(amount) {
         MainController.scope.game.health_points += amount;
 
-        let max_hp = Abilities.getMaxPlayerHealth();
+        const max_hp = Abilities.getMaxPlayerHealth();
         if (MainController.scope.game.health_points > max_hp)
             MainController.scope.game.health_points = max_hp;
     }

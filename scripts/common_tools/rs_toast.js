@@ -20,7 +20,7 @@ class RS_Toast {
    * @param      {number}  lasting_time  Temps d'affichage du toast (en ms)
    */
   static show(html_content, lasting_time) {
-    let toast = new RS_Toast(html_content);
+    const toast = new RS_Toast(html_content);
     document.body.appendChild(toast.root_element);
     setTimeout(()=> { toast.hide(); }, lasting_time);
   }

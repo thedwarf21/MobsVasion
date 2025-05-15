@@ -11,7 +11,7 @@ class MV_AnimatedFrame extends MobileGameElement {
     }
 
     __addAnimationElement(animationCssClass) {
-        let animationElement = document.createElement("div");
+        const animationElement = document.createElement("div");
         this.root_element.appendChild(animationElement);
         animationElement.classList.add(animationCssClass);
     }

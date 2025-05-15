@@ -1,13 +1,13 @@
 class JuiceHelper {
     
     static characterPop() {
-        let pop_animation = new MV_AnimatedFrame(
+        const pop_animation = new MV_AnimatedFrame(
             MainController.viewport, 
             ( MainController.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE ) / 2, 
             ( MainController.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE ) / 2, 
             CHARACTER_SIZE, CHARACTER_SIZE, ANIMATIONS.monster_pop.css_class, ANIMATIONS.monster_pop.duration, 
             ()=> {
-                let character = new MV_Character(MainController.viewport);
+                const character = new MV_Character(MainController.viewport);
                 MainController.UI.character = character;
                 MainController.UI.addToGameWindow(character.root_element);
             }
@@ -18,7 +18,7 @@ class JuiceHelper {
     }
 
     static shoot(x, y, angle) {
-        let weapon_flame = document.createElement("DIV");
+        const weapon_flame = document.createElement("DIV");
         weapon_flame.classList.add("fire");
 
         weapon_flame.style.left = MainController.viewport.getCssValue(x);
@@ -38,7 +38,7 @@ class JuiceHelper {
     static dashSound() { MainController.audio_manager.playAudio("dash"); }
 
     static levelUp() {
-        let level_element = document.querySelector(".player-level");
+        const level_element = document.querySelector(".player-level");
         level_element.classList.add("level-up");
         setTimeout(()=> {  level_element.classList.remove("level-up"); }, 1000);
         
@@ -46,7 +46,7 @@ class JuiceHelper {
     }
     
     static hitEffect() {
-        let flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
+        const flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
             ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
             ()=> { flash_effect.root_element.remove(); }
         );
@@ -58,8 +58,8 @@ class JuiceHelper {
 
 
     static checkPanicMode() {
+        const panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
         let panic_element = document.querySelector(".panic-mode");
-		let panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
 		
 		if (!panic_element && MainController.scope.game.health_points <= panic_threshold) {
 			panic_element = document.createElement("DIV");
@@ -84,11 +84,11 @@ class JuiceHelper {
 
 
     static monsterPop(x, y) {
-		let animation = ANIMATIONS.monster_pop;
-        let pop_animation = new MV_AnimatedFrame( MainController.viewport, 
+		const animation = ANIMATIONS.monster_pop;
+        const pop_animation = new MV_AnimatedFrame( MainController.viewport, 
             x, y, MONSTER_SIZE, MONSTER_SIZE, 
             animation.css_class, animation.duration, ()=> {
-                let monster = new MV_Monster(MainController.viewport, x, y);
+                const monster = new MV_Monster(MainController.viewport, x, y);
                 MainController.UI.monsters.push(monster);
                 MainController.UI.addToGameWindow(monster.root_element);
             }
@@ -99,7 +99,7 @@ class JuiceHelper {
 	}
 
     static bloodSplash(x, y, angle, onAmimationEnd) {
-        let blood_splash = new MV_AnimatedFrame( MainController.viewport, x, y, 0, 0, 
+        const blood_splash = new MV_AnimatedFrame( MainController.viewport, x, y, 0, 0, 
             ANIMATIONS.blood_splash.css_class, ANIMATIONS.blood_splash.duration, ()=> {
                 blood_splash.root_element.remove();
                 if (onAmimationEnd) 

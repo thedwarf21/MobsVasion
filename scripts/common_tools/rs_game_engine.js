@@ -5,7 +5,7 @@
  * @returns   			La valeur piochée dans la liste
  */
 function randomize(values_list) {
-	let randomIndex = Math.floor(Math.random() * values_list.length);
+	const randomIndex = Math.floor(Math.random() * values_list.length);
 	return values_list[randomIndex];
 }
 
@@ -17,12 +17,12 @@ function randomize(values_list) {
 class RS_Hitbox {
 	constructor(shape, params) {
 		this.shape = shape;
-		for (let property_name in params)
+		for (const property_name in params)
 			this[property_name] = params[property_name];
 	}
 
 	checkCollide(hitbox) {
-		let str_notice = "veillez à n'initialiser la propriété shape qu'avec les constantes statiques prévues à cet effet.";
+		const str_notice = "veillez à n'initialiser la propriété shape qu'avec les constantes statiques prévues à cet effet.";
 		if (this.shape == RS_Hitbox.SHAPE_CIRCLE) {
 			if (hitbox.shape == RS_Hitbox.SHAPE_CIRCLE)
 				return this.__checkCircleVsCircle(hitbox);
@@ -39,22 +39,22 @@ class RS_Hitbox {
 	}
 
 	getDistance(hitbox) {
-		let deltaX = Math.abs(this.x - hitbox.x),
-			deltaY = Math.abs(this.y - hitbox.y);
+		const deltaX = Math.abs(this.x - hitbox.x),
+			  deltaY = Math.abs(this.y - hitbox.y);
 		return (deltaX**2 + deltaY**2) ** 0.5;
 	}
 
 	getDirection(hitbox) {
-        let rad_angle = Math.atan( (hitbox.y - this.y) / (hitbox.x - this.x) );
+        const rad_angle = Math.atan( (hitbox.y - this.y) / (hitbox.x - this.x) );
         return this.x > hitbox.x 
 			 ? rad_angle + Math.PI 
 			 : rad_angle;
 	}
 
 	__checkCircleVsCircle(hitbox) {
-		let deltaX = Math.abs(this.x - hitbox.x),
-			deltaY = Math.abs(this.y - hitbox.y),
-			distance = (deltaX**2 + deltaY**2) ** 0.5;
+		const deltaX = Math.abs(this.x - hitbox.x),
+			  deltaY = Math.abs(this.y - hitbox.y),
+			  distance = (deltaX**2 + deltaY**2) ** 0.5;
 		return (distance < this.radius + hitbox.radius);
 	}
 
@@ -173,8 +173,8 @@ class MobileGameElement {
 		//------------------------------------------------------------------
 		// function  --> exécuter la fonction
 		// undefined --> bloquer en bordure
-	  	let window_height = this.viewport.VIRTUAL_HEIGHT,
-		 	 window_width = this.viewport.VIRTUAL_WIDTH;
+	  	const window_height = this.viewport.VIRTUAL_HEIGHT,
+		 	   window_width = this.viewport.VIRTUAL_WIDTH;
 	  	if (onScreenLeave) {
 			if (this.y > window_height || this.y < -this.pixel_size || this.x > window_width || this.x < -this.pixel_size)
 				onScreenLeave();
@@ -218,7 +218,7 @@ class MobileGameElement {
 	 * Ajoute un élément permettant de visualiser la hitbox de l'élément
 	 */
 	addVisualHitBox(isVisible) {
-		let div = document.createElement("DIV");
+		const div = document.createElement("DIV");
 		div.classList.add("hitbox");
 	
 		// On applique le coefficient pour obtenir la marge 
@@ -266,7 +266,7 @@ class MobileGameElement {
 	 * @type       {RS_Hitbox}
 	 */
 	get hitbox() {
-		let radius_coef = this.hitbox_size_coef || 1;
+		const radius_coef = this.hitbox_size_coef || 1;
 		
 		// On retourne un objet donnant le coef à appliquer à la taille 
 		return new RS_Hitbox(RS_Hitbox.SHAPE_CIRCLE, {
@@ -304,14 +304,14 @@ class GamepadGenericAdapter {
 	}
 
 	applyControl(code, isSecondaryAction) {
-		let gamepad = GamepadGenericAdapter.getConnectedGamepad();
-		for (let control of this.controls)
+		const gamepad = GamepadGenericAdapter.getConnectedGamepad();
+		for (const control of this.controls)
 			if (control.code === code)
 				control.applyContext(gamepad, isSecondaryAction);
 	}
 
 	updateJoysticksStates() {
-		let gamepad = GamepadGenericAdapter.getConnectedGamepad();
+		const gamepad = GamepadGenericAdapter.getConnectedGamepad();
 		this.leftJoystick = new GamepadJoystick(gamepad.axes[0], gamepad.axes[1]);
 		this.rightJoystick = new GamepadJoystick(gamepad.axes[2], gamepad.axes[3]);
 		if (gamepad.axes.length > 4)
@@ -319,8 +319,8 @@ class GamepadGenericAdapter {
 	}
 
 	static getConnectedGamepad() {
-		let gamepads = navigator.getGamepads();
-		for (let gamepad of gamepads)
+		const gamepads = navigator.getGamepads();
+		for (const gamepad of gamepads)
 			if (gamepad != null)
 				return gamepad;
 	}
@@ -401,7 +401,7 @@ class GamepadConfigUI {
 	show(onPopupClose) {
 		this.popup = new RS_Dialog("gamepad_config", "Configuration de la manette", [], [], [], false, 
 								  "tpl_gamepad_config.html", ()=> {
-			let container = this.popup.root_element.querySelector("#controls-gui-container");
+			const container = this.popup.root_element.querySelector("#controls-gui-container");
 			for (let i=0; i<this.controls_mapper.controls.length; i++) {
 				container.appendChild(this.__getConfigInterfaceItem(i));
 			}
@@ -415,30 +415,30 @@ class GamepadConfigUI {
 	}
 
 	__getConfigInterfaceItem(control_index) {
-		let control_mapping_item = this.controls_mapper.controls[control_index]
-		let config_interface_item = this.__getItemContainer();
+		const control_mapping_item = this.controls_mapper.controls[control_index]
+		const config_interface_item = this.__getItemContainer();
 		config_interface_item.appendChild(this.__getItemNameDiv(control_mapping_item.name));
-		let button_mapped = this.__getItemMapDiv(control_mapping_item.buttonIndex);
+		const button_mapped = this.__getItemMapDiv(control_mapping_item.buttonIndex);
 		config_interface_item.appendChild(button_mapped);
 		config_interface_item.addEventListener("click", ()=> { this.__itemClicked(button_mapped, control_index); });
 		return config_interface_item;
 	}
 
 	__getItemContainer() {
-		let config_interface_item = document.createElement("DIV");
+		const config_interface_item = document.createElement("DIV");
 		config_interface_item.classList.add("control-item-container");
 		return config_interface_item;
 	}
 
 	__getItemNameDiv(name) {
-		let control_name = document.createElement("DIV");
+		const control_name = document.createElement("DIV");
 		control_name.classList.add("control-name");
 		control_name.innerHTML = name;
 		return control_name;
 	}
 
 	__getItemMapDiv(buttonIndex) {
-		let button_mapped = document.createElement("DIV");
+		const button_mapped = document.createElement("DIV");
 		button_mapped.classList.add("button-mapped");
 		button_mapped.innerHTML = buttonIndex 
 								? "Bouton " + buttonIndex 
@@ -455,8 +455,8 @@ class GamepadConfigUI {
 	}
 
 	__captureButtonPressed(fnThen) {
-		let interval_id = setInterval(()=> {
-			let gamepad = GamepadGenericAdapter.getConnectedGamepad();
+		const interval_id = setInterval(()=> {
+			const gamepad = GamepadGenericAdapter.getConnectedGamepad();
 			for (let i=0; i<gamepad.buttons.length; i++) {
 				if (gamepad.buttons[i].pressed) {
 					clearInterval(interval_id);

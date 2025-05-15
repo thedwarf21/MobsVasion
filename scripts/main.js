@@ -156,8 +156,8 @@ class MainController {
 	}
 
     static togglePause() { 
-		let controls_state = MainController.scope.controls;
-		let was_paused = controls_state.paused;
+		const controls_state = MainController.scope.controls;
+		const was_paused = controls_state.paused;
         
 		if (!was_paused)   						// Mise en pause manuelle => ouverture de la popup paramètres
 			MainController.popups_stack.push(ParametersPopup);
@@ -167,9 +167,9 @@ class MainController {
 	}
 
 	static popMonsterRandomly() {
+		const max_x_value = MainController.viewport.VIRTUAL_WIDTH - MONSTER_SIZE;
+		const max_y_value = MainController.viewport.VIRTUAL_HEIGHT - MONSTER_SIZE;
 		let x_monster, y_monster;
-		let max_x_value = MainController.viewport.VIRTUAL_WIDTH - MONSTER_SIZE;
-		let max_y_value = MainController.viewport.VIRTUAL_HEIGHT - MONSTER_SIZE;
 
 		switch ( Math.floor(Math.random() * 4) ) { // selon la bordure choisie aléatoirement pour faire apparaître le monstre
 			case 0: // haut
@@ -208,8 +208,8 @@ class MainController {
 		MainController.scope.game.wave_pop.elapsed = 0;
 		MainController.scope.game.wave_pop.timeouts = [];
 		
+		const mobsNumber = MonstersInCurerntWave.mobsNumber(); 
 		let timeout = TIMEOUTS.before_pop;
-		let mobsNumber = MonstersInCurerntWave.mobsNumber(); 
 		for (let i=0; i<mobsNumber; i++) {
 			MainController.scope.game.wave_pop.timeouts.push(timeout);
 			timeout += Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
@@ -218,7 +218,7 @@ class MainController {
 
 
     static monsterSlayed() {
-        let monster_swag = Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
+        const monster_swag = Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG);
 		MainController.scope.game.money += monster_swag;
 		XpBarHelper.addXp(XP_PER_MONSTER);
 		if (MainController.__isWaveComplete())
@@ -236,8 +236,8 @@ class MainController {
     }
 
     static __characterRescueFees() {
-        let scope = MainController.scope.game;
-        let max_hp = Abilities.getMaxPlayerHealth();
+        const scope = MainController.scope.game;
+        const max_hp = Abilities.getMaxPlayerHealth();
 
         if (max_hp > scope.money * HP_PRICE) {
             scope.health_points = scope.money * HP_PRICE;

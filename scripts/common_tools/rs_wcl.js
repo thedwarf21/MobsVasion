@@ -33,7 +33,7 @@ function routage(url, callback, target) {
  * @param  | {Function}      | fnOk   | Fonction de rappel si succès              *
  **********************************************************************************/
 function xhr(url, method, params, fnOk) {
-  let xhttp = new XMLHttpRequest();
+  const xhttp = new XMLHttpRequest();
   xhttp.responseType = 'json';
   xhttp.onload = function () { 
     fnOk(this.response);
@@ -101,7 +101,7 @@ class RS_WCL {
    *       ==> Voir constante MsgLevel, ci-dessus                                 *
    ********************************************************************************/
   static showToastMessage(message, type, duree) {
-    let eltToast = document.getElementById("rs-toast");
+    const eltToast = document.getElementById("rs-toast");
     eltToast.innerHTML = message;
     eltToast.classList.add(type);
     eltToast.classList.add("rs-shown");
@@ -133,7 +133,7 @@ class RS_WCL {
    * @param | {string}     | cssUri     | URL de la feuille de style *
    *******************************************************************/
   static styleShadow(shadowRoot, cssUri) {
-    let linkElem = document.createElement('link');
+    const linkElem = document.createElement('link');
     linkElem.setAttribute('rel', 'stylesheet');
     linkElem.setAttribute('href', cssUri);
     shadowRoot.appendChild(linkElem);
@@ -147,7 +147,7 @@ class RS_WCL {
    * @param | {string}      | scriptUri  | URL de la ressource      *
    ******************************************************************/
   static scriptShadow(shadowRoot, type, scriptUri) {
-    let scriptElem = document.createElement("SCRIPT");
+    const scriptElem = document.createElement("SCRIPT");
     scriptElem.setAttribute("type", type);
     scriptElem.setAttribute("src", scriptUri);
     shadowRoot.appendChild(scriptElem);
@@ -175,8 +175,8 @@ class RS_WCL {
    * @return {Array}                      La liste itérable correspondante *
    *************************************************************************/
   static collectionToArray(collection) {
-    let arr = [],
-        i = collection.length;
+    const arr = [];
+    let i = collection.length;
     while (i) 
       arr[--i] = collection[i];
     return arr;
@@ -223,9 +223,9 @@ class RS_Binding {
   /* Accesseur et mutateur de la "value" du binding (le mutateur se charge du binding model -> DOM) */
   valueGetter() { return this.value; }
   valueSetter (val) {
-    let oldValue = this.value;
+    const oldValue = this.value;
     this.value = val;
-    for (let binding of this.elementBindings)
+    for (const binding of this.elementBindings)
       binding.element[binding.attribute] = val;
     if (this.setterCallback) 
       this.setterCallback(val, oldValue);
@@ -242,7 +242,7 @@ class RS_Binding {
    * @return  {RS_Binding}  Le pointeur "this" est retourné pour permettre les appels chaînés *
    ********************************************************************************************/
   addBinding(element, attribute, event, callback) {
-    let binding = {
+    const binding = {
       element: element,
       attribute: attribute
     };
@@ -250,7 +250,7 @@ class RS_Binding {
     // Si un événement est passé en paramètre, on met en place un binding DOM -> model
     if (event) {
       element.addEventListener(event, (event)=> {
-        let val = event.srcElement[attribute];
+        const val = event.srcElement[attribute];
         this.valueSetter(val);
         if (callback)
           callback(val);
@@ -299,7 +299,7 @@ class RS_Binding {
   static bindModel(rs_model, element, attribute, eventName, callback, setter) {
 
     // Création du binding
-    let [target_obj, property] = RS_Binding.getObjectAndPropertyNameFromModel(rs_model);
+    const [target_obj, property] = RS_Binding.getObjectAndPropertyNameFromModel(rs_model);
     new RS_Binding({
       object: target_obj,
       property: property,
@@ -321,8 +321,8 @@ class RS_Binding {
   static getObjectAndPropertyNameFromModel(rs_model) {
     
     // Extraction du nom de propriété
-    let rs_model_split = rs_model.split(".");
-    let property = rs_model_split.pop();
+    const rs_model_split = rs_model.split(".");
+    const property = rs_model_split.pop();
 
     // On se positionne sur l'objet concerné (ciblage de l'objet référencé par la string)
     let target_obj = document.currentController;
@@ -330,8 +330,8 @@ class RS_Binding {
       rs_model_split.shift();
 
     // Parcourt des sous-propriétés
-    for (let sub_object of rs_model_split) {
-      let idx_crochet = sub_object.indexOf("[");
+    for (const sub_object of rs_model_split) {
+      const idx_crochet = sub_object.indexOf("[");
       if (idx_crochet > -1) {
         target_obj = RS_Binding.updateTarget(target_obj, sub_object.substring(0, idx_crochet), true);
         target_obj = RS_Binding.updateTarget(target_obj, sub_object.substring(idx_crochet + 1, sub_object.length - 1), false);
@@ -366,34 +366,34 @@ class RS_Binding {
  ********************************************************************/
 function RS_ArrayObserver(arr, callback, isRecursive) {
   arr.push = (obj)=> {
-    let push = Array.prototype.push.apply(arr, [obj]);
+    const push = Array.prototype.push.apply(arr, [obj]);
     callback(push);
     if (isRecursive)
       RS_BindValuesRecursively(arr, arr.length - 1, ()=> { callback(); });
     return push;
   };
   arr.pop = function() {
-    let popped = Array.prototype.pop.apply(arr, []);
+    const popped = Array.prototype.pop.apply(arr, []);
     callback(popped);
     return popped;
   };
   arr.reverse = function() {
-    let result = Array.prototype.reverse.apply(arr, []);
+    const result = Array.prototype.reverse.apply(arr, []);
     callback(result);
     return result;
   };
   arr.shift = function() {
-    let deleted_item = Array.prototype.shift.apply(arr, []);
+    const deleted_item = Array.prototype.shift.apply(arr, []);
     callback(deleted_item);
     return deleted_item;
   };
   arr.sort = function() {
-    let result = Array.prototype.sort.apply(arr, []);
+    const result = Array.prototype.sort.apply(arr, []);
     callback(result);
     return result;
   };
   arr.splice = function(i, length, itemsToInsert) {
-    let deleted_objects = Array.prototype.splice.apply(arr, arguments);
+    const deleted_objects = Array.prototype.splice.apply(arr, arguments);
     callback(deleted_objects);
     if (isRecursive)
       for (let idx = i; idx < i + arguments.length - 2; idx++)
@@ -401,7 +401,7 @@ function RS_ArrayObserver(arr, callback, isRecursive) {
     return deleted_objects;
   };
   arr.unshift = function() {
-    let new_length = Array.prototype.unshift.apply(arr, arguments);
+    const new_length = Array.prototype.unshift.apply(arr, arguments);
     callback();
     if (isRecursive)
       RS_BindValuesRecursively(arr, 0, ()=> { callback(); });
@@ -422,14 +422,14 @@ function RS_BindValuesRecursively(target_obj, property, callback) {
   // S'il s'agit d'une liste, on place un observer d'Array, en plus du bind de base
   // S'il s'agit d'un objet, il faut parcourir les propriétés
   // Dans un cas comme dans l'autre, il va falloir descendre récursivement dans les éléments/propriétés
-  let targeted_prop = target_obj[property];
+  const targeted_prop = target_obj[property];
   RS_Binding.bindLoop(target_obj, property, ()=> { callback(); });
   if (Array.isArray(targeted_prop)) {
     RS_ArrayObserver(targeted_prop, ()=> { callback(); }, true);
     for (let idx = 0; idx < targeted_prop.length; idx++)
       RS_BindValuesRecursively(targeted_prop, idx, ()=> { callback(); });
   } else if (typeof(targeted_prop) == 'object') {
-    for (let prop in targeted_prop)
+    for (const prop in targeted_prop)
       RS_BindValuesRecursively(targeted_prop, prop, ()=> { callback(); });
   }
 }

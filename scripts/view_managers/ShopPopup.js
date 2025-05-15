@@ -9,10 +9,10 @@ class ShopPopup extends AbstractPopup {
     show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog("shop_dialog", "Pense à faire le plein, avant d'y retourner", [], [], [], false, "tpl_shop.html", ()=> {  
             
-            let shop_items_container = this.__querySelector("#items-container"); 
+            const shop_items_container = this.__querySelector("#items-container"); 
             MainController.shop_manager.setShopItemsContainer( shop_items_container );
 
-            let item_description_element = this.__querySelector("#item-description");
+            const item_description_element = this.__querySelector("#item-description");
             MainController.shop_manager.setShopItemDescriptionElement( item_description_element );
 			
             this.switchToMoneyShop();
@@ -57,7 +57,7 @@ class ShopPopup extends AbstractPopup {
     }
 
     __initKnowledgeDisplay() {
-        let knowledge_element = this.__querySelector("#knowledge_points");
+        const knowledge_element = this.__querySelector("#knowledge_points");
         knowledge_element.innerHTML = MainController.scope.game.knowledge_points;
         new RS_Binding({
             object: MainController.scope.game,
@@ -68,23 +68,23 @@ class ShopPopup extends AbstractPopup {
     /*********  AbstractPopup methods implementation  *********/
     
     navigateUp() {
-        let active_item_position = this.__getLineAndColumnNumbers();
-        let new_line = active_item_position.line - 1;
-        let new_active_ident = `${active_item_position.column}_${new_line}`;
+        const active_item_position = this.__getLineAndColumnNumbers();
+        const new_line = active_item_position.line - 1;
+        const new_active_ident = `${active_item_position.column}_${new_line}`;
         this.setActiveItem(new_active_ident);
     }
 
     navigateDown() {
-        let active_item_position = this.__getLineAndColumnNumbers();
-        let new_line = active_item_position.line + 1;
-        let new_active_ident = `${active_item_position.column}_${new_line}`;
+        const active_item_position = this.__getLineAndColumnNumbers();
+        const new_line = active_item_position.line + 1;
+        const new_active_ident = `${active_item_position.column}_${new_line}`;
         this.setActiveItem(new_active_ident);
     }
 
     navigateLeft() {
-        let active_item_position = this.__getLineAndColumnNumbers();
-        let new_col = active_item_position.column - 1;
-        let new_active_ident = `${new_col}_${active_item_position.line}`;
+        const active_item_position = this.__getLineAndColumnNumbers();
+        const new_col = active_item_position.column - 1;
+        const new_active_ident = `${new_col}_${active_item_position.line}`;
         
         if (new_col == 0)
             this.switchToMoneyShop();
@@ -93,9 +93,9 @@ class ShopPopup extends AbstractPopup {
     }
 
     navigateRight() {
-        let active_item_position = this.__getLineAndColumnNumbers();
-        let new_col = active_item_position.column + 1;
-        let new_active_ident = `${new_col}_${active_item_position.line}`;
+        const active_item_position = this.__getLineAndColumnNumbers();
+        const new_col = active_item_position.column + 1;
+        const new_active_ident = `${new_col}_${active_item_position.line}`;
         
         if (new_col == 1)
             this.switchToTrainingRoom();

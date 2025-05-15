@@ -21,7 +21,7 @@ class MainUI {
 		this.__clearMonsters();
 		this.__clearGauges();		
 
-		let soil_index = Tools.radomValueInRange(0, 2);
+		const soil_index = Tools.radomValueInRange(0, 2);
 		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
 		this.game_window.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
     }
@@ -62,12 +62,12 @@ class MainUI {
 	}
 
 	refreshAllHitboxesVisibility() {
-		for (let hitbox of this.hitboxes)
+		for (const hitbox of this.hitboxes)
 			hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
 	}
 
 	closeAllPopups() {
-		let gamepadControlsUI = MainController.scope.gamepadControlsUI;
+		const gamepadControlsUI = MainController.scope.gamepadControlsUI;
 		if (gamepadControlsUI) {
 			gamepadControlsUI.closeModal();
 			MainController.scope.controls.paused = false;
@@ -97,7 +97,7 @@ class MainUI {
     }
 
     __prepareAmmoAutoRefresh() {
-		let html_element = document.querySelector(".ammo-display #current");
+		const html_element = document.querySelector(".ammo-display #current");
         new RS_Binding({
 			object: MainController.scope.game,
 			property: "clip_ammo",
@@ -113,7 +113,7 @@ class MainUI {
     __prepareLifeBarAutoRefresh(character_health_bar) {
 		this.addToGameWindow(character_health_bar.root_element);
 
-		let html_element = document.querySelector(".health-display #current");
+		const html_element = document.querySelector(".health-display #current");
 		html_element.innerHTML = CHARACTER_MAX_LIFE;
 		new RS_Binding({
 			object: MainController.scope.game,

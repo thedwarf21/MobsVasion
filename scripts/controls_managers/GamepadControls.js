@@ -4,13 +4,13 @@ class GamepadControls {
 		window.addEventListener('gamepadconnected', (event)=> {
 			console.info("Manette connectée");
 
-			let controls = controller.scope.controls;
-			let gamepad = new GamepadGenericAdapter();
+			const controls = controller.scope.controls;
+			const gamepad = new GamepadGenericAdapter();
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
 
-			let menu_controls = controls.gamepad_menu_nav;
+			const menu_controls = controls.gamepad_menu_nav;
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_up, 		"Menu : haut", 		()=> { menu_controls.up = true; });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_down, 	"Menu : bas", 		()=> { menu_controls.down = true; });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_left, 	"Menu : gauche", 	()=> { menu_controls.left = true; });
@@ -19,11 +19,11 @@ class GamepadControls {
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_cancel, 	"Menu : annuler", 	()=> { menu_controls.cancel = true; });
 			controller.timer.gamepad_mapper = gamepad;
 			
-			let was_paused = controls.paused;
+			const was_paused = controls.paused;
 			controls.paused = true;
 			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, ()=> { controls.paused = was_paused; });
 
-			let active_popup = MainController.popups_stack.activePopup();
+			const active_popup = MainController.popups_stack.activePopup();
 			if (active_popup)
 				active_popup.highlightActiveItem();
 		});
@@ -42,14 +42,14 @@ class GamepadControls {
 		controls_state.firing_secondary = false;
 		controls_state.reloading = false;
 
-		for (let key in controls_state.gamepad_menu_nav)
+		for (const key in controls_state.gamepad_menu_nav)
 			controls_state.gamepad_menu_nav[ key ] = false;
 	}
 
 	static applyMenuControls() {
 		MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.pause);
 
-		let active_popup = MainController.popups_stack.activePopup();
+		const active_popup = MainController.popups_stack.activePopup();
 		if (active_popup) {
 
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_up);
@@ -59,7 +59,7 @@ class GamepadControls {
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_validate);
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.menu_cancel);
 			
-			let menu_controls = MainController.scope.controls.gamepad_menu_nav;
+			const menu_controls = MainController.scope.controls.gamepad_menu_nav;
 			if (menu_controls.up) 			active_popup.navigateUp();
 			if (menu_controls.down) 		active_popup.navigateDown();
 			if (menu_controls.left) 		active_popup.navigateLeft();
@@ -79,9 +79,9 @@ class GamepadControls {
 	}
 
 	static __applyJoysticksControls() {
-		let character = MainController.UI.character;
-		let leftJoystick = MainController.timer.gamepad_mapper.leftJoystick;
-		let rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
+		const character = MainController.UI.character;
+		const leftJoystick = MainController.timer.gamepad_mapper.leftJoystick;
+		const rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
 
 		GamepadControls.__applyMoveJoystick(leftJoystick, character);
 		GamepadControls.__applyFireJoystick(rightJoystick, character);

@@ -10,7 +10,7 @@ class ShopManager {
         
         this.__createHealingItems();
 
-        for (let shop_item of shop_scope) {
+        for (const shop_item of shop_scope) {
             this.__shop_items.push( new ShopItem(shop_item) );
         }
     }
@@ -21,7 +21,7 @@ class ShopManager {
 	refreshAllShopItems() {
         this.__refreshHealingItems();
 
-		for (let shop_item of this.__shop_items)
+		for (const shop_item of this.__shop_items)
             shop_item.refreshHtmlDetails();
 	}
 
@@ -29,7 +29,7 @@ class ShopManager {
         this.__shop_items_container.innerHTML = "";
         this.__attachHealingItems();
         
-        for (let shop_item of this.__shop_items) {
+        for (const shop_item of this.__shop_items) {
             if (shop_item.is_money_priced_item)
                 this.__shop_items_container.appendChild(shop_item.html_element);
         }
@@ -38,7 +38,7 @@ class ShopManager {
     displayTrainingRoom() {
         this.__shop_items_container.innerHTML = "";
 
-        for (let shop_item of this.__shop_items) {
+        for (const shop_item of this.__shop_items) {
             if (!shop_item.is_money_priced_item)
                 this.__shop_items_container.appendChild(shop_item.html_element);
         }
@@ -54,20 +54,20 @@ class ShopManager {
     }
 
     __createHealingItems() {        
-        let small_heal =  new ShopHealingItem("Verre d'eau", 2, 5, "0_0");
+        const small_heal =  new ShopHealingItem("Verre d'eau", 2, 5, "0_0");
         this.__healing_items.push(small_heal);
 
-        let large_heal = new ShopHealingItem("Repas chaud", 8, 25, "0_1");
+        const large_heal = new ShopHealingItem("Repas chaud", 8, 25, "0_1");
         this.__healing_items.push(large_heal);
     }
 
     __attachHealingItems() {
-        for (let healing_item of this.__healing_items)
+        for (const healing_item of this.__healing_items)
             this.__shop_items_container.appendChild(healing_item.root_element);
     }
 
     __refreshHealingItems() {
-        for (let shop_item of this.__healing_items) {
+        for (const shop_item of this.__healing_items) {
             shop_item.refresh();
         }
     }
