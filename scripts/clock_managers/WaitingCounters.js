@@ -49,7 +49,7 @@ class WaitingCounters {
 	static __performCounterEndAction(counter_key) {
 		switch(counter_key) {
 			case "clip":
-				MainController.scope.game.clip_ammo = CLIP_SIZE;
+				MainController.scope.game.clip_ammo = Abilities.getClipSize();
 				MainController.UI.primaryReloadGauge.root_element.remove();
 				MainController.UI.primaryReloadGauge = null;
 				break;
