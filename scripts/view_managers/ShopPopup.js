@@ -114,8 +114,9 @@ class ShopPopup extends AbstractPopup {
         this.switchToMoneyShop();
     }
 
-    __autoScrollDown(line) {
-        const scroll_needs = line + 1 - 4;
+    __autoScrollDown(line_index) {
+        const visible_items_number = 4;
+        const scroll_needs = line_index + 1 - visible_items_number;
         
         if (scroll_needs > 0) {
             const scroll_y = scroll_needs * this.__itemHeight();
@@ -126,8 +127,8 @@ class ShopPopup extends AbstractPopup {
         }
     }
 
-    __autoScrollUp(line) {
-        const scroll_y = line * this.__itemHeight();
+    __autoScrollUp(line_index) {
+        const scroll_y = line_index * this.__itemHeight();
         const items_container = this.__querySelector("#items-container");
         const scroll_needed = scroll_y < items_container.scrollTop;
         
