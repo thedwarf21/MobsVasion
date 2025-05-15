@@ -56,6 +56,29 @@ class MV_GameInitializer {
 			},
 			gamepad_mapper: null,
 			shop: [{
+				name: "Détecteur de métaux",
+				code: "DET",
+				description: "Cet accessoire te permettra de récupérer plus de pièces sur les monstres",
+				lbl_effect: "Nombre maximum de pièces par monstre",
+				max_level: 5,
+				level_0_effect: 0,
+				upgrade_value: 1,
+				level_1_price: 20,
+				level_2_price_coef : 1.75,
+				current_level: 0,
+				nav_id: "0_2"
+			}, {
+				name: "Chargeur haute capacité",
+				code: "CHC",
+				description: "Bricolons un peu ton arme, pour augmenter la capacité du chargeur",
+				lbl_effect: "Capacité du chargeur",
+				level_0_effect: CLIP_SIZE,
+				upgrade_value: 1,
+				level_1_price: 30,
+				level_2_price_coef : 1.5,
+				current_level: 0,
+				nav_id: "0_3"
+			}, {
 				name: "Déluge de balles",
 				code: "RAT",
 				description: "Réduit le recul de l'arme, pour faciliter la visée entre deux coups de feu",
@@ -67,7 +90,7 @@ class MV_GameInitializer {
 				level_1_price: 80,
 				level_2_price_coef : 1.75,
 				current_level: 0,
-				nav_id: "0_2"
+				nav_id: "0_4"
 			}, {
 				name: "Puissance de feu",
 				code: "POW",
@@ -78,7 +101,7 @@ class MV_GameInitializer {
 				level_1_price: 40,
 				level_2_price_coef : 1.75,
 				current_level: 0,
-				nav_id: "0_3"
+				nav_id: "0_5"
 			}, {
 				name: "Constitution",
 				code: "CON",

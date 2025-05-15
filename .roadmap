@@ -131,9 +131,9 @@ V   Tâche terminée
         >   gérer une progress-bar additionnelle dans la barre de vie
         >   mouseenter / mouseleave => déclencher l'apparition/disparition de la progress-bar additionnelle
         >   gérer cette problématique pour la navigation manette dans le menu
-    _   Nouveaux items dans le magasin
-        _   ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
-        _   ajouter l'item "Chargeur haute capacité" => augmentation des munitions dans le chargeur
+    X   Nouveaux items dans le magasin
+        x   ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
+        x   ajouter l'item "Chargeur haute capacité" => augmentation des munitions dans le chargeur
         _   ajouter l'item "Tenue matelassée" => ajout d'une armure, absorbant les dégâts, mais ralentissant légèrement les déplacement (bah oui, c'est moins pratique pour bouger)
             _   gérer la nouvelle jauge, et les données qui vont avec
             _   ne pas oublier de gérer l'effet de ralentissement tant que l'armure est là
@@ -164,7 +164,8 @@ _   controls_managers => objets instanciés, inclus dans une propriété dédié
 _   Entité de traduction du MouseEvent.buttons, sous forme de liste de booléens, pour en simplifier l'exploitation
  
 
------------- À AJOUTER ENSUITE ------------
+------------ À AJOUTER DANS VERSIONS SUIVANTES ------------
+Tuto scénarisé sur nouvelle partie (explications par le PNJ, au fil de l'eau)
 Choix dans le lobby, entre plusieurs armes pour le tir principal   \
 Choix dans le lobby, entre plusieurs armes pour le tir secondaire   |=> facilitation à la création de nouveau contenu
 Définir de nouveaux types de monstres                              /

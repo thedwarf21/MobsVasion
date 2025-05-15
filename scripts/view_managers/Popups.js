@@ -78,13 +78,15 @@ class AbstractPopup {
     }
 
     setActiveItem(new_active_ident) {
-        if (this.__querySelector(`[nav-ident='${new_active_ident}']`)) {
-            this.leaveActiveItem();
-            this.active_item_id = new_active_ident;
-            this.highlightActiveItem();
+        if ( !this.__querySelector(`[nav-ident='${new_active_ident}']`) )
+            return false;
 
-            JuiceHelper.popupNavigate();
-        }
+        this.leaveActiveItem();
+        this.active_item_id = new_active_ident;
+        this.highlightActiveItem();
+
+        JuiceHelper.popupNavigate();
+        return true;
     }
 
     __getLineAndColumnNumbers() {

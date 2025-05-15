@@ -71,14 +71,18 @@ class ShopPopup extends AbstractPopup {
         const active_item_position = this.__getLineAndColumnNumbers();
         const new_line = active_item_position.line - 1;
         const new_active_ident = `${active_item_position.column}_${new_line}`;
-        this.setActiveItem(new_active_ident);
+        
+        if ( this.setActiveItem(new_active_ident) && active_item_position.column === 0 )
+            this.__autoScrollUp(new_line);
     }
 
     navigateDown() {
         const active_item_position = this.__getLineAndColumnNumbers();
         const new_line = active_item_position.line + 1;
         const new_active_ident = `${active_item_position.column}_${new_line}`;
-        this.setActiveItem(new_active_ident);
+        
+        if ( this.setActiveItem(new_active_ident) && active_item_position.column === 0 )
+            this.__autoScrollDown(new_line);
     }
 
     navigateLeft() {
@@ -109,4 +113,31 @@ class ShopPopup extends AbstractPopup {
         super.__registerMenuItems();
         this.switchToMoneyShop();
     }
+
+    __autoScrollDown(line) {
+        const scroll_needs = line + 1 - 4;
+        
+        if (scroll_needs > 0) {
+            const scroll_y = scroll_needs * this.__itemHeight();
+            this.__querySelector("#items-container").scrollTo({
+                behavior: "smooth",
+                top: scroll_y
+            });
+        }
+    }
+
+    __autoScrollUp(line) {
+        const scroll_y = line * this.__itemHeight();
+        const items_container = this.__querySelector("#items-container");
+        const scroll_needed = scroll_y < items_container.scrollTop;
+        
+        if (scroll_needed) {
+            items_container.scrollTo({
+                behavior: "smooth",
+                top: scroll_y
+            });
+        }
+    }
+
+    __itemHeight() { return 0.08 * document.body.clientHeight; }
 }

@@ -25,7 +25,6 @@
 }
 
 .shop-items-wrapper {
-    overflow-y: auto;
     display: flex;
     flex-direction: row;
 }
@@ -41,6 +40,8 @@
     max-height: 35vh;
     padding-left: 1vh;
     padding-right: 1vh;
+    
+    overflow-y: auto;
 }
 
 .shop-item {
