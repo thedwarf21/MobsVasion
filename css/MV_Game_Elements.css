@@ -2,7 +2,7 @@
 	position: absolute;
 	height: 8.3vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_vaisseau_px)  */
 	width: 8.3vh;
-	z-index: 2;
+	z-index: 1;
 }
 .character .spinning-image {
     width: 100%;
@@ -19,13 +19,14 @@
 	border-radius: 50%;
 	width: 0.8vh;
 	height: 0.8vh;
+	z-index: 1;
 }
 
 .monster {
 	position: absolute;
 	height: 10vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_vaisseau_px)  */
 	width: 10vh;
-	z-index: 2;
+	z-index: 1;
 }
 .monster .spinning-image {
 	width: 100%;
@@ -48,7 +49,7 @@
 	height: 4vh;
 	background-size: contain;
   	background-repeat: no-repeat;
-	z-index: 1;
+	z-index: 0;
 }
 
 .fire {
