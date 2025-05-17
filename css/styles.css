@@ -19,6 +19,7 @@ body {
 	background: url('../images/soil_desert.png');
 	background-size: 15vh;
 	cursor: crosshair;
+	z-index: 0;
 }
 
 .ath-background {
