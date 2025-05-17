@@ -19,8 +19,8 @@
 	position: absolute;
 	border-radius: 50%;
 	background: radial-gradient(circle at center, white 10%, transparent);
-	width: 15vh;
-	height: 15vh;
+	width: 18vh;
+	height: 18vh;
 	z-index: 9;
 
 	display: flex;
@@ -53,8 +53,8 @@
 }
 .hud .virtual-joystick .stick {
 	border-radius: 50%;
-	width: 12vh;
-	height: 12vh;
+	width: 14vh;
+	height: 14vh;
 	background: radial-gradient(circle at center, rgba(0,0,0,0.6) 40%, black 60%, transparent);
 }
 
@@ -64,15 +64,15 @@
 }
 
 .button.secondary-fire {
-	right: 21vh;
-	bottom: 19vh;
-	height: 6vh;
-	width: 6vh;
+	right: 24vh;
+	bottom: 22vh;
+	height: 8vh;
+	width: 8vh;
 }
 
 .button.reload {
-	right: 21vh;
-	bottom: 11vh;
-	height: 6vh;
-	width: 6vh;
+	right: 24vh;
+	bottom: 10vh;
+	height: 8vh;
+	width: 8vh;
 }

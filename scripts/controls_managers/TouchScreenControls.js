@@ -128,6 +128,7 @@ class VirtualJoystick {
 			if (this.start_x === null || this.start_y === null)
 				return;
 
+			const stick_movement = 3;
 			const current_touch = this.__getTouch(e.touches);
 			const delta_x = current_touch.clientX - this.start_x;
 			const delta_y = current_touch.clientY - this.start_y;
@@ -137,7 +138,7 @@ class VirtualJoystick {
 			this.angle = Math.atan2(delta_y, delta_x);
 			MainController.UI.character.angle = this.angle;
 
-			this.stick_element.style.transform = `translate(${2 * Math.cos(this.angle)}vh, ${2 * Math.sin(this.angle)}vh)`;
+			this.stick_element.style.transform = `translate(${stick_movement * Math.cos(this.angle)}vh, ${stick_movement * Math.sin(this.angle)}vh)`;
 		});
 
 		this.global_element.addEventListener("touchend", (e)=> { this.reset(); });
