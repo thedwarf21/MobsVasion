@@ -156,7 +156,6 @@ class MainController {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
 		MV_GameInitializer.prepareGame(MainController, ()=> {
 			MainController.startWave(true);
-			MainController.scope.controls.paused = false;
 		});
 	}
 
@@ -200,15 +199,21 @@ class MainController {
 
     static startWave(is_silent_save) {
 		MainController.save_manager.saveGame(is_silent_save);
-
+		
 		MainController.scope.game.clip_ammo = Abilities.getClipSize();
 		MainController.UI.clearGameWindow();
 		WaitingCounters.clear();
-
+		
 		JuiceHelper.characterPop();
-		JuiceHelper.startWaveMusic();
 		MainController.__scheduleLevelMonstersPop();
+		
+		setTimeout(TutorialHelper.showIntro, 1000);
     }
+
+	static startForReal() {
+		JuiceHelper.startWaveMusic();
+		MainController.scope.controls.paused = false;
+	}
 
 	static __scheduleLevelMonstersPop() {
 		MainController.scope.game.wave_pop.elapsed = 0;

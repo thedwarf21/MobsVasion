@@ -60,7 +60,7 @@ input { cursor: pointer; }
     width: 35vh;
 }
 
-/** UI rapport fin de vague */
+/** UI rapport fin de vague + tutoriel */
 #friend-face {
     max-height: 35vh;
     margin-top: 3vh;
@@ -70,4 +70,8 @@ input { cursor: pointer; }
     font-weight: bold;
     margin: 2vh;
     margin-top: 0;
+}
+#message.tutorial {
+    font-size: 2.5vh;
+    font-weight: normal;
 }
