@@ -25,14 +25,20 @@
 	</div>
 
 	<div class="modal-line">
+		<div class="pref-title"><b>Clavier QWERTY:</b></div>
+		<input type="checkbox" class="pref-value" id="is_qwerty" nav-ident="0_4" />
+		<!-- Attribut "value" synchronisé à  MainController.scope.controls.is_qwerty -->
+	</div>
+
+	<div class="modal-line">
 		<div class="pref-title"><b>Afficher les hitbox:</b></div>
-		<input type="checkbox" class="pref-value" id="show_hitboxes" nav-ident="0_4" />
+		<input type="checkbox" class="pref-value" id="show_hitboxes" nav-ident="0_5" />
 		<!-- Attribut "checked" synchronisé à MainController.scope.game.showHitboxes -->
 	</div>
 </div>
 
 <!-- Bouton de fermeture -->
 <div class="dialog-footer">
-	<input type="button" class="modal-button" value="Fermer" id="btn_close" nav-ident="0_5" onclick="MainController.popups_stack.pop()" />
-	<input type="button" class="modal-button" value="Paramétrer la manette" id="btn_gamepad_controls" nav-ident="1_5" onclick="MainController.scope.gamepadControlsUI.show();" />
+	<input type="button" class="modal-button" value="Fermer" id="btn_close" nav-ident="0_6" onclick="MainController.popups_stack.pop()" />
+	<input type="button" class="modal-button" value="Paramétrer la manette" id="btn_gamepad_controls" nav-ident="1_6" onclick="MainController.scope.gamepadControlsUI.show();" />
 </div>

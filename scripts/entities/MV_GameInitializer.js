@@ -35,6 +35,7 @@ class MV_GameInitializer {
 				downPressed: false,
 				rightPressed: false,
 				leftPressed: false,
+				is_qwerty: false,
 				mousePosition: {
 					x: 0,
 					y: 0

@@ -6,9 +6,9 @@ class KeyboardAndMouseControls {
 			const key = e.key.toLowerCase();
 			if (key === "s")
 				controls.downPressed = true;
-			else if (key === "z")
+			else if ((controls.is_qwerty && key === "w") || (!controls.is_qwerty && key === "z"))
 				controls.upPressed = true;
-			else if (key === "q")
+			else if ((controls.is_qwerty && key === "a") || (!controls.is_qwerty && key === "q"))
 				controls.leftPressed = true;
 			else if (key === "d")
 				controls.rightPressed = true;
@@ -21,9 +21,9 @@ class KeyboardAndMouseControls {
 			const key = e.key.toLowerCase();
 			if (key === "s")
 				controls.downPressed = false;
-			if (key === "z")
+			if ((controls.is_qwerty && key === "w") || (!controls.is_qwerty && key === "z"))
 				controls.upPressed = false;
-			if (key === "q")
+			if ((controls.is_qwerty && key === "a") || (!controls.is_qwerty && key === "q"))
 				controls.leftPressed = false;
 			if (key === "d")
 				controls.rightPressed = false;
