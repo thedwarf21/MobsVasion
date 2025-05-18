@@ -72,6 +72,5 @@ input { cursor: pointer; }
     margin-top: 0;
 }
 #message.tutorial {
-    font-size: 2.5vh;
     font-weight: normal;
 }

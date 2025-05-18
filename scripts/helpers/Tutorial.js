@@ -6,8 +6,8 @@ class TutorialHelper {
 
         JuiceHelper.startShopMusic();
 
-        const controls_sequence = TutorialHelper.controlsSequence();
-        TutorialHelper.popupsSequence(
+        const controls_sequence = TutorialHelper.__controlsSequence();
+        TutorialHelper.__popupsSequence(
             [{
                 message_lines: ["Hey, salut toi !!", 
                                 "C'est cool de croiser de quelqu'un, ici."],
@@ -53,7 +53,22 @@ class TutorialHelper {
         );
     }
 
-    static controlsSequence() {
+    static showShopTutorial() {
+        if (MainController.scope.game.wave_number > 2)
+            return;
+
+        TutorialHelper.__popupsSequence(
+            [{
+                message_lines: ["Merci de m'avoir aidé à reprendre le contrôle de mon labo.", 
+                                "Je te présente ton nouveau chez toi... ou plutôt, notre chez nous."],
+                face: FRIEND_FACES.happy
+            }], ()=> {
+                setTimeout( TutorialHelper.__showMoneyShopTutorial, 1500 );
+            }
+        );
+    }
+
+    static __controlsSequence() {
         if ( window.matchMedia('(display-mode: standalone)').matches ) { // permet de savoir si l'utilisateur est sur mobile ou sur PC
             return [{
                 message_lines: ["Au fait, au cas où ça pourrait t'aider, j'ai lu quelque part que le <b>joysitck virtuel</b>, à gauche, permettait de se déplacer, tandis que les <b>boutons à droite</b> permettaient d'effectuer diverses actions : ",
@@ -83,76 +98,66 @@ class TutorialHelper {
         }
     }
 
-    static showShopTutorial() {
-        if (MainController.scope.game.wave_number > 2)
-            return;
-
-        TutorialHelper.popupsSequence(
-            [{
-                message_lines: ["Merci de m'avoir aidé à reprendre le contrôle de mon labo.", 
-                                "Je te présente ton nouveau chez toi... ou plutôt, notre chez nous."],
-                face: FRIEND_FACES.happy
-            }], ()=> {
-                setTimeout( TutorialHelper.showMoneyShopTutorial, 1500 );
-            }
-        );
-    }
-
-    static showMoneyShopTutorial() {
-        TutorialHelper.popupsSequence(
+    static __showMoneyShopTutorial() {
+        TutorialHelper.__popupsSequence(
             [{
                 message_lines: ["Ici tu trouveras de quoi te retaurer, entre deux sorties. Mais ce n'est pas gratuit, hein...", 
                                 "Et comme promis, je pourrai améliorer ton équipement, si tu me ramène de quoi travailler."],
                 face: FRIEND_FACES.happy
             }, {
                 message_lines: ["J'avais bricolé un système de téléportation d'urgence permettant de revenir ici instantanément en cas de problème.", 
-                                "Par chance, il semble encore en état de marche. Je vais te raccorder au système de contrôle, et paramétrer la machine pour qu'elle te ramène automatiquement, en cas de problème.",
-                                "Compte sur moi pour te soigner dans la limite de ce que j'ai sous la main, si ça devait se produire."],
+                                "Je me demande s'il fonctionne toujours..."],
                 face: FRIEND_FACES.worried
+            }, {
+                message_lines: ["Par chance, il semble encore en état de marche. Je vais te raccorder au système de contrôle, et paramétrer la machine pour qu'elle te ramène automatiquement, en cas de problème.",
+                                "Compte sur moi pour te soigner dans la limite de ce que j'ai sous la main, si ça devait se produire."],
+                face: FRIEND_FACES.happy
             }], ()=> {
                 MainController.popups_stack.activePopup().switchToTrainingRoom();
-                setTimeout( TutorialHelper.showTrainingRoomTutorial, 1500 );
+                setTimeout( TutorialHelper.__showTrainingRoomTutorial, 1500 );
             }
         );
     }
 
-    static showTrainingRoomTutorial() {
-        TutorialHelper.popupsSequence(
+    static __showTrainingRoomTutorial() {
+        TutorialHelper.__popupsSequence(
             [{
                 message_lines: ["Ici, c'est la salle d'entrainement.", 
                                 "Tu peux y développer tes compétences physiques."],
                 face: FRIEND_FACES.happy
             }, {
                 message_lines: ["J'ai lu dans un livre sur le sujet, qu'il était nécessaire de s'entrainer concrètement en amont, pour que l'entrainement en salle soit efficace.",
-                                "D'après ce livre, tuer des monstres permet de <b>gagner de l'expérience</b>, qui permet ensuite de <b>gagner des niveaux</b>.",
-                                "Chaque nouveau niveau, te permet d'obtenir un <b>point de compétences</b> utilisable en salle pour améliorer tes caractéristiques."],
+                                "D'après ce livre, tuer des monstres permet de <b>gagner de l'expérience</b>, qui permet ensuite de <b>gagner des niveaux</b>."],
                 face: FRIEND_FACES.worried
             }, {
-                message_lines: ["J'ai l'impression que tu es mûr pour utiliser la salle, après ce premier combat, alors fais-toi plaisir.", 
-                                "Voilà, tu sais tout. Je te laisse. À très vite."],
+                message_lines: ["Chaque nouveau niveau, te permet d'obtenir un <b>point de compétences</b> utilisable ici pour améliorer tes caractéristiques.", 
+                                "D'ailleurs, j'ai l'impression que tu es mûr pour utiliser la salle, après ce premier combat."],
+                face: FRIEND_FACES.happy
+            }, {
+                message_lines: ["Voilà, tu sais tout. Je te laisse. À très vite."],
                 face: FRIEND_FACES.happy
             }], ()=> {}
         );
     }
 
-    static popupsSequence(dialogs, fn_on_sequence_end) {
+    static __popupsSequence(dialogs, fn_on_sequence_end) {
         const next_dialog = dialogs.shift();
-        const message = TutorialHelper.fromMessageLines(next_dialog.message_lines);
-        TutorialHelper.showPopup(message, next_dialog.face, ()=> {
+        const message = TutorialHelper.__fromMessageLines(next_dialog.message_lines);
+        TutorialHelper.__showPopup(message, next_dialog.face, ()=> {
             if (dialogs.length > 0)
-                TutorialHelper.popupsSequence(dialogs, fn_on_sequence_end);
+                TutorialHelper.__popupsSequence(dialogs, fn_on_sequence_end);
             else fn_on_sequence_end();
         })
     }
 
-    static fromMessageLines(message_lines) {
+    static __fromMessageLines(message_lines) {
         let html_message = "";
         for (let line of message_lines)
             html_message += `<p>${line}</p>`;
         return html_message;
     }
 
-    static showPopup(message, friend_face_url, fn_on_close) {
+    static __showPopup(message, friend_face_url, fn_on_close) {
 		MainController.report_popup = new RS_Dialog("report_dialog", "Introduction", [], [], [], false, "tpl_report.html", function() {
             MainController.report_popup.root_element.querySelector("#friend-face").src = friend_face_url; 
             const message_container = MainController.report_popup.root_element.querySelector("#message");
