@@ -155,7 +155,7 @@ class MainController {
 	static onLoad() {
 		MainController.viewport = new RS_ViewPortCompatibility("y", WINDOW_HEIGHT);
 		MV_GameInitializer.prepareGame(MainController, ()=> {
-			MainController.startWave(true);
+			MainController.prepareWaveStart(true);
 		});
 	}
 
@@ -166,7 +166,7 @@ class MainController {
 		if (!was_paused)   						// Mise en pause manuelle => ouverture de la popup paramètres
 			MainController.popups_stack.push(ParametersPopup);
 		else if (MainController.report_popup) 	// Possibilité de fermer la popup de rapport de fin de vague, via bouton pause (workflow particulier => gestion à part)
-			WaveReportPopup.__close( MainController.startWave );
+			WaveReportPopup.__close( MainController.prepareWaveStart );
 		else MainController.UI.closeAllPopups();
 	}
 
@@ -197,7 +197,7 @@ class MainController {
 		JuiceHelper.monsterPop(x_monster, y_monster);
 	}
 
-    static startWave(is_silent_save) {
+    static prepareWaveStart(is_silent_save) {
 		MainController.save_manager.saveGame(is_silent_save);
 		
 		MainController.scope.game.clip_ammo = Abilities.getClipSize();
@@ -210,7 +210,7 @@ class MainController {
 		setTimeout(TutorialHelper.showIntro, 1500);
     }
 
-	static startForReal() {
+	static startWave() {
 		JuiceHelper.startWaveMusic();
 		MainController.scope.controls.paused = false;
 	}

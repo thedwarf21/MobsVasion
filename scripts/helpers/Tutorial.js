@@ -2,10 +2,11 @@ class TutorialHelper {
 
     static showIntro() {
         if (MainController.scope.game.wave_number > 1) 
-            return MainController.startForReal();
+            return MainController.startWave();
 
         JuiceHelper.startShopMusic();
 
+        const controls_sequence = TutorialHelper.controlsSequence();
         TutorialHelper.popupsSequence(
             [{
                 message_lines: ["Hey, salut toi !!", 
@@ -41,27 +42,45 @@ class TutorialHelper {
                                 "Tu pourras te réfugier dans mon labo, et je pourrai améliorer ton équipement.", 
                                 "C'est pas pour me vanter, mais je suis un véritable génie."],
                 face: FRIEND_FACES.happy
-            }, {
-                message_lines: ["Au fait, au cas où ça pourrait t'aider, j'ai lu quelque part qu'il était possible de se déplacer avec les touches <b>Z</b>, <b>Q</b>, <b>S</b> et <b>D</b> du clavier.",
-                                "Il parraît même que la <b>barre espace</b> permet d'effectuer un bond d'esquive en avant.", 
-                                "Par contre, je n'ai aucune idée de ce que ça signifie..."],
-                face: FRIEND_FACES.worried
-            }, {
-                message_lines: ["L'article dans lequel j'ai lu tout ça expliquait aussi que la souris permettait de viser, de tirer avec le <b>bouton gauche</b>, et de recharger avec le <b>bouton droit</b>."],
-                face: FRIEND_FACES.worried
-            }, {
-                message_lines: ["Si je me rappelle bien, il y était également fait mention de la possibilité de brancher une <b>manette de jeu</b>, puis de se <b>laisser guider</b>.",
-                                "J'espère que tu comprends ce charabia, parce que moi non..."],
-                face: FRIEND_FACES.worried
-            }, {
+            }, ...controls_sequence, {
                 message_lines: ["Assez parlé !",
                                 "Explose-moi ces abominations !"],
                 face: FRIEND_FACES.angry
             }], ()=> {
                 JuiceHelper.stopShopMusic();
-                MainController.startForReal();
+                MainController.startWave();
             }
         );
+    }
+
+    static controlsSequence() {
+        if ( window.matchMedia('(display-mode: standalone)').matches ) { // permet de savoir si l'utilisateur est sur mobile ou sur PC
+            return [{
+                message_lines: ["Au fait, au cas où ça pourrait t'aider, j'ai lu quelque part que le <b>joysitck virtuel</b>, à gauche, permettait de se déplacer, tandis que les <b>boutons à droite</b> permettaient d'effectuer diverses actions : ",
+                                "Par exemple, celui affichant une <b>cible</b> permettrait de <b>tirer sur le monstre le plus proche</b>.",
+                                "Par contre, je n'ai aucune idée de ce que ça signifie..."],
+                face: FRIEND_FACES.worried
+            }, {
+                message_lines: ["En outre, l'ouvrage faisait également référence à un bouton affichant un <b>personnage élancé</b> et permettant d'effectuer une <b>maneuvre d'esquive</b>.",
+                                "Il y était aussi question d'un autre bouton, situé juste en-dessous pour <b>recharger l'arme</b>, et d'un bouton <b>pause</b> permettant d'accéder aux paramètres.",
+                                "J'espère que tu comprends ce charabia, parce que moi non..."],
+                face: FRIEND_FACES.worried
+            }];
+        } else {
+            return [{
+                message_lines: ["Au fait, au cas où ça pourrait t'aider, j'ai lu quelque part qu'il était possible de se déplacer avec les touches <b>Z</b>, <b>Q</b>, <b>S</b> et <b>D</b> du clavier.",
+                                "Il parraît même que la <b>barre espace</b> permet d'effectuer un bond d'esquive en avant.", 
+                                "Par contre, je n'ai aucune idée de ce que ça signifie..."],
+                face: FRIEND_FACES.worried
+            }, {
+                message_lines: ["L'article dans lequel j'ai lu tout ça expliquait aussi que <b>la souris</b> permettait de viser, de tirer avec le <b>bouton gauche</b>, et de recharger avec le <b>bouton droit</b>."],
+                face: FRIEND_FACES.worried
+            }, {
+                message_lines: ["Si je me rappelle bien, il y était également fait mention de la possibilité de brancher une <b>manette de jeu</b>, puis de se <b>laisser guider</b>.",
+                                "J'espère que tu comprends ce charabia, parce que moi non..."],
+                face: FRIEND_FACES.worried
+            }];
+        }
     }
 
     static showShopTutorial() {
