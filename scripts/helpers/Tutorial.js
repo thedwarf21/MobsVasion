@@ -10,15 +10,15 @@ class TutorialHelper {
         TutorialHelper.__popupsSequence(
             [{
                 message_lines: ["Hey, salut toi !!", 
-                                "C'est cool de croiser de quelqu'un, ici."],
+                                "C'est cool de croiser quelqu'un, ici."],
                 face: FRIEND_FACES.happy
             }, {
-                message_lines: ["Quand j'y pense, il y a bien longtemps que je n'ai croisé personne..."],
+                message_lines: ["Quand j'y pense, il y avait bien longtemps que je n'avais croisé personne..."],
                 face: FRIEND_FACES.worried
             }, {
                 message_lines: ["Peu importe...", 
                                 "Au fait, moi c'est Julie Péhainegis.", 
-                                "Et toi, comment tu t'appeles ?"],
+                                "Et toi, comment tu t'appelles ?"],
                 face: FRIEND_FACES.happy
             }, {
                 message_lines: ["... chelou comme nom.", 
@@ -59,7 +59,7 @@ class TutorialHelper {
 
         TutorialHelper.__popupsSequence(
             [{
-                message_lines: ["Merci de m'avoir aidé à reprendre le contrôle de mon labo.", 
+                message_lines: ["Merci de m'avoir aidée à reprendre le contrôle de mon labo.", 
                                 "Je te présente ton nouveau chez toi... ou plutôt, notre chez nous."],
                 face: FRIEND_FACES.happy
             }], ()=> {
@@ -110,7 +110,7 @@ class TutorialHelper {
                 face: FRIEND_FACES.worried
             }, {
                 message_lines: ["Par chance, il semble encore en état de marche. Je vais te raccorder au système de contrôle, et paramétrer la machine pour qu'elle te ramène automatiquement, en cas de problème.",
-                                "Compte sur moi pour te soigner dans la limite de ce que j'ai sous la main, si ça devait se produire."],
+                                "Compte sur moi pour te soigner dans la limite de ce que j'aurai sous la main, si ça devait se produire."],
                 face: FRIEND_FACES.happy
             }], ()=> {
                 MainController.popups_stack.activePopup().switchToTrainingRoom();
