@@ -27,6 +27,7 @@ class ShopPopup extends AbstractPopup {
                 onPopupOpened();
 
             JuiceHelper.startShopMusic();
+            TutorialHelper.showShopTutorial();
 		});
 
 		document.body.appendChild(this.rs_dialog_instance.root_element);

@@ -207,7 +207,7 @@ class MainController {
 		JuiceHelper.characterPop();
 		MainController.__scheduleLevelMonstersPop();
 		
-		setTimeout(TutorialHelper.showIntro, 1000);
+		setTimeout(TutorialHelper.showIntro, 1500);
     }
 
 	static startForReal() {
