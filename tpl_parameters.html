@@ -25,9 +25,13 @@
 	</div>
 
 	<div class="modal-line">
-		<div class="pref-title"><b>Clavier QWERTY:</b></div>
-		<input type="checkbox" class="pref-value" id="is_qwerty" nav-ident="0_4" />
-		<!-- Attribut "value" synchronisé à  MainController.scope.controls.is_qwerty -->
+		<div class="pref-title"><b>Type de clavier:</b></div>
+		<rs-selector class="pref-value" id="keyboard_type" onchange="MainController.scope.controls.keyboard_type = this.selected_value" nav_ident="0_4">
+			<option value="AZERTY">AZERTY</option>
+			<option value="QWERTY">QWERTY</option>
+			<option value="Dvorak">Dvorak</option>
+			<option value="Bépo">Bépo</option>
+		</rs-selector>
 	</div>
 
 	<div class="modal-line">

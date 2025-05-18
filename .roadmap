@@ -80,6 +80,10 @@ V   Tâche terminée
         >   Ajouter les préférences utilisateur correspondantes
         >   Modifier la navigation manette de la fenêtre de préférences
         >   Intégrer les niveaux des volumes paramétrés, dans la sauvegarde
+    X   Gérer d'autres dispositions de touches pour les commandes clavier
+        >   QWERTY  (wasd)
+        _   Dvorak  (,'oe)
+        _   Bépo    (v,ui)
 *   Gérer l'argent
     V   Afficher l'argent détenu par le joueur, dans l'UI
     V   Ajout de l'argent aux ressources du joueur, lorsqu'un monstre rend l'âme
@@ -165,7 +169,6 @@ _   Entité de traduction du MouseEvent.buttons, sous forme de liste de booléen
  
 
 ------------ À AJOUTER DANS VERSIONS SUIVANTES ------------
-Tuto scénarisé sur nouvelle partie (explications par le PNJ, au fil de l'eau)
 Choix dans le lobby, entre plusieurs armes pour le tir principal   \
 Choix dans le lobby, entre plusieurs armes pour le tir secondaire   |=> facilitation à la création de nouveau contenu
 Définir de nouveaux types de monstres                              /

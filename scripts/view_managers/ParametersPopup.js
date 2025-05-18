@@ -32,13 +32,6 @@ class ParametersPopup extends AbstractPopup {
             MainController.UI.refreshAllHitboxesVisibility();
             JuiceHelper.emptyClipPercussion();
         });
-
-        new RS_Binding({
-            object: MainController.scope.controls,
-            property: "is_qwerty"
-        }).addBinding(this.__querySelector("#is_qwerty"), "checked", "change", ()=> {
-            JuiceHelper.emptyClipPercussion();
-        });
         
         new RS_Binding({
             object: MainController.audio_manager.sound_settings,

@@ -1,4 +1,9 @@
 class KeyboardAndMouseControls {
+
+	static get AZERTY() { return "AZERTY"; }
+	static get QWERTY() { return "QWERTY"; }
+	static get DVORAK() { return "Dvorak"; }
+	static get BEPO() 	{ return "Bépo"; }
     
     static addKeyListeners(controller) {
 		const controls = controller.scope.controls;
