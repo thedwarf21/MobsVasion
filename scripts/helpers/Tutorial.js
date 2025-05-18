@@ -169,10 +169,4 @@ class TutorialHelper {
 		});
 		document.body.appendChild(MainController.report_popup.root_element);
 	}
-
-    static close() {
-        MainController.report_popup.closeModal();
-        MainController.report_popup = null;
-        MainController.popups_stack.push(ShopPopup);
-    }
 }
