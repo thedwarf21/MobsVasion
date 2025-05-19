@@ -80,10 +80,12 @@ V   Tâche terminée
         >   Ajouter les préférences utilisateur correspondantes
         >   Modifier la navigation manette de la fenêtre de préférences
         >   Intégrer les niveaux des volumes paramétrés, dans la sauvegarde
-    X   Gérer d'autres dispositions de touches pour les commandes clavier
+    X   Gérer d'autres dispositions de touches pour les commandes clavier 
         >   QWERTY  (wasd)
-        _   Dvorak  (,'oe)
-        _   Bépo    (v,ui)
+        >   Dvorak  (,aoe)
+        >   Bépo    (éaui)
+        _   Gérer les commandes manette sur le <rs_selector>, dans ParametersPopup
+        _   Gérer la propriété `scope.controls.keyboard_type` dans la sauvegarde
 *   Gérer l'argent
     V   Afficher l'argent détenu par le joueur, dans l'UI
     V   Ajout de l'argent aux ressources du joueur, lorsqu'un monstre rend l'âme

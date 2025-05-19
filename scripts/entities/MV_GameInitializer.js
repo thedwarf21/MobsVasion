@@ -36,7 +36,7 @@ class MV_GameInitializer {
 				rightPressed: false,
 				leftPressed: false,
 				is_qwerty: false,
-				keyboard_type: KeyboardAndMouseControls.AZERTY,
+				keyboard_type: KeyTranslater.AZERTY,
 				mousePosition: {
 					x: 0,
 					y: 0

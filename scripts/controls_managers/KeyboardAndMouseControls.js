@@ -1,21 +1,16 @@
 class KeyboardAndMouseControls {
-
-	static get AZERTY() { return "AZERTY"; }
-	static get QWERTY() { return "QWERTY"; }
-	static get DVORAK() { return "Dvorak"; }
-	static get BEPO() 	{ return "Bépo"; }
     
     static addKeyListeners(controller) {
 		const controls = controller.scope.controls;
 		window.addEventListener('keydown', function(e) {
 			const key = e.key.toLowerCase();
-			if (key === "s")
+			if ( KeyTranslater.isDown(key) )
 				controls.downPressed = true;
-			else if ((controls.is_qwerty && key === "w") || (!controls.is_qwerty && key === "z"))
+			else if ( KeyTranslater.isUp(key) )
 				controls.upPressed = true;
-			else if ((controls.is_qwerty && key === "a") || (!controls.is_qwerty && key === "q"))
+			else if ( KeyTranslater.isLeft(key) )
 				controls.leftPressed = true;
-			else if (key === "d")
+			else if ( KeyTranslater.isRight(key) )
 				controls.rightPressed = true;
 			else if (e.code === "Space")
 				controls.firing_secondary = true;
@@ -24,13 +19,13 @@ class KeyboardAndMouseControls {
 		});
 		window.addEventListener('keyup', function(e) {
 			const key = e.key.toLowerCase();
-			if (key === "s")
+			if ( KeyTranslater.isDown(key) )
 				controls.downPressed = false;
-			if ((controls.is_qwerty && key === "w") || (!controls.is_qwerty && key === "z"))
+			if ( KeyTranslater.isUp(key) )
 				controls.upPressed = false;
-			if ((controls.is_qwerty && key === "a") || (!controls.is_qwerty && key === "q"))
+			if ( KeyTranslater.isLeft(key) )
 				controls.leftPressed = false;
-			if (key === "d")
+			if ( KeyTranslater.isRight(key) )
 				controls.rightPressed = false;
 			if (e.code === "Space")
 				controls.firing_secondary = false;
@@ -126,4 +121,61 @@ class KeyboardAndMouseControls {
     static __isToUpRight(controls) {  return !controls.leftPressed && controls.rightPressed && controls.upPressed && !controls.downPressed; }
     static __isToDownLeft(controls) {  return controls.leftPressed && !controls.rightPressed && !controls.upPressed && controls.downPressed; }
     static __isToDownRight(controls) {  return !controls.leftPressed && controls.rightPressed && !controls.upPressed && controls.downPressed; }
+}
+
+
+class KeyTranslater {
+
+	static get AZERTY() { return "AZERTY"; } 	/* zqsd */
+	static get QWERTY() { return "QWERTY"; }	/* wasd */
+	static get DVORAK() { return "Dvorak"; } 	/* ,aoe */
+	static get BEPO() 	{ return "Bépo"; }		/* éaui */
+
+	static isUp(key) {
+		const keyboard_type = MainController.scope.controls.keyboard_type;
+		if (keyboard_type === KeyTranslater.AZERTY && key === "z")
+			return true;
+		if (keyboard_type === KeyTranslater.QWERTY && key === "w")
+			return true;
+		if (keyboard_type === KeyTranslater.DVORAK && key === ",")
+			return true;
+		if (keyboard_type === KeyTranslater.BEPO && key === "é")
+			return true;
+		return false;
+	}
+
+	static isLeft(key) {
+		const keyboard_type = MainController.scope.controls.keyboard_type;
+		if (keyboard_type === KeyTranslater.AZERTY && key === "q")
+			return true;
+		else if (key === "a")
+			return true;
+		return false;
+	}
+
+	static isDown(key) {
+		const keyboard_type = MainController.scope.controls.keyboard_type;
+		if (keyboard_type === KeyTranslater.AZERTY && key === "s")
+			return true;
+		if (keyboard_type === KeyTranslater.QWERTY && key === "s")
+			return true;
+		if (keyboard_type === KeyTranslater.DVORAK && key === "o")
+			return true;
+		if (keyboard_type === KeyTranslater.BEPO && key === "u")
+			return true;
+		return false;
+	}
+
+	static isRight(key) {
+		const keyboard_type = MainController.scope.controls.keyboard_type;
+		if (keyboard_type === KeyTranslater.AZERTY && key === "d")
+			return true;
+		if (keyboard_type === KeyTranslater.QWERTY && key === "d")
+			return true;
+		if (keyboard_type === KeyTranslater.DVORAK && key === "e")
+			return true;
+		if (keyboard_type === KeyTranslater.BEPO && key === "i")
+			return true;
+		return false;
+	}
 }

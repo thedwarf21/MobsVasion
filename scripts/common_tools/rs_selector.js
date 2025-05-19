@@ -18,12 +18,23 @@ class SelectorInput extends HTMLBaseElement {
         if (this.options.length === 0)
             throw new Error("<rs-selector> elements need <option> tags in its body, to work");
 
+        this.__setSelectedValue( eval(this.getAttribute("value")) );
         this.on_change = ()=> { eval(this.getAttribute("onchange")); };
 
         // Génération du shadow DOM
         let shadow = this.attachShadow({ mode: SHADOW_MODE });
         RS_WCL.styleShadow(shadow, 'css/rs_selector.css');
         shadow.appendChild( this.__getShadowDomContent() );
+    }
+
+    __setSelectedValue(value) {
+        for (let i = 0; i < this.options.length; i++) {
+            const option = this.options[i];
+            if (option.value === value) {
+                this.selected_index = i;
+                return;
+            }
+        }
     }
 
     __addOption(html_element) {
