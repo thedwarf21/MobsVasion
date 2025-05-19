@@ -28,6 +28,7 @@ class MV_GameInitializer {
 					dash: 0,
 					clip: 0
 				},
+				keyboard_type: KeyTranslater.AZERTY,
 				showHitboxes: false
 			},
 			controls: {
@@ -35,8 +36,6 @@ class MV_GameInitializer {
 				downPressed: false,
 				rightPressed: false,
 				leftPressed: false,
-				is_qwerty: false,
-				keyboard_type: KeyTranslater.AZERTY,
 				mousePosition: {
 					x: 0,
 					y: 0

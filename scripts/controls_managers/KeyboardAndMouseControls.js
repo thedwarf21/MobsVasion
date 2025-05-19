@@ -132,7 +132,7 @@ class KeyTranslater {
 	static get BEPO() 	{ return "Bépo"; }		/* éaui */
 
 	static isUp(key) {
-		const keyboard_type = MainController.scope.controls.keyboard_type;
+		const keyboard_type = MainController.scope.game.keyboard_type;
 		if (keyboard_type === KeyTranslater.AZERTY && key === "z")
 			return true;
 		if (keyboard_type === KeyTranslater.QWERTY && key === "w")
@@ -145,7 +145,7 @@ class KeyTranslater {
 	}
 
 	static isLeft(key) {
-		const keyboard_type = MainController.scope.controls.keyboard_type;
+		const keyboard_type = MainController.scope.game.keyboard_type;
 		if (keyboard_type === KeyTranslater.AZERTY && key === "q")
 			return true;
 		else if (key === "a")
@@ -154,7 +154,7 @@ class KeyTranslater {
 	}
 
 	static isDown(key) {
-		const keyboard_type = MainController.scope.controls.keyboard_type;
+		const keyboard_type = MainController.scope.game.keyboard_type;
 		if (keyboard_type === KeyTranslater.AZERTY && key === "s")
 			return true;
 		if (keyboard_type === KeyTranslater.QWERTY && key === "s")
@@ -167,7 +167,7 @@ class KeyTranslater {
 	}
 
 	static isRight(key) {
-		const keyboard_type = MainController.scope.controls.keyboard_type;
+		const keyboard_type = MainController.scope.game.keyboard_type;
 		if (keyboard_type === KeyTranslater.AZERTY && key === "d")
 			return true;
 		if (keyboard_type === KeyTranslater.QWERTY && key === "d")
