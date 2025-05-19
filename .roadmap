@@ -137,12 +137,9 @@ V   Tâche terminée
         >   gérer une progress-bar additionnelle dans la barre de vie
         >   mouseenter / mouseleave => déclencher l'apparition/disparition de la progress-bar additionnelle
         >   gérer cette problématique pour la navigation manette dans le menu
-    X   Nouveaux items dans le magasin
+    V   Nouveaux items dans le magasin
         >   ajouter l'item "Détecteur de métaux" => augmentation des gains en argent
         >   ajouter l'item "Chargeur haute capacité" => augmentation des munitions dans le chargeur
-        _   ajouter l'item "Tenue matelassée" => ajout d'une armure, absorbant les dégâts, mais ralentissant légèrement les déplacement (bah oui, c'est moins pratique pour bouger)
-            _   gérer la nouvelle jauge, et les données qui vont avec
-            _   ne pas oublier de gérer l'effet de ralentissement tant que l'armure est là
 *   Sauvegarde automatique
     V   Sauvegarder automatiquement la partie, à chaque chaque fin de vague, à chaque démarrage de vague (pour que les achats soient enregistrés)
     V   Chargement automatique de la sauvegarde au démarrage du jeu
@@ -160,6 +157,23 @@ V   Tâche terminée
     V   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
     V   Ajouter la musique
+*   Nouveaux types de monstres
+    _   Préparation du terrain
+        _   Définir les caractéristiques des monstres dans une liste d'objets
+        _   S'appuyer sur cette liste pour la génération des vagues
+        _   Idem pour l'XP
+        _   Idem pour le butin
+    _   Les Cracheurs
+        _   Santé faible
+        _   Attaquent à distance
+    _   Les Tacleurs
+        _   Rapides
+        _   Attaquent par ruées
+    _   Les Golgoths
+        _   Lents
+        _   Santé importante
+        _   Lancent les autres zombies en direction du joueur
+        
 
 *   Optimisations et assainissements
 V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
