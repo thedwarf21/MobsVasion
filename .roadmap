@@ -84,7 +84,7 @@ V   Tâche terminée
         >   QWERTY  (wasd)
         >   Dvorak  (,aoe)
         >   Bépo    (éaui)
-        _   Gérer les commandes manette sur le <rs_selector>, dans ParametersPopup
+        >   Gérer les commandes manette sur le <rs_selector>, dans ParametersPopup
         _   Gérer la propriété `scope.controls.keyboard_type` dans la sauvegarde
 *   Gérer l'argent
     V   Afficher l'argent détenu par le joueur, dans l'UI

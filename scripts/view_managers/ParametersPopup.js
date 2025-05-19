@@ -64,6 +64,7 @@ class ParametersPopup extends AbstractPopup {
     }
 
     get FOOTER_LINE() { return 6; }
+    __isSelectorInput(line) { return line === 4; }
     __isRangeInput(line) { return [1, 3].includes(line); }
     __setRangeInputValue(input, value) {
         input.value = value;
@@ -97,12 +98,15 @@ class ParametersPopup extends AbstractPopup {
             this.setActiveItem(new_active_ident);
         }
 
-        if (this.__isRangeInput(active_item_position.line)) {   // Réglage des volumes
-            const input = this.__getActiveItem().html_element;
+        const input = this.__getActiveItem().html_element;
 
+        if (this.__isRangeInput(active_item_position.line)) {   // Réglage des volumes
             if (input.value > input.min)
                 this.__setRangeInputValue(input, parseFloat(input.value) - parseFloat(input.step));
         }
+
+        if (this.__isSelectorInput(active_item_position.line))
+            input.select_previous();
     }
 
     navigateRight() {
@@ -114,11 +118,14 @@ class ParametersPopup extends AbstractPopup {
             this.setActiveItem(new_active_ident);
         }
 
+        const input = this.__getActiveItem().html_element;
+        
         if (this.__isRangeInput(active_item_position.line)) {   // Réglage des volumes
-            const input = this.__getActiveItem().html_element;
-            
             if (input.value < input.max)
                 this.__setRangeInputValue(input, parseFloat(input.value) + parseFloat(input.step));
         }
+
+        if (this.__isSelectorInput(active_item_position.line))
+            input.select_next();
     }
 }

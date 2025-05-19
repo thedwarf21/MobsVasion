@@ -27,6 +27,24 @@ class SelectorInput extends HTMLBaseElement {
         shadow.appendChild( this.__getShadowDomContent() );
     }
 
+    select_previous() {
+        if (this.selected_index === 0)
+            return;
+
+        this.selected_index--;
+        this.__applySelectedIndex();
+        JuiceHelper.dashSound();
+    }
+
+    select_next() {
+        if (this.selected_index === this.options.length - 1)
+            return;
+
+        this.selected_index++;
+        this.__applySelectedIndex();
+        JuiceHelper.dashSound();
+    }
+
     __setSelectedValue(value) {
         for (let i = 0; i < this.options.length; i++) {
             const option = this.options[i];
@@ -48,9 +66,9 @@ class SelectorInput extends HTMLBaseElement {
         const root_container = document.createElement("DIV");
         root_container.classList.add("root-container");
 
-        this.__addButton("previous", root_container, ()=> { this.__select_previous(); });
+        this.__addButton("previous", root_container, ()=> { this.select_previous(); });
         this.__addValueDisplayElement(root_container);
-        this.__addButton("next", root_container, ()=> { this.__select_next(); });
+        this.__addButton("next", root_container, ()=> { this.select_next(); });
 
         this.__applySelectedIndex();
 
@@ -68,24 +86,6 @@ class SelectorInput extends HTMLBaseElement {
         this.value_display_element = document.createElement("DIV");
         this.value_display_element.classList.add("displayed-value");
         container.appendChild(this.value_display_element);
-    }
-
-    __select_previous() {
-        if (this.selected_index === 0)
-            return;
-
-        this.selected_index--;
-        this.__applySelectedIndex();
-        JuiceHelper.dashSound();
-    }
-
-    __select_next() {
-        if (this.selected_index === this.options.length - 1)
-            return;
-
-        this.selected_index++;
-        this.__applySelectedIndex();
-        JuiceHelper.dashSound();
     }
 
     __applySelectedIndex() { 
