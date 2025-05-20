@@ -163,17 +163,30 @@ V   Tâche terminée
         _   S'appuyer sur cette liste pour la génération des vagues
         _   Idem pour l'XP
         _   Idem pour le butin
+        _   La classe Monster devient abstraite, et chaque monstre se voit attribuer une classe spécifique héritant de Monster
+    _   Les Voraces
+        _   Monstres de base
+        _   Valeur de combat : 1
     _   Les Cracheurs
         _   Santé faible
         _   Attaquent à distance
+        _   Laissent une AOE toxique en mourant
+        _   Valeur de combat : 2
     _   Les Tacleurs
         _   Rapides
         _   Attaquent par ruées
+        _   Valeur de combat : 2
     _   Les Golgoths
         _   Lents
         _   Santé importante
-        _   Lancent les autres zombies en direction du joueur
-        
+        _   Lancent les autres zombies (sauf d'autres Golgoths) en direction du joueur
+        _   Valeur de combat : 5
+*   Gestion des vagues et tuto pour chaque type de monstre
+    _   Vague 1 composée uniquement de Voraces => tuto Voraces
+    _   Vague 2 composée uniquement de Cracheurs => tuto Cracheurs
+    _   Vague 3 composée de 2 Tacleurs et un Vorace => tuto Tacleurs
+    _   Vague 10 => apparition du premier Goglgoth => tuto Golgoths
+    _   Pas plus d'un Golgoth par tranche de 10 du numéro de vague
 
 *   Optimisations et assainissements
 V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées

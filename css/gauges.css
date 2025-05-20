@@ -11,10 +11,12 @@
 
 .gauge.primary-reload {
 	position: absolute;
-	bottom: 6.45vh;
-  	right: 1.8vh;
-  	width: 7vh;
-  	height: 0.7vh;
+	top: 0;
+	left: 0;
+	box-sizing: border-box;
+  	width: 100%;
+  	height: 1vh;
+  	border: 0.1vh solid #075300;
 }
 .gauge.primary-reload .progress { background: rgb(54, 181, 28); }
 
@@ -25,9 +27,9 @@
 	box-sizing: border-box;
   	width: 100%;
   	height: 1vh;
-  	border: 0.1vh solid #9c9de8;
+  	border: 0.1vh solid #000266;
 }
-.gauge.secondary-reload .progress { background: rgb(235, 222, 43); }
+.gauge.secondary-reload .progress { background: rgb(0, 102, 255); }
 
 .gauge.character-health-bar {
 	position: absolute;
