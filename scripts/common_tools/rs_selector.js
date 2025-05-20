@@ -2,6 +2,8 @@ class SelectorInput extends HTMLBaseElement {
     options;
     selected_index;
     value_display_element;
+    infos_display_element;
+    on_change;
 
     constructor() { super(); }
 
@@ -58,7 +60,8 @@ class SelectorInput extends HTMLBaseElement {
     __addOption(html_element) {
         this.options.push({
             value: html_element.getAttribute("value"),
-            display: html_element.innerHTML
+            display: html_element.innerHTML,
+            infos: html_element.getAttribute("infos")
         });
     }
 
@@ -83,13 +86,23 @@ class SelectorInput extends HTMLBaseElement {
     }
 
     __addValueDisplayElement(container) {
+        const display_element = document.createElement("DIV");
+        display_element.classList.add("display-zone");
+
         this.value_display_element = document.createElement("DIV");
         this.value_display_element.classList.add("displayed-value");
-        container.appendChild(this.value_display_element);
+        display_element.appendChild(this.value_display_element);
+
+        this.infos_display_element = document.createElement("DIV");
+        this.infos_display_element.classList.add("displayed-infos");
+        display_element.appendChild(this.infos_display_element);
+
+        container.appendChild(display_element);
     }
 
-    __applySelectedIndex() { 
+    __applySelectedIndex() {
         this.value_display_element.innerHTML = this.__selected_option.display;
+        this.infos_display_element.innerHTML = this.__selected_option.infos;
         this.on_change();
     }
 
