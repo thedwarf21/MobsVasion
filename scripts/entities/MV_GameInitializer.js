@@ -154,6 +154,7 @@ class MV_GameInitializer {
 		controller.scope = MV_GameInitializer.initial_scope;
 		MV_GameInitializer.__initPopupsStack(controller);
 		MV_GameInitializer.__initShopManager(controller);
+		MV_GameInitializer.__initWaveGenerator(controller);
 		TouchScreenControls.addListeners(controller);
 		KeyboardAndMouseControls.addKeyListeners(controller);
 		KeyboardAndMouseControls.addMouseListeners(controller);
@@ -170,6 +171,10 @@ class MV_GameInitializer {
 
 	static __initShopManager(controller) { 
 		controller.shop_manager = new ShopManager( controller.scope.shop );
+	}
+
+	static __initWaveGenerator(controller) {
+		controller.wave_generator = new MV_WaveGenerator();
 	}
 
 	static __initAudioManager(controller) {

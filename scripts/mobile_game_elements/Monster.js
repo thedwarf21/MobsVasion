@@ -1,85 +1,94 @@
 class MV_Monster extends MobileGameElement {
-    __speed;
-    __life_bar;
-    __health_points;
-    __shocked;
+    speed;
+    life_bar;
+    health_points;
+    shocked;
   
     constructor(viewport, x, y) {
         super(viewport, x, y);
         this.root_element.classList.add("monster");
-        this.__init();
     }
   
-    follow(character) {
-        if (!this.__shocked) {
-            this.angle = Math.atan( (character.y - this.y) / (character.x - this.x) );
-            if (character.x < this.x)
+    wound(injury_amount, monster_index) {
+        this.health_points -= injury_amount;
+        this.life_bar.assignValue(this.health_points);
+        this.__dieOrBleed(monster_index);
+    }
+  
+    follow(target) {
+        if (!this.shocked) {
+            this.angle = Math.atan( (target.y - this.y) / (target.x - this.x) );
+            if (target.x < this.x)
                 this.angle += Math.PI;
-            this.deltaX = this.__speed * Math.cos(this.angle);
-            this.deltaY = this.__speed * Math.sin(this.angle);
+            this.deltaX = this.speed * Math.cos(this.angle);
+            this.deltaY = this.speed * Math.sin(this.angle);
             this.move();
         }
     }
   
-    wound(injury_amount, onMonsterDeath) {
-        this.__health_points -= injury_amount;
-        this.__life_bar.assignValue(this.__health_points);
-        this.__dieOrBleed(onMonsterDeath);
-    }
-  
-    __init() {
+    init() {
         this.angle = 0;
         this.deltaX = 0;
         this.deltaY = 0;
-        this.pixel_size = MONSTER_SIZE;
-        this.__health_points = MonstersInCurerntWave.healthPoints();
-    
-        this.__setRadomSpeed(MIN_MONSTER_SPEED, MAX_MONSTER_SPEED);
+        this.__initFromMonsterType();
         this.__addLifeBar();
-        this.addImageElt("spinning-image");
-        this.addVisualHitBox(MainController.scope.game.showHitboxes);
+        super.addImageElt("spinning-image");
+        super.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
   
-    __setRadomSpeed(min_value, max_value) {
-        this.__speed = Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
+    __initFromMonsterType() {
+        this.pixel_size = this.__monster_type.size;
+        this.health_points = MainController.wave_generator.healthPoints(this.__monster_type);
+        this.speed = MainController.wave_generator.randomSpeed(this.__monster_type);
     }
   
     __addLifeBar() {
-        this.__life_bar = new MV_Gauge("monster-health-bar", this.__health_points, this.__health_points);
-        this.root_element.appendChild(this.__life_bar.root_element);
+        this.life_bar = new MV_Gauge("monster-health-bar", this.health_points, this.health_points);
+        this.root_element.appendChild(this.life_bar.root_element);
     }
 
-    __dieOrBleed(onMonsterDeath) {
-        if (this.__health_points <= 0) {
+    __dieOrBleed(monster_index) {
+        if (this.health_points <= 0) {
             this.root_element.remove();
-
-            this.__createBloodPuddle(this.x + MONSTER_SIZE/2, this.y + MONSTER_SIZE/2, true);
-
-            if (onMonsterDeath) 
-                onMonsterDeath();
+            this.__createBloodPuddle(this.x + this.pixel_size/2, this.y + this.pixel_size/2, true);
+            this.__monsterSlayed(monster_index);
         } else {
-            this.__shock(WOUND_SHOCK_TIME);
+            this.__shock();
             this.__bleed();
         }
     }
 
-    __shock(WOUND_SHOCK_TIME) {
-        this.__shocked = true;
+    __shock() {
+        this.shocked = true;
         this.root_element.classList.add("shocked");
         setTimeout(()=> {
             this.root_element.classList.remove("shocked");
-            this.__shocked = false;
+            this.shocked = false;
         }, WOUND_SHOCK_TIME);
     }
 
     __bleed() {
-        const x_splash = this.x + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.cos(this.angle) );
-        const y_splash = this.y + MONSTER_SIZE/2 + ( MONSTER_SIZE/2 * Math.sin(this.angle) );  
+        const x_splash = this.x + this.pixel_size/2 + ( this.pixel_size/2 * Math.cos(this.angle) );
+        const y_splash = this.y + this.pixel_size/2 + ( this.pixel_size/2 * Math.sin(this.angle) );  
         const x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(this.angle);
         const y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(this.angle);  
         JuiceHelper.bloodSplash(x_splash, y_splash, this.angle, ()=> {
             this.__createBloodPuddle(x_puddle, y_puddle, false);
         });
+    }
+
+    __monsterSlayed(monster_index) {
+        MainController.UI.monsters.splice(monster_index, 1);
+
+        const monster_swag = Tools.radomValueInRange(this.__monster_type.swag_range[0], this.__monster_type.swag_range[1] + Abilities.getSwagUpgrade());
+		MainController.scope.game.money += monster_swag;
+
+		XpBarHelper.addXp(XP_PER_MONSTER * this.__monster_type.battle_value);
+		
+        if (MainController.__isWaveComplete())
+			MainController.__waveDefeated();
+
+		JuiceHelper.monsterSlayed();
     }
 
     
@@ -93,8 +102,8 @@ class MV_Monster extends MobileGameElement {
         puddle_element.style.top = this.viewport.getCssValue(y);
         
         if (isBig) {
-            puddle_element.style.width = this.viewport.getCssValue(MONSTER_SIZE);
-            puddle_element.style.height = this.viewport.getCssValue(MONSTER_SIZE);
+            puddle_element.style.width = this.viewport.getCssValue(this.pixel_size);
+            puddle_element.style.height = this.viewport.getCssValue(this.pixel_size);
         }
         MainController.UI.addToGameWindow(puddle_element);
     }

@@ -77,24 +77,16 @@ class MV_WaveGenerator {
 		JuiceHelper.monsterPop(x_monster, y_monster, monster_type.class);
 	}
 
-    monsterSlayed(monster_key) { //TODO remplacer l'appel à MainController.monsterSlayed dans GameClock par cette version, quand le reste sera opérationnel
-        const monster_type = this.bestiary[ monster_key ];
-        const monster_swag = Tools.radomValueInRange(monster_type.swag_range[0], monster_type.swag_range[1] + Abilities.getSwagUpgrade());
-		MainController.scope.game.money += monster_swag;
-
-		XpBarHelper.addXp(XP_PER_MONSTER * monster_type.battle_value);
-		
-        if (MainController.__isWaveComplete())
-			MainController.__waveDefeated();
-
-		JuiceHelper.monsterSlayed();
+    
+    healthPoints(monster_type) { //TODO utiliser cette méthode plutôt que celle de MonstersInCurrentWave, qui sera ensuite abandonnée
+        const wave_number = MainController.scope.game.wave_number;
+        return monster_type.base_hp + (wave_number - 1) * monster_type.hp_inc_per_wave;
     }
 
-    
-    healthPoints(monster_key) { //TODO utiliser cette méthode plutôt que celle de MonstersInCurrentWave, qui sera ensuite abandonnée
-        const wave_number = MainController.scope.game.wave_number;
-        const monster_type = this.bestiary[ monster_key ];
-        return monster_type.base_hp + (wave_number - 1) * monster_type.hp_inc_per_wave;
+    randomSpeed(monster_type) {
+        const min_value = monster_type.speed_range[0];
+        const max_value = monster_type.speed_range[1];
+        return Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
     }
 
     get remaining_battle_value() {

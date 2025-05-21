@@ -42,7 +42,7 @@ const FIRE_SIZE = 30;
 
 const MONSTERS_TYPES = {
 	voracious: {
-		class: MV_Monster,
+		class: MV_MonsterVoracious,
 		appear_from_wave: 1,
 		size: 60,
 		speed_range: [2, 4],
@@ -247,7 +247,7 @@ class MainController {
 				break;
 		}
 
-		JuiceHelper.monsterPop(x_monster, y_monster, MV_Monster);
+		JuiceHelper.monsterPop(x_monster, y_monster, MV_MonsterVoracious);
 	}
 
     static prepareWaveStart(is_silent_save) {
