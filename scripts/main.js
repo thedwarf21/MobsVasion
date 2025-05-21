@@ -16,23 +16,9 @@ const WOUND_SHOCK_TIME = 500;
 
 const DASH_LENGTH = 125;
 
-const MONSTER_SIZE = 60;			//TODO à virer quand le WaveGenerator sera prêt
-const MIN_MONSTER_SPEED = 2;		//TODO à virer quand le WaveGenerator sera prêt
-const MAX_MONSTER_SPEED = 4;		//TODO à virer quand le WaveGenerator sera prêt
-const MIN_MONSTER_SWAG = 1;			//TODO à virer quand le WaveGenerator sera prêt
-const MAX_MONSTER_SWAG = 3;			//TODO à virer quand le WaveGenerator sera prêt
-const MONSTER_STRENGTH = 1;			//TODO à virer quand le WaveGenerator sera prêt
-
-const MOBS_BASE_HEALTH = 3;			//TODO à virer quand le WaveGenerator sera prêt
-const MOBS_HP_ADD_PER_WAVE = 0.2;	//TODO à virer quand le WaveGenerator sera prêt
-
-const MOBS_ON_FIRST_WAVE = 3;		//TODO à virer quand le WaveGenerator sera prêt
-const MOBS_ADD_PER_WAVE = 1;		//TODO à virer quand le WaveGenerator sera prêt
-
 const FIRST_WAVE_BATTLE_VALUE = 3;
 const BATTLE_VALUE_ADD_PER_WAVE = 1;
 
-const XP_PER_MONSTER = 1;			//TODO à virer quand le WaveGenerator sera prêt
 const BASE_LEVEL_UP_XP = 3;
 const LEVEL_UP_XP_COEF = 1.5;
 const KP_PER_LEVEL = 1;
@@ -223,33 +209,6 @@ class MainController {
 		else MainController.UI.closeAllPopups();
 	}
 
-	static popMonsterRandomly() {
-		const max_x_value = MainController.viewport.VIRTUAL_WIDTH - MONSTER_SIZE;
-		const max_y_value = MainController.viewport.VIRTUAL_HEIGHT - MONSTER_SIZE;
-		let x_monster, y_monster;
-
-		switch ( Math.floor(Math.random() * 4) ) { // selon la bordure choisie aléatoirement pour faire apparaître le monstre
-			case 0: // haut
-				x_monster = Tools.radomValueInRange(0, max_x_value);
-				y_monster = 0;
-				break;
-			case 1: // bas
-				x_monster = Tools.radomValueInRange(0, max_x_value);
-				y_monster = max_y_value;
-				break;
-			case 2: // gauche
-				x_monster = 0;
-				y_monster = Tools.radomValueInRange(0, max_y_value);
-				break;
-			case 3: // droite
-				x_monster = max_x_value;
-				y_monster = Tools.radomValueInRange(0, max_y_value);
-				break;
-		}
-
-		JuiceHelper.monsterPop(x_monster, y_monster, MV_MonsterVoracious);
-	}
-
     static prepareWaveStart(is_silent_save) {
 		MainController.save_manager.saveGame(is_silent_save);
 		
@@ -258,7 +217,7 @@ class MainController {
 		WaitingCounters.clear();
 		
 		JuiceHelper.characterPop();
-		MainController.__scheduleLevelMonstersPop();
+		MainController.wave_generator.scheduleLevelMonstersPop();
 		
 		setTimeout(TutorialHelper.showIntro, 1500);
     }
@@ -268,28 +227,6 @@ class MainController {
 		MainController.scope.controls.paused = false;
 	}
 
-	static __scheduleLevelMonstersPop() {
-		MainController.scope.game.wave_pop.elapsed = 0;
-		MainController.scope.game.wave_pop.timeouts = [];
-		
-		const mobsNumber = MonstersInCurerntWave.mobsNumber(); 
-		let timeout = TIMEOUTS.before_pop;
-		for (let i=0; i<mobsNumber; i++) {
-			MainController.scope.game.wave_pop.timeouts.push(timeout);
-			timeout += Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
-		}
-	}
-
-
-    static monsterSlayed() {
-        const monster_swag = Tools.radomValueInRange(MIN_MONSTER_SWAG, MAX_MONSTER_SWAG + Abilities.getSwagUpgrade());
-		MainController.scope.game.money += monster_swag;
-		XpBarHelper.addXp(XP_PER_MONSTER);
-		if (MainController.__isWaveComplete())
-			MainController.__waveDefeated();
-
-		JuiceHelper.monsterSlayed();
-    }
 	
     static waveLost() {
 		JuiceHelper.stopWaveMusic();

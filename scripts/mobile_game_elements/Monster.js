@@ -83,7 +83,7 @@ class MV_Monster extends MobileGameElement {
         const monster_swag = Tools.radomValueInRange(this.__monster_type.swag_range[0], this.__monster_type.swag_range[1] + Abilities.getSwagUpgrade());
 		MainController.scope.game.money += monster_swag;
 
-		XpBarHelper.addXp(XP_PER_MONSTER * this.__monster_type.battle_value);
+		XpBarHelper.addXp( this.__monster_type.battle_value );
 		
         if (MainController.__isWaveComplete())
 			MainController.__waveDefeated();

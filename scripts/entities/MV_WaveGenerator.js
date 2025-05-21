@@ -14,8 +14,8 @@ class MV_WaveGenerator {
 		let timeout = TIMEOUTS.before_pop;
 		while (this.remaining_battle_value) {
 			MainController.scope.game.wave_pop.timeouts.push({
-                timeout: timeout,
-                monster_type: this.__ramdomMonster()
+                ticks_number: timeout,
+                monster_type: this.__randomMonster()
             });
 
 			timeout += Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
@@ -24,13 +24,16 @@ class MV_WaveGenerator {
 
     __randomMonster() {
         const available_bestiary = this.__filteredBestiary();
-        Tools.getRandomArrayElement( available_bestiary );
+        const monster_type = Tools.getRandomArrayElement( available_bestiary );
+        
+        this.battle_value += monster_type.battle_value;
+        return monster_type;
     }
 
     __filteredBestiary() {
         const result_list = [];
         
-        for (const key in this.bestiary) 
+        for (const key in this.bestiary)
             if (this.__canMonsterTypePop(key))
                 result_list.push(this.bestiary[key]);
 
@@ -41,7 +44,7 @@ class MV_WaveGenerator {
         const wave_number = MainController.scope.game.wave_number;
         const monster_type = this.bestiary[monster_key];
 
-        if (monster_type.appear_from_wave < wave_number)
+        if (monster_type.appear_from_wave > wave_number)
             return false;
 
         if (monster_type.battle_value > this.remaining_battle_value)
@@ -74,7 +77,7 @@ class MV_WaveGenerator {
 				break;
 		}
 
-		JuiceHelper.monsterPop(x_monster, y_monster, monster_type.class);
+		JuiceHelper.monsterPop(x_monster, y_monster, monster_type);
 	}
 
     
