@@ -39,9 +39,9 @@ const MONSTERS_TYPES = {
 		battle_value: 1
 	},
 	spitter: {
-		class: MV_Monster,
-		appear_from_wave: 100000,//2,
-		size: 40,
+		class: MV_MonsterSpitter,
+		appear_from_wave: 2,
+		size: 30,
 		speed_range: [2, 2],
 		swag_range: [3, 5],
 		attack_range: 300,
@@ -53,19 +53,19 @@ const MONSTERS_TYPES = {
 	tackler: {
 		class: MV_Monster,
 		appear_from_wave: 100000,//3,
-		size: 50,
-		speed_range: [5, 6],
+		size: 45,
+		speed_range: [6, 7],
 		swag_range: [3, 5],
 		attack_range: 150,
 		strength: 5,
 		base_hp: 2.5,
 		hp_inc_per_wave: 0.15,
-		battle_value: 2
+		battle_value: 3
 	},
 	golgoth: {
 		class: MV_Monster,
 		appear_from_wave: 100000,//10,
-		size: 120,
+		size: 90,
 		speed_range: [1, 1],
 		swag_range: [8, 12],
 		attack_range: 1000,

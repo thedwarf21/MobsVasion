@@ -56,17 +56,21 @@ class GameClock {
 		if (character)
 			this.__characterActions(character);
 
-		const shots = MainController.UI.shots;
-		for (let i = shots.length - 1; i >= 0; i--) {
-			const shot = shots[i];
-			shot.move(()=> {
-				shots.splice(i, 1);
-				shot.root_element.remove();
-			});
-		} 
+		this.__moveShots(MainController.UI.shots);
+		this.__moveShots(MainController.UI.monster_shots);
 
 		for (const monster of MainController.UI.monsters)
 			monster.follow(character);
+	}
+
+	__moveShots(shots_list) {
+		for (let i = shots_list.length - 1; i >= 0; i--) {
+			const shot = shots_list[i];
+			shot.move(()=> {
+				shots_list.splice(i, 1);
+				shot.root_element.remove();
+			});
+		}
 	}
 
 	__characterActions(character) {
@@ -97,20 +101,23 @@ class GameClock {
 
 	__testCollides() {
 		const monsters = MainController.UI.monsters;
+		const character = MainController.UI.character;
+		const monster_shots = MainController.UI.monster_shots;
 
 		for (let i = monsters.length - 1; i >= 0; i--) {
 			const monster = monsters[i];
-			this.__performMonsterAttacks(monster);
+			monster.attack();
 			this.__performMonsterWounds(i, monster);
 		}
-	}
 
-	__performMonsterAttacks(monster) {
-		const character = MainController.UI.character;
-
-		if (monster.hitbox.checkCollide(character.hitbox)) {
-			JuiceHelper.hitEffect();
-			HealthBarHelper.characterHit(MONSTER_STRENGTH);
+		for (let i = monster_shots.length - 1; i >= 0; i--) {
+			const monster_shot = monster_shots[i];
+			if (monster_shot.hitbox.checkCollide(character.hitbox)) {
+				JuiceHelper.hitEffect();
+				HealthBarHelper.characterHit(monster_shot.strength);
+				monster_shot.root_element.remove();
+				monster_shots.splice(i, 1);
+			}
 		}
 	}
 

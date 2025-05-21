@@ -21,6 +21,7 @@
 	height: 0.8vh;
 	z-index: 1;
 }
+.shot.monster { background: #41da1b; }
 
 .monster {
 	position: absolute;
@@ -38,6 +39,24 @@
 	width: 10vh;
 }
 .monster.voracious .spinning-image { background-image: url("../images/zombie.png"); }
+
+.monster.spitter {
+	height: 5vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
+	width: 5vh;
+}
+.monster.spitter .spinning-image { background-image: url("../images/zombie_spitter.png"); }
+
+.monster.tackler {
+	height: 7.5vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
+	width: 7.5vh;
+}
+.monster.tackler .spinning-image { background-image: url("../images/zombie_tackler.png"); }
+
+.monster.golgoth {
+	height: 15vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
+	width: 15vh;
+}
+.monster.golgoth .spinning-image { background-image: url("../images/zombie_golgoth.png"); }
 
 .hitbox {
 	position: absolute;

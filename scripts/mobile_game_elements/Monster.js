@@ -12,11 +12,12 @@ class MV_Monster extends MobileGameElement {
     wound(injury_amount, monster_index) {
         this.health_points -= injury_amount;
         this.life_bar.assignValue(this.health_points);
+        this.interruptAttack();
         this.__dieOrBleed(monster_index);
     }
   
     follow(target) {
-        if (!this.shocked) {
+        if (!this.shocked && !this.__isAttacking()) {
             this.angle = Math.atan( (target.y - this.y) / (target.x - this.x) );
             if (target.x < this.x)
                 this.angle += Math.PI;
@@ -35,6 +36,21 @@ class MV_Monster extends MobileGameElement {
         super.addImageElt("spinning-image");
         super.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
+
+    interruptAttack() {
+        if (this.__isAttacking()) {
+            this.attack_bar.root_element.remove();
+            this.attack_bar = null;
+            WaitingCounters.removeAttackCounter(this);
+        }
+    }
+
+    aimPlayer() {
+        const character = MainController.UI.character;
+        this.aiming_angle = this.hitbox.getDirection(character.hitbox);
+    }
+
+    __isAttacking() { return !!this.attack_bar; }
   
     __initFromMonsterType() {
         this.pixel_size = this.__monster_type.size;

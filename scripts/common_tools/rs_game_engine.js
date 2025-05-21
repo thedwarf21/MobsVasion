@@ -259,6 +259,18 @@ class MobileGameElement {
 	setHitboxDisplay(makeVisible) { 
 		this.root_element.querySelector(".hitbox").style.opacity = makeVisible ? "1" : "0";
 	}
+
+	/**
+	 * Permet d'obtenir les coordonnées du point central de l'objet
+	 * 
+	 * @returns {x, y}
+	 */
+    centralSpotPosition() {
+        return {
+            x: this.x + (this.pixel_size / 2),
+            y: this.y + (this.pixel_size / 2)
+        };
+    }
   
 	/**
 	 * Retourne l'objet RS_Hitbox correspondant au vaisseau

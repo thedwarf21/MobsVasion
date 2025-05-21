@@ -26,13 +26,6 @@ class MV_Character extends MobileGameElement {
         this.deltaY = character_speed * Math.sin(this.angle);
         this.move();
     }
-
-    centralSpotPosition() {
-        return {
-            x: this.x + CHARACTER_SIZE/2,
-            y: this.y + CHARACTER_SIZE/2
-        };
-    }
   
     dash() {
         this.deltaX = DASH_LENGTH * Math.cos(this.angle);

@@ -25,6 +25,8 @@ class WaitingCounters {
 				else WaitingCounters.__performValueChangeAction(counter_key, counters_object[counter_key]);
 			}
 		}
+
+		this.__decrementMonsterAttackCounter();
 	}
 
 	static clear() {
@@ -32,6 +34,18 @@ class WaitingCounters {
 		const counters_names_list = Object.keys(counters_object);
 		for (const counter_key of counters_names_list)
 			counters_object[counter_key] = 0;
+
+		MainController.scope.game.attacking_monsters = [];
+	}
+
+	static removeAttackCounter(monster) {
+		const attacks = MainController.scope.game.attacking_monsters;
+		for (let i = 0; i < attacks.length; i++) {
+			const attacking_monster = attacks[i];
+
+			if (attacking_monster.monster === monster)
+				attacks.splice(i, 1);
+		}
 	}
 
 	static __performValueChangeAction(counter_key, counter_value) {
@@ -60,6 +74,18 @@ class WaitingCounters {
 				break;
 			default:
 				break;	
+		}
+	}
+
+	static __decrementMonsterAttackCounter() {
+		for (const attacking_monster of MainController.scope.game.attacking_monsters) {
+			const monster = attacking_monster.monster;
+			monster.aimPlayer();
+			
+			attacking_monster.time--;
+			if (!attacking_monster.time)
+				monster.performAttack();
+			else monster.attack_bar.assignValue(attacking_monster.time);
 		}
 	}
 }

@@ -28,6 +28,7 @@ class MV_GameInitializer {
 					dash: 0,
 					clip: 0
 				},
+				attacking_monsters: [],   // { monster: MV_Monster, time: number }
 				keyboard_type: KeyTranslater.AZERTY,
 				showHitboxes: false
 			},

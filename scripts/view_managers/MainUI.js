@@ -1,6 +1,7 @@
 class MainUI {
 	character;
 	shots;
+	monster_shots;
 	monsters;
 	primaryReloadGauge;
 	secondaryReloadGauge;
@@ -9,6 +10,7 @@ class MainUI {
 	constructor() {
 		this.shots = [];
 		this.monsters = [];
+		this.monster_shots = [];
 		this.__prepareWaveSwagAutoRefresh();
 		this.__prepareAmmoAutoRefresh();
 		this.__prepareLifeBarAutoRefresh( HealthBarHelper.create() );
@@ -19,7 +21,8 @@ class MainUI {
 		this.__clearCharacter();
 		this.__clearBloodPuddles();
 		this.__clearMonsters();
-		this.__clearGauges();		
+		this.__clearMonsterShots();
+		this.__clearGauges();
 
 		const soil_index = Tools.radomValueInRange(0, 2);
 		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
@@ -42,6 +45,13 @@ class MainUI {
 		for (let i = this.monsters.length - 1; i >= 0; i--) {
 			this.monsters[i].root_element.remove();
 			this.monsters.splice(i, 1);
+		}
+	}
+
+	__clearMonsterShots() {
+		for (let i = this.monster_shots.length - 1; i >= 0; i--) {
+			this.monster_shots[i].root_element.remove();
+			this.monster_shots.splice(i, 1);
 		}
 	}
 

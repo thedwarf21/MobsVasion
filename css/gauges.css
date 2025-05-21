@@ -41,6 +41,16 @@
 }
 .gauge.character-health-bar .progress { background: rgb(255, 50, 50); }
 
+.gauge.xp-bar {
+	position: absolute;
+	top: 1vh;
+	left: 6vh;
+	width: 60vh;
+  	height: 2vh;
+	opacity: 0.75;
+}
+.gauge.xp-bar .progress { background: rgb(93, 255, 0); }
+
 .gauge.monster-health-bar {
 	position: absolute;
 	top: -2.5vh;
@@ -53,12 +63,14 @@
 }
 .gauge.monster-health-bar .progress { background: rgb(255, 50, 50); }
 
-.gauge.xp-bar {
+.gauge.monster-attack-bar {
 	position: absolute;
-	top: 1vh;
-	left: 6vh;
-	width: 60vh;
-  	height: 2vh;
-	opacity: 0.75;
+	bottom: -1.2vh;
+	left: 0;
+	box-sizing: border-box;
+	width: 100%;
+	height: 0.8vh;
+	border: 0.1vh ridge black;
+	padding: 0;
 }
-.gauge.xp-bar .progress { background: rgb(93, 255, 0); }
+.gauge.monster-attack-bar .progress { background: #1dc11d; }
