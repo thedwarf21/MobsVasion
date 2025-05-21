@@ -22,7 +22,7 @@ class MV_MonsterVoracious extends MV_Monster {
 
 class MV_MonsterSpitter extends MV_Monster {
     __monster_type;
-    ATTACK_TIME = 20;
+    ATTACK_TIME = 10;
   
     constructor(viewport, x, y) {
         super(viewport, x, y);
@@ -58,7 +58,7 @@ class MV_MonsterSpitter extends MV_Monster {
 
     __canAttack() { 
         const character = MainController.UI.character;
-        return !this.__isAttacking() && this.hitbox.getDistance(character.hitbox);
+        return !this.__isAttacking() && this.hitbox.getDistance(character.hitbox) < this.__monster_type.attack_range;
     }
     
     __createShot() {

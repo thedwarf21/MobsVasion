@@ -158,17 +158,17 @@ V   Tâche terminée
     V   Style général des popup (boutons, mise en page commune)
     V   Ajouter la musique
 *   Nouveaux types de monstres
-    X   Préparation du terrain
+    V   Préparation du terrain
         >   Définir les caractéristiques des monstres dans un dictionnaire de données
         >   S'appuyer sur ce dictionnaire pour la génération des vagues
         >   Idem pour l'XP
         >   Idem pour le butin
-        _   La classe Monster devient abstraite, et chaque monstre se voit attribuer une classe spécifique héritant de Monster
-    _   Les Voraces
-        _   Foncent vers le joueur
-        _   Le joueur subit des dégâts tant qu'il est au corps à corps
-    _   Les Cracheurs
-        _   Attaquent à distance
+        >   La classe Monster devient abstraite, et chaque monstre se voit attribuer une classe spécifique héritant de Monster
+    V   Les Voraces
+        >   Foncent vers le joueur
+        >   Le joueur subit des dégâts tant qu'il est au corps à corps
+    X   Les Cracheurs
+        >   Attaquent à distance
         _   Laissent une AOE toxique en mourant
     _   Les Tacleurs
         _   Attaquent par ruées, dès lors que le joueur est à portée
