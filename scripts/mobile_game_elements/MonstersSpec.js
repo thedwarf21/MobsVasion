@@ -22,7 +22,7 @@ class MV_MonsterVoracious extends MV_Monster {
 
 class MV_MonsterSpitter extends MV_Monster {
     __monster_type;
-    ATTACK_TIME = 10;
+    ATTACK_TIME = 15;
   
     constructor(viewport, x, y) {
         super(viewport, x, y);
@@ -38,7 +38,7 @@ class MV_MonsterSpitter extends MV_Monster {
     }
 
     prepareSpitting() {
-        //TODO enregistrer le son correspondant et écrire JuiceHelper.prepareSpitting();
+        JuiceHelper.prepareSpitting();
         this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
         this.root_element.appendChild(this.attack_bar.root_element);
         
@@ -49,7 +49,7 @@ class MV_MonsterSpitter extends MV_Monster {
     }
 
     performAttack() {
-        //TODO enregistrer le son correspondant et écrire JuiceHelper.spit();
+        JuiceHelper.spit();
         super.interruptAttack();
         const shot = this.__createShot();
 		MainController.UI.addToGameWindow(shot.root_element);

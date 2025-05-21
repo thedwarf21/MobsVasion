@@ -79,6 +79,10 @@ class JuiceHelper {
     static popupClosing() { MainController.audio_manager.playAudio("popup_close"); }
     static popupNavigate() { MainController.audio_manager.playAudio("popup_navigate"); }
     static popupValidate() { MainController.audio_manager.playAudio("popup_validate"); }
+
+    static prepareSpitting() { MainController.audio_manager.playAudio("spit_prepare"); }
+    static spit() { MainController.audio_manager.playAudio("spit"); }
+    
     static startShopMusic() { MainController.audio_manager.playAudio("shop_music"); }
     static stopShopMusic() { MainController.audio_manager.stopAudioLoop("shop_music"); }
     static startWaveMusic() { MainController.audio_manager.playAudio("wave_music"); }

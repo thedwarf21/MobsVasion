@@ -155,6 +155,14 @@ const SOUND_LIB = {
 	reload: 		{ file: "reload.mp3" },
 	dash: 			{ file: "dash.mp3" },
 	level_up:   	{ file: "level-up.mp3" },
+	spit_prepare:   { 
+		file: "spit-prepare.mp3",
+		players_number: 3 
+	},
+	spit:   { 
+		file: "spit.mp3",
+		players_number: 3 
+	},
 	kill: 			{ 
 		file: "dying-monster.mp3",
 		players_number: 3
