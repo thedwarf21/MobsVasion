@@ -158,29 +158,24 @@ V   Tâche terminée
     V   Style général des popup (boutons, mise en page commune)
     V   Ajouter la musique
 *   Nouveaux types de monstres
-    _   Préparation du terrain
-        _   Définir les caractéristiques des monstres dans une liste d'objets
-        _   S'appuyer sur cette liste pour la génération des vagues
-        _   Idem pour l'XP
-        _   Idem pour le butin
+    X   Préparation du terrain
+        >   Définir les caractéristiques des monstres dans un dictionnaire de données
+        >   S'appuyer sur ce dictionnaire pour la génération des vagues
+        >   Idem pour l'XP
+        >   Idem pour le butin
         _   La classe Monster devient abstraite, et chaque monstre se voit attribuer une classe spécifique héritant de Monster
     _   Les Voraces
-        _   Monstres de base
-        _   Valeur de combat : 1
+        _   Foncent vers le joueur
+        _   Le joueur subit des dégâts tant qu'il est au corps à corps
     _   Les Cracheurs
-        _   Santé faible
         _   Attaquent à distance
         _   Laissent une AOE toxique en mourant
-        _   Valeur de combat : 2
     _   Les Tacleurs
-        _   Rapides
-        _   Attaquent par ruées
-        _   Valeur de combat : 2
+        _   Attaquent par ruées, dès lors que le joueur est à portée
     _   Les Golgoths
-        _   Lents
-        _   Santé importante
-        _   Lancent les autres zombies (sauf d'autres Golgoths) en direction du joueur
-        _   Valeur de combat : 5
+        _   Se déplacent vers la cible la plus proche (joueur ou zombie autre que Golgoth)
+        _   Capables de lancer les autres zombies (sauf d'autres Golgoths) en direction du joueur
+        _   Font très très mal au corps à corps
 *   Gestion des vagues et tuto pour chaque type de monstre
     _   Vague 1 composée uniquement de Voraces => tuto Voraces
     _   Vague 2 composée uniquement de Cracheurs => tuto Cracheurs

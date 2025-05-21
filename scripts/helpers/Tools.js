@@ -18,9 +18,11 @@ class Tools {
 	}
 
 	static getRandomMessage(isVictory) {
-		const random_messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
-		return random_messages[ Tools.radomValueInRange(0, random_messages.length - 1) ];
+		const messages = isVictory ? NPC_RANDOM_DIALOGS.victory : NPC_RANDOM_DIALOGS.defeat;
+		return Tools.getRandomArrayElement( messages );
 	}
+
+	static getRandomArrayElement(array) { return array[ Tools.radomValueInRange(0, array.length - 1) ]; }
 
 	static intToHumanReadableString(value) {
 		let display_number = value;

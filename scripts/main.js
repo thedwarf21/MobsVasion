@@ -16,26 +16,79 @@ const WOUND_SHOCK_TIME = 500;
 
 const DASH_LENGTH = 125;
 
-const MONSTER_SIZE = 60;
-const MIN_MONSTER_SPEED = 2;
-const MAX_MONSTER_SPEED = 4;
-const MIN_MONSTER_SWAG = 1;
-const MAX_MONSTER_SWAG = 3;
-const MONSTER_STRENGTH = 1;
+const MONSTER_SIZE = 60;			//TODO à virer quand le WaveGenerator sera prêt
+const MIN_MONSTER_SPEED = 2;		//TODO à virer quand le WaveGenerator sera prêt
+const MAX_MONSTER_SPEED = 4;		//TODO à virer quand le WaveGenerator sera prêt
+const MIN_MONSTER_SWAG = 1;			//TODO à virer quand le WaveGenerator sera prêt
+const MAX_MONSTER_SWAG = 3;			//TODO à virer quand le WaveGenerator sera prêt
+const MONSTER_STRENGTH = 1;			//TODO à virer quand le WaveGenerator sera prêt
 
-const MOBS_BASE_HEALTH = 3;
-const MOBS_HP_ADD_PER_WAVE = 0.2;
+const MOBS_BASE_HEALTH = 3;			//TODO à virer quand le WaveGenerator sera prêt
+const MOBS_HP_ADD_PER_WAVE = 0.2;	//TODO à virer quand le WaveGenerator sera prêt
 
-const MOBS_ON_FIRST_WAVE = 3;
-const MOBS_ADD_PER_WAVE = 1;
+const MOBS_ON_FIRST_WAVE = 3;		//TODO à virer quand le WaveGenerator sera prêt
+const MOBS_ADD_PER_WAVE = 1;		//TODO à virer quand le WaveGenerator sera prêt
 
-const XP_PER_MONSTER = 1;
+const FIRST_WAVE_BATTLE_VALUE = 3;
+const BATTLE_VALUE_ADD_PER_WAVE = 1;
+
+const XP_PER_MONSTER = 1;			//TODO à virer quand le WaveGenerator sera prêt
 const BASE_LEVEL_UP_XP = 3;
-const LEVEL_UP_XP_COEF = 2;
+const LEVEL_UP_XP_COEF = 1.5;
 const KP_PER_LEVEL = 1;
 
 const BLOOD_SPLASH_LENGTH = 60;
 const FIRE_SIZE = 30;
+
+const MONSTERS_TYPES = {
+	voracious: {
+		class: MV_Monster,
+		appear_from_wave: 1,
+		size: 60,
+		speed_range: [2, 4],
+		swag_range: [1, 3],
+		strength: 1,
+		base_hp: 3,
+		hp_inc_per_wave: 0.2,
+		battle_value: 1
+	},
+	spitter: {
+		class: MV_Monster,
+		appear_from_wave: 100000,//2,
+		size: 40,
+		speed_range: [2, 2],
+		swag_range: [3, 5],
+		attack_range: 300,
+		strength: 3,
+		base_hp: 1.5,
+		hp_inc_per_wave: 0.1,
+		battle_value: 2
+	},
+	tackler: {
+		class: MV_Monster,
+		appear_from_wave: 100000,//3,
+		size: 50,
+		speed_range: [5, 6],
+		swag_range: [3, 5],
+		attack_range: 150,
+		strength: 5,
+		base_hp: 2.5,
+		hp_inc_per_wave: 0.15,
+		battle_value: 2
+	},
+	golgoth: {
+		class: MV_Monster,
+		appear_from_wave: 100000,//10,
+		size: 120,
+		speed_range: [1, 1],
+		swag_range: [8, 12],
+		attack_range: 1000,
+		strength: 10,
+		base_hp: 20,
+		hp_inc_per_wave: 0.5,
+		battle_value: 5
+	}
+}
 
 const TIMEOUTS = {
 	dash_interval: 75,
@@ -194,7 +247,7 @@ class MainController {
 				break;
 		}
 
-		JuiceHelper.monsterPop(x_monster, y_monster);
+		JuiceHelper.monsterPop(x_monster, y_monster, MV_Monster);
 	}
 
     static prepareWaveStart(is_silent_save) {

@@ -85,12 +85,12 @@ class JuiceHelper {
     static stopWaveMusic() { MainController.audio_manager.stopAudioLoop("wave_music"); }
 
 
-    static monsterPop(x, y) {
+    static monsterPop(x, y, MonsterClass) {
 		const animation = ANIMATIONS.monster_pop;
         const pop_animation = new MV_AnimatedFrame( MainController.viewport, 
             x, y, MONSTER_SIZE, MONSTER_SIZE, 
             animation.css_class, animation.duration, ()=> {
-                const monster = new MV_Monster(MainController.viewport, x, y);
+                const monster = new MonsterClass(MainController.viewport, x, y);
                 MainController.UI.monsters.push(monster);
                 MainController.UI.addToGameWindow(monster.root_element);
             }
