@@ -69,7 +69,7 @@ class TutorialHelper {
     }
 
     static __controlsSequence() {
-        if ( window.matchMedia('(display-mode: standalone)').matches ) { // permet de savoir si l'utilisateur est sur mobile ou sur PC
+        if ( Tools.isMediaStadalone() ) { // permet de savoir si l'utilisateur est sur mobile ou sur PC
             return [{
                 message_lines: ["Au fait, au cas où ça pourrait t'aider, j'ai lu quelque part que le <b>joysitck virtuel</b>, à gauche, permettait de se déplacer, tandis que les <b>boutons à droite</b> permettaient d'effectuer diverses actions : ",
                                 "Par exemple, celui affichant une <b>cible</b> permettrait de <b>tirer sur le monstre le plus proche</b>.",

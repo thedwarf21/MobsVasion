@@ -22,6 +22,9 @@ class ParametersPopup extends AbstractPopup {
     __removeUnnecessaryContent() {
         if(!MainController.timer.gamepad_mapper)
             this.__querySelector("#btn_gamepad_controls").remove();
+
+        if(Tools.isMediaStadalone()) 
+            this.__querySelector("#keyboard_type").parentElement.remove();
     }
 
     __bindOptions() {

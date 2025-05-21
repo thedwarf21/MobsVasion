@@ -51,4 +51,6 @@ class Tools {
 		
 		return number.toFixed(2) + unit;
 	}
+
+	static isMediaStadalone() { return window.matchMedia('(display-mode: standalone)').matches; }
 }
