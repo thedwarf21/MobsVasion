@@ -52,7 +52,7 @@ const MONSTERS_TYPES = {
 	},
 	tackler: {
 		class: MV_MonsterTackler,
-		appear_from_wave: 3,
+		appear_from_wave: 4,
 		size: 45,
 		speed_range: [6, 7],
 		swag_range: [3, 5],
@@ -240,7 +240,9 @@ class MainController {
 
 	static startWave() {
 		JuiceHelper.startWaveMusic();
-		MainController.scope.controls.paused = false;
+
+		if (MainController.popups_stack.activePopup()) // Ne pas enlever la pause, si la fenêtre de paramètres à été ouverte
+			MainController.scope.controls.paused = false;
 	}
 
 	
