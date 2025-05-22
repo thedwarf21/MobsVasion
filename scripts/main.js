@@ -51,8 +51,8 @@ const MONSTERS_TYPES = {
 		battle_value: 2
 	},
 	tackler: {
-		class: MV_Monster,
-		appear_from_wave: 100000,//3,
+		class: MV_MonsterTackler,
+		appear_from_wave: 3,
 		size: 45,
 		speed_range: [6, 7],
 		swag_range: [3, 5],
@@ -161,6 +161,14 @@ const SOUND_LIB = {
 	},
 	spit:   { 
 		file: "spit.mp3",
+		players_number: 3 
+	},
+	tackle_prepare:   { 
+		file: "tackle-prepare.mp3",
+		players_number: 3 
+	},
+	tackle:   { 
+		file: "tackle.mp3",
 		players_number: 3 
 	},
 	kill: 			{ 

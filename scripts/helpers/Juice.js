@@ -33,10 +33,6 @@ class JuiceHelper {
         MainController.audio_manager.playAudio("shot"); 
     }
 
-    static reload() { MainController.audio_manager.playAudio("reload"); }
-    static emptyClipPercussion() { MainController.audio_manager.playAudio("empty_clip"); }
-    static dashSound() { MainController.audio_manager.playAudio("dash"); }
-
     static levelUp() {
         const level_element = document.querySelector(".player-level");
         level_element.classList.add("level-up");
@@ -53,9 +49,6 @@ class JuiceHelper {
 
         MainController.UI.addToGameWindow(flash_effect.root_element);
     }
-
-    static playerDied() { MainController.audio_manager.playAudio("lose"); }
-
 
     static checkPanicMode() {
         const panic_threshold = PANIC_MODE_THRESHOLD_RATIO * Abilities.getMaxPlayerHealth();
@@ -75,6 +68,11 @@ class JuiceHelper {
         }
     }
 
+    static reload() { MainController.audio_manager.playAudio("reload"); }
+    static emptyClipPercussion() { MainController.audio_manager.playAudio("empty_clip"); }
+    static dashSound() { MainController.audio_manager.playAudio("dash"); }
+    static playerDied() { MainController.audio_manager.playAudio("lose"); }
+
     static popupOpening() { MainController.audio_manager.playAudio("popup_open"); }
     static popupClosing() { MainController.audio_manager.playAudio("popup_close"); }
     static popupNavigate() { MainController.audio_manager.playAudio("popup_navigate"); }
@@ -82,6 +80,9 @@ class JuiceHelper {
 
     static prepareSpitting() { MainController.audio_manager.playAudio("spit_prepare"); }
     static spit() { MainController.audio_manager.playAudio("spit"); }
+    static prepareTackling() { MainController.audio_manager.playAudio("tackle_prepare"); }
+    static tackle() { MainController.audio_manager.playAudio("tackle"); }
+    static monsterSlayed() { MainController.audio_manager.playAudio("kill"); }
     
     static startShopMusic() { MainController.audio_manager.playAudio("shop_music"); }
     static stopShopMusic() { MainController.audio_manager.stopAudioLoop("shop_music"); }
@@ -116,5 +117,19 @@ class JuiceHelper {
         MainController.UI.addToGameWindow(blood_splash.root_element);
     }
 
-    static monsterSlayed() { MainController.audio_manager.playAudio("kill"); }
+    static tackleTrail(monster, tackle_length) {
+        const trail = document.createElement("DIV");
+        trail.classList.add("tackle-trail");
+        trail.style.height = MainController.viewport.getCssValue(monster.pixel_size);
+        trail.style.width = MainController.viewport.getCssValue(tackle_length);
+        trail.style.top = MainController.viewport.getCssValue(monster.y);
+        trail.style.left = MainController.viewport.getCssValue(monster.x + monster.pixel_size/2);
+        trail.style.transform = `rotateZ(${monster.aiming_angle}rad)`;
+
+        MainController.UI.addToGameWindow(trail);
+        setTimeout(()=> {
+            trail.style.opacity = 0;
+            setTimeout(()=> { trail.remove(); }, 1000);
+        }, 200);
+    }
 }

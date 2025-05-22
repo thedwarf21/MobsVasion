@@ -80,7 +80,9 @@ class WaitingCounters {
 	static __decrementMonsterAttackCounter() {
 		for (const attacking_monster of MainController.scope.game.attacking_monsters) {
 			const monster = attacking_monster.monster;
-			monster.aimPlayer();
+
+			if (!monster.aiming_locked_while_attacking)
+				monster.aimPlayer();
 			
 			attacking_monster.time--;
 			if (!attacking_monster.time)
