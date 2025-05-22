@@ -44,7 +44,14 @@ class ShopManager {
         }
     }
 
-    forceItemLevel(code, value) { this.__getShopItemByCode(code).current_level = value; }
+    forceItemLevel(code, value) { 
+        const shop_item = this.__getShopItemByCode(code);
+        this.__getShopItemByCode(code).current_level = value;
+        
+        // Contourner le binding (sinon, charger la sauvegarde augmente le total de points vie)
+        if (code === "CON")
+            MainController.scope.game.health_points -= value * shop_item.upgrade_value;
+    }
 
     __getShopItemByCode(code) {
         for (const shop_item of this.__shop_items) {
