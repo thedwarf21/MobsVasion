@@ -16,7 +16,7 @@ class MV_Monster extends MobileGameElement {
     wound(injury_amount, monster_index) {
         this.health_points -= injury_amount;
         this.life_bar.assignValue(this.health_points);
-        this.interruptAttack();
+        this.resetAttackCounter();
         this.__dieOrBleed(monster_index);
     }
   
@@ -41,7 +41,7 @@ class MV_Monster extends MobileGameElement {
         super.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
 
-    interruptAttack() {
+    resetAttackCounter() {
         if (this.__isAttacking()) {
             this.attack_bar.root_element.remove();
             this.attack_bar = null;

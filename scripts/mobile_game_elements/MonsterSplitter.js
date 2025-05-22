@@ -24,13 +24,13 @@ class MV_MonsterSpitter extends MV_Monster {
 
     performAttack() {
         JuiceHelper.spit();
-        super.interruptAttack();
+        super.resetAttackCounter();
         const shot = this.__createShot();
 		MainController.UI.addToGameWindow(shot.root_element);
         MainController.UI.monster_shots.push(shot);
     }
 
-    specificDeathEffect() {  // appelée par MV_Monster à la mort du monstre, si la méthode est présente
+    specificDeathEffect() {  // appelée par MV_Monster à la mort du monstre, si la méthode est présente (comme c'est le cas pour cette classe enfant)
         const toxic_cloud = document.createElement("DIV");
         toxic_cloud.classList.add("toxic-cloud");
         toxic_cloud.hitbox = this.hitbox;
