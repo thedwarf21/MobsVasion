@@ -68,6 +68,68 @@ class TutorialHelper {
         );
     }
 
+    static showMonsterTutorial() {
+        const bestiary = MainController.wave_generator.bestiary;
+        MainController.scope.controls.paused = true;
+
+        for (const key in bestiary) {
+            const monster_type = bestiary[key];
+
+            if (monster_type.appear_from_wave === MainController.scope.game.wave_number) {
+                switch (key) {
+                    case "voracious":
+                        TutorialHelper.__popupsSequence(
+                            [{
+                                message_lines: ["Ces zombie sont appelés des <i>Voraces</i>.", 
+                                                "Ils ne feront que te foncer dessus, alors tant que tu gardes tes distances, tout devrait bien se passer."],
+                                face: FRIEND_FACES.happy
+                            }], ()=> { MainController.scope.controls.paused = false; }
+                        );
+                        return;
+
+                    case "spitter":
+                        TutorialHelper.__popupsSequence(
+                            [{
+                                message_lines: ["Ces zombies miniatures sont des <i>Cracheurs</i>.", 
+                                                "Méfie-toi d'eux. Non seulement ils attaquent à distance, mais il laissent s'échapper un nuage toxique en mourant."],
+                                face: FRIEND_FACES.angry
+                            }, {
+                                message_lines: ["Je me demande si tu ne peux pas les amener à tirer sur les autres zombies, en te plaçant stratégiquement."],
+                                face: FRIEND_FACES.worried
+                            }], ()=> { MainController.scope.controls.paused = false; }
+                        );
+                        return;
+
+                    case "tackler":
+                        TutorialHelper.__popupsSequence(
+                            [{
+                                message_lines: ["Fais très attention à ces <i>Tacleurs</i> !", 
+                                                "Ils sont incroyablement rapides, et te fonceront dessus d'un coup, lorsqu'ils se seront suffisamment approchés."],
+                                face: FRIEND_FACES.worried
+                            }], ()=> { MainController.scope.controls.paused = false; }
+                        );
+                        return;
+
+                    case "golgoth":
+                        TutorialHelper.__popupsSequence(
+                            [{
+                                message_lines: ["Oh non ! Un <i>Golgoth</i> !", 
+                                                "Ces abominations sont très lentes, mais aussi incroyablement fortes et résistantes."],
+                                face: FRIEND_FACES.disappointed
+                            }, {
+                                message_lines: ["J'ai même entendu dire qu'il leur arrivait d'utiliser d'autres zombies comme projectiles.", 
+                                                "Si le zombie ainsi projeté survit au vol plané, il sera dangereusement proche de toi."],
+                                face: FRIEND_FACES.worried
+                            }], ()=> { MainController.scope.controls.paused = false; }
+                        );
+                        return;
+                }
+            }
+        }
+
+        MainController.scope.controls.paused = false;
+    }
+
     static __controlsSequence() {
         if ( Tools.isMediaStadalone() ) { // permet de savoir si l'utilisateur est sur mobile ou sur PC
             return [{
@@ -88,7 +150,8 @@ class TutorialHelper {
                                 "Par contre, je n'ai aucune idée de ce que ça signifie..."],
                 face: FRIEND_FACES.worried
             }, {
-                message_lines: ["L'article dans lequel j'ai lu tout ça expliquait aussi que <b>la souris</b> permettait de viser, de tirer avec le <b>bouton gauche</b>, et de recharger avec le <b>bouton droit</b>."],
+                message_lines: ["L'article dans lequel j'ai lu tout ça expliquait aussi que <b>la souris</b> permettait de viser, de tirer avec le <b>bouton gauche</b>, et de recharger avec le <b>bouton droit</b>.",
+                                "Il expliquait également que la touche <b>P</b> permettait de mettre en pause et d'afficher les paramètres."],
                 face: FRIEND_FACES.worried
             }, {
                 message_lines: ["Si je me rappelle bien, il y était également fait mention de la possibilité de brancher une <b>manette de jeu</b>, puis de se <b>laisser guider</b>.",
@@ -130,7 +193,7 @@ class TutorialHelper {
                                 "D'après ce livre, tuer des monstres permet de <b>gagner de l'expérience</b>, qui permet ensuite de <b>gagner des niveaux</b>."],
                 face: FRIEND_FACES.worried
             }, {
-                message_lines: ["Chaque nouveau niveau, te permet d'obtenir un <b>point de compétences</b> utilisable ici pour améliorer tes caractéristiques.", 
+                message_lines: ["Chaque nouveau niveau, te permet d'obtenir des <b>points de compétences</b> utilisables ici pour améliorer tes caractéristiques.", 
                                 "D'ailleurs, j'ai l'impression que tu es mûr pour utiliser la salle, après ce premier combat."],
                 face: FRIEND_FACES.happy
             }, {

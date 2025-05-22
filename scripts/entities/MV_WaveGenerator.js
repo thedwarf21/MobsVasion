@@ -11,14 +11,14 @@ class MV_WaveGenerator {
 		MainController.scope.game.wave_pop.timeouts = [];
         this.battle_value = 0;
 
-		let timeout = TIMEOUTS.before_pop;
+		let timeout = this.__getMandatoryPop();
 		while (this.remaining_battle_value) {
 			MainController.scope.game.wave_pop.timeouts.push({
                 ticks_number: timeout,
                 monster_type: this.__randomMonster()
             });
 
-			timeout += Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval);
+			timeout += this.time_before_next_pop;
 		}
 	}
 
@@ -51,6 +51,25 @@ class MV_WaveGenerator {
             return false;
 
         return true;
+    }
+
+    __getMandatoryPop() {
+        for (const key in this.bestiary) {
+            const monster_type = this.bestiary[key];
+
+            if (monster_type.appear_from_wave === MainController.scope.game.wave_number) {
+                this.battle_value += monster_type.battle_value;
+                
+                MainController.scope.game.wave_pop.timeouts.push({
+                    ticks_number: TIMEOUTS.before_pop,
+                    monster_type: monster_type
+                });
+
+                return TIMEOUTS.before_pop + this.time_before_next_pop;
+            }
+        }
+
+        return TIMEOUTS.before_pop;
     }
 
     popMonsterRandomly(monster_type) {
@@ -97,4 +116,6 @@ class MV_WaveGenerator {
         const current_wave_battle_value = FIRST_WAVE_BATTLE_VALUE + (wave_number - 1) * BATTLE_VALUE_ADD_PER_WAVE;
         return current_wave_battle_value - this.battle_value;
     }
+
+    get time_before_next_pop() { return Tools.radomValueInRange(TIMEOUTS.min_pop_interval, TIMEOUTS.max_pop_interval); }
 }

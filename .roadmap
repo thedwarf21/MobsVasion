@@ -171,18 +171,17 @@ V   Tâche terminée
         >   Attaquent à distance
         >   Laissent une AOE toxique en mourant
         >   Gérer les tirs alliés
-    _   Les Tacleurs
-        _   Attaquent par ruées, dès lors que le joueur est à portée
+    V   Les Tacleurs
+        >   Attaquent par ruées, dès lors que le joueur est à portée
     _   Les Golgoths
         _   Se déplacent vers la cible la plus proche (joueur ou zombie autre que Golgoth)
         _   Capables de lancer les autres zombies (sauf d'autres Golgoths) en direction du joueur
         _   Font très très mal au corps à corps
 *   Gestion des vagues et tuto pour chaque type de monstre
-    _   Vague 1 composée uniquement de Voraces => tuto Voraces
-    _   Vague 2 composée uniquement de Cracheurs => tuto Cracheurs
-    _   Vague 3 composée de 2 Tacleurs et un Vorace => tuto Tacleurs
-    _   Vague 10 => apparition du premier Goglgoth => tuto Golgoths
-    _   Pas plus d'un Golgoth par tranche de 10 du numéro de vague
+    >   Vague 2 => tuto Cracheurs
+    >   Vague 4 => tuto Tacleurs
+    >   Vague 10 => apparition du premier Goglgoth => tuto Golgoths
+    >   Pas plus d'un Golgoth par tranche de 10 du numéro de vague
 
 *   Optimisations et assainissements
 V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées

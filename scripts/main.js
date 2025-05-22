@@ -20,8 +20,8 @@ const FIRST_WAVE_BATTLE_VALUE = 3;
 const BATTLE_VALUE_ADD_PER_WAVE = 1;
 
 const BASE_LEVEL_UP_XP = 3;
-const LEVEL_UP_XP_COEF = 1.5;
-const KP_PER_LEVEL = 1;
+const LEVEL_UP_XP_COEF = 1.3;
+const KP_PER_LEVEL = 2;
 
 const BLOOD_SPLASH_LENGTH = 60;
 const FIRE_SIZE = 30;
@@ -43,7 +43,7 @@ const MONSTERS_TYPES = {
 		appear_from_wave: 2,
 		size: 30,
 		speed_range: [2, 2],
-		swag_range: [3, 5],
+		swag_range: [4, 6],
 		attack_range: 300,
 		strength: 3,
 		base_hp: 1.5,
@@ -55,7 +55,7 @@ const MONSTERS_TYPES = {
 		appear_from_wave: 4,
 		size: 45,
 		speed_range: [6, 7],
-		swag_range: [3, 5],
+		swag_range: [6, 8],
 		attack_range: 150,
 		strength: 5,
 		base_hp: 2.5,
@@ -241,8 +241,8 @@ class MainController {
 	static startWave() {
 		JuiceHelper.startWaveMusic();
 
-		if (MainController.popups_stack.activePopup()) // Ne pas enlever la pause, si la fenêtre de paramètres à été ouverte
-			MainController.scope.controls.paused = false;
+		if (!MainController.popups_stack.activePopup()) // Ne pas enlever la pause, si la fenêtre de paramètres à été ouverte
+			TutorialHelper.showMonsterTutorial();
 	}
 
 	
