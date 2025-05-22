@@ -74,6 +74,17 @@
 	z-index: 0;
 }
 
+.toxic-cloud {
+	position: absolute;
+	width: 10vh;
+	height: 10vh;
+	border-radius: 50%;
+	background-image: radial-gradient(circle at center, rgba(115, 255, 0, 0.25) 30%, rgba(115, 255, 0, 0.6) 80%);
+	background-size: contain;
+  	background-repeat: no-repeat;
+	z-index: 5;
+}
+
 .fire {
 	position: absolute;
 	width: 5vh;

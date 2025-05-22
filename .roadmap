@@ -167,9 +167,10 @@ V   Tâche terminée
     V   Les Voraces
         >   Foncent vers le joueur
         >   Le joueur subit des dégâts tant qu'il est au corps à corps
-    X   Les Cracheurs
+    V   Les Cracheurs
         >   Attaquent à distance
-        _   Laissent une AOE toxique en mourant
+        >   Laissent une AOE toxique en mourant
+        >   Gérer les tirs alliés
     _   Les Tacleurs
         _   Attaquent par ruées, dès lors que le joueur est à portée
     _   Les Golgoths

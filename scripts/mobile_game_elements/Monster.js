@@ -94,17 +94,19 @@ class MV_Monster extends MobileGameElement {
     }
 
     __monsterSlayed(monster_index) {
+        JuiceHelper.monsterSlayed();
         MainController.UI.monsters.splice(monster_index, 1);
 
         const monster_swag = Tools.radomValueInRange(this.__monster_type.swag_range[0], this.__monster_type.swag_range[1] + Abilities.getSwagUpgrade());
 		MainController.scope.game.money += monster_swag;
 
 		XpBarHelper.addXp( this.__monster_type.battle_value );
+
+        if (this.specificDeathEffect)
+            this.specificDeathEffect();
 		
         if (MainController.__isWaveComplete())
 			MainController.__waveDefeated();
-
-		JuiceHelper.monsterSlayed();
     }
 
     

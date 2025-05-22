@@ -1,28 +1,7 @@
-class MV_MonsterVoracious extends MV_Monster {
-    __monster_type;
-  
-    constructor(viewport, x, y) {
-        super(viewport, x, y);
-        this.root_element.classList.add("voracious");
-
-        this.__monster_type = MainController.wave_generator.bestiary.voracious;        
-        super.init();
-    }
-
-    attack() {
-        const character = MainController.UI.character;
-
-		if (this.hitbox.checkCollide(character.hitbox)) {
-			JuiceHelper.hitEffect();
-			HealthBarHelper.characterHit(this.__monster_type.strength);
-		}
-    }
-}
-
-
 class MV_MonsterSpitter extends MV_Monster {
     __monster_type;
-    ATTACK_TIME = 15;
+    ATTACK_TIME = 25;
+    TOXIC_CLOUD_RADIUS = 30;
   
     constructor(viewport, x, y) {
         super(viewport, x, y);
@@ -54,6 +33,18 @@ class MV_MonsterSpitter extends MV_Monster {
         const shot = this.__createShot();
 		MainController.UI.addToGameWindow(shot.root_element);
         MainController.UI.monster_shots.push(shot);
+    }
+
+    specificDeathEffect() {  // appelée par MV_Monster à la mort du monstre, si la méthode est présente
+        const toxic_cloud = document.createElement("DIV");
+        toxic_cloud.classList.add("toxic-cloud");
+        toxic_cloud.hitbox = this.hitbox;
+        toxic_cloud.hitbox.radius = this.TOXIC_CLOUD_RADIUS;
+
+        const radius_delta = this.TOXIC_CLOUD_RADIUS - this.pixel_size/2;
+        toxic_cloud.style.left = MainController.viewport.getCssValue(this.x - radius_delta);
+        toxic_cloud.style.top = MainController.viewport.getCssValue(this.y - radius_delta);
+        MainController.UI.addToGameWindow(toxic_cloud);
     }
 
     __canAttack() { 

@@ -107,7 +107,8 @@ class GameClock {
 		for (let i = monsters.length - 1; i >= 0; i--) {
 			const monster = monsters[i];
 			monster.attack();
-			this.__performMonsterWounds(i, monster);
+			this.__performMonsterWounds(i, monster, MainController.UI.shots, Abilities.getShotPower());
+			this.__performMonsterWounds(i, monster, MainController.UI.monster_shots);
 		}
 
 		for (let i = monster_shots.length - 1; i >= 0; i--) {
@@ -119,18 +120,23 @@ class GameClock {
 				monster_shots.splice(i, 1);
 			}
 		}
+
+		for (const toxic_cloud of MainController.UI.toxicClouds) {
+			if (character.hitbox.checkCollide(toxic_cloud.hitbox)) {
+				JuiceHelper.hitEffect();
+				HealthBarHelper.characterHit(1);
+			}
+		}
 	}
 
-	__performMonsterWounds(index, monster) {
-		const shots = MainController.UI.shots;
-		
+	__performMonsterWounds(index, monster, shots, shot_power) {
 		for (let i = shots.length - 1; i >=0; i--) {
 			const shot = shots[i];
 
 			if (monster.hitbox.checkCollide(shot.hitbox)) {
 				shots.splice(i, 1);
 				shot.root_element.remove();
-				monster.wound(Abilities.getShotPower(), index);
+				monster.wound(shot_power || shot.strength, index);
 			}					
 		}
 	}

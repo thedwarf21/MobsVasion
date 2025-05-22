@@ -10,6 +10,7 @@ class MainUI {
 	constructor() {
 		this.shots = [];
 		this.monsters = [];
+		this.toxic_clouds = [];
 		this.monster_shots = [];
 		this.__prepareWaveSwagAutoRefresh();
 		this.__prepareAmmoAutoRefresh();
@@ -20,6 +21,7 @@ class MainUI {
     clearGameWindow() {
 		this.__clearCharacter();
 		this.__clearBloodPuddles();
+		this.__clearToxicClouds();
 		this.__clearMonsters();
 		this.__clearMonsterShots();
 		this.__clearGauges();
@@ -39,6 +41,11 @@ class MainUI {
 	__clearBloodPuddles() {
 		for (let i = this.bloodPuddles.length - 1; i >= 0; i--)
 			this.bloodPuddles[i].remove();
+	}
+
+	__clearToxicClouds() {
+		for (let i = this.toxicClouds.length - 1; i >= 0; i--)
+			this.toxicClouds[i].remove();
 	}
 
 	__clearMonsters() {
@@ -159,5 +166,6 @@ class MainUI {
 	
 	get game_window() 			{ return document.getElementById("game-window"); }
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
+	get toxicClouds() 			{ return document.getElementsByClassName("toxic-cloud"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
 }
