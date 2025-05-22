@@ -52,6 +52,7 @@ class MV_Monster extends MobileGameElement {
     aimPlayer() {
         const character = MainController.UI.character;
         this.aiming_angle = this.hitbox.getDirection(character.hitbox);
+        this.__rotate( this.aiming_angle );
     }
 
     __isAttacking() { return !!this.attack_bar; }
