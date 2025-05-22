@@ -15,6 +15,7 @@ class MV_MonsterTackler extends MV_Monster {
 
     prepareTackle() {
         this.aimPlayer();
+        this.angle = this.aiming_angle;
 
         JuiceHelper.prepareTackling();
         this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
