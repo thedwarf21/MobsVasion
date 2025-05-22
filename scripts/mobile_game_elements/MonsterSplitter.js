@@ -1,14 +1,9 @@
 class MV_MonsterSpitter extends MV_Monster {
-    __monster_type;
     ATTACK_TIME = 25;
     TOXIC_CLOUD_RADIUS = 30;
   
     constructor(viewport, x, y) {
-        super(viewport, x, y);
-        this.root_element.classList.add("spitter");
-
-        this.__monster_type = MainController.wave_generator.bestiary.spitter;        
-        super.init();
+        super(viewport, x, y, "spitter");
     }
 
     attack() {
@@ -49,7 +44,7 @@ class MV_MonsterSpitter extends MV_Monster {
 
     __canAttack() { 
         const character = MainController.UI.character;
-        return !this.__isAttacking() && this.hitbox.getDistance(character.hitbox) < this.__monster_type.attack_range;
+        return !this.__isAttacking() && this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
     }
     
     __createShot() {
@@ -57,15 +52,15 @@ class MV_MonsterSpitter extends MV_Monster {
         const cos_angle = Math.cos(this.aiming_angle);
         const sin_angle = Math.sin(this.aiming_angle);
 
-        const shot_start_x = center_spot.x + this.__monster_type.size/2 * cos_angle;
-        const shot_start_y = center_spot.y + this.__monster_type.size/2 * sin_angle;
+        const shot_start_x = center_spot.x + this.monster_type.size/2 * cos_angle;
+        const shot_start_y = center_spot.y + this.monster_type.size/2 * sin_angle;
         
         const deltaX = SHOT_VELOCITY/2 * cos_angle;
         const deltaY = SHOT_VELOCITY/2 * sin_angle;
         
         const shot = new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
         shot.root_element.classList.add("monster");
-        shot.strength = this.__monster_type.strength;
+        shot.strength = this.monster_type.strength;
         return shot;
     }
 }

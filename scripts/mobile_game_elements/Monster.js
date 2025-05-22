@@ -1,12 +1,16 @@
 class MV_Monster extends MobileGameElement {
+    monster_type;
     speed;
     life_bar;
     health_points;
     shocked;
   
-    constructor(viewport, x, y) {
+    constructor(viewport, x, y, monster_key) {
         super(viewport, x, y);
         this.root_element.classList.add("monster");
+        this.root_element.classList.add(monster_key);
+        this.monster_type = MainController.wave_generator.bestiary[monster_key];
+        this.init();
     }
   
     wound(injury_amount, monster_index) {
@@ -53,9 +57,9 @@ class MV_Monster extends MobileGameElement {
     __isAttacking() { return !!this.attack_bar; }
   
     __initFromMonsterType() {
-        this.pixel_size = this.__monster_type.size;
-        this.health_points = MainController.wave_generator.healthPoints(this.__monster_type);
-        this.speed = MainController.wave_generator.randomSpeed(this.__monster_type);
+        this.pixel_size = this.monster_type.size;
+        this.health_points = MainController.wave_generator.healthPoints(this.monster_type);
+        this.speed = MainController.wave_generator.randomSpeed(this.monster_type);
     }
   
     __addLifeBar() {
@@ -97,10 +101,10 @@ class MV_Monster extends MobileGameElement {
         JuiceHelper.monsterSlayed();
         MainController.UI.monsters.splice(monster_index, 1);
 
-        const monster_swag = Tools.radomValueInRange(this.__monster_type.swag_range[0], this.__monster_type.swag_range[1] + Abilities.getSwagUpgrade());
+        const monster_swag = Tools.radomValueInRange(this.monster_type.swag_range[0], this.monster_type.swag_range[1] + Abilities.getSwagUpgrade());
 		MainController.scope.game.money += monster_swag;
 
-		XpBarHelper.addXp( this.__monster_type.battle_value );
+		XpBarHelper.addXp( this.monster_type.battle_value );
 
         if (this.specificDeathEffect)
             this.specificDeathEffect();
