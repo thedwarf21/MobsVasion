@@ -127,11 +127,11 @@ class MV_GameInitializer {
 				code: "RLD",
 				description: "Permet de changer plus rapidement de chargeur",
 				lbl_effect: "Temps de rechargement",
-				max_level: 20,
+				max_level: 12,
 				show_multiplicator: TIME_INTERVAL / 1000,
 				display_unit: "s",
 				level_0_effect: TIMEOUTS.reload_time,
-				upgrade_value: -1,
+				upgrade_value: -2,
 				current_level: 0,
 				nav_id: "1_2"
 			}, {
@@ -139,11 +139,11 @@ class MV_GameInitializer {
 				code: "DAR",
 				description: "Permet de récupérer plus vite d'une esquive",
 				lbl_effect: "Temps de rechargement",
-				max_level: 25,
+				max_level: 15,
 				show_multiplicator: TIME_INTERVAL / 1000,
 				display_unit: "s",
 				level_0_effect: TIMEOUTS.dash_interval,
-				upgrade_value: -2,
+				upgrade_value: -4,
 				current_level: 0,
 				nav_id: "1_3"
 			}]
