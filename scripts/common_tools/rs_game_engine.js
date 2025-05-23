@@ -304,7 +304,18 @@ class MobileGameElement {
  * @class      GamepadGenericAdapter
  */
 class GamepadGenericAdapter {
-	constructor() { this.controls = []; }
+	constructor() { 
+		this.controls = [];
+		this.calibration = [0, 0, 0, 0];
+	}
+
+	calibrate() {
+		const gamepad = GamepadGenericAdapter.getConnectedGamepad();
+		this.calibration = [gamepad.axes[0],
+							gamepad.axes[1],
+							gamepad.axes[2],
+							gamepad.axes[3]];
+	}
 
 	addControlEntry(code, name, fnMainAction, fnSecondaryAction, isAuto) {
 		this.controls.push(new GamepadControl(code, name, fnMainAction, fnSecondaryAction, isAuto));
@@ -324,8 +335,8 @@ class GamepadGenericAdapter {
 
 	updateJoysticksStates() {
 		const gamepad = GamepadGenericAdapter.getConnectedGamepad();
-		this.leftJoystick = new GamepadJoystick(gamepad.axes[0], gamepad.axes[1]);
-		this.rightJoystick = new GamepadJoystick(gamepad.axes[2], gamepad.axes[3]);
+		this.leftJoystick = new GamepadJoystick(this.axes[0], this.axes[1]);
+		this.rightJoystick = new GamepadJoystick(this.axes[2], this.axes[3]);
 		if (gamepad.axes.length > 4)
 			this.accelerometer = new GamepadJoystick(gamepad.axes[4], gamepad.axes[5]);
 	}
@@ -335,6 +346,14 @@ class GamepadGenericAdapter {
 		for (const gamepad of gamepads)
 			if (gamepad !== null)
 				return gamepad;
+	}
+
+	get axes() {
+		const gamepad = GamepadGenericAdapter.getConnectedGamepad();
+		return [gamepad.axes[0] - this.calibration[0],
+				gamepad.axes[1] - this.calibration[1],
+				gamepad.axes[2] - this.calibration[2],
+				gamepad.axes[3] - this.calibration[3]]
 	}
 }
 
@@ -423,6 +442,7 @@ class GamepadConfigUI {
 	}
 
 	closeModal(onPopupClose) {
+		this.controls_mapper.calibrate();
 		this.popup.closeModal(onPopupClose);
 	}
 
