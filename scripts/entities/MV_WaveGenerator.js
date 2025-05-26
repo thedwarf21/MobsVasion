@@ -10,6 +10,7 @@ class MV_WaveGenerator {
 		MainController.scope.game.wave_pop.elapsed = 0;
 		MainController.scope.game.wave_pop.timeouts = [];
         this.battle_value = 0;
+        this.__initScheduleCounters();
 
 		let timeout = this.__getMandatoryPop();
 		while (this.remaining_battle_value) {
@@ -22,11 +23,18 @@ class MV_WaveGenerator {
 		}
 	}
 
+    __initScheduleCounters() {
+        for (const key in this.bestiary)
+            this.bestiary[key].count = 0;
+    }
+
     __randomMonster() {
         const available_bestiary = this.__filteredBestiary();
         const monster_type = Tools.getRandomArrayElement( available_bestiary );
         
         this.battle_value += monster_type.battle_value;
+        monster_type.count++;
+
         return monster_type;
     }
 
@@ -50,7 +58,18 @@ class MV_WaveGenerator {
         if (monster_type.battle_value > this.remaining_battle_value)
             return false;
 
+        if (this.__occursLimitReached(monster_type))
+            return false;
+
         return true;
+    }
+
+    __occursLimitReached(monster_type) {
+        if (!monster_type.appear_limiter)
+            return false;
+
+        const limit = Math.ceil( MainController.scope.game.wave_number / monster_type.appear_limiter );
+        return monster_type.count === limit;
     }
 
     __getMandatoryPop() {
