@@ -69,7 +69,7 @@ const MONSTERS_TYPES = {
 		size: 90,
 		speed_range: [1, 1],
 		swag_range: [12, 20],
-		attack_range: 1000,
+		attack_range: 450,
 		strength: 10,
 		base_hp: 20,
 		hp_inc_per_wave: 0.35,
