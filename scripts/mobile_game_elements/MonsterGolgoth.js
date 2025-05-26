@@ -53,6 +53,8 @@ class MV_MonsterGolgoth extends MV_Monster {
         this.__dropMonster(true);
     }
 
+    isPickable() { return false; }
+
     __processThrowSection(section_length, player_already_hit) {
         this.carried_monster.deltaX = section_length * Math.cos(this.aiming_angle);
         this.carried_monster.deltaY = section_length * Math.sin(this.aiming_angle);

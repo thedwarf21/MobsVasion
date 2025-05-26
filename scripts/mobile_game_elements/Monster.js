@@ -84,6 +84,8 @@ class MV_Monster extends MobileGameElement {
             fn_sound_fx();
     }
 
+    isPickable() { return !this.carried; }
+
     __isAttacking() { return !!this.attack_bar; }
 
     __canMove() { return !this.shocked && !this.carried && !this.__isAttacking(); }
