@@ -79,7 +79,8 @@ class TouchScreenControls {
 	}
 
 	static __nearestMonsterHitbox(character_hitbox) {
-		return character_hitbox.getNearest( MainController.UI.monsters );
+		const nearest_monster = character_hitbox.getNearest(MainController.UI.monsters);
+		return nearest_monster.hitbox;
 	}
 }
 
