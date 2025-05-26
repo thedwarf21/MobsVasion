@@ -45,7 +45,6 @@ class MV_MonsterGolgoth extends MV_Monster {
 
     performAttack() {
         super.resetAttackCounter();
-        this.carried_monster.aiming_angle = this.aiming_angle;
         
         const throw_length = this.THROW_LENGTH_RATIO * this.monster_type.attack_range;
         JuiceHelper.throw();
