@@ -2,7 +2,6 @@ class MV_MonsterGolgoth extends MV_Monster {
     CARRIED_OFFSETS = { x: 6, y: 18 };
     ATTACK_TIME = 15;
     THROW_LENGTH_RATIO = 1.25;
-    THROW_SEGMENTATION = 10;
     THROWN_MONSTER_MAX_INJURIES = 5;
     aiming_locked_while_attacking = true;
 
@@ -33,7 +32,7 @@ class MV_MonsterGolgoth extends MV_Monster {
             return;
 
         if (this.carried_monster && this.__canThrow())
-            return this.prepareThrow();
+            super.timedAttack(); //TODO enregistrer son, implémenter et passer JuiceHelper.prepareThrowing(); en paramètre
 
         if (this.current_target.monster_type)
             return this.__pickUpIfPossible();
@@ -42,18 +41,6 @@ class MV_MonsterGolgoth extends MV_Monster {
 			JuiceHelper.hitEffect();
 			HealthBarHelper.characterHit(this.monster_type.strength);
 		}
-    }
-
-    prepareThrow() {  //TODO les méthodes prepareXXX() sont identiques à l'exception du son joué => méthode générique dans MV_Monster
-        this.aimPlayer();
-        //TODO enregistrer son et implémenter JuiceHelper.prepareThrowing();
-        this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
-        this.root_element.appendChild(this.attack_bar.root_element);
-
-        MainController.scope.game.attacking_monsters.push({
-            monster: this,
-            time: this.ATTACK_TIME
-        });
     }
 
     performAttack() {

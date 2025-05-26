@@ -70,6 +70,20 @@ class MV_Monster extends MobileGameElement {
         }, WOUND_SHOCK_TIME);
     }
 
+    timedAttack(fn_sound_fx) {
+        this.aimPlayer();
+        this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
+        this.root_element.appendChild(this.attack_bar.root_element);
+
+        MainController.scope.game.attacking_monsters.push({
+            monster: this,
+            time: this.ATTACK_TIME
+        });
+
+        if (fn_sound_fx)
+            fn_sound_fx();
+    }
+
     __isAttacking() { return !!this.attack_bar; }
 
     __canMove() { return !this.shocked && !this.carried && !this.__isAttacking(); }

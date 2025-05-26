@@ -9,18 +9,7 @@ class MV_MonsterSpitter extends MV_Monster {
 
     attack() {
         if (this.__canAttack())
-            this.prepareSpitting();
-    }
-
-    prepareSpitting() {
-        JuiceHelper.prepareSpitting();
-        this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
-        this.root_element.appendChild(this.attack_bar.root_element);
-        
-        MainController.scope.game.attacking_monsters.push({
-            monster: this,
-            time: this.ATTACK_TIME
-        });
+            super.timedAttack( JuiceHelper.prepareSpitting );
     }
 
     performAttack() {
