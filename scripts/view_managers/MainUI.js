@@ -44,8 +44,10 @@ class MainUI {
 	}
 
 	__clearToxicClouds() {
-		for (let i = this.toxicClouds.length - 1; i >= 0; i--)
+		for (let i = this.toxicClouds.length - 1; i >= 0; i--) {
+			this.toxicClouds[i].hitbox = null;
 			this.toxicClouds[i].remove();
+		}
 	}
 
 	__clearMonsters() {
