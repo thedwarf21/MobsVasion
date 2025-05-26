@@ -4,6 +4,7 @@ class MV_Monster extends MobileGameElement {
     life_bar;
     health_points;
     shocked;
+    carried;
   
     constructor(viewport, x, y, monster_key) {
         super(viewport, x, y);
@@ -21,17 +22,19 @@ class MV_Monster extends MobileGameElement {
     }
   
     follow(target) {
-        if (!this.shocked && !this.__isAttacking()) {
-            if (this.choseFollowTarget)
-                target = this.choseFollowTarget();
+        if (!this.__canMove())
+            return;
+        
+        if (this.choseFollowTarget)
+            target = this.choseFollowTarget();
 
-            this.angle = Math.atan( (target.y - this.y) / (target.x - this.x) );
-            if (target.x < this.x)
-                this.angle += Math.PI;
-            this.deltaX = this.speed * Math.cos(this.angle);
-            this.deltaY = this.speed * Math.sin(this.angle);
-            this.move();
-        }
+        this.angle = Math.atan( (target.y - this.y) / (target.x - this.x) );
+        if (target.x < this.x)
+            this.angle += Math.PI;
+        
+        this.deltaX = this.speed * Math.cos(this.angle);
+        this.deltaY = this.speed * Math.sin(this.angle);
+        this.move();
     }
   
     init() {
@@ -59,6 +62,8 @@ class MV_Monster extends MobileGameElement {
     }
 
     __isAttacking() { return !!this.attack_bar; }
+
+    __canMove() { return !this.shocked && !this.carried && !this.__isAttacking(); }
   
     __initFromMonsterType() {
         this.pixel_size = this.monster_type.size;
