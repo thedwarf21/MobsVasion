@@ -117,11 +117,11 @@ class JuiceHelper {
         MainController.UI.addToGameWindow(blood_splash.root_element);
     }
 
-    static tackleTrail(monster, tackle_length) {
+    static attackTrail(monster, trail_length) {
         const trail = document.createElement("DIV");
-        trail.classList.add("tackle-trail");
+        trail.classList.add("attack-trail");
         trail.style.height = MainController.viewport.getCssValue(monster.pixel_size);
-        trail.style.width = MainController.viewport.getCssValue(tackle_length);
+        trail.style.width = MainController.viewport.getCssValue(trail_length);
         trail.style.top = MainController.viewport.getCssValue(monster.y);
         trail.style.left = MainController.viewport.getCssValue(monster.x + monster.pixel_size/2);
         trail.style.transform = `rotateZ(${monster.aiming_angle}rad)`;

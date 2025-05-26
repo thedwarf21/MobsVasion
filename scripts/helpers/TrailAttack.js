@@ -1,7 +1,7 @@
 class TrailAttackHelper {
     static performAttack(attacker, moved_monster, trail_length) {
         moved_monster.aiming_angle = attacker.aiming_angle;
-        JuiceHelper.tackleTrail(moved_monster, trail_length);
+        JuiceHelper.attackTrail(moved_monster, trail_length);
         
         let player_already_hit = false;
         const segmentation = Math.ceil(trail_length / CHARACTER_SIZE) + 1;
