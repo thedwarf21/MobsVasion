@@ -173,22 +173,23 @@ V   Tâche terminée
         >   Gérer les tirs alliés
     V   Les Tacleurs
         >   Attaquent par ruées, dès lors que le joueur est à portée
-    _   Les Golgoths
-        _   Se déplacent vers la cible la plus proche (joueur ou zombie autre que Golgoth)
-        _   Capables de lancer les autres zombies (sauf d'autres Golgoths) en direction du joueur
-        _   Font très très mal au corps à corps
+    X   Les Golgoths
+        >   Se déplacent vers la cible la plus proche (joueur ou zombie autre que Golgoth)
+        x   Capables de lancer les autres zombies en direction du joueur
+        _   Attaque au corps à corps, s'il n'est pas en train de porter un autre monstre
+        _   L'atterrissage blesse le zombie lancé (valeur définie par constante dans la classe du golgoth)
 *   Gestion des vagues et tuto pour chaque type de monstre
     >   Vague 2 => tuto Cracheurs
     >   Vague 4 => tuto Tacleurs
     >   Vague 10 => apparition du premier Goglgoth => tuto Golgoths
-    >   Pas plus d'un Golgoth par tranche de 10 du numéro de vague
+    >   Pas plus d'un Golgoth par tranche de 25 du numéro de vague
 
 *   Optimisations et assainissements
 V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
 V   Passer tous les angles en radian (en degré, c'était pratique pour debug en phase de prototypage, mais ça induit beaucoup de calculs de conversion...)
 V   Faire une passe sur les 'let' qui pourraient être des 'const'
 V   Faire une passe sur les '==' qui devraient être des '==='
-_   controls_managers => objets instanciés, inclus dans une propriété dédiée du scope
+_   Faire le tour des classes statiques pour voir s'il ne serait pas pertinent d'en rendre certaines instanciables
 _   Entité de traduction du MouseEvent.buttons, sous forme de liste de booléens, pour en simplifier l'exploitation
  
 

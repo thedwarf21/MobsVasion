@@ -63,15 +63,16 @@ const MONSTERS_TYPES = {
 		battle_value: 3
 	},
 	golgoth: {
-		class: MV_Monster,
-		appear_from_wave: 100000,//10,
+		class: MV_MonsterGolgoth,
+		appear_from_wave: 10,
+		appear_limiter: 25,
 		size: 90,
 		speed_range: [1, 1],
 		swag_range: [12, 20],
 		attack_range: 1000,
 		strength: 10,
 		base_hp: 20,
-		hp_inc_per_wave: 0.5,
+		hp_inc_per_wave: 0.35,
 		battle_value: 5
 	}
 }
