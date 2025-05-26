@@ -24,6 +24,14 @@ class MV_MonsterGolgoth extends MV_Monster {
 
         if (this.current_target.monster_type)
             return this.__pickUpIfPossible();
+
+        if (this.carried_monster && this.__canThrow())
+            return this.__prepareThrowing();
+
+        if (this.hitbox.checkCollide(MainController.UI.character.hitbox)) {
+			JuiceHelper.hitEffect();
+			HealthBarHelper.characterHit(this.monster_type.strength);
+		}
     }
 
     performAttack() {
@@ -46,8 +54,11 @@ class MV_MonsterGolgoth extends MV_Monster {
         carried_monster_element.style.bottom = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.y - carried_monster_radius);
     }
 
-    __canAttack() { 
-        /*const character = MainController.UI.character;
-        return !this.__isAttacking() && this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;*/
+    __canThrow() {
+
+    }
+
+    __prepareThrowing() {
+
     }
 }

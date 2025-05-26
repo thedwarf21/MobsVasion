@@ -157,6 +157,7 @@ V   Tâche terminée
     V   Viseuls du jeu
     V   Style général des popup (boutons, mise en page commune)
     V   Ajouter la musique
+    _   Afficher le numéro de la vague, pendant le pop du joueur
 *   Nouveaux types de monstres
     V   Préparation du terrain
         >   Définir les caractéristiques des monstres dans un dictionnaire de données
@@ -176,7 +177,7 @@ V   Tâche terminée
     X   Les Golgoths
         >   Se déplacent vers la cible la plus proche (joueur ou zombie autre que Golgoth)
         x   Capables de lancer les autres zombies en direction du joueur
-        _   Attaque au corps à corps, s'il n'est pas en train de porter un autre monstre
+        >   Attaque au corps à corps, s'il n'est pas en train de porter un autre monstre
         _   L'atterrissage blesse le zombie lancé (valeur définie par constante dans la classe du golgoth)
 *   Gestion des vagues et tuto pour chaque type de monstre
     >   Vague 2 => tuto Cracheurs
