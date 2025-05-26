@@ -32,7 +32,7 @@ class MV_MonsterGolgoth extends MV_Monster {
             return;
 
         if (this.carried_monster && this.__canThrow())
-            super.timedAttack(); //TODO enregistrer son, implémenter et passer JuiceHelper.prepareThrowing(); en paramètre
+            super.timedAttack( JuiceHelper.prepareThrowing );
 
         if (this.current_target.monster_type)
             return this.__pickUpIfPossible();
@@ -48,7 +48,7 @@ class MV_MonsterGolgoth extends MV_Monster {
         this.carried_monster.aiming_angle = this.aiming_angle;
         
         const throw_length = this.THROW_LENGTH_RATIO * this.monster_type.attack_range;
-        //TODO enregistrer et implémenter JuiceHelper.throw();
+        JuiceHelper.throw();
         TrailAttackHelper.performAttack(this, this.carried_monster, throw_length);
 
         this.__dropMonster(true);

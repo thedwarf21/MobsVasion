@@ -172,6 +172,14 @@ const SOUND_LIB = {
 		file: "tackle.mp3",
 		players_number: 3 
 	},
+	throw_prepare:   { 
+		file: "throw-prepare.mp3",
+		players_number: 3 
+	},
+	throw:   { 
+		file: "throw.mp3",
+		players_number: 3 
+	},
 	kill: 			{ 
 		file: "dying-monster.mp3",
 		players_number: 3

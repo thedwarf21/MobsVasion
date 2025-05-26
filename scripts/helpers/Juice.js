@@ -82,6 +82,8 @@ class JuiceHelper {
     static spit() { MainController.audio_manager.playAudio("spit"); }
     static prepareTackling() { MainController.audio_manager.playAudio("tackle_prepare"); }
     static tackle() { MainController.audio_manager.playAudio("tackle"); }
+    static prepareThrowing() { MainController.audio_manager.playAudio("throw_prepare"); }
+    static throw() { MainController.audio_manager.playAudio("throw"); }
     static monsterSlayed() { MainController.audio_manager.playAudio("kill"); }
     
     static startShopMusic() { MainController.audio_manager.playAudio("shop_music"); }
