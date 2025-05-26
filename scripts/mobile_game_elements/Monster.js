@@ -22,6 +22,9 @@ class MV_Monster extends MobileGameElement {
   
     follow(target) {
         if (!this.shocked && !this.__isAttacking()) {
+            if (this.choseFollowTarget)
+                target = this.choseFollowTarget();
+
             this.angle = Math.atan( (target.y - this.y) / (target.x - this.x) );
             if (target.x < this.x)
                 this.angle += Math.PI;
@@ -113,8 +116,6 @@ class MV_Monster extends MobileGameElement {
         if (MainController.__isWaveComplete())
 			MainController.__waveDefeated();
     }
-
-    
 
     __createBloodPuddle(x, y, isBig) {
         const puddle_element = document.createElement("DIV");
