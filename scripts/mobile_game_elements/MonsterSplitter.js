@@ -1,6 +1,7 @@
 class MV_MonsterSpitter extends MV_Monster {
     ATTACK_TIME = 25;
-    TOXIC_CLOUD_RADIUS = 30;
+    TOXIC_CLOUD_RADIUS = 50;
+    HITBOX_RATIO = 0.6;  // => rayon de la hitbox = 30
   
     constructor(viewport, x, y) {
         super(viewport, x, y, "spitter");
@@ -34,11 +35,13 @@ class MV_MonsterSpitter extends MV_Monster {
         const toxic_cloud = document.createElement("DIV");
         toxic_cloud.classList.add("toxic-cloud");
         toxic_cloud.hitbox = this.hitbox;
-        toxic_cloud.hitbox.radius = this.TOXIC_CLOUD_RADIUS;
+        toxic_cloud.hitbox.radius = this.TOXIC_CLOUD_RADIUS * this.HITBOX_RATIO;
 
         const radius_delta = this.TOXIC_CLOUD_RADIUS - this.pixel_size/2;
         toxic_cloud.style.left = MainController.viewport.getCssValue(this.x - radius_delta);
         toxic_cloud.style.top = MainController.viewport.getCssValue(this.y - radius_delta);
+        toxic_cloud.style.width = MainController.viewport.getCssValue(this.TOXIC_CLOUD_RADIUS * 2);
+        toxic_cloud.style.height = MainController.viewport.getCssValue(this.TOXIC_CLOUD_RADIUS * 2);
         MainController.UI.addToGameWindow(toxic_cloud);
     }
 
