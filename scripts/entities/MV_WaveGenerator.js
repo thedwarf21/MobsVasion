@@ -119,7 +119,7 @@ class MV_WaveGenerator {
 	}
 
     
-    healthPoints(monster_type) { //TODO utiliser cette méthode plutôt que celle de MonstersInCurrentWave, qui sera ensuite abandonnée
+    healthPoints(monster_type) {
         const wave_number = MainController.scope.game.wave_number;
         return monster_type.base_hp + (wave_number - 1) * monster_type.hp_inc_per_wave;
     }
