@@ -205,9 +205,13 @@ class MobileGameElement {
 				this.x = 0;
 		}
 
-	  	this.root_element.style.top = this.viewport.getCssValue(this.y);
-	  	this.root_element.style.left = this.viewport.getCssValue(this.x);
+	  	this.applyPosition();
 		this.__rotate();
+	}
+
+	applyPosition() {
+		this.root_element.style.top = this.viewport.getCssValue(this.y);
+	  	this.root_element.style.left = this.viewport.getCssValue(this.x);
 	}
 
 	__rotate(forced_angle) {
