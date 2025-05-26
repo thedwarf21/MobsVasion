@@ -61,6 +61,15 @@ class MV_Monster extends MobileGameElement {
         this.__rotate( this.aiming_angle );
     }
 
+    shock() {
+        this.shocked = true;
+        this.root_element.classList.add("shocked");
+        setTimeout(()=> {
+            this.root_element.classList.remove("shocked");
+            this.shocked = false;
+        }, WOUND_SHOCK_TIME);
+    }
+
     __isAttacking() { return !!this.attack_bar; }
 
     __canMove() { return !this.shocked && !this.carried && !this.__isAttacking(); }
@@ -82,18 +91,9 @@ class MV_Monster extends MobileGameElement {
             this.__createBloodPuddle(this.x + this.pixel_size/2, this.y + this.pixel_size/2, true);
             this.__monsterSlayed(monster_index);
         } else {
-            this.__shock();
+            this.shock();
             this.__bleed();
         }
-    }
-
-    __shock() {
-        this.shocked = true;
-        this.root_element.classList.add("shocked");
-        setTimeout(()=> {
-            this.root_element.classList.remove("shocked");
-            this.shocked = false;
-        }, WOUND_SHOCK_TIME);
     }
 
     __bleed() {

@@ -39,7 +39,7 @@ class MV_MonsterTackler extends MV_Monster {
         for (let i = 0; i < this.TACKLE_SEGMENTATION; i++)
             player_already_hit = this.__processTackleSection(section_length, player_already_hit);
 
-        this.__shock();
+        this.shock();
     }
 
     __processTackleSection(section_length, player_already_hit) {
