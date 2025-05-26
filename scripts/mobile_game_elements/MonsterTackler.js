@@ -31,13 +31,7 @@ class MV_MonsterTackler extends MV_Monster {
         
         const tackle_length = this.TACKLE_LENGTH_RATIO * this.monster_type.attack_range;
         JuiceHelper.tackle();
-        JuiceHelper.tackleTrail(this, tackle_length);
-        
-        let player_already_hit = false;
-        const section_length = tackle_length / this.TACKLE_SEGMENTATION;
-
-        for (let i = 0; i < this.TACKLE_SEGMENTATION; i++)
-            player_already_hit = this.__processTackleSection(section_length, player_already_hit);
+        TrailAttackHelper.performAttack(this, this, tackle_length);
 
         this.shock();
     }
