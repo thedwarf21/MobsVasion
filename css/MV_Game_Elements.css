@@ -57,6 +57,7 @@
 	width: 15vh;
 }
 .monster.golgoth > .spinning-image { background-image: url("../images/zombie_golgoth.png"); }
+.spinning-image > .monster > .gauge { opacity: 0; } /* la barre de vie d'un monstre porté par un golgoth n'apparaît pas */
 
 .hitbox {
 	position: absolute;
