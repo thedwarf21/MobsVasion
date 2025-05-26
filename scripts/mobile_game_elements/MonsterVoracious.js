@@ -5,6 +5,9 @@ class MV_MonsterVoracious extends MV_Monster {
     }
 
     attack() {
+        if (this.carried)
+            return;
+
         const character = MainController.UI.character;
 
 		if (this.hitbox.checkCollide(character.hitbox)) {

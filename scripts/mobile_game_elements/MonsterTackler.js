@@ -60,7 +60,10 @@ class MV_MonsterTackler extends MV_Monster {
     }
 
     __canAttack() { 
+        if (this.__isAttacking() || this.carried)
+            return false;
+
         const character = MainController.UI.character;
-        return !this.__isAttacking() && this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
+        return this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
     }
 }
