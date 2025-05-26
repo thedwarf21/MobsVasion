@@ -97,11 +97,11 @@ class MainUI {
 		MainController.popups_stack.closeAll();
 	}
 
-	nonGolgothMonsters() {
+	pickableMonsters() {
 		const result_list = [];
 
 		for (const monster of this.monsters)
-			if (monster.monster_type !== MainController.wave_generator.bestiary.golgoth)
+			if (monster.monster_type !== MainController.wave_generator.bestiary.golgoth && !monster.carried)
 				result_list.push(monster);
 
 		return result_list;

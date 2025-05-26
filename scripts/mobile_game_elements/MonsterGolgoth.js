@@ -16,7 +16,7 @@ class MV_MonsterGolgoth extends MV_Monster {
         if (this.carried_monster)
             return MainController.UI.character;
 
-        const targetables = MainController.UI.nonGolgothMonsters();
+        const targetables = MainController.UI.pickableMonsters();
         targetables.push(MainController.UI.character);
         this.current_target = this.hitbox.getNearest(targetables);
         return this.current_target;
