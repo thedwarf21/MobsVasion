@@ -35,23 +35,6 @@ class MV_MonsterTackler extends MV_Monster {
         this.shock();
     }
 
-    __processTackleSection(section_length, player_already_hit) {
-        this.deltaX = section_length * Math.cos(this.aiming_angle);
-        this.deltaY = section_length * Math.sin(this.aiming_angle);
-        this.move();
-
-        if (player_already_hit)
-            return true;
-
-        if ( this.hitbox.checkCollide(MainController.UI.character.hitbox) ) {
-            JuiceHelper.hitEffect();
-            HealthBarHelper.characterHit( this.monster_type.strength );
-            return true;
-        }
-
-        return false;
-    }
-
     __canAttack() { 
         if (this.__isAttacking() || this.carried)
             return false;
