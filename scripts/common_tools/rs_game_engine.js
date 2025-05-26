@@ -51,6 +51,22 @@ class RS_Hitbox {
 			 : rad_angle;
 	}
 
+	getNearest(hitboxed_elements) {
+		let nearest_hitbox = null;
+		let shortest_distance = MainController.viewport.VIRTUAL_WIDTH * 2; 
+		
+		for (const game_element of hitboxed_elements) {
+			const current_hitbox = game_element.hitbox;
+			const distance = this.getDistance( current_hitbox );
+			if (distance < shortest_distance) {
+				nearest_hitbox = current_hitbox;
+				shortest_distance = distance;
+			}
+		}
+
+		return nearest_hitbox;
+	}
+
 	__checkCircleVsCircle(hitbox) {
 		const deltaX = Math.abs(this.x - hitbox.x),
 			  deltaY = Math.abs(this.y - hitbox.y),

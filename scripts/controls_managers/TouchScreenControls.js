@@ -79,21 +79,7 @@ class TouchScreenControls {
 	}
 
 	static __nearestMonsterHitbox(character_hitbox) {
-		const monsters = MainController.UI.monsters;
-
-		let nearest_monster_hitbox = null;
-		let shortest_distance = MainController.viewport.VIRTUAL_WIDTH * 2; 
-		
-		for (const monster of monsters) {
-			const monster_hitbox = monster.hitbox;
-			const distance = character_hitbox.getDistance( monster_hitbox );
-			if (distance < shortest_distance) {
-				nearest_monster_hitbox = monster_hitbox;
-				shortest_distance = distance;
-			}
-		}
-
-		return nearest_monster_hitbox;
+		return character_hitbox.getNearest( MainController.UI.monsters );
 	}
 }
 
