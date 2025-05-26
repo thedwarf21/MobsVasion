@@ -1,5 +1,10 @@
 class MV_MonsterGolgoth extends MV_Monster {
     CARRIED_OFFSETS = { x: 6, y: 18 };
+    ATTACK_TIME = 15;
+    THROW_LENGTH_RATIO = 1.25;
+    THROW_SEGMENTATION = 10;
+    THROWN_MONSTER_MAX_INJURIES = 5;
+    aiming_locked_while_attacking = true;
 
     current_target;
     carried_monster;
@@ -17,16 +22,21 @@ class MV_MonsterGolgoth extends MV_Monster {
         this.current_target = this.hitbox.getNearest(targetables);
         return this.current_target;
     }
+    
+    specificDeathEffect() {  // appelée par MV_Monster à la mort du monstre, si la méthode est présente
+        if (this.carried_monster)
+            this.__dropMonster();
+    }
 
     attack() {
         if (this.__isAttacking())
             return;
 
+        if (this.carried_monster && this.__canThrow())
+            return this.prepareThrow();
+
         if (this.current_target.monster_type)
             return this.__pickUpIfPossible();
-
-        if (this.carried_monster && this.__canThrow())
-            return this.__prepareThrowing();
 
         if (this.hitbox.checkCollide(MainController.UI.character.hitbox)) {
 			JuiceHelper.hitEffect();
@@ -34,8 +44,44 @@ class MV_MonsterGolgoth extends MV_Monster {
 		}
     }
 
+    prepareThrow() {  //TODO les méthodes prepareXXX() sont identiques à l'exception du son joué => méthode générique dans MV_Monster
+        this.aimPlayer();
+        //TODO enregistrer son et implémenter JuiceHelper.prepareThrowing();
+        this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
+        this.root_element.appendChild(this.attack_bar.root_element);
+
+        MainController.scope.game.attacking_monsters.push({
+            monster: this,
+            time: this.ATTACK_TIME
+        });
+    }
+
     performAttack() {
+        super.resetAttackCounter();
+        this.carried_monster.aiming_angle = this.aiming_angle;
         
+        const throw_length = this.THROW_LENGTH_RATIO * this.monster_type.attack_range;
+        //TODO enregistrer et implémenter JuiceHelper.throw();
+        TrailAttackHelper.performAttack(this, this.carried_monster, throw_length);
+
+        this.__dropMonster(true);
+    }
+
+    __processThrowSection(section_length, player_already_hit) {
+        this.carried_monster.deltaX = section_length * Math.cos(this.aiming_angle);
+        this.carried_monster.deltaY = section_length * Math.sin(this.aiming_angle);
+        this.carried_monster.move();
+
+        if (player_already_hit)
+            return true;
+
+        if ( this.carried_monster.hitbox.checkCollide(MainController.UI.character.hitbox) ) {
+            JuiceHelper.hitEffect();
+            HealthBarHelper.characterHit( this.monster_type.strength );
+            return true;
+        }
+
+        return false;
     }
 
     __pickUpIfPossible() {
@@ -44,6 +90,7 @@ class MV_MonsterGolgoth extends MV_Monster {
 
         this.carried_monster = this.current_target;
         this.carried_monster.carried = true;
+        this.carried_monster.resetAttackCounter();
 
         const carried_monster_radius = this.carried_monster.pixel_size / 2;
         const carried_monster_element = this.carried_monster.root_element;
@@ -54,11 +101,31 @@ class MV_MonsterGolgoth extends MV_Monster {
         carried_monster_element.style.bottom = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.y - carried_monster_radius);
     }
 
-    __canThrow() {
-
+    __dropMonster(was_thrown) {
+        if (!was_thrown) {
+            this.carried_monster.x = this.x;
+            this.carried_monster.y = this.y;
+            this.applyPosition();
+        }
+        
+        MainController.UI.addToGameWindow(this.carried_monster.root_element);
+        this.__performDroppedMonsterInjuries();
+        this.carried_monster.carried = false;
+        this.carried_monster = null;
     }
 
-    __prepareThrowing() {
+    __performDroppedMonsterInjuries() {
+        this.carried_monster.health_points -= this.THROWN_MONSTER_MAX_INJURIES;
+        
+        if (this.carried_monster.health_points <= 0)
+            this.carried_monster.health_points = 0.1;
+        
+        this.carried_monster.life_bar.assignValue(this.carried_monster.health_points);
+        this.carried_monster.shock();
+    }
 
+    __canThrow() {
+        const character = MainController.UI.character;
+        return this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
     }
 }
