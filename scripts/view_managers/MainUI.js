@@ -93,6 +93,16 @@ class MainUI {
 		MainController.popups_stack.closeAll();
 	}
 
+	nonGolgothMonsters() {
+		const result_list = [];
+
+		for (const monster of this.monsters)
+			if (monster.monster_type !== MainController.wave_generator.bestiary.golgoth)
+				result_list.push(monster);
+
+		return result_list;
+	}
+
     __prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
 			object: MainController.scope.game,
