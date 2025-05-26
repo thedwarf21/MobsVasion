@@ -1,7 +1,6 @@
 class MV_MonsterTackler extends MV_Monster {
     ATTACK_TIME = 20;
     TACKLE_LENGTH_RATIO = 1.25;
-    TACKLE_SEGMENTATION = 4;
     aiming_locked_while_attacking = true;
   
     constructor(viewport, x, y) {
