@@ -78,6 +78,7 @@ class MV_WaveGenerator {
 
             if (monster_type.appear_from_wave === MainController.scope.game.wave_number) {
                 this.battle_value += monster_type.battle_value;
+                monster_type.count++;
                 
                 MainController.scope.game.wave_pop.timeouts.push({
                     ticks_number: TIMEOUTS.before_pop,

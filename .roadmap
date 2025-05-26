@@ -158,6 +158,8 @@ V   Tâche terminée
     V   Style général des popup (boutons, mise en page commune)
     V   Ajouter la musique
     _   Afficher le numéro de la vague, pendant le pop du joueur
+    _   Bouton paramètres dans le magasin
+    _   Lancer la musique quand on l'unmute dans les paramètres
 *   Nouveaux types de monstres
     V   Préparation du terrain
         >   Définir les caractéristiques des monstres dans un dictionnaire de données
