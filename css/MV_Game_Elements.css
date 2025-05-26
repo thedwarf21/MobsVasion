@@ -78,10 +78,10 @@
 .toxic-cloud {
 	position: absolute;
 	border-radius: 50%;
-	background-image: radial-gradient(circle at center, transparent, rgba(115, 255, 0, 0.4) 50%, transparent 80%);
+	background-image: radial-gradient(circle at center, rgba(115, 255, 0, 0.4) 45%, transparent 80%);
 	background-size: contain;
   	background-repeat: no-repeat;
-	backdrop-filter: blur(0.5vh);
+	backdrop-filter: blur(0.1vh);
 	z-index: 5;
 }
 
