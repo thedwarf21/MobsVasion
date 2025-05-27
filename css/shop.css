@@ -150,3 +150,12 @@
 	background-size: contain;
 	background-repeat: no-repeat;
 }
+
+.parameters-button {
+    background: url(../images/parameters.svg);
+    background-size: contain;
+
+    border: none;
+    width: 5vh;
+    height: 5vh;
+}
