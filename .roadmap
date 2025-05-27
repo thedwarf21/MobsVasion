@@ -176,10 +176,10 @@ V   Tâche terminée
         >   Gérer les tirs alliés
     V   Les Tacleurs
         >   Attaquent par ruées, dès lors que le joueur est à portée
-    X   Les Golgoths
+    V   Les Golgoths
         >   Se déplacent vers la cible la plus proche (joueur ou zombie autre que Golgoth)
         >   Capables de lancer les autres zombies en direction du joueur
-        _   Tir en cloche
+        >   Tir en cloche
         >   Attaque au corps à corps, s'il n'est pas en train de porter un autre monstre
         >   L'atterrissage blesse le zombie lancé (valeur définie par constante dans la classe du golgoth)
 *   Gestion des vagues et tuto pour chaque type de monstre

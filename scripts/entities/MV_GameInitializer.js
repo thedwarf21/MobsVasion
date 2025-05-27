@@ -28,7 +28,8 @@ class MV_GameInitializer {
 					dash: 0,
 					clip: 0
 				},
-				attacking_monsters: [],   // { monster: MV_Monster, time: number }
+				attacking_monsters: [],   	// { monster: MV_Monster, time: number }
+				flying_monsters: [], 		// { monster: MV_Monster, deltaX, deltaY, deltaAngle, frames, max_scale: number, onAnimationEnd: function }
 				keyboard_type: KeyTranslater.AZERTY,
 				showHitboxes: false
 			},

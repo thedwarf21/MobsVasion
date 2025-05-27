@@ -119,7 +119,9 @@ class MV_SaveManager {
 		const excluded_keys = [	
 			"wave_pop",
 			"waiting_counter",
-			"clip_ammo"
+			"clip_ammo",
+			"attacking_monsters",
+			"flying_monsters"
 		];
 
 		return !excluded_keys.includes(key);

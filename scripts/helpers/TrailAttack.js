@@ -1,7 +1,5 @@
 class TrailAttackHelper {
-    static performAttack(attacker, moved_monster, trail_length) {
-        TrailAttackHelper.__computeMovedMonsterStartPosition(attacker, moved_monster);
-
+    static performAttack(attacker, moved_monster, trail_length) { //TODO refacto => attacker plus nécessaire, seulement les dégats => moved_monster -> monster
         JuiceHelper.attackTrail(moved_monster, trail_length);
         
         let player_already_hit = false;
@@ -10,16 +8,6 @@ class TrailAttackHelper {
 
         for (let i = 0; i < segmentation; i++)
             player_already_hit = TrailAttackHelper.__processSection(moved_monster, section_length, player_already_hit, attacker.monster_type.strength);
-    }
-
-    static __computeMovedMonsterStartPosition(attacker, moved_monster) {
-        if (moved_monster === attacker)
-            return;
-   
-        const front_spot = attacker.frontSpotPosition();
-        moved_monster.x = front_spot.x;
-        moved_monster.y = front_spot.y;
-        moved_monster.aiming_angle = attacker.aiming_angle;
     }
 
     static __processSection(moved_monster, section_length, player_already_hit, strength) {

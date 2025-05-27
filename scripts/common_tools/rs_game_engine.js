@@ -212,6 +212,8 @@ class MobileGameElement {
 	applyPosition() {
 		this.root_element.style.top = this.viewport.getCssValue(this.y);
 	  	this.root_element.style.left = this.viewport.getCssValue(this.x);
+	  	this.root_element.style.right = null;
+		this.root_element.style.bottom = null;
 	}
 
 	__rotate(forced_angle) {

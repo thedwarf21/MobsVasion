@@ -26,7 +26,8 @@ class WaitingCounters {
 			}
 		}
 
-		this.__decrementMonsterAttackCounter();
+		this.__decrementMonsterAttackCounters();
+		this.__animateFlyingMonsters();
 	}
 
 	static clear() {
@@ -45,6 +46,16 @@ class WaitingCounters {
 
 			if (attacking_monster.monster === monster)
 				attacks.splice(i, 1);
+		}
+	}
+
+	static removeFlyingMonster(monster) {
+		const animations = MainController.scope.game.flying_monsters;
+		for (let i = 0; i < animations.length; i++) {
+			const flying_monster = animations[i];
+
+			if (flying_monster.monster === monster)
+				animations.splice(i, 1);
 		}
 	}
 
@@ -77,7 +88,7 @@ class WaitingCounters {
 		}
 	}
 
-	static __decrementMonsterAttackCounter() {
+	static __decrementMonsterAttackCounters() {
 		for (const attacking_monster of MainController.scope.game.attacking_monsters) {
 			const monster = attacking_monster.monster;
 
@@ -88,6 +99,35 @@ class WaitingCounters {
 			if (!attacking_monster.time)
 				monster.performAttack();
 			else monster.attack_bar.assignValue(attacking_monster.time);
+		}
+	}
+
+	static __animateFlyingMonsters() { //TODO découper pour mise au propre
+		for (const flying_monster of MainController.scope.game.flying_monsters) {
+			const monster = flying_monster.monster;
+
+			if (!flying_monster.frames_counter) {
+				flying_monster.frames_counter = 1;
+				monster.deltaX = flying_monster.deltaX;
+				monster.deltaY = flying_monster.deltaY;
+			} else flying_monster.frames_counter++;
+
+			monster.angle += flying_monster.deltaAngle; console.log(flying_monster.deltaAngle);
+			monster.move();
+
+			// scale
+			const apogee_frame = flying_monster.frames / 2;
+			const frames_from_apogee = Math.abs(flying_monster.frames_counter - apogee_frame);
+			const from_apogee_ratio = frames_from_apogee / apogee_frame;
+			const scale_diff = (flying_monster.max_scale - 1) * from_apogee_ratio;
+			const scale = flying_monster.max_scale - scale_diff;
+			monster.root_element.style.transform = `scale(${scale})`;
+
+			// fin d'animation
+			if (flying_monster.frames_counter === flying_monster.frames) {
+				monster.root_element.style.transform = null;
+				flying_monster.onAnimationEnd();
+			}
 		}
 	}
 }

@@ -85,6 +85,13 @@
 	z-index: 5;
 }
 
+.bell-throw-aoe {
+	position: absolute;
+  	border-radius: 50%;
+ 	background: #FF000060;
+	z-index: 0;
+}
+
 .attack-trail {
 	position: absolute;
 	background: linear-gradient(to bottom, #FFF6, #FFF3, #FFF6);
