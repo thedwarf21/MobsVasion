@@ -44,19 +44,19 @@ class KeyboardAndMouseControls {
 		// MouseEvent.buttons est une représentation codée en binaire de l'état des boutons de souris, convertie en décimal 
 		// pour bien faire et gérer un nombre variable de boutons, il faudrait écrire une classe qui le gère => pas urgent, mais à voir
 		window.addEventListener('mousedown', (e)=> {
-			if ([1, 3].includes(e.buttons)) { //=> 1?
+			if (e.buttons & 2**0) { //=> 1?
 				controls.firing_primary = true;
 				controls.mouse_aiming = true;
 			}
-			if ([2, 3].includes(e.buttons)) //=> ?1
+			if (e.buttons & 2**1) //=> ?1
 				controls.reloading = true;
 		});
 		window.addEventListener('mouseup', (e)=> {
-			if ([0, 2].includes(e.buttons)) { //=> 0?
+			if (!(e.buttons & 2**0)) { //=> 0?
 				controls.firing_primary = false;
 				controls.mouse_aiming = false;
 			}
-			if ([0, 1].includes(e.buttons))  //=> ?0
+			if (!(e.buttons & 2**1))  //=> ?0
 				controls.reloading = false;
 		});
 	}

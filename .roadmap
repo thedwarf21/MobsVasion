@@ -194,7 +194,6 @@ V   Passer tous les angles en radian (en degré, c'était pratique pour debug en
 V   Faire une passe sur les 'let' qui pourraient être des 'const'
 V   Faire une passe sur les '==' qui devraient être des '==='
 _   Faire le tour des classes statiques pour voir s'il ne serait pas pertinent d'en rendre certaines instanciables
-_   Entité de traduction du MouseEvent.buttons, sous forme de liste de booléens, pour en simplifier l'exploitation
  
 
 ------------ À AJOUTER DANS VERSIONS SUIVANTES ------------
