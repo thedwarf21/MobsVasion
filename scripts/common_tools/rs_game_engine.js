@@ -291,6 +291,22 @@ class MobileGameElement {
             y: this.y + (this.pixel_size / 2)
         };
     }
+
+	/**
+	 * Permet d'obtenir les coordonnées du point situé face à l'objet
+	 * 
+	 * @returns {x, y}
+	 */
+	frontSpotPosition() {
+		const center_spot = this.centralSpotPosition();
+        const cos_angle = Math.cos(this.aiming_angle || this.angle);
+        const sin_angle = Math.sin(this.aiming_angle || this.angle);
+        
+        return { 
+            x: center_spot.x + this.pixel_size/2 * cos_angle,
+            y: center_spot.y + this.pixel_size/2 * sin_angle
+        };
+	}
   
 	/**
 	 * Retourne l'objet RS_Hitbox correspondant au vaisseau

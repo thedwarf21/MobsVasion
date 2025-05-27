@@ -16,12 +16,9 @@ class TrailAttackHelper {
         if (moved_monster === attacker)
             return;
    
-        const center_spot = attacker.centralSpotPosition();
-        const cos_angle = Math.cos(attacker.aiming_angle);
-        const sin_angle = Math.sin(attacker.aiming_angle);
-        
-        moved_monster.x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
-        moved_monster.y = center_spot.y + CHARACTER_SIZE/2 * sin_angle; 
+        const front_spot = attacker.frontSpotPosition();
+        moved_monster.x = front_spot.x;
+        moved_monster.y = front_spot.y;
         moved_monster.aiming_angle = attacker.aiming_angle;
     }
 

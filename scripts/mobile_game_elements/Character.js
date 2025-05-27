@@ -61,17 +61,11 @@ class MV_Character extends MobileGameElement {
     }
 
     __createShot() {
-        const center_spot = this.centralSpotPosition();
-        const cos_angle = Math.cos(this.aiming_angle);
-        const sin_angle = Math.sin(this.aiming_angle);
-
-        const shot_start_x = center_spot.x + CHARACTER_SIZE/2 * cos_angle;
-        const shot_start_y = center_spot.y + CHARACTER_SIZE/2 * sin_angle;
- 
-        JuiceHelper.shoot(shot_start_x, shot_start_y, this.aiming_angle);
+        const front_spot = this.frontSpotPosition();
+        JuiceHelper.shoot(front_spot.x, front_spot.y, this.aiming_angle);
         
-        const deltaX = SHOT_VELOCITY * cos_angle;
-        const deltaY = SHOT_VELOCITY * sin_angle;
-        return new MV_Shot(this.viewport, shot_start_x, shot_start_y, deltaX, deltaY);
+        const deltaX = SHOT_VELOCITY * Math.cos(this.aiming_angle);
+        const deltaY = SHOT_VELOCITY * Math.sin(this.aiming_angle);
+        return new MV_Shot(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY);
     }
 }
