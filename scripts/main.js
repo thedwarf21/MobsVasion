@@ -88,6 +88,7 @@ const TIMEOUTS = {
 
 const GAMEPAD_ACTION_CODES = {
     pause: "PAU",
+    primary_auto_fire: "PRI",
     secondary_fire: "SEC",
 	reload: "REL",
 	menu_up: "MNU",

@@ -7,7 +7,8 @@ class GamepadControls {
 			const controls = controller.scope.controls;
 			const gamepad = new GamepadGenericAdapter();
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.primary_auto_fire, "Tir visée auto", ()=> { GamepadControls.__autoAim(); }, null, true);
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; }, null, true);
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
 
 			const menu_controls = controls.gamepad_menu_nav;
@@ -72,10 +73,29 @@ class GamepadControls {
 	static updateControlsObject() {
 		if ( MainController.UI.character ) {
 			MainController.timer.gamepad_mapper.updateJoysticksStates();
+			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.primary_auto_fire);
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire);
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.reload);
 			GamepadControls.__applyJoysticksControls();
 		}
+	}
+
+	static __autoAim() {
+		MainController.scope.controls.firing_primary = true;
+
+		const character = MainController.UI.character;
+		const character_hitbox = character.hitbox;
+		const nearest_monster_hitbox = TouchScreenControls.__nearestMonsterHitbox(character_hitbox);
+
+		if (nearest_monster_hitbox) {
+			character.aiming_angle = character_hitbox.getDirection( nearest_monster_hitbox );
+			character.applyAngles();
+		} else character.aiming_angle = character.angle;
+	}
+
+	static __nearestMonsterHitbox(character_hitbox) {
+		const nearest_monster = character_hitbox.getNearest(MainController.UI.monsters);
+		return nearest_monster ? nearest_monster.hitbox : null;
 	}
 
 	static __applyJoysticksControls() {
