@@ -82,20 +82,7 @@ class GamepadControls {
 
 	static __autoAim() {
 		MainController.scope.controls.firing_primary = true;
-
-		const character = MainController.UI.character;
-		const character_hitbox = character.hitbox;
-		const nearest_monster_hitbox = TouchScreenControls.__nearestMonsterHitbox(character_hitbox);
-
-		if (nearest_monster_hitbox) {
-			character.aiming_angle = character_hitbox.getDirection( nearest_monster_hitbox );
-			character.applyAngles();
-		} else character.aiming_angle = character.angle;
-	}
-
-	static __nearestMonsterHitbox(character_hitbox) {
-		const nearest_monster = character_hitbox.getNearest(MainController.UI.monsters);
-		return nearest_monster ? nearest_monster.hitbox : null;
+		AutoAimHelper.proceed();
 	}
 
 	static __applyJoysticksControls() {
