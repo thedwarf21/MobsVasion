@@ -159,7 +159,7 @@ V   Tâche terminée
     V   Ajouter la musique
     V   Afficher le numéro de la vague, pendant le pop du joueur
     V   Bouton paramètres dans le magasin
-    _   Lancer la musique quand on l'unmute dans les paramètres
+    V   Relancer la musique quand on l'unmute dans les paramètres
 *   Nouveaux types de monstres
     V   Préparation du terrain
         >   Définir les caractéristiques des monstres dans un dictionnaire de données
