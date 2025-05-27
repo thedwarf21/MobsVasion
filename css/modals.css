@@ -32,6 +32,10 @@ input { cursor: pointer; }
     margin: 2vh;
     margin-left: 5vh;
     margin-right: 5vh;
+    cursor: pointer;
+}
+.control-item-container:hover {
+    background: #0005;
 }
 
 .control-name {
@@ -45,7 +49,6 @@ input { cursor: pointer; }
     font-size: 2.1vh;
     font-family: monospace;
     width: 28vh;
-    cursor: pointer;
 }
 
 /** UI parmètres */
