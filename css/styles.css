@@ -110,3 +110,20 @@ body {
 	box-shadow: 0 0 1.5vh #d0ff7d;
 	z-index: 9;
 }
+
+.wave-level {
+	position: absolute;
+	top: 60vh;
+	width: 100%;
+	padding-top: 3vh;
+	padding-bottom: 3vh;
+	
+	text-align: center;
+	font-size: 5vh;
+	font-family: monospace;
+	color: #044;
+	
+	background: linear-gradient(to bottom, transparent, white, transparent);
+	transition: opacity 0.2s linear;
+	opacity: 0;
+}

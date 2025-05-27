@@ -242,6 +242,7 @@ class MainController {
 		WaitingCounters.clear();
 		
 		JuiceHelper.characterPop();
+		MainController.__showWaveNumber();
 		MainController.wave_generator.scheduleLevelMonstersPop();
 		
 		setTimeout(TutorialHelper.showIntro, 1500);
@@ -250,7 +251,7 @@ class MainController {
 	static startWave() {
 		JuiceHelper.startWaveMusic();
 
-		if (!MainController.popups_stack.activePopup()) // Ne pas enlever la pause, si la fenêtre de paramètres à été ouverte
+		if (!MainController.popups_stack.activePopup())
 			TutorialHelper.showMonsterTutorial();
 	}
 
@@ -263,6 +264,19 @@ class MainController {
         WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed );
 		JuiceHelper.playerDied();
     }
+
+	static __showWaveNumber() {
+		const wave_number_display = document.createElement("DIV");
+		wave_number_display.classList.add("wave-level");
+		wave_number_display.innerHTML = `Vague ${MainController.scope.game.wave_number}`;
+
+		MainController.UI.addToGameWindow(wave_number_display);
+		wave_number_display.style.opacity = 0.8;
+		setTimeout(()=> {
+			wave_number_display.style.opacity = 0;
+			setTimeout(()=> { wave_number_display.remove() }, 300);
+		}, 1200);
+	}
 
     static __characterRescueFees() {
         const scope = MainController.scope.game;
