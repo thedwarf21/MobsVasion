@@ -41,8 +41,9 @@ class ParametersPopup extends AbstractPopup {
             property: "music_on"
         }).addBinding(this.__querySelector("#music_on"), "checked", "change", ()=> {
             JuiceHelper.emptyClipPercussion();
+            
             if (MainController.audio_manager.sound_settings.music_on) {
-                if (MainController.popups_stack.__popups.length > 1)   // magasin ouvert
+                if (MainController.popups_stack.isShopOpened())
                     JuiceHelper.startShopMusic();
                 else JuiceHelper.startWaveMusic();
             } else MainController.audio_manager.stopMusic();

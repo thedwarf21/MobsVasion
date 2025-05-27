@@ -29,6 +29,14 @@ class PopupsStack {
 
     activePopup() { return this.__popups.length ? this.__popups[0] : null; }
 
+    isShopOpened() {
+        for (const popup of this.__popups)
+            if (popup.switchToMoneyShop)
+                return true;
+
+        return false;
+    }
+
     closeAll() {
         while(this.__popups.length)
             this.pop();
