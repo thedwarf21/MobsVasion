@@ -133,7 +133,7 @@ class GameClock {
 		for (let i = shots.length - 1; i >=0; i--) {
 			const shot = shots[i];
 
-			if (monster.hitbox.checkCollide(shot.hitbox)) {
+			if (!monster.carried && monster.hitbox.checkCollide(shot.hitbox)) {
 				shots.splice(i, 1);
 				shot.root_element.remove();
 				monster.wound(shot_power || shot.strength, index);
