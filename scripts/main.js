@@ -181,6 +181,10 @@ const SOUND_LIB = {
 		file: "throw.mp3",
 		players_number: 3 
 	},
+	monster_falldown:   { 
+		file: "falldown.mp3",
+		players_number: 3 
+	},
 	kill: 			{ 
 		file: "dying-monster.mp3",
 		players_number: 3

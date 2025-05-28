@@ -89,6 +89,62 @@ class MV_MonsterGolgoth extends MV_Monster {
         return thrown_monster;
     }
 
+    __canThrow() {
+        const character = MainController.UI.character;
+        return this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
+    }
+
+    /** Ramassage des monstres */
+    __pickUpIfPossible() {
+        if (!this.hitbox.checkCollide(this.current_target.hitbox) || this.before_next_pick)
+            return;
+
+        this.carried_monster = this.current_target;
+        this.carried_monster.carried = true;
+        this.carried_monster.resetAttackCounter();
+        this.__setCarriedMonsterPosition();
+    }
+
+    __setCarriedMonsterPosition() {
+        const carried_monster_element = this.carried_monster.root_element;
+        this.rotate_element.appendChild(carried_monster_element);
+        
+        const carried_monster_radius = this.carried_monster.pixel_size / 2;
+        carried_monster_element.style.right = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.x - carried_monster_radius);
+        carried_monster_element.style.bottom = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.y - carried_monster_radius);
+        carried_monster_element.style.left = null;
+        carried_monster_element.style.top = null;
+    }
+
+    /** Chute du monstre porté */
+    __carriedMonsterFallDown() {
+        MainController.UI.addToGameWindow(this.carried_monster.root_element);
+        const position_delta = (this.pixel_size - this.carried_monster.pixel_size) / 2;
+        this.carried_monster.x = this.x + position_delta;
+        this.carried_monster.y = this.y + position_delta;
+        this.applyPosition();
+
+        const fallen_monster = this.carried_monster;
+        this.carried_monster = null;
+        this.__dropMonster(fallen_monster);
+    }
+    
+    __dropMonster(monster) {
+        this.__performDroppedMonsterInjuries(monster);
+        monster.carried = false;
+    }
+
+    __performDroppedMonsterInjuries(monster) {
+       monster.health_points -= this.THROWN_MONSTER_MAX_INJURIES;
+        
+        if (monster.health_points <= 0)
+            monster.health_points = 0.1;
+        
+        monster.life_bar.assignValue(monster.health_points);
+        monster.shock();
+    }
+
+    /** Lancer en cloche */
     bellThrow() {
         JuiceHelper.throw();
 
@@ -136,59 +192,6 @@ class MV_MonsterGolgoth extends MV_Monster {
             HealthBarHelper.characterHit(this.monster_type.strength);
         
         //TODO effet visuel AOE atterrissage
-        //TODO effet audio atterrissage
-    }
-
-    __pickUpIfPossible() {
-        if (!this.hitbox.checkCollide(this.current_target.hitbox) || this.before_next_pick)
-            return;
-
-        this.carried_monster = this.current_target;
-        this.carried_monster.carried = true;
-        this.carried_monster.resetAttackCounter();
-        this.__setCarriedMonsterPosition();
-    }
-
-    __setCarriedMonsterPosition() {
-        const carried_monster_element = this.carried_monster.root_element;
-        this.rotate_element.appendChild(carried_monster_element);
-        
-        const carried_monster_radius = this.carried_monster.pixel_size / 2;
-        carried_monster_element.style.right = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.x - carried_monster_radius);
-        carried_monster_element.style.bottom = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.y - carried_monster_radius);
-        carried_monster_element.style.left = null;
-        carried_monster_element.style.top = null;
-    }
-
-    __canThrow() {
-        const character = MainController.UI.character;
-        return this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
-    }
-
-    __carriedMonsterFallDown() {
-        MainController.UI.addToGameWindow(this.carried_monster.root_element);
-        const position_delta = (this.pixel_size - this.carried_monster.pixel_size) / 2;
-        this.carried_monster.x = this.x + position_delta;
-        this.carried_monster.y = this.y + position_delta;
-        this.applyPosition();
-
-        const fallen_monster = this.carried_monster;
-        this.carried_monster = null;
-        this.__dropMonster(fallen_monster);
-    }
-
-    __dropMonster(monster) {
-        this.__performDroppedMonsterInjuries(monster);
-        monster.carried = false;
-    }
-
-    __performDroppedMonsterInjuries(monster) {
-       monster.health_points -= this.THROWN_MONSTER_MAX_INJURIES;
-        
-        if (monster.health_points <= 0)
-            monster.health_points = 0.1;
-        
-        monster.life_bar.assignValue(monster.health_points);
-        monster.shock();
+        JuiceHelper.monsterFalldown();
     }
 }
