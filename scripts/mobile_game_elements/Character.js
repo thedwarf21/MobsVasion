@@ -66,6 +66,6 @@ class MV_Character extends MobileGameElement {
         
         const deltaX = SHOT_VELOCITY * Math.cos(this.aiming_angle);
         const deltaY = SHOT_VELOCITY * Math.sin(this.aiming_angle);
-        return new MV_Shot(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY);
+        return new MV_Shot(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
     }
 }

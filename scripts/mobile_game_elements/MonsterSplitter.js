@@ -48,7 +48,7 @@ class MV_MonsterSpitter extends MV_Monster {
         const deltaX = SHOT_VELOCITY/2 * Math.cos(this.aiming_angle);
         const deltaY = SHOT_VELOCITY/2 * Math.sin(this.aiming_angle);
         
-        const shot = new MV_Shot(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY);
+        const shot = new MV_Shot(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
         shot.root_element.classList.add("monster");
         shot.strength = this.monster_type.strength;
         return shot;

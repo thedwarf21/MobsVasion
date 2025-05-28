@@ -14,11 +14,11 @@ class MV_Monster extends MobileGameElement {
         this.init();
     }
   
-    wound(injury_amount, monster_index) {
+    wound(injury_amount, monster_index, angle) {
         this.health_points -= injury_amount;
         this.life_bar.assignValue(this.health_points);
         this.resetAttackCounter();
-        this.__dieOrBleed(monster_index);
+        this.__dieOrBleed(monster_index, angle);
     }
   
     follow(target) {
@@ -101,23 +101,27 @@ class MV_Monster extends MobileGameElement {
         this.root_element.appendChild(this.life_bar.root_element);
     }
 
-    __dieOrBleed(monster_index) {
+    __dieOrBleed(monster_index, angle) {
         if (this.health_points <= 0) {
             this.root_element.remove();
             this.__createBloodPuddle(this.x + this.pixel_size/2, this.y + this.pixel_size/2, true);
             this.__monsterSlayed(monster_index);
         } else {
             this.shock();
-            this.__bleed();
+            this.__bleed(angle);
         }
     }
 
-    __bleed() {
-        const x_splash = this.x + this.pixel_size/2 + ( this.pixel_size/2 * Math.cos(this.angle) );
-        const y_splash = this.y + this.pixel_size/2 + ( this.pixel_size/2 * Math.sin(this.angle) );  
-        const x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(this.angle);
-        const y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(this.angle);  
-        JuiceHelper.bloodSplash(x_splash, y_splash, this.angle, ()=> {
+    __bleed(angle) {
+        if (angle)
+            angle += Math.PI;
+        else angle = this.angle;
+
+        const x_splash = this.x + this.pixel_size/2 + ( this.pixel_size/2 * Math.cos(angle) );
+        const y_splash = this.y + this.pixel_size/2 + ( this.pixel_size/2 * Math.sin(angle) );  
+        const x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(angle);
+        const y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(angle);  
+        JuiceHelper.bloodSplash(x_splash, y_splash, angle, ()=> {
             this.__createBloodPuddle(x_puddle, y_puddle, false);
         });
     }

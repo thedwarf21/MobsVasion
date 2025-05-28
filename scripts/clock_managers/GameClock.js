@@ -133,7 +133,7 @@ class GameClock {
 			if (!monster.carried && monster.hitbox.checkCollide(shot.hitbox)) {
 				shots.splice(i, 1);
 				shot.root_element.remove();
-				monster.wound(shot_power || shot.strength, index);
+				monster.wound(shot_power || shot.strength, index, shot.angle);
 			}					
 		}
 	}
