@@ -23,6 +23,7 @@ class MainUI {
 		this.__clearCharacter();
 		this.__clearBloodPuddles();
 		this.__clearToxicClouds();
+		this.__clearBellThrowMarks();
 		this.__clearMonsters();
 		this.__clearMonsterShots();
 		this.__clearGauges();
@@ -48,6 +49,13 @@ class MainUI {
 		for (let i = this.toxicClouds.length - 1; i >= 0; i--) {
 			this.toxicClouds[i].hitbox = null;
 			this.toxicClouds[i].remove();
+		}
+	}
+
+	__clearBellThrowMarks() {
+		for (let i = this.bellThrowMarks.length - 1; i >= 0; i--) {
+			this.bellThrowMarks[i].hitbox = null;
+			this.bellThrowMarks[i].remove();
 		}
 	}
 
@@ -194,6 +202,7 @@ class MainUI {
 	get game_window() 			{ return document.getElementById("game-window"); }
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
 	get toxicClouds() 			{ return document.getElementsByClassName("toxic-cloud"); }
+	get bellThrowMarks()		{ return document.getElementsByClassName("bell-throw-aoe"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
 	get hud() 					{ return document.querySelector(".hud"); }
 }
