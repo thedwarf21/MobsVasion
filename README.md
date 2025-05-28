@@ -11,7 +11,7 @@ Le jeu gère différents modes de contrôle pour les commandes :
 
 * clavier + souris,
 * manette de jeu, 
-* écran tactile (pas encore implémenté)
+* écran tactile
 
 MobsVasion propose un affichage lisible et cohérent, quel que soit l'écran utilisé et son ratio d'affichage.
 
@@ -19,62 +19,39 @@ Le joueur affronte des vagues de monstres. Ce faisant, il obtient de l'expérien
 
 Un magasin d'améliorations, utilisable entre deux vagues de monstres, permet au joueur de se ravitailler et d'améliorer les capacités de son personnage.
 
-L'apparition des monstres de la vague se fait petit à petit (un par un), sur une position aléatoire en bordure d'écran, entre 1s et 2s après l'apparition du monstre précédent (valeurs susceptibles de bouger, pour affiner l'expérience de jeu).
+L'apparition des monstres de la vague se fait petit à petit (un par un), sur une position aléatoire en bordure d'écran, entre 1s et 2s après l'apparition du monstre précédent.
 
-La vitesse de chaque monstre est fixe, et déterminée aléatoirement lors de son apparition, dans une fourchette de valeurs données.
+La vitesse de chaque monstre est fixe, et déterminée aléatoirement lors de son apparition, dans une fourchette de valeurs données, selon le type de monstre.
 
-Chaque monstre se dirige en azimut brutal, dans la direction du joueur.
+Chaque monstre se dirige en azimut brutal, dans la direction du joueur, à l'exception du golgoth qui, si un monstre susceptible d'être utilisé comme projectile se trouve plus près de lui, cherchera à aller le ramasser pour le lancer en direction du joueur.
 
-Le joueur tire à distance (visée par positionnement souris, ou via l'un des joysticks manette/tactile)
+Le joueur tire à distance. La visée se fait par :
 
-Lorsqu'un monstre est au contact du joueur, ce dernier perd des points de vie.
+* souris : positionnement de la souris, 
+* manette : via le joystick doit de la manette, ou en direction du monstre le plus proche avec la commande "Tir visée auto"
+* écran tactile : en direction du monstre le plus proche
+
+Lorsqu'un "vorace" ou un "golgoth" est au contact du joueur, ce dernier perd des points de vie.
 
 Le joueur doit éliminer tous les monstres de la vague, pour passer à la vague suivante. S'il échoue, il peut retenter la dernière vague autant de fois qu'il lui sera nécessaire. Toutefois, lorsqu'il échoue, de l'argent est prélevé sur son butin pour assurer ses soins. 
 
 S'il ne dispose pas de l'argent nécessaire à la récupération totale de sa santé, il ne bénéficiera que d'un soin partiel, et devra poursuivre l'aventure ainsi :goberserk:
 
 
-## Les commandes
+## Tutoriel intégré
 
-### Clavier
+Votre aventure débute par votre rencontre avec un PNJ, qui vous guidera ensuite dans le jeu :
 
-Vous pouvez déplacer le personnage à l'aide des touches Z, Q, S et D.
-
-La barre espace vous permet de bondir dans la direction du déplacement (dash).
-
-Le clic gauche de la souris permet de tirer dans la direction pointée.
-
-Le clic droit de la souris permet de recharger l'arme principale.
+* commandes
+* fonctionnement du magasin
+* différents types de monstres
 
 
-### Manette
+## Sauvegare automatique
 
-Pour jouer avec la manette, il faut tout d'abord que celle-ci soit détectée par le jeu.
+Votre partie est automatiquement sauvegardée via le `LocalStorage`, à chaque fin de vague et lorsque vous fermez le magasin pour affronter la vague suivante.
 
-Pour ce faire, il vous suffit de presser n'importe quel bouton de la manette, tandis que le jeu est ouvert. Un fenêtre de configuration de la manette s'ouvrira alors, vous permettant de paramétrer les boutons pour :
-
-* Pause / reprise
-* Dash
-* Rechargement de l'arme principale
-* Navigation dans les menus
-
-
-## Bientôt disponible
-
-À venir prochainement :
-
-* La possibilité de sauvegarder/charger une partie (c'est mieux pour un jeu infini)
-* Des commandes tactiles pour jouer sur un smartphone
-* Une intro avec un mini-tutoriel (j'ai déjà un PNJ, autant en profiter)
-* Amélioration de l'interface du magasin (si vous êtes curieux, je décris ce que j'ai en tête dans le fichier .roadmap)
-
-
-À venir en seconde intention :
-
-* Plus d'améliorations
-* Différents types de monstres
-* Différentes armes pour le tir principal
-* Différentes options de tir secondaire
+Lorsque le jeu s'ouvre, si une sauvegarde est détectée, le choix vous est donné entre reprendre la partie sauvegardée ou commencer une nouvelle partie et écraser la sauvegarde existante.
 
 
 ## Documentation technique

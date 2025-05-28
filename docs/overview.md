@@ -18,15 +18,15 @@ Au moment de démarrer, j'ai commencé par rassembler des briques logicielles, p
 ![image](initial_archi.excalidraw.svg)
 
 
-## Après 4 semaines
+## Aujourd'hui
 
 Puis, une chose en entrainant une autre, la quasi-totalité de l'architecture a évolué, afin d'accueillir les nouvelles fonctionnalités, sans trop introduire de complexité inutile (si vous êtes développeur, vous savez ce que c'est :smirk:)
 
 ![image](archi_2.excalidraw.svg)
 
-Le `MainController` déclare et définit tout le paramétrage par défaut, à travers des constantes. En outre, il implémente également l'initialisation du jeu ainsi que des vagues de monstres, de même que les méthodes de détection et de gestion de fins de vagues, qu'il s'agisse de victoires ou de défaites.
+Le `MainController` déclare et définit tout le paramétrage par défaut, à travers des constantes. En outre, il implémente également l'initialisation du jeu, de même que les méthodes de détection et de gestion de fins de vagues, qu'il s'agisse de victoires ou de défaites.
 
-Il s'appuie sur la classe statique `MV_GameInitializer` pour initialiser l'objet `scope`, préparer la gestion des contrôles, et instancier les divers objets chargés de  gérer les diverses problématiques : audio, sauvegarde, magasin d'améliorations, popups, gamplay et ATH, et traitements périodiques (`GameClock`).
+Il s'appuie sur la classe statique `MV_GameInitializer` pour initialiser l'objet `scope`, préparer la gestion des contrôles, et instancier les divers objets chargés de  gérer les diverses problématiques : audio, sauvegarde, magasin d'améliorations, popups, génération des vagues de monstre, gamplay et ATH, et traitements périodiques (`GameClock`).
 
 Les fenêtre modales gérées par `PopupsStack` sont des classes héritant de `AbstractPopup`, qui définit les méthodes invoquées par `PopupsStack`, ainsi que les méthodes permettant de gérer la navigation par manette, dans la fenêtre.
 
@@ -43,9 +43,13 @@ Directement rattaché au `MainController`, l'objet `scope` est une banque de don
 
 `scope.game` définit l'état actuel de la partie en cours, du point de vue du personnage : ressources du joueur, xp, numéro de la vague en cours, compteurs de délais, etc.
 
-En outre, cette structure contient également le flag de préférences utilisateur concernant l'affichage des hit box, ainsi que les compteurs d'attente en cours, et la planification de l'apparition des monstres de la vague en cours.
+En outre, cette structure contient également le flag de préférences utilisateur concernant l'affichage des hit box, ainsi que les compteurs d'attente en cours (`waiting_counters`), et la planification de l'apparition des monstres de la vague en cours (`wave_pop`).
 
-`scope.controls` centralise l'état des commandes à l'instant T. Certains de ces états sont mutualisés entre les différents modes de contrôles (`paused`, `firing_primary`, `firing_secondary`, `reloading`). Tous les autres sont chacun lié à un mode de contrôle spécifique.
+La liste `attacking_monsters` permet de gérer dans `WaitingCounters`, les compteurs d'attaques de monstres, en cours de préparation, et ainsi d'afficher et animer les jauges correspondantes.
+
+La liste `flying_monsters` permet de gérer dans `WaitingCounters`, les animations de vol plané, pour les monstres lancés en cloche par un "golgoth".
+
+`scope.controls` centralise l'état des commandes à l'instant T. Certains de ces états sont mutualisés entre les différents modes de contrôles (`auto_aiming`, `paused`, `firing_primary`, `firing_secondary`, `reloading`). Tous les autres sont chacun lié à un mode de contrôle spécifique.
 
 * Clavier: `upPressed`, `downPressed`, `leftPressed`, `rightPressed`
 * Souris: `mouse_aiming` et structure `mouse_position` (`x`, `y`)
@@ -59,7 +63,9 @@ Ce répertoire contient des classes "utilitaires", réutilisables.
 
 ## Configuration de la manette
 
-le couple `GamepadGenericAdapter` + `GamepadConfigUI`, me permet d'abstraire l'API native Gamepad, en générant une liste d'actions (avec fonction à exécuter au déclenchement), puis en mappant ces actions aux boutons de la manette via l'UI de configuration, dont l'ouverture automatique est déclenchée lorsqu'une manette est détectée.
+Le couple `GamepadGenericAdapter` + `GamepadConfigUI`, permet d'abstraire l'API native `Gamepad`, en générant une liste d'actions (avec fonction à exécuter au déclenchement), puis en mappant ces actions aux boutons de la manette via l'UI de configuration, dont l'ouverture automatique est déclenchée lorsqu'une manette est détectée.
+
+Le `GamepadGenericAdapter` gère également le calibrage des joysticks. Celui-ci est initié automatiquement par `GamepadConfigUI`, lors de la fermeture de l'interface de configuration.
 
 
 ## ViewPortCompatibility
@@ -93,6 +99,13 @@ Ce sont des composants de la RS_WCL (Roquefort Softwares' Web Components Library
 `RS_Toast` permet d'afficher un toast, c'est à dire un message apparaissant en bas de l'écran, puis disparaissant au bout d'un certain temps.
 
 
+## RS_Selector
+
+Il s'agit d'un `customElement` utilisant un template HTML pour afficher un champ de sélection, façon interface de jeu vidéo.
+
+Il est utilisé pour le paramétrage du type de clavier dans la boîte de dialogue des paramètres.
+
+
 ## MobileGameElement
 
 Cette classe sert de "modèle" à toutes les classes gérant des objets affichés à l'écran et soumis à positionnement dynamique. 
@@ -102,7 +115,19 @@ Elle embarque tout le nécessaire pour gérer les diverses problématiques susce
 * Elle gère le positionnement et l'orientation d'un conteneur DOM, qui lui est rattaché (`root_element`)
 * Elle gère la traduction entre les coordonnées virtuelles et le positionnement en CSS (via une instance de `ViewPortCompatibility`)
 * Elle offre la possibilité de n'appliquer les mouvements de rotation, qu'à un élément précis du DOM interne du conteneur (`rotation_element`)
-* Elle permet d'accéder directement à la hitboxn et en embarque le système d'affichage
+* Elle permet d'accéder directement à la hitbox (intance de `RS_Hitbox`) et en embarque le système d'affichage
+
+
+## RS_Hitbox
+
+Cette classe définit une hitbox par ses coordonnée, ses dimensions et sa forme. Pour l'heure, seule la forme circulaire est gérée (parce que c'est suffisant).
+
+Elle permet de :
+
+* effectuer un test de collision avec une autre hitbox,
+* calculer la distance avec une autre hitbox,
+* calculer l'angle correspondant à la direction d'une autre hitbox,
+* déterminer l'objet le plus proche, parmi une liste d'instances de `MobileGameElement`
 
 
 # Les éléments du jeu
@@ -121,6 +146,16 @@ Cette classe a quelque peu évolué. En effet, elle s'appuyait à l'origine sur 
 
 Chacune des 5 classes, encapsule ensuite les propriétés et méthodes qui lui sont propres (c'est un peu le principe de l'héritage, quand même...)
 
+`MV_Monster` définit les comportements communs à tous les monstres, quel que soit leur type. Une classe par type de monstre, hérite de `MV_Monster`, et définit les comportements spécifiques. Ces classes doivent obligatoirement implémenter certaines méthodes :
+
+* `attack()` : c'est la méthode appelée par `GameClock` pour déclencher l'attaque du monstre
+* `performAttack()` : c'est la méthode appelée par `WaitingCounters` pour déclencher l'attaque temporisée via l'appel à `timedAttack(fn_sound_fx)`
+
+L'implémentation des méthodes de `MV_Monster` offre également des hooks, utilisables dans les classes enfant :
+
+* `specificDeathEffect()` : est appelée au moment de la mort du monstre
+* `choseFollowTarget()` : est appelée juste avant déplacement, pour permettre la poursuite d'un autre élément que le joueur
+
 
 # Les helpers: des classes statiques qui vous veulent du bien
 
@@ -133,14 +168,14 @@ Ainsi,
 * `HealthBarHelper` et `XpBarHelper` permettent de gérer respectivement la santé et l'expérience du joueur, 
 * `JuiceHelper` permet de créer des animation ainsi que les effets sonores, d'un simple appel de méthode, 
 * `Tools` propose des fonctions utilitaires (oui, ok... c'est un fourre-tout... mais pas trop plein, vous en conviendrez),
-* `MonstersInCurrentWave` expose les méthodes de calculs du nombre de monstres constituant la vague courante, ainsi que de leur santé.
+* `AutoAimHelper` centralise la visée automatique du monstre le plus proche du joueur,
+* `TrailAttackHelper` lance une attaque de type "trainée" (lancer ou dash),
+* `TutorialHelper` gère le tutoriel intégré.
 
-`HealthBarHelper`, `XpBarHelper` et `MonstersInCurrentWave` sont plutôt orientées model, puisqu'elles embarquent de la logique, tandis que `Tools` expose des méthodes de calculs et de conversions généraliste, et `JuiceHelper` abstrait les aspects liés au feedback auditif et visuel.
+`HealthBarHelper`, `XpBarHelper`, `AutoAimHelper` et `TrailAttackHelper` sont plutôt orientées model, puisqu'elles embarquent de la logique, tandis que `Tools` expose des méthodes de calculs et de conversions généraliste, `JuiceHelper` abstrait les aspects liés au feedback auditif et visuel et `TutorialHelper` génère des boîtes de dialogue.
 
 
 # Le gestionnaire de boutique
-
-Sur cette partie, je me suis fait plaisir en termes de conception :feelsgood:
 
 Les prix et les effets d'un article du magasin, sont calculés en fonction de son niveau actuel, en se basant sur une progression calquée sur la suite de Fibonnacci.
  
@@ -166,6 +201,7 @@ Comme son nom l'indique, il s'agit de la classe portant toutes les fonctions d'i
 
 * Définit l'état par défaut des données internes (`scope`)
 * Instancie les divers objets de gestion 
+    * générateur de vague,
     * gestionnaire d'horloge,
     * gestionnaire de boutique, 
     * gestionnaire de fenêtres modales,
@@ -186,6 +222,32 @@ Il gère un pool d'éléments `<audio>` pour chaque son, et expose les méthodes
 `stopAudioLoop` permet d'arrêter un son joué en boucle.
 
 `stopMusic` permet d'arrêter tous les lecteurs identifiés comme référençant un son musical.
+
+
+## MV_SaveManager
+
+Le gestionnaire de sauvegarde gère le format de la sauvegarde et son stockage.
+
+Il extrait les données du `scope` pour créer la sauvegarde, et calque le contenu de la sauvegarde dans le `scope` lors du chargement.
+
+Les données sauvegardées sont :
+
+* tout `scope.game`, à l'exception des propriétés liées à la vague en cours, et listées dans `__gameScopePropsFilter(key)`
+* le niveau de chaque amélioration du magasin
+* les paramètres audio (volumes et états d'activation)
+
+
+## MV_WaveGenerator
+
+Le générateur de vagues s'occupe de planifier l'apparition des monstres d'une vague. 
+
+Une "valeur de combat" est calculée à partir du numéro de la vague courante. 
+
+Le moteur de génération de vague s'appuie ensuite sur cette valeur, ainsi que sur le paramétrage des divers types de monstres, pour planifier un pop aléatoire.
+
+En effet, chaque type de monstre se voit attribuer une "valeur de combat", et ne peut apparaître qu'à partir d'une certaine vague.
+
+D'autre part, lorsqu'arrive la vague à partir de laquelle un type de monstre donné peut commencer à apparaître, le premier monstre de cette vague est un spécimen du type en question, et ce afin de mieux illuster la brève présentation de ce type de monstre par le tutoriel intégré.
 
 
 # Les gestionnaires de vues
