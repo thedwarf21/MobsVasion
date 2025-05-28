@@ -114,6 +114,7 @@ class WaitingCounters {
 
 			if (flying_monster.frames_counter === flying_monster.frames) {
 				monster.root_element.style.transform = null;
+				monster.root_element.classList.remove("flying");
 				flying_monster.onAnimationEnd();
 			}
 		}
@@ -126,6 +127,7 @@ class WaitingCounters {
 			const monster = flying_monster.monster;
 			monster.deltaX = flying_monster.deltaX;
 			monster.deltaY = flying_monster.deltaY;
+			monster.root_element.classList.add("flying");
 		} else flying_monster.frames_counter++;
 	}
 

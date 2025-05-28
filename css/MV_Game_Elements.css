@@ -27,6 +27,7 @@
 	position: absolute;
 	z-index: 1;
 }
+.monster.flying { z-index: 6; }
 .monster .spinning-image {
 	width: 100%;
 	height: 100%;
