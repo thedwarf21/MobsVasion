@@ -102,32 +102,39 @@ class WaitingCounters {
 		}
 	}
 
-	static __animateFlyingMonsters() { //TODO découper pour mise au propre
+	static __animateFlyingMonsters() {
 		for (const flying_monster of MainController.scope.game.flying_monsters) {
+			WaitingCounters.__prepareFlyingAnimation(flying_monster);
+			
 			const monster = flying_monster.monster;
-
-			if (!flying_monster.frames_counter) {
-				flying_monster.frames_counter = 1;
-				monster.deltaX = flying_monster.deltaX;
-				monster.deltaY = flying_monster.deltaY;
-			} else flying_monster.frames_counter++;
-
-			monster.angle += flying_monster.deltaAngle; console.log(flying_monster.deltaAngle);
+			monster.angle += flying_monster.deltaAngle;
 			monster.move();
 
-			// scale
-			const apogee_frame = flying_monster.frames / 2;
-			const frames_from_apogee = Math.abs(flying_monster.frames_counter - apogee_frame);
-			const from_apogee_ratio = frames_from_apogee / apogee_frame;
-			const scale_diff = (flying_monster.max_scale - 1) * from_apogee_ratio;
-			const scale = flying_monster.max_scale - scale_diff;
-			monster.root_element.style.transform = `scale(${scale})`;
+			WaitingCounters.__applyFlyingScale(flying_monster);
 
-			// fin d'animation
 			if (flying_monster.frames_counter === flying_monster.frames) {
 				monster.root_element.style.transform = null;
 				flying_monster.onAnimationEnd();
 			}
 		}
+	}
+
+	static __prepareFlyingAnimation(flying_monster) {
+		if (!flying_monster.frames_counter) {
+			flying_monster.frames_counter = 1;
+
+			const monster = flying_monster.monster;
+			monster.deltaX = flying_monster.deltaX;
+			monster.deltaY = flying_monster.deltaY;
+		} else flying_monster.frames_counter++;
+	}
+
+	static __applyFlyingScale(flying_monster) {
+		const apogee_frame = flying_monster.frames / 2;
+		const frames_from_apogee = Math.abs(flying_monster.frames_counter - apogee_frame);
+		const from_apogee_ratio = frames_from_apogee / apogee_frame;
+		const scale_diff = (flying_monster.max_scale - 1) * from_apogee_ratio;
+		const scale = flying_monster.max_scale - scale_diff;
+		flying_monster.monster.root_element.style.transform = `scale(${scale})`;
 	}
 }
