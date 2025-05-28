@@ -146,7 +146,9 @@ Cette classe a quelque peu évolué. En effet, elle s'appuyait à l'origine sur 
 
 Chacune des 5 classes, encapsule ensuite les propriétés et méthodes qui lui sont propres (c'est un peu le principe de l'héritage, quand même...)
 
-`MV_Monster` définit les comportements communs à tous les monstres, quel que soit leur type. Une classe par type de monstre, hérite de `MV_Monster`, et définit les comportements spécifiques. Ces classes doivent obligatoirement implémenter certaines méthodes :
+`MV_Monster` définit les comportements communs à tous les monstres, quel que soit leur type. Chaque instance de la classe porte une propriété `monster_type` pointant sur le paramétrage du type de monstre qu'elle représente. Ainsi, beaucoup de choses ont pu être automatisées directement au sein de cette classe.
+
+Une classe par type de monstre, hérite de `MV_Monster`, et définit les comportements spécifiques. Ces classes doivent obligatoirement implémenter certaines méthodes :
 
 * `attack()` : c'est la méthode appelée par `GameClock` pour déclencher l'attaque du monstre
 * `performAttack()` : c'est la méthode appelée par `WaitingCounters` pour déclencher l'attaque temporisée via l'appel à `timedAttack(fn_sound_fx)`
@@ -154,7 +156,7 @@ Chacune des 5 classes, encapsule ensuite les propriétés et méthodes qui lui s
 L'implémentation des méthodes de `MV_Monster` offre également des hooks, utilisables dans les classes enfant :
 
 * `specificDeathEffect()` : est appelée au moment de la mort du monstre
-* `choseFollowTarget()` : est appelée juste avant déplacement, pour permettre la poursuite d'un autre élément que le joueur
+* `choseFollowTarget()` : est appelée juste avant le déplacement, pour permettre la poursuite d'un autre élément que le joueur
 
 
 # Les helpers: des classes statiques qui vous veulent du bien
