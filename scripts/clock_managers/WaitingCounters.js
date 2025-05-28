@@ -37,6 +37,7 @@ class WaitingCounters {
 			counters_object[counter_key] = 0;
 
 		MainController.scope.game.attacking_monsters = [];
+		MainController.scope.game.flying_monsters = [];
 	}
 
 	static removeAttackCounter(monster) {
