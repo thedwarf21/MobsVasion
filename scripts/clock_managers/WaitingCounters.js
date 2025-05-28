@@ -104,7 +104,7 @@ class WaitingCounters {
 
 	static __animateFlyingMonsters() {
 		for (const flying_monster of MainController.scope.game.flying_monsters) {
-			WaitingCounters.__prepareFlyingAnimation(flying_monster);
+			WaitingCounters.__updateFlyingFramesCounter(flying_monster);
 			
 			const monster = flying_monster.monster;
 			monster.angle += flying_monster.deltaAngle;
@@ -119,7 +119,7 @@ class WaitingCounters {
 		}
 	}
 
-	static __prepareFlyingAnimation(flying_monster) {
+	static __updateFlyingFramesCounter(flying_monster) {
 		if (!flying_monster.frames_counter) {
 			flying_monster.frames_counter = 1;
 
