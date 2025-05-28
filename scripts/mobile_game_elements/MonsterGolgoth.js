@@ -60,7 +60,6 @@ class MV_MonsterGolgoth extends MV_Monster {
         const throw_length = this.THROW_LENGTH_RATIO * this.monster_type.attack_range;
         JuiceHelper.throw();
         const thrown_monster = this.setThrownMonsterStartPoition();
-        thrown_monster.aiming_angle = this.aiming_angle;
         TrailAttackHelper.performAttack(this, thrown_monster, throw_length);
 
         this.__dropMonster(thrown_monster);
