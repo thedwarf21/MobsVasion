@@ -6,6 +6,7 @@ class HealthBarHelper {
     }
 
     static characterHit(damage) {
+        JuiceHelper.hitEffect();
         MainController.scope.game.health_points -= damage;
 
         if (MainController.scope.game.health_points <= 0) {

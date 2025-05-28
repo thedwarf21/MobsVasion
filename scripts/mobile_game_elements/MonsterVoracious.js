@@ -8,11 +8,7 @@ class MV_MonsterVoracious extends MV_Monster {
         if (this.carried)
             return;
 
-        const character = MainController.UI.character;
-
-		if (this.hitbox.checkCollide(character.hitbox)) {
-			JuiceHelper.hitEffect();
+		if (this.hitbox.checkCollide(MainController.UI.character.hitbox))
 			HealthBarHelper.characterHit(this.monster_type.strength);
-		}
     }
 }

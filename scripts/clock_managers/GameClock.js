@@ -114,7 +114,6 @@ class GameClock {
 		for (let i = monster_shots.length - 1; i >= 0; i--) {
 			const monster_shot = monster_shots[i];
 			if (monster_shot.hitbox.checkCollide(character.hitbox)) {
-				JuiceHelper.hitEffect();
 				HealthBarHelper.characterHit(monster_shot.strength);
 				monster_shot.root_element.remove();
 				monster_shots.splice(i, 1);
@@ -122,10 +121,8 @@ class GameClock {
 		}
 
 		for (const toxic_cloud of MainController.UI.toxicClouds) {
-			if (character.hitbox.checkCollide(toxic_cloud.hitbox)) {
-				JuiceHelper.hitEffect();
+			if (character.hitbox.checkCollide(toxic_cloud.hitbox))
 				HealthBarHelper.characterHit(1);
-			}
 		}
 	}
 

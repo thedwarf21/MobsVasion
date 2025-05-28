@@ -50,10 +50,8 @@ class MV_MonsterGolgoth extends MV_Monster {
         if (this.current_target.monster_type)
             return this.__pickUpIfPossible();
 
-        if (this.hitbox.checkCollide(MainController.UI.character.hitbox)) {
-			JuiceHelper.hitEffect();
+        if (this.hitbox.checkCollide(MainController.UI.character.hitbox))
 			HealthBarHelper.characterHit(this.monster_type.strength);
-		}
     }
 
     performAttack() {
@@ -124,11 +122,11 @@ class MV_MonsterGolgoth extends MV_Monster {
                 this.__dropMonster(thrown_monster);
 
                 aoe_element.root_element.remove();
-                if (aoe_element.hitbox.checkCollide(character.hitbox)) {
-                    JuiceHelper.hitEffect();
+                if (aoe_element.hitbox.checkCollide(character.hitbox))
 			        HealthBarHelper.characterHit(this.monster_type.strength);
-                }
+                
 				//TODO effet visuel AOE atterrissage
+				//TODO effet audio atterrissage
             }
         });
     }

@@ -19,7 +19,6 @@ class TrailAttackHelper {
             return true;
 
         if ( moved_monster.hitbox.checkCollide(MainController.UI.character.hitbox) ) {
-            JuiceHelper.hitEffect();
             HealthBarHelper.characterHit(strength);
             return true;
         }
