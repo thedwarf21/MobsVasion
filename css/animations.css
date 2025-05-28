@@ -15,15 +15,25 @@
  }
 
  /* Animation de Level UP */
- .player-level.level-up {
+.player-level.level-up {
 	transition: box-shadow ;
 	animation: level-up 1s ease-in-out;
- }
-
+}
 @keyframes level-up {
 	0% { box-shadow: 0 0 1.5vh #d0ff7d; }
 	50% { box-shadow: 0 0 1.5vh 1.5vh #d0ff7d; }
 	100% { box-shadow: 0 0 1.5vh #d0ff7d; }
+}
+
+/* Animation d'AOE d'un lancer en cloche de golgoth */
+.impact-effect {
+	background: radial-gradient(circle at center,transparent 32%, #ffffffb0 52%, transparent 72%);
+	animation: impact-effect 1s ease-out infinite;
+}
+@keyframes impact-effect {
+	0% { transform: scale(0.1); }
+	75% { transform: scale(2); }
+	100% { opacity: 0; }
 }
 
 /* Animation d'affichage d'amélioration dans les gauges */

@@ -187,11 +187,11 @@ class MV_MonsterGolgoth extends MV_Monster {
         WaitingCounters.removeFlyingMonster(thrown_monster);
         this.__dropMonster(thrown_monster);
 
-        aoe_element.root_element.remove();
         if (aoe_element.hitbox.checkCollide(MainController.UI.character.hitbox))
             HealthBarHelper.characterHit(this.monster_type.strength);
         
-        //TODO effet visuel AOE atterrissage
         JuiceHelper.monsterFalldown();
+        aoe_element.root_element.classList.add("impact-effect");
+        setTimeout(()=> { aoe_element.root_element.remove(); }, 1000);
     }
 }
