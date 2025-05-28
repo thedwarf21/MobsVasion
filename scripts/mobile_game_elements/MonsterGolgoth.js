@@ -191,6 +191,7 @@ class MV_MonsterGolgoth extends MV_Monster {
             HealthBarHelper.characterHit(this.monster_type.strength);
         
         JuiceHelper.monsterFalldown();
+        MainController.UI.shakeGameWindow();
         aoe_element.root_element.classList.add("impact-effect");
         setTimeout(()=> { aoe_element.root_element.remove(); }, 1000);
     }

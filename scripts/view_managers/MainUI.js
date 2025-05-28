@@ -16,6 +16,7 @@ class MainUI {
 		this.__prepareAmmoAutoRefresh();
 		this.__prepareLifeBarAutoRefresh( HealthBarHelper.create() );
         this.__prepareLevelAndXpAutoRefresh( XpBarHelper.create() );
+		this.__manageHudDisplay();
 	}
 
     clearGameWindow() {
@@ -84,6 +85,11 @@ class MainUI {
 		this.game_window.appendChild(element);
 	}
 
+	shakeGameWindow() {
+		this.game_window.classList.add("shocked");
+		setTimeout(()=> { this.game_window.classList.remove("shocked"); }, 500);
+	}
+
 	refreshAllHitboxesVisibility() {
 		for (const hitbox of this.hitboxes)
 			hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
@@ -107,6 +113,11 @@ class MainUI {
 				result_list.push(monster);
 
 		return result_list;
+	}
+
+	__manageHudDisplay() {
+		if (!Tools.isMediaStadalone())
+			this.hud.remove();
 	}
 
     __prepareWaveSwagAutoRefresh() {
@@ -184,4 +195,5 @@ class MainUI {
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
 	get toxicClouds() 			{ return document.getElementsByClassName("toxic-cloud"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
+	get hud() 					{ return document.querySelector(".hud"); }
 }
