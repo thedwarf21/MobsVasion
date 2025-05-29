@@ -11,7 +11,8 @@ class AutoAimHelper {
 	}
 
 	static __nearestMonsterHitbox(character_hitbox) {
-		const nearest_monster = character_hitbox.getNearest(MainController.UI.monsters);
+		const aimable_monsters = MainController.UI.monsters.filter((monster) => !monster.carried)
+		const nearest_monster = character_hitbox.getNearest(aimable_monsters);
 		return nearest_monster ? nearest_monster.hitbox : null;
 	}
 }
