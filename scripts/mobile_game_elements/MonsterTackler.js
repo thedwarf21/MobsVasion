@@ -8,14 +8,11 @@ class MV_MonsterTackler extends MV_Monster {
     }
 
     attack() {
-        if (this.__canAttack()) {
-            this.root_element.classList.add("duck");
+        if (this.__canAttack())
             super.timedAttack( JuiceHelper.prepareTackling );
-        }
     }
 
     performAttack() {
-        this.root_element.classList.remove("duck");
         super.resetAttackCounter();
         
         const tackle_length = this.TACKLE_LENGTH_RATIO * this.monster_type.attack_range;

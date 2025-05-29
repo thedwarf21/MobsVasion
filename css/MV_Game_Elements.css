@@ -47,7 +47,7 @@
 	width: 5vh;
 }
 .monster.spitter > .spinning-image { background-image: url("../images/zombie_spitter.png"); }
-.monster.spitter.swell { animation: swell 1s ease-in; }
+.monster.spitter.attack-animation { animation: swell 1s ease-in; }
 @keyframes swell {
 	from { transform: scale(1); }
 	to { transform: scale(1.25); }
@@ -58,7 +58,7 @@
 	width: 7.5vh;
 }
 .monster.tackler > .spinning-image { background-image: url("../images/zombie_tackler.png"); }
-.monster.tackler.duck { animation: duck 1s ease-in; }
+.monster.tackler.attack-animation { animation: duck 1s ease-in; }
 @keyframes duck {
 	from { transform: scale(1); }
 	to { transform: scale(0.8); }

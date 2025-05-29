@@ -49,6 +49,7 @@ class MV_Monster extends MobileGameElement {
 
     resetAttackCounter() {
         if (this.__isAttacking()) {
+            this.root_element.classList.remove("attack-animation");
             this.attack_bar.root_element.remove();
             this.attack_bar = null;
             WaitingCounters.removeAttackCounter(this);
@@ -74,6 +75,7 @@ class MV_Monster extends MobileGameElement {
         this.aimPlayer();
         this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
         this.root_element.appendChild(this.attack_bar.root_element);
+        this.root_element.classList.add("attack-animation");
 
         MainController.scope.game.attacking_monsters.push({
             monster: this,

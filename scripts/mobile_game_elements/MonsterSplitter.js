@@ -8,14 +8,11 @@ class MV_MonsterSpitter extends MV_Monster {
     }
 
     attack() {
-        if (this.__canAttack()) {
-            this.root_element.classList.add("swell");
+        if (this.__canAttack())
             super.timedAttack( JuiceHelper.prepareSpitting );
-        }
     }
 
     performAttack() {
-        this.root_element.classList.remove("swell");
         JuiceHelper.spit();
         super.resetAttackCounter();
         const shot = this.__createShot();
