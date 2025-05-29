@@ -195,7 +195,7 @@ const SOUND_LIB = {
 	},
 	shot: { 
 		file: "shot.mp3", 
-		players_number: 2 
+		players_number: 10
 	},
 	low_hp_loop: { 
 		file: "heartbeat-loop.mp3", 
