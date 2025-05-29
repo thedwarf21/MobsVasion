@@ -118,10 +118,11 @@ class ShopPopup extends AbstractPopup {
     __autoScrollDown(line_index) {
         const visible_items_number = 4;
         const scroll_needs = line_index + 1 - visible_items_number;
+        const scroll_y = scroll_needs * this.__itemHeight();
+        const scoll_element = this.__querySelector("#items-container");
         
-        if (scroll_needs > 0) {
-            const scroll_y = scroll_needs * this.__itemHeight();
-            this.__querySelector("#items-container").scrollTo({
+        if (scroll_y > scoll_element.scrollTop) {
+            scoll_element.scrollTo({
                 behavior: "smooth",
                 top: scroll_y
             });
