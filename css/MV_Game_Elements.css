@@ -69,7 +69,21 @@
 	width: 15vh;
 }
 .monster.golgoth > .spinning-image { background-image: url("../images/zombie_golgoth.png"); }
+.monster.golgoth.attack-animation { animation: hard-shake 1s linear; }
 .spinning-image > .monster > .gauge { opacity: 0; } /* la barre de vie d'un monstre porté par un golgoth n'apparaît pas */
+@keyframes hard-shake {
+	0% { transform: translateX(0.8vh); }
+	10% { transform: translateY(-1vh); }
+	20% { transform: translateX(-1.2vh); }
+	30% { transform: translateX(1.6vh); }
+	40% { transform: translateY(-1.4vh); }
+	50% { transform: translateX(1vh); }
+	60% { transform: translateY(1vh); }
+	70% { transform: translateY(-1.2vh); }
+	80% { transform: translateX(0.8vh); }
+	90% { transform: translateY(1.4vh); }
+	100% { transform: translateX(-1.6vh); }
+}
 
 .hitbox {
 	position: absolute;
