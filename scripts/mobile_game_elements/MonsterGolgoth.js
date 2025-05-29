@@ -96,7 +96,11 @@ class MV_MonsterGolgoth extends MV_Monster {
 
     /** Ramassage des monstres */
     __pickUpIfPossible() {
-        if (!this.hitbox.checkCollide(this.current_target.hitbox) || this.before_next_pick)
+        if (this.before_next_pick)
+            return;
+        if (!this.hitbox.checkCollide(this.current_target.hitbox))
+            return;
+        if (!this.current_target.isPickable())  // fix: si 2 golgoth tentent de ramasser le même monstre en mêmes temps => bug
             return;
 
         this.carried_monster = this.current_target;
