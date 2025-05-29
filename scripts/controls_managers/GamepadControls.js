@@ -7,9 +7,15 @@ class GamepadControls {
 			const controls = controller.scope.controls;
 			const gamepad = new GamepadGenericAdapter();
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.primary_auto_fire, "Tir visée auto", ()=> { GamepadControls.__autoAim(); }, null, true);
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", ()=> { controls.firing_secondary = true; }, null, true);
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", ()=> { controls.reloading = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.primary_auto_fire, "Tir visée auto", 
+										()=> { GamepadControls.__autoAim(); }, 
+										()=> { controls.firing_primary = false; }, true);
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", 
+										()=> { controls.firing_secondary = true; }, 
+										()=> { controls.firing_secondary = false; }, true);
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", 
+										()=> { controls.reloading = true; },
+										()=> { controls.reloading = false; });
 
 			const menu_controls = controls.gamepad_menu_nav;
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_up, 		"Menu : haut", 		()=> { menu_controls.up = true; });
@@ -38,11 +44,6 @@ class GamepadControls {
 	}
 
 	static clearState(controls_state) {
-		if (!MainController.scope.controls.mouse_aiming && !MainController.scope.controls.auto_aiming)
-			controls_state.firing_primary = false;
-		controls_state.firing_secondary = false;
-		controls_state.reloading = false;
-
 		for (const key in controls_state.gamepad_menu_nav)
 			controls_state.gamepad_menu_nav[ key ] = false;
 	}
@@ -93,7 +94,9 @@ class GamepadControls {
 		GamepadControls.__applyMoveJoystick(leftJoystick, character);
 		GamepadControls.__applyFireJoystick(rightJoystick, character);
 
-		if (rightJoystick.intensity === 0 && !MainController.scope.game.clip_ammo) { // Rechargement automatique si chargeur vide et pas de visée
+		if (rightJoystick.intensity === 0 
+		  && !MainController.scope.game.clip_ammo 
+		  && !MainController.scope.controls.firing_primary) { // Rechargement automatique si chargeur vide et pas de visée
 			MainController.timer.launchReloadingAction();
 		}
 		

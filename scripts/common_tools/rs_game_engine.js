@@ -355,8 +355,8 @@ class GamepadGenericAdapter {
 							gamepad.axes[3]];
 	}
 
-	addControlEntry(code, name, fnMainAction, fnSecondaryAction, isAuto) {
-		this.controls.push(new GamepadControl(code, name, fnMainAction, fnSecondaryAction, isAuto));
+	addControlEntry(code, name, fnPushedAction, fnUnpushedAction, isAuto) {
+		this.controls.push(new GamepadControl(code, name, fnPushedAction, fnUnpushedAction, isAuto));
 	}
 
 	setControlMapping(controlIndex, buttonIndex) {
@@ -401,29 +401,35 @@ class GamepadGenericAdapter {
  * @class      GamepadControl
  */
 class GamepadControl {
-	constructor(code, name, fnMainAction, fnSecondaryAction, isAuto) {
+	constructor(code, name, fnPushedAction, fnUnpushedAction, isAuto) {
 		this.code = code;
 		this.name = name;
-		this.mainAction = fnMainAction;
-		this.secondaryAction = fnSecondaryAction;
+		this.pushedAction = fnPushedAction;
+		this.unpushedAction = fnUnpushedAction;
 		this.isAuto = isAuto;
 		this.actionAlreadyDone = false;
 		this.buttonIndex = undefined;
 	}
 
-	applyContext(gamepad, isSecondaryAction) {
+	applyContext(gamepad) {
 		if (this.__isButtonPressed(gamepad)) {
 			if (this.__isExecutionPossible()) {
-				this.__execute(isSecondaryAction);
+				this.__execute(true);
 				this.actionAlreadyDone = true;
 			}
-		} else this.actionAlreadyDone = false;
+		} else {
+			this.__execute(false);
+			this.actionAlreadyDone = false;
+		}
+
 	}
 
-	__execute(isSecondaryAction) {
-		if (isSecondaryAction) {
-			this.secondaryAction();
-		} else this.mainAction();
+	__execute(button_state) {
+		if (button_state)
+			return this.pushedAction();
+		
+		if (this.unpushedAction) 
+			return this.unpushedAction();
 	}
 
 	__isButtonPressed(gamepad) {
