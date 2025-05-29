@@ -91,7 +91,8 @@
 .shop-item-desc {
     font-family: sans-serif;
     font-size: 3.2vh;
-    color: #c9edff;
+    color: #004151;
+    text-shadow: none;
 
     text-align: center;
     margin-left: 2vh;
