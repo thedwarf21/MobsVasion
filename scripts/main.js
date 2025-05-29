@@ -136,7 +136,7 @@ const NPC_RANDOM_DIALOGS = {
 	]
 }
 
-const HP_PRICE = 5;
+const HP_PRICE = 0.5;
 
 const SOILS = ["desert", "ice", "marble"];
 const SOIL_BG_SIZE = ["15vh", "100vh", "30vh"];
@@ -287,12 +287,12 @@ class MainController {
         const scope = MainController.scope.game;
         const max_hp = Abilities.getMaxPlayerHealth();
 
-        if (max_hp > scope.money * HP_PRICE) {
-            scope.health_points = scope.money * HP_PRICE;
+        if (max_hp > scope.money / HP_PRICE) {
+            scope.health_points = scope.money / HP_PRICE;
             scope.money = 0;
         } else {
             scope.health_points = max_hp;
-            scope.money -= max_hp / HP_PRICE;
+            scope.money -= max_hp * HP_PRICE;
         }
 
         if (!scope.health_points)
