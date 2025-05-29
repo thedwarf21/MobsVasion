@@ -26,6 +26,7 @@ class MainUI {
 		this.__clearBellThrowMarks();
 		this.__clearMonsters();
 		this.__clearMonsterShots();
+		this.__clearPlayerShots();
 		this.__clearGauges();
 
 		const soil_index = Tools.radomValueInRange(0, 2);
@@ -75,6 +76,11 @@ class MainUI {
 			this.monster_shots[i].root_element.remove();
 			this.monster_shots.splice(i, 1);
 		}
+	}
+
+	__clearPlayerShots() {
+		for (let i = this.player_shots.length - 1; i >= 0; i--)
+			this.player_shots[i].remove();
 	}
 
 	__clearGauges() {
@@ -203,6 +209,7 @@ class MainUI {
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
 	get toxicClouds() 			{ return document.getElementsByClassName("toxic-cloud"); }
 	get bellThrowMarks()		{ return document.getElementsByClassName("bell-throw-aoe"); }
+	get player_shots() 			{ return document.getElementsByClassName("shot"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
 	get hud() 					{ return document.querySelector(".hud"); }
 }
