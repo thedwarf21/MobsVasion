@@ -89,7 +89,7 @@ class ShopPopup extends AbstractPopup {
     navigateLeft() {
         const active_item_position = this.__getLineAndColumnNumbers();
         const new_col = active_item_position.column - 1;
-        const new_active_ident = `${new_col}_${active_item_position.line}`;
+        const new_active_ident = `${new_col}_${0}`;
         
         if (new_col === 0)
             this.switchToMoneyShop();
@@ -100,7 +100,7 @@ class ShopPopup extends AbstractPopup {
     navigateRight() {
         const active_item_position = this.__getLineAndColumnNumbers();
         const new_col = active_item_position.column + 1;
-        const new_active_ident = `${new_col}_${active_item_position.line}`;
+        const new_active_ident = `${new_col}_${0}`;
         
         if (new_col === 1)
             this.switchToTrainingRoom();
