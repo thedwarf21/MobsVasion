@@ -159,35 +159,35 @@ const SOUND_LIB = {
 	level_up:   	{ file: "level-up.mp3" },
 	spit_prepare:   { 
 		file: "spit-prepare.mp3",
-		players_number: 3 
+		players_number: 10 
 	},
 	spit:   { 
 		file: "spit.mp3",
-		players_number: 3 
+		players_number: 5
 	},
 	tackle_prepare:   { 
 		file: "tackle-prepare.mp3",
-		players_number: 3 
+		players_number: 10 
 	},
 	tackle:   { 
 		file: "tackle.mp3",
-		players_number: 3 
+		players_number: 5 
 	},
 	throw_prepare:   { 
 		file: "throw-prepare.mp3",
-		players_number: 3 
+		players_number: 6 
 	},
 	throw:   { 
 		file: "throw.mp3",
-		players_number: 3 
+		players_number: 6 
 	},
 	monster_falldown:   { 
 		file: "falldown.mp3",
-		players_number: 3 
+		players_number: 6 
 	},
 	kill: 			{ 
 		file: "dying-monster.mp3",
-		players_number: 3
+		players_number: 6
 	},
 	portal: { 
 		file: "portal.mp3",
