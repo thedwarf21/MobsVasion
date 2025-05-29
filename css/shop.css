@@ -84,7 +84,8 @@
     margin: 1vh;
     width: calc(60% - 2vh);
     border-radius: 1vh;
-    background: rgba(255 255 255 / 0.2);
+    background: rgba(255 255 255 / 0.3);
+    backdrop-filter: blur(0.5vh);
 }
 
 .shop-item-desc {

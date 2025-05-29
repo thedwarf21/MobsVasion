@@ -10,7 +10,7 @@ const CHARACTER_SPEED = 4;
 const CHARACTER_MAX_LIFE = 50;
 
 const SHOT_VELOCITY = 30;
-const SHOT_SIZE = 5;
+const SHOT_SIZE = 6;
 const CLIP_SIZE = 9;
 const WOUND_SHOCK_TIME = 500;
 
