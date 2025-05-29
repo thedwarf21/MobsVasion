@@ -47,6 +47,11 @@
 	width: 5vh;
 }
 .monster.spitter > .spinning-image { background-image: url("../images/zombie_spitter.png"); }
+.monster.spitter.swell { animation: swell 1s ease-in; }
+@keyframes swell {
+	from { transform: scale(1); }
+	to { transform: scale(1.25); }
+}
 
 .monster.tackler {
 	height: 7.5vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */

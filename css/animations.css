@@ -28,7 +28,7 @@
 /* Animation d'AOE d'un lancer en cloche de golgoth */
 .impact-effect {
 	background: radial-gradient(circle at center,transparent 32%, #ffffffb0 52%, transparent 72%);
-	animation: impact-effect 1s ease-out infinite;
+	animation: impact-effect 1s ease-out;
 }
 @keyframes impact-effect {
 	0% { transform: scale(0.1); }
