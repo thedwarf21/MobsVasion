@@ -77,52 +77,10 @@ class TutorialHelper {
 
             if (monster_type.appear_from_wave === MainController.scope.game.wave_number) {
                 switch (key) {
-                    case "voracious":
-                        TutorialHelper.__popupsSequence(
-                            [{
-                                message_lines: ["Ces zombie sont appelés des <i>Voraces</i>.", 
-                                                "Ils ne feront que te foncer dessus, alors tant que tu gardes tes distances, tout devrait bien se passer."],
-                                face: FRIEND_FACES.happy
-                            }], ()=> { MainController.scope.controls.paused = false; }
-                        );
-                        return;
-
-                    case "spitter":
-                        TutorialHelper.__popupsSequence(
-                            [{
-                                message_lines: ["Ces zombies miniatures sont des <i>Cracheurs</i>.", 
-                                                "Méfie-toi d'eux. Non seulement ils attaquent à distance, mais il laissent s'échapper un nuage toxique en mourant."],
-                                face: FRIEND_FACES.angry
-                            }, {
-                                message_lines: ["Je me demande si tu ne peux pas les amener à tirer sur les autres zombies, en te plaçant stratégiquement."],
-                                face: FRIEND_FACES.worried
-                            }], ()=> { MainController.scope.controls.paused = false; }
-                        );
-                        return;
-
-                    case "tackler":
-                        TutorialHelper.__popupsSequence(
-                            [{
-                                message_lines: ["Fais très attention à ces <i>Tacleurs</i> !", 
-                                                "Ils sont incroyablement rapides, et te fonceront dessus d'un coup, lorsqu'ils se seront suffisamment approchés."],
-                                face: FRIEND_FACES.worried
-                            }], ()=> { MainController.scope.controls.paused = false; }
-                        );
-                        return;
-
-                    case "golgoth":
-                        TutorialHelper.__popupsSequence(
-                            [{
-                                message_lines: ["Oh non ! Un <i>Golgoth</i> !", 
-                                                "Ces abominations sont très lentes, mais aussi incroyablement fortes et résistantes."],
-                                face: FRIEND_FACES.disappointed
-                            }, {
-                                message_lines: ["J'ai même entendu dire qu'il leur arrivait d'utiliser d'autres zombies comme projectiles.", 
-                                                "Si le zombie ainsi projeté survit au vol plané, il sera dangereusement proche de toi."],
-                                face: FRIEND_FACES.worried
-                            }], ()=> { MainController.scope.controls.paused = false; }
-                        );
-                        return;
+                    case "voracious":   return TutorialHelper.__showVoraciousTuto();
+                    case "spitter":     return TutorialHelper.__showSpitterTuto();
+                    case "tackler":     return TutorialHelper.__showTacklerTuto();
+                    case "golgoth":     return TutorialHelper.__showGolgothTuto();
                 }
             }
         }
@@ -237,4 +195,133 @@ class TutorialHelper {
 		});
 		document.body.appendChild(MainController.report_popup.root_element);
 	}
+
+    static __showVoraciousTuto() {
+        TutorialHelper.__showSpecificMonsterTuto({
+            monster_name: "Vorace",
+            monster_class: MV_MonsterVoracious,
+            message: `
+                <p>Ces zombie sont appelés des <i>Voraces</i>.</p> 
+                <p>Ils ne feront que te foncer dessus, alors tant que tu gardes tes distances, tout devrait bien se passer.</p>`
+        });
+	}
+
+    static __showSpitterTuto() {
+        TutorialHelper.__showSpecificMonsterTuto({
+            monster_name: "Cracheur",
+            monster_class: MV_MonsterSpitter,
+            attack: {
+                prepareSound: JuiceHelper.prepareSpitting,
+                sound: JuiceHelper.spit,
+                duration: 1000,
+                interval: 1500
+            },
+            special_element: TutorialHelper.__getSpitterSpecial(),
+            message: `
+                <p>Ces zombies miniatures sont des <i>Cracheurs</i>.</p> 
+                <p>Méfie-toi d'eux. Non seulement ils attaquent à distance, mais il laissent s'échapper un nuage toxique en mourant.</p>
+                <p>Je me demande si tu ne peux pas les amener à tirer sur les autres zombies, en te plaçant stratégiquement.</p>`
+        });
+	}
+
+    static __getSpitterSpecial() {
+        const toxic_cloud = document.createElement("DIV");
+        toxic_cloud.classList.add("toxic-cloud");
+        toxic_cloud.style.position = "unset";
+        toxic_cloud.style.width = MainController.viewport.getCssValue(100);
+        toxic_cloud.style.height = MainController.viewport.getCssValue(100);
+        return toxic_cloud;
+    }
+
+    static __showTacklerTuto() {
+        TutorialHelper.__showSpecificMonsterTuto({
+            monster_name: "Tackleur",
+            monster_class: MV_MonsterTackler,
+            attack: {
+                prepareSound: JuiceHelper.prepareTackling,
+                sound: JuiceHelper.tackle,
+                duration: 800,
+                interval: 1300
+            },
+            message: `
+                <p>Fais très attention à ces <i>Tackleurs</i> !</p>
+                <p>Ils sont incroyablement rapides, et te fonceront dessus d'un coup, lorsqu'ils se seront suffisamment approchés.</p>`
+        });
+	}
+
+    static __showGolgothTuto() {
+        TutorialHelper.__showSpecificMonsterTuto({
+            monster_name: "Golgoth",
+            monster_class: MV_MonsterGolgoth,
+            attack: {
+                prepareSound: JuiceHelper.prepareThrowing,
+                sound: JuiceHelper.throw,
+                duration: 600,
+                interval: 2000
+            },
+            special_element: TutorialHelper.__getGolgothSpecial(),
+            message: `
+                <p>Les <i>Golgoths</i> sont très lents, mais aussi incroyablement forts et résistants.</p>
+                <p>J'ai même entendu dire qu'il leur arrivait d'utiliser d'autres zombies comme projectiles.</p>
+                <p>Ils mettent du temps à lancer en ligne droite, mais leurs lancers en cloche sont instantanés et occasionnent de lourds dégâts sur une large zone.</p>`
+        });
+	}
+
+    static __getGolgothSpecial() {
+        const aoe = document.createElement("DIV");
+        aoe.classList.add("bell-throw-aoe");
+        aoe.style.position = "unset";
+        aoe.style.width = MainController.viewport.getCssValue(270);
+        aoe.style.height = MainController.viewport.getCssValue(270);
+        return aoe;
+    }
+
+    static __showSpecificMonsterTuto(params) {
+        MainController.report_popup = new RS_Dialog("report_dialog", `Présentation du <b>${params.monster_name}</b>`, [], [], [], false, "tpl_monster_tutorial.html", function() {
+            const monster_viewer = MainController.report_popup.root_element.querySelector("#monster_view");
+            
+            let timer;
+            if (params.attack) {
+                const monster_attacking = new params.monster_class(MainController.viewport, 0, 0);
+                monster_attacking.root_element.style.position = "unset";
+
+                timer = setInterval(()=> {
+                    params.attack.prepareSound();
+                    monster_attacking.root_element.classList.add("attack-animation");
+                    setTimeout(()=> {
+                        params.attack.sound();
+                        monster_attacking.root_element.classList.remove("attack-animation");
+                    }, params.attack.duration);
+                }, params.attack.interval);
+                
+                monster_viewer.appendChild(monster_attacking.root_element);
+            } else {
+                const monster = new params.monster_class(MainController.viewport, 0, 0);
+                monster.root_element.style.position = "unset";
+                monster_viewer.appendChild(monster.root_element);
+            }
+            
+            if (params.special_element)
+                monster_viewer.appendChild(params.special_element);
+
+            const message_container = MainController.report_popup.root_element.querySelector("#message");
+            message_container.classList.add("tutorial");
+            message_container.innerHTML = params.message;
+
+            const close_button = MainController.report_popup.root_element.querySelector("#btn_close");
+            close_button.value = "Suite...";
+			close_button.addEventListener("click", function() {
+                if (params.special_element)
+                    params.special_element.remove();
+
+                if (params.attack)
+                    clearInterval(timer);
+
+                MainController.report_popup.closeModal();
+                MainController.report_popup = null;
+                MainController.scope.controls.paused = false;
+			});
+		});
+		document.body.appendChild(MainController.report_popup.root_element);
+    }
 }

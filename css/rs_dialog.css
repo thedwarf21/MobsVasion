@@ -56,10 +56,6 @@
   width: 100%;
   min-height: 3.8vh;
   border-bottom: 1px solid black;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
 
 /*** Bouton de fermeture de la boîte de dialogue ***/
@@ -85,13 +81,14 @@
   backdrop-filter: blur(0.5vh);
   color: white;
   text-shadow: 0.1vh 0.1vh black;
-  font-size: 2vh;
+  font-size: 2.5vh;
   border-radius: 0 0 5px 5px;
   
   position: relative;
   width: 100%;
   height: calc(100% - 3.8vh);
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Boutons d'action */
@@ -99,6 +96,9 @@
   padding: 2vh;
   display: flex;
   justify-content: space-around;
+  
+  position: relative;
+  z-index: 2;
 }
 .rs-btn-action { 
   width: 20vh;

@@ -77,3 +77,11 @@ input { cursor: pointer; }
 #message.tutorial {
     font-weight: normal;
 }
+#monster_view {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+
+    margin-top: 3vh;
+}
