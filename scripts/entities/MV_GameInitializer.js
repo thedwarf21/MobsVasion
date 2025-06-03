@@ -31,7 +31,8 @@ class MV_GameInitializer {
 				attacking_monsters: [],   	// { monster: MV_Monster, time: number }
 				flying_monsters: [], 		// { monster: MV_Monster, deltaX, deltaY, deltaAngle, frames, max_scale: number, onAnimationEnd: function }
 				keyboard_type: KeyTranslater.AZERTY,
-				showHitboxes: false
+				showHitboxes: false,
+				skip_tutorial: false
 			},
 			controls: {
 				upPressed: false,

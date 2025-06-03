@@ -134,6 +134,9 @@ class TutorialHelper {
                                 "Compte sur moi pour te soigner dans la limite de ce que j'aurai sous la main, si ça devait se produire."],
                 face: FRIEND_FACES.happy
             }], ()=> {
+                if (MainController.scope.game.skip_tutorial)
+                    return;
+
                 MainController.popups_stack.activePopup().switchToTrainingRoom();
                 setTimeout( TutorialHelper.__showTrainingRoomTutorial, 1500 );
             }
@@ -162,6 +165,9 @@ class TutorialHelper {
     }
 
     static __popupsSequence(dialogs, fn_on_sequence_end) {
+        if (MainController.scope.game.skip_tutorial)
+            return fn_on_sequence_end();
+
         const next_dialog = dialogs.shift();
         const message = TutorialHelper.__fromMessageLines(next_dialog.message_lines);
         TutorialHelper.__showPopup(message, next_dialog.face, ()=> {
@@ -192,9 +198,29 @@ class TutorialHelper {
                 MainController.report_popup = null;
                 fn_on_close();
 			});
+
+            TutorialHelper.__addSkipTutorialButton();
 		});
 		document.body.appendChild(MainController.report_popup.root_element);
 	}
+    
+    static __addSkipTutorialButton() {
+        const button = document.createElement("INPUT");
+        button.setAttribute("type", "button");
+        button.classList.add("modal-button");
+        button.value = "Passer >>";
+
+        button.addEventListener("click", function() {
+            RS_Confirm("<p>Le présent tutoriel ne vous sera présenté qu'une seule fois.</p><p>Souhaitez-vous réellement le passer ?</p>", 
+                "Passer l'intro et le tutoriel", "Bien sûr !", "Euuuuh...", function() {
+                    MainController.scope.game.skip_tutorial = true;
+                    MainController.report_popup.root_element.querySelector("#btn_close").dispatchEvent(new Event('click'));
+                }
+            );
+        })
+
+        MainController.report_popup.root_element.querySelector(".dialog-footer").prepend(button);
+    }
 
     static __showVoraciousTuto() {
         TutorialHelper.__showSpecificMonsterTuto({
