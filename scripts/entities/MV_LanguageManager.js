@@ -124,6 +124,189 @@ class MV_LanguageManager {
         gamepad_config_press_button_lib: {
             fr: "Appuyez sur un bouton",
             en: "Press a button"
+        },
+
+        tutorial_title: {
+            fr: "Introduction",
+            en: "Introduction"
+        },
+        tutorial_next: {
+            fr: "Suite...",
+            en: "Next..."
+        },
+        tutorial_skip: {
+            fr: "Passer",
+            en: "Skip"
+        },
+
+        tutorial_message_intro_0: {
+            fr: "<p>Hey, salut toi !!</p><p>C'est cool de croiser quelqu'un ici.</p>",
+            en: "<p>Hey, you !!</p><p>It's cool to run into someone around here.</p>"
+        },
+        tutorial_message_intro_1: {
+            fr: "<p>Quand j'y pense, il y avait bien longtemps que je n'avais croisé personne...</p>",
+            en: "<p>When I think about it, it's been a long time since I've met anyone...</p>"
+        },
+        tutorial_message_intro_2: {
+            fr: "<p>Peu importe...</p><p>Au fait, moi c'est Julie Péhainegis</p><p>Et toi, comment tu t'appelles ?</p>",
+            en: "<p>Never mind...</p><p>By the way, I'm Julia Peehenjay</p><p>What about you ? What's your name ?</p>"
+        },
+        tutorial_message_intro_3: {
+            fr: "<p>...chelou comme nom.</p><p>Bref. Passons.</p>",
+            en: "<p>...weird name.</p><p>Anyway. Let's move on.</p>"
+        },
+        tutorial_message_intro_4: {
+            fr: "<p>Comme tu le sais peut-être, la plupart des gens se sont transformés en zombies...</p><p>Et avant que tu ne demandes pourquoi, je n'en ai aucune idée.</p>",
+            en: "<p>As you may know, most people have turned into zombies...</p><p>And before you ask why, I have no idea.</p>"
+        },
+        tutorial_message_intro_5: {
+            fr: "<p>Tout ce que je sais, c'est qu'ils ont investi mon labo et l'ont entièrement saccagé.</p><p>Je vois que t'es armé...</p><p>Tu pourrais botter leurs fesses puantes, s'il te plaît ?</p>",
+            en: "<p>All I know is that they broke into my lab and completely trashed it.</p><p>I can see you're armed...</p><p>Will you kick their stinky butts, please ?</p>"
+        },
+        tutorial_message_intro_6: {
+            fr: "<p>Ce que tu y gagnes ?</p><p>Sauver une demoiselle en détresse, ça suffit pas ?</p>",
+            en: "<p>What you shall gain from it ?</p><p>Saving a damsel in distress isn't enough ?</p>"
+        },
+        tutorial_message_intro_7: {
+            fr: "<p>J'ai une idée: je pourrais t'aider.</p><p>Tu pourrais te réfugier dans mon labo, et je pourrais améliorer ton équipement.</p><p>C'est pas pour me vanter, mais je suis un véritable génie.</p>",
+            en: "<p>I have an idea: I could help you.</p><p>You could take refuge in my lab, and I could improve your equipment.</p><p>Not to brag, but I'm a real genius.</p>"
+        },
+        tutorial_message_intro_8: {
+            fr: "<p>Assez parlé !</p><p>Explose-moi ces abominations !</p>",
+            en: "<p>Enough talking !</p><p>Blast these abominations !</p>"
+        },
+
+        tutorial_message_controls_mobile_0: {
+            fr: `<p>Au fait, au cas où ça pourrait t'aider, j'ai lu quelque part que le <b>joysitck virtuel</b>, à gauche, permettait de se déplacer, tandis que les <b>boutons à droite</b> permettaient d'effectuer diverses actions :</p>
+                <p>Par exemple, celui affichant une <b>cible</b> permettrait de <b>tirer sur le monstre le plus proche</b>.</p>
+                <p>Par contre, je n'ai aucune idée de ce que ça signifie...</p>`,
+            en: `<p>By the way, in case it helps, I read somewhere that the <b>virtual joystick</b> on the left allows you to move, while the <b>buttons on the right</b> allow you to perform various actions:</p>
+                <p>For example, the one displaying a <b>target</b> is supposed to allow you to <b>shoot the nearest monster</b>.</p>
+                <p>However, I have no idea what that means...</p>`
+        },
+        tutorial_message_controls_mobile_1: {
+            fr: `<p>En outre, l'ouvrage faisait également référence à un bouton affichant un <b>personnage élancé</b> et permettant d'effectuer une <b>maneuvre d'esquive</b>.</p>
+                <p>Il y était aussi question d'un autre bouton, situé juste en-dessous pour <b>recharger l'arme</b>, et d'un bouton <b>pause</b> permettant d'accéder aux paramètres.</p>
+                <p>J'espère que tu comprends ce charabia, parce que moi non...</p>`,
+            en: `<p>Additionally, the book also referred to a button displaying a <b>dashing character</b> and allowing for a <b>dodge maneuver</b> to be performed.</p>
+                <p>There was also written of another button, located just below to <b>reload the weapon</b>, and a <b>pause</b> button allowing access to the settings.</p>
+                <p>I hope you understand this gibberish, because I don't...</p>`
+        },
+
+        tutorial_message_controls_0: {
+            fr: `<p>Au fait, au cas où ça pourrait t'aider, j'ai lu quelque part qu'il était possible de se déplacer avec les touches <b>Z</b>, <b>Q</b>, <b>S</b> et <b>D</b> du clavier.</p>
+                <p>Il parraît même que la <b>barre espace</b> permet d'effectuer un bond d'esquive en avant.</p>
+                <p>Par contre, je n'ai aucune idée de ce que ça signifie...</p>`,
+            en: `<p>By the way, in case it helps, I read somewhere that you can move with the <b>Z</b>, <b>Q</b>, <b>S</b> and <b>D</b> keys on the keyboard.</p>
+                <p>It even seems that the <b>space bar</b> allows you to perform a forward dodge jump.</p>
+                <p>However, I have no idea what that means...</p>`
+        },
+        tutorial_message_controls_1: {
+            fr: `<p>L'article dans lequel j'ai lu tout ça expliquait aussi que <b>la souris</b> permettait de viser, de tirer avec le <b>bouton gauche</b>, et de recharger avec le <b>bouton droit</b>.</p>
+                <p>Il expliquait également que la touche <b>P</b> permettait de mettre en pause et d'afficher les paramètres, et qu'il était possible de choisir ton type de clavier, dans ces paramètres.</p>`,
+            en: `<p>The article I read all this in also explained that <b>the mouse</b> allowed you to aim, shoot with the <b>left button</b>, and reload with the <b>right button</b>.</p>
+                <p>It also explained that the <b>P</b> key was used to pause and display settings.</p>
+                <p>...and that it was possible to choose your keyboard type in these settings.</p>`
+        },
+        tutorial_message_controls_2: {
+            fr: `<p>Si je me rappelle bien, il y était également fait mention de la possibilité de brancher une <b>manette de jeu</b>, puis de se <b>laisser guider</b>.</p>
+                <p>J'espère que tu comprends ce charabia, parce que moi non...</p>`,
+            en: `<p>If I remember well, it also mentioned the possibility to connect a <b>gamepad</b> and then <b>follow the instructions</b>.</p>
+                <p>I hope you understand this gibberish, because I don't...</p>`
+        },
+
+        tutorial_message_shop_0: {
+            fr: `<p>Merci de m'avoir aidée à reprendre le contrôle de mon labo.</p>
+                <p>Je te présente ton nouveau chez toi... ou plutôt, notre chez nous.</p>`,
+            en: `<p>Thank you for helping me regain control of my lab.</p>
+                <p>Here's your new home... or rather, our home.</p>`
+        },
+        tutorial_message_shop_money_0: {
+            fr: `<p>Ici tu trouveras de quoi te retaurer, entre deux sorties. Mais ce n'est pas gratuit, hein...</p>
+                <p>Et comme promis, je pourrai améliorer ton équipement, si tu me ramène de quoi travailler.</p>`,
+            en: `<p>Here you'll find something to eat between outings. But it's not free, eh...</p>
+                <p>And as promised, I can upgrade your gear if you bring me something to work with.</p>`
+        },
+        tutorial_message_shop_money_1: {
+            fr: `<p>J'avais bricolé un système de téléportation d'urgence permettant de revenir ici instantanément en cas de problème.</p>
+                <p>Je me demande s'il fonctionne toujours...</p>`,
+            en: `<p>I had tinkered with an emergency teleportation system that would allow me to return here instantly in case of trouble.</p>
+                <p>I wonder if it still works...</p>`
+        },
+        tutorial_message_shop_money_2: {
+            fr: `<p>Par chance, il semble encore en état de marche. Je vais te raccorder au système de contrôle, et paramétrer la machine pour qu'elle te ramène automatiquement, en cas de problème.</p>
+                <p>Compte sur moi pour te soigner dans la limite de ce que j'aurai sous la main, si ça devait se produire.</p>`,
+            en: `<p>Luckily, it still seems to be in working order. I'll hook you up to the control system and set the machine to automatically bring you back if anything goes wrong.</p>
+                <p>Count on me to heal you in my (ou rather, your) ressources limits, should that happen.</p>`
+        },
+
+        tutorial_message_shop_taining_0: {
+            fr: "<p>Ici, c'est la salle d'entrainement.</p><p>Tu peux y développer tes compétences physiques.</p>",
+            en: "<p>This is the training room.</p><p>You can develop your physical skills here.</p>"
+        },
+        tutorial_message_shop_taining_1: {
+            fr: `<p>J'ai lu dans un livre sur le sujet, qu'il était nécessaire de s'entrainer concrètement en amont, pour que l'entrainement en salle soit efficace.</p>
+                <p>D'après ce livre, tuer des monstres permet de <b>gagner de l'expérience</b>, qui permet ensuite de <b>gagner des niveaux</b>.</p>`,
+            en: `<p>I read in a book that it was necessary to train concretely beforehand, for the training in the room to be effective.</p>
+                <p>According to this book, killing monsters allows you to <b>gain experience</b>, which then allows you to <b>gain levels</b>.</p>`
+        },
+        tutorial_message_shop_taining_2: {
+            fr: `<p>Chaque nouveau niveau, te permet d'obtenir des <b>points de compétences</b> utilisables ici pour améliorer tes caractéristiques.</p>
+                <p>D'ailleurs, j'ai l'impression que tu es mûr pour utiliser la salle, après ce premier combat.</p>`,
+            en: `<p>Each new level allows you to obtain <b>skill points</b> that can be used here to improve your characteristics.</p>
+                <p>Besides, it sounds like you're ready to use the room, after this first fight.</p>`
+        },
+        tutorial_message_shop_taining_3: {
+            fr: "<p>Voilà, tu sais tout. Je te laisse. À très vite.</p>",
+            en: "<p>There you have it, I told you everything I know. See you soon.</p>"
+        },
+
+        tutorial_voracious_title: {
+            fr: "Présentation du <b>Vorace</b>",
+            en: "Introducing <b>Voracious</b>"
+        },
+        tutorial_voracious_message: {
+            fr: `<p>Ces zombie sont appelés des <i>Voraces</i>.</p> 
+                <p>Ils ne feront que te foncer dessus, alors tant que tu gardes tes distances, tout devrait bien se passer.</p>`,
+            en: `<p>These zombies are called <i>Voracious</i>.</p> 
+                <p>They'll just charge at you, so as long as you keep your distance, you should be fine.</p>`
+        },
+
+        tutorial_spitter_title: {
+            fr: "Présentation du <b>Cracheur</b>",
+            en: "Introducing <b>Spitter</b>"
+        },
+        tutorial_spitter_message: {
+            fr: `<p>Ces zombies miniatures sont des <i>Cracheurs</i>.</p> 
+                <p>Méfie-toi d'eux. Non seulement ils attaquent à distance, mais il laissent s'échapper un nuage toxique en mourant.</p>
+                <p>Je me demande si tu ne peux pas les amener à tirer sur les autres zombies, en te plaçant stratégiquement.</p>`,
+            en: `<p>These miniature zombies are <i>Spitters</i>.</p>
+                <p>Beware of them. Not only do they attack from a distance, but they also release a toxic cloud when they die.</p>
+                <p>I wonder if you can get them to shoot other zombies by positioning yourself strategically.</p>`
+        },
+
+        tutorial_tackler_title: {
+            fr: "Présentation du <b>Tacleur</b>",
+            en: "Introducing <b>Tackler</b>"
+        },
+        tutorial_tackler_message: {
+            fr: `<p>Fais très attention à ces <i>Tackleurs</i> !</p>
+                <p>Ils sont incroyablement rapides, et te fonceront dessus d'un coup, lorsqu'ils se seront suffisamment approchés.</p>`,
+            en: `<p>Be very careful of those <i>Tacklers</i> !</p>
+                <p>They're incredibly fast, and will charge you in one go when they get close enough.</p>`
+        },
+
+        tutorial_golgoth_title: {
+            fr: "Présentation du <b>Golgoth</b>",
+            en: "Introducing <b>Golgoth</b>"
+        },
+        tutorial_golgoth_message: {
+            fr: `<p>Les <i>Golgoths</i> sont très lents, mais aussi incroyablement forts et résistants.</p>
+                <p>J'ai même entendu dire qu'il leur arrivait d'utiliser d'autres zombies comme projectiles.</p>
+                <p>Ils mettent du temps à lancer en ligne droite, mais leurs lancers en cloche sont instantanés et occasionnent de lourds dégâts sur une large zone.</p>`,
+            en: `<p>Golgoths are very slow, but also incredibly strong and resilient.</p>
+                <p>I've even heard of them sometimes using other zombies as projectiles.</p>
+                <p>They take a while to perform a straight throw, but their aerial throws are instantaneous and deal heavy damage over a wide area.</p>`
         }
     }
 }
