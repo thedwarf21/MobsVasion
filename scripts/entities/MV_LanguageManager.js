@@ -51,6 +51,7 @@ class MV_LanguageManager {
             fr: "Nouvelle partie",
             en: "New game"
         },
+
         skip_tuto_confirm: {
             fr: "<p>Le présent tutoriel ne vous sera présenté qu'une seule fois.</p><p>Souhaitez-vous réellement le passer ?</p>",
             en: "<p>This tutorial will only be shown once.</p><p>Are you really sure you want to skip it ?</p>"
@@ -66,6 +67,63 @@ class MV_LanguageManager {
         skip_tuto_no: {
             fr: "Euuuuh...",
             en: "Uuuuuh..."
+        },
+
+        gamepad_config_title: {
+            fr: "Configuration de la manette",
+            en: "Gamepad configuration"
+        },
+        gamepad_config_close: {
+            fr: "Fermer",
+            en: "Close"
+        },
+        gamepad_config_pause: {
+            fr: "Pause",
+            en: "Pause"
+        },
+        gamepad_config_auto_aim: {
+            fr: "Tir visée auto",
+            en: "Auto aim shot"
+        },
+        gamepad_config_rush: {
+            fr: "S'élancer",
+            en: "Rush"
+        },
+        gamepad_config_reload: {
+            fr: "Recharger",
+            en: "Reload"
+        },
+        gamepad_config_up: {
+            fr: "Menu : haut",
+            en: "Menu : up"
+        },
+        gamepad_config_down: {
+            fr: "Menu : bas",
+            en: "Menu : down"
+        },
+        gamepad_config_left: {
+            fr: "Menu : gauche",
+            en: "Menu : left"
+        },
+        gamepad_config_right: {
+            fr: "Menu : droite",
+            en: "Menu : right"
+        },
+        gamepad_config_validate: {
+            fr: "Menu : valider",
+            en: "Menu : validate"
+        },
+        gamepad_config_abort: {
+            fr: "Menu : annuler",
+            en: "Menu : abort"
+        },
+        gamepad_config_mapped_lib: {
+            fr: "Bouton",
+            en: "Button"
+        },
+        gamepad_config_press_button_lib: {
+            fr: "Appuyez sur un bouton",
+            en: "Press a button"
         }
     }
 }

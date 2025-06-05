@@ -468,19 +468,21 @@ class GamepadJoystick {
  * @class      GamepadConfigUI
  */
 class GamepadConfigUI {
-	constructor(game_controls_mapper, onPopupClose) {
+	constructor(game_controls_mapper, language_manager, onPopupClose) {
 		this.controls_mapper = game_controls_mapper;
+		this.language_manager = language_manager;
 		this.show(onPopupClose);
 	}
 
 	show(onPopupClose) {
-		this.popup = new RS_Dialog("gamepad_config", "Configuration de la manette", [], [], [], false, 
-								  "tpl_gamepad_config.html", ()=> {
+		this.popup = new RS_Dialog(this.language_manager, "gamepad_config_title", "tpl_gamepad_config.html", ()=> {
 			const container = this.popup.root_element.querySelector("#controls-gui-container");
 			for (let i=0; i<this.controls_mapper.controls.length; i++) {
 				container.appendChild(this.__getConfigInterfaceItem(i));
 			}
-			this.popup.root_element.querySelector("#btn_close").addEventListener("click", ()=> { this.closeModal(onPopupClose) });
+			const btn_close = this.popup.root_element.querySelector("#btn_close");
+			btn_close.value = this.language_manager.getText("gamepad_config_close");
+			btn_close.addEventListener("click", ()=> { this.closeModal(onPopupClose) });
 			document.body.appendChild(this.popup.root_element);
 		});
 	}
@@ -509,7 +511,7 @@ class GamepadConfigUI {
 	__getItemNameDiv(name) {
 		const control_name = document.createElement("DIV");
 		control_name.classList.add("control-name");
-		control_name.innerHTML = name;
+		control_name.innerHTML = this.language_manager.getText(name);
 		return control_name;
 	}
 
@@ -517,16 +519,16 @@ class GamepadConfigUI {
 		const button_mapped = document.createElement("DIV");
 		button_mapped.classList.add("button-mapped");
 		button_mapped.innerHTML = buttonIndex 
-								? "Bouton " + buttonIndex 
+								? this.language_manager.getText("gamepad_config_mapped_lib") + " " + buttonIndex 
 								: "-";
 		return button_mapped;
 	}
 
 	__itemClicked(button_mapped, control_index) {
-		button_mapped.innerHTML = "Appuyez sur un bouton";
+		button_mapped.innerHTML = this.language_manager.getText("gamepad_config_press_button_lib");
 		this.__captureButtonPressed((button_index)=> {
 			this.controls_mapper.setControlMapping(control_index, button_index);
-			button_mapped.innerHTML = "Bouton " + button_index;
+			button_mapped.innerHTML = this.language_manager.getText("gamepad_config_mapped_lib") + " " + button_index;
 		});
 	}
 

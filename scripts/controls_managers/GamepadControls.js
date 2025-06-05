@@ -6,31 +6,31 @@ class GamepadControls {
 
 			const controls = controller.scope.controls;
 			const gamepad = new GamepadGenericAdapter();
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "Pause", ()=> { controller.togglePause(); });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.primary_auto_fire, "Tir visée auto", 
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "gamepad_config_pause", ()=> { controller.togglePause(); });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.primary_auto_fire, "gamepad_config_auto_aim", 
 										()=> { GamepadControls.__autoAim(); }, 
 										()=> { controls.firing_primary = false; }, true);
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "Tir secondaire", 
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "gamepad_config_rush", 
 										()=> { controls.firing_secondary = true; }, 
 										()=> { controls.firing_secondary = false; }, true);
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "Recharger", 
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.reload, "gamepad_config_reload", 
 										()=> { controls.reloading = true; },
 										()=> { controls.reloading = false; });
 
 			const menu_controls = controls.gamepad_menu_nav;
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_up, 		"Menu : haut", 		()=> { menu_controls.up = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_down, 	"Menu : bas", 		()=> { menu_controls.down = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_left, 	"Menu : gauche", 	()=> { menu_controls.left = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_right, 	"Menu : droite", 	()=> { menu_controls.right = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_validate, "Menu : valider", 	()=> { menu_controls.validate = true; });
-			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_cancel, 	"Menu : annuler", 	()=> { menu_controls.cancel = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_up, 		"gamepad_config_up", 		()=> { menu_controls.up = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_down, 	"gamepad_config_down", 		()=> { menu_controls.down = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_left, 	"gamepad_config_left", 		()=> { menu_controls.left = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_right, 	"gamepad_config_right", 	()=> { menu_controls.right = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_validate, "gamepad_config_validate", 	()=> { menu_controls.validate = true; });
+			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.menu_cancel, 	"gamepad_config_abort", 	()=> { menu_controls.cancel = true; });
 			controller.timer.gamepad_mapper = gamepad;
 			
 			const was_paused = controls.paused;
 			controls.paused = true;
-			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, ()=> { controls.paused = was_paused; });
+			controller.scope.gamepadControlsUI = new GamepadConfigUI(gamepad, controller.language_manager, ()=> { controls.paused = was_paused; });
 
-			const active_popup = MainController.popups_stack.activePopup();
+			const active_popup = controller.popups_stack.activePopup();
 			if (active_popup)
 				active_popup.highlightActiveItem();
 		});
