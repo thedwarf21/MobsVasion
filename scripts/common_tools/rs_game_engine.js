@@ -481,7 +481,7 @@ class GamepadConfigUI {
 				container.appendChild(this.__getConfigInterfaceItem(i));
 			}
 			const btn_close = this.popup.root_element.querySelector("#btn_close");
-			btn_close.value = this.language_manager.getText("gamepad_config_close");
+			btn_close.value = this.language_manager.getText("popup_close");
 			btn_close.addEventListener("click", ()=> { this.closeModal(onPopupClose) });
 			document.body.appendChild(this.popup.root_element);
 		});

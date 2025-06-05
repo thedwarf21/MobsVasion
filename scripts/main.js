@@ -123,16 +123,16 @@ const FRIEND_FACES = {
 
 const NPC_RANDOM_DIALOGS = {
 	victory: [
-		"Bravo !<br/>Tu as encore fait de l'excellent travail.<br/>Continue comme ça.",
-		"Ces monstres n'avaient aucune chance face à toi.",
-		"Voilà qui est fait.<br/>Rien de tel qu'un peu de ménage pour y voir clair.",
-		"Exterminer ces brutes sanguinaires semble facile, quand on te voit faire."
+		"wave_report_victory_0",
+		"wave_report_victory_1",
+		"wave_report_victory_2",
+		"wave_report_victory_3"
 	],
 	defeat: [
-		"Ils étaient trop forts pour toi.<br/>Je vais t'aider à reprendre des forces.",
-		"J'espère que tu vas survivre à tes blessures...<br/>...mais si tu ne survis pas, c'est pas de ma faute !",
-		"Ma foi, ça à l'air douloureux...",
-		"À mon tour de me rendre utile...<br/>Tu as mal quand j'appuies là ?<br/>Aïe ! Me tapes pas, j'essaies de t'aider !"
+		"wave_report_defeat_0",
+		"wave_report_defeat_1",
+		"wave_report_defeat_2",
+		"wave_report_defeat_3"
 	]
 }
 

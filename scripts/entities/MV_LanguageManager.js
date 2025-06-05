@@ -31,6 +31,11 @@ class MV_LanguageManager {
     }
 
     TEXTS = {
+        popup_close: {
+            fr: "Fermer",
+            en: "Close"
+        },
+
         load_popup_confirm: {
             fr: `<p>Nous avons trouvé une sauvegarde.</p>
 				<p>Vous pouvez la charger, ou commencer une nouvelle partie.</p>
@@ -72,10 +77,6 @@ class MV_LanguageManager {
         gamepad_config_title: {
             fr: "Configuration de la manette",
             en: "Gamepad configuration"
-        },
-        gamepad_config_close: {
-            fr: "Fermer",
-            en: "Close"
         },
         gamepad_config_pause: {
             fr: "Pause",
@@ -307,6 +308,43 @@ class MV_LanguageManager {
             en: `<p>Golgoths are very slow, but also incredibly strong and resilient.</p>
                 <p>I've even heard of them sometimes using other zombies as projectiles.</p>
                 <p>They take a while to perform a straight throw, but their aerial throws are instantaneous and deal heavy damage over a wide area.</p>`
+        },
+
+        wave_report_title: {
+            fr: "La bataille est terminée...",
+            en: "The battle is over..."
+        },
+        wave_report_victory_0: {
+            fr: "Bravo !<br/>Tu as encore fait de l'excellent travail.<br/>Continue comme ça.",
+            en: "Well done!<br/>You did an excellent job again.<br/>Keep it up."
+        },
+        wave_report_victory_1: {
+            fr: "Ces monstres n'avaient aucune chance face à toi.",
+            en: "Those monsters didn't stand a chance against you."
+        },
+        wave_report_victory_2: {
+            fr: "Voilà qui est fait.<br/>Rien de tel qu'un peu de ménage pour y voir clair.",
+            en: "That's it.<br/>Nothing like a little cleaning to clear things up."
+        },
+        wave_report_victory_3: {
+            fr: "Exterminer ces brutes sanguinaires semble facile, quand on te voit faire.",
+            en: "Exterminating these bloodthirsty brutes seems easy when you see you do it."
+        },
+        wave_report_defeat_0: {
+            fr: "Ils étaient trop forts pour toi.<br/>Je vais t'aider à reprendre des forces.",
+            en: "They were too strong for you.<br/>I will help you regain your strength."
+        },
+        wave_report_defeat_1: {
+            fr: "J'espère que tu vas survivre à tes blessures...<br/>...mais si tu ne survis pas, c'est pas de ma faute !",
+            en: "I hope you survive your injuries...<br/>...but if you don't, it's not my fault !"
+        },
+        wave_report_defeat_2: {
+            fr: "Ma foi, ça à l'air douloureux...",
+            en: "Well, that looks painful..."
+        },
+        wave_report_defeat_3: {
+            fr: "À mon tour de me rendre utile...<br/>Tu as mal quand j'appuies là ?<br/>Aïe ! Me tapes pas, j'essaies de t'aider !",
+            en: "My turn to be useful...<br/>Does it hurt when I press there ?<br/>Ouch ! Don't hit me, I'm trying to help you !"
         }
     }
 }
