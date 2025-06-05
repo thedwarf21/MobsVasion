@@ -114,7 +114,7 @@ class TutorialHelper {
                 if (MainController.scope.game.skip_tutorial)
                     return;
 
-                setTimeout( MainController.popups_stack.activePopup().switchToTrainingRoom, 1000 );
+                MainController.popups_stack.activePopup().switchToTrainingRoom();
                 setTimeout( TutorialHelper.__showTrainingRoomTutorial, 1500 );
             }
         );
