@@ -273,7 +273,7 @@ class MainController {
 	static __showWaveNumber() {
 		const wave_number_display = document.createElement("DIV");
 		wave_number_display.classList.add("wave-level");
-		wave_number_display.innerHTML = `Vague ${MainController.scope.game.wave_number}`;
+		wave_number_display.innerHTML = MainController.language_manager.getText("shop_start_wave");
 
 		MainController.UI.addToGameWindow(wave_number_display);
 		wave_number_display.style.opacity = 0.8;

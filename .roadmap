@@ -20,11 +20,11 @@ V   Tâche terminée
     V   Prise en charge dans la GamepadConfigUI
     V   Prise en charge dans l'intro et le Tutoriel
     V   Prise en charge dans le rapport de fin de vague
+    V   Prise en charge dans le bandeau de début de vague
     X   Prise en charge dans la popup du magasin
         >   Titre et libellés de boutons standards
         _   Articles de soin
         _   Autres articles du magasin
-    _   Prise en charge dans le bandeau de début de vague
     X   Prise en charge dans la popup des paramètres
         >   Titre et libellés des boutons standards
         >   Libellés des divers paramètres
