@@ -1,31 +1,31 @@
 <div class="dialog-body">
 
 	<div class="modal-line">
-		<div class="pref-title"><b>Musique:</b></div>
+		<div class="pref-title" id="music_on_lbl"><b>Musique:</b></div>
 		<input type="checkbox" class="pref-value" id="music_on" nav-ident="0_0" />
 		<!-- Attribut "checked" synchronisé à MainController.audio_manger.sound_settings.music_on -->
 	</div>
 
 	<div class="modal-line">
-		<div class="pref-title"><b>Volume musique:</b></div>
+		<div class="pref-title" id="music_volume_lbl"><b>Volume musique:</b></div>
 		<input type="range" class="pref-value" id="music_volume" min="0.05" max="1" step="0.05" nav-ident="0_1" />
 		<!-- Attribut "value" synchronisé à MainController.audio_manger.sound_settings.music_volume -->
 	</div>
 
 	<div class="modal-line">
-		<div class="pref-title"><b>Effets sonores:</b></div>
+		<div class="pref-title" id="sound_fx_on_lbl"><b>Effets sonores:</b></div>
 		<input type="checkbox" class="pref-value" id="sound_fx_on" nav-ident="0_2" />
 		<!-- Attribut "checked" synchronisé à MainController.audio_manger.sound_settings.sound_fx_on -->
 	</div>
 
 	<div class="modal-line">
-		<div class="pref-title"><b>Volume effets sonores:</b></div>
+		<div class="pref-title" id="sound_fx_volume_lbl"><b>Volume effets sonores:</b></div>
 		<input type="range" class="pref-value" id="sound_fx_volume" min="0.05" max="1" step="0.05" nav-ident="0_3" />
 		<!-- Attribut "value" synchronisé à MainController.audio_manger.sound_settings.sound_fx_volume -->
 	</div>
 
 	<div class="modal-line">
-		<div class="pref-title"><b>Type de clavier:</b></div>
+		<div class="pref-title" id="keyboard_type_lbl"><b>Type de clavier:</b></div>
 		<rs-selector class="pref-value" id="keyboard_type" value="MainController.scope.game.keyboard_type" 
 					 onchange="MainController.scope.game.keyboard_type = this.selected_value" nav-ident="0_4">
 			<option value="AZERTY" infos="z q s d">AZERTY</option>
@@ -36,7 +36,7 @@
 	</div>
 
 	<div class="modal-line">
-		<div class="pref-title"><b>Afficher les hitbox:</b></div>
+		<div class="pref-title" id="show_hitboxes_lbl"><b>Afficher les hitbox:</b></div>
 		<input type="checkbox" class="pref-value" id="show_hitboxes" nav-ident="0_5" />
 		<!-- Attribut "checked" synchronisé à MainController.scope.game.showHitboxes -->
 	</div>

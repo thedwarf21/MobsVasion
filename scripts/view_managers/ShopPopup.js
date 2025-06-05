@@ -7,8 +7,11 @@ class ShopPopup extends AbstractPopup {
     }
 
     show(onPopupOpened) {
-        this.rs_dialog_instance = new RS_Dialog("shop_dialog", "Pense à faire le plein, avant d'y retourner", [], [], [], false, "tpl_shop.html", ()=> {  
-            
+        this.rs_dialog_instance = new RS_Dialog(MainController.language_manager, "shop_title", "tpl_shop.html", ()=> {
+            setTranslatedContent(MainController.language_manager, this.__querySelector("#money_selector"), "shop_money_button", "innerHTML");
+            setTranslatedContent(MainController.language_manager, this.__querySelector("#knowledge_selector"), "shop_knowledge_button", "innerHTML");
+            setTranslatedContent(MainController.language_manager, this.__querySelector("#btn_close"), "shop_start_wave", "value");
+
             const shop_items_container = this.__querySelector("#items-container"); 
             MainController.shop_manager.setShopItemsContainer( shop_items_container );
 
@@ -20,8 +23,6 @@ class ShopPopup extends AbstractPopup {
 
             this.__initMoneyDisplay();
             this.__initKnowledgeDisplay();
-
-            this.__querySelector("#btn_close").value = `Vague ${MainController.scope.game.wave_number}`;
 
             if (onPopupOpened)
                 onPopupOpened();

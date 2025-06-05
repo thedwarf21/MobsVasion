@@ -345,6 +345,56 @@ class MV_LanguageManager {
         wave_report_defeat_3: {
             fr: "À mon tour de me rendre utile...<br/>Tu as mal quand j'appuies là ?<br/>Aïe ! Me tapes pas, j'essaies de t'aider !",
             en: "My turn to be useful...<br/>Does it hurt when I press there ?<br/>Ouch ! Don't hit me, I'm trying to help you !"
+        },
+
+        shop_title: {
+            fr: "Pense à faire le plein, avant d'y retourner",
+            en: "Remember to fill up before going back"
+        },
+        shop_money_button: {
+            fr: "Ravitaillement",
+            en: "Refueling"
+        },
+        shop_knowledge_button: {
+            fr: "Salle d'entrainement",
+            en: "Training room"
+        },
+        shop_start_wave: {
+            fr: `Vague ${MainController.scope.game.wave_number}`,
+            en: `Wave ${MainController.scope.game.wave_number}`
+        },
+
+        params_title: {
+            fr: "Paramètres utilisateur",
+            en: "User settings"
+        },
+        params_music_on_lbl: {
+            fr: "<b>Musique:</b>",
+            en: "<b>Music:</b>"
+        },
+        params_music_volume_lbl: {
+            fr: "<b>Volume musique:</b>",
+            en: "<b>Music volume:</b>"
+        },
+        params_sound_fx_on_lbl: {
+            fr: "<b>Effets sonores:</b>",
+            en: "<b>Sound FX:</b>"
+        },
+        params_sound_fx_volume_lbl: {
+            fr: "<b>Volume effets sonores:</b>",
+            en: "<b>Sound FX volume:</b>"
+        },
+        params_keyboard_type_lbl: {
+            fr: "<b>Type de clavier:</b>",
+            en: "<b>Keyboard type:</b>"
+        },
+        params_show_hitboxes_lbl: {
+            fr: "<b>Afficher les hitbox:</b>",
+            en: "<b>Display hitboxes:</b>"
+        },
+        params_gamepad_config: {
+            fr: "Paramétrer la manette",
+            en: "Gamepad configuration"
         }
     }
 }

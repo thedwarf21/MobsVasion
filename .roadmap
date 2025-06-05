@@ -14,8 +14,21 @@ V   Tâche terminée
 >   Sous-tâche terminée
 
 
-*   Tutoriel monstres
-    V   Afficher une image apportant le contexte, au lieu du PNJ (monstre, animation d'attaque, etc)
+*   Internationnalisation
+    V   Créer un LanguageManager pour gérer cet aspect
+    V   Revoir le fonctionnement de RS_Dialog pour prendre en charge le LanguageManager
+    V   Prise en charge dans la GamepadConfigUI
+    V   Prise en charge dans l'intro et le Tutoriel
+    V   Prise en charge dans le rapport de fin de vague
+    X   Prise en charge dans la popup du magasin
+        >   Titre et libellés de boutons standards
+        _   Articles de soin
+        _   Autres articles du magasin
+    _   Prise en charge dans le bandeau de début de vague
+    X   Prise en charge dans la popup des paramètres
+        >   Titre et libellés des boutons standards
+        >   Libellés des divers paramètres
+        _   Ajout du nouveau paramètre, pour sélectionner la langue (utiliser <rs-selector>)
 
 *   Optimisations et assainissements
     V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées
