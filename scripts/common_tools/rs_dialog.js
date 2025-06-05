@@ -27,7 +27,6 @@ class RS_Dialog {
 
     // Ensuite on construit la boîte de dialogue en elle-même
     const popup = document.createElement("DIV");
-    popup.id = name + "_container";
     popup.classList.add("rs-modal");
     popup.classList.add("rs-closed");
     for (const classe of containerClassList)
@@ -51,7 +50,6 @@ class RS_Dialog {
     
     // Création et ajout à la boîte de dialogue de la div de contenu
     const content = document.createElement("DIV");
-    content.id = name;
     content.classList.add("rs-modal-content");
     for (const classe of classList)
       content.classList.add(classe);
@@ -142,58 +140,93 @@ function RS_Alert(msg, titre, lbl_btn, callback) {
   document.body.appendChild(popup.root_element);
 }
 
-/*********************************************************************************
- * Génère une boîte de dialogue demandant confirmation pour une action donnée    *
- *********************************************************************************
- * @param | {string}   | question | Message à afficher dans la boîte de dialogue *
- * @param | {string}   | titre    | Titre de la boîte de dialogue                *
- * @param | {string}   | lbl_yes  | Libellé du bouton "Oui"                      *
- * @param | {string}   | lbl_no   | Libellé du bouton "Non"                      *
- * @param | {function} | fn_yes   | Fonction à exécuter si "Oui"                 *
- * @param | {function} | fn_no    | Fonction à exécuter si "Non"                 *
- *********************************************************************************/
-function RS_Confirm(question, titre, lbl_yes, lbl_no, fn_yes, fn_no) {
-  const popup = new RS_Dialog("confirm_box", titre, [], [], [], false);
+/**
+ * Construit et injecte dans la page, une "confirm popup"
+ * @param {MV_LanguageManager} language_manager 
+ * @param {string} question_key 
+ * @param {string} title_key 
+ * @param {string} lbl_yes_key 
+ * @param {string} lbl_no_key 
+ * @param {function} fn_yes 
+ * @param {function} fn_no 
+ */
+function RS_Confirm(language_manager, question_key, title_key, lbl_yes_key, lbl_no_key, fn_yes, fn_no) {
+  const title = language_manager.getText(title_key);
+  const popup = new RS_Dialog("confirm_box", title, [], [], [], false);
   
-  // Ajout de la question au contenu de la popup
-  const div_msg = document.createElement("DIV");
-  div_msg.classList.add("dialog-body");
-  div_msg.innerHTML = question;
-  popup.appendToContent(div_msg);
+  popup.appendToContent( getDialogBodyElement(language_manager, question_key) );
+  popup.appendToContent(
+    getConfirmFooter(language_manager, lbl_yes_key, lbl_no_key, ()=> {
+        popup.closeModal();
+        if (fn_yes)
+          fn_yes();
+      }, ()=> {
+        popup.closeModal();
+        if (fn_no)
+          fn_no();
+      }
+    )
+  );
 
-  // Création de la <div> contenant les boutons
-  const div_btn = document.createElement("DIV");
-  div_btn.classList.add("dialog-footer");
-
-  // Création du bouton "Oui"
-  const btn_yes = document.createElement("INPUT");
-  btn_yes.setAttribute("type", "button");
-  btn_yes.classList.add("rs-btn-action");
-  btn_yes.classList.add("rs-btn-create");
-  btn_yes.classList.add("main-form");
-  btn_yes.value = lbl_yes;
-  btn_yes.addEventListener("click", ()=> {
-    popup.closeModal();
-    if (fn_yes)
-      fn_yes();
-  });
-
-  // Création du bouton "Non"
-  const btn_no = document.createElement("INPUT");
-  btn_no.setAttribute("type", "button");
-  btn_no.classList.add("rs-btn-action");
-  btn_no.classList.add("rs-btn-suppr");
-  btn_no.classList.add("main-form");
-  btn_no.value = lbl_no;
-  btn_no.addEventListener("click", ()=> {
-    popup.closeModal();
-    if (fn_no)
-      fn_no();
-  });
-
-  // Ajout des boutons à la boîte de dialogue et affichage
-  div_btn.appendChild(btn_yes);
-  div_btn.appendChild(btn_no);
-  popup.appendToContent(div_btn);
   document.body.appendChild(popup.root_element);
+}
+
+/**
+ * Construit et retourne un corps de popup
+ * @param {MV_LanguageManager} language_manager 
+ * @param {string} text_key 
+ * @returns HTMLDivElement
+ */
+function getDialogBodyElement(language_manager, text_key) {
+  const div_body = document.createElement("DIV");
+  div_body.classList.add("dialog-body");
+  setTranslatedContent(language_manager, div_body, text_key, "innerHTML");
+  return div_body;
+}
+
+/**
+ * Construit et retourne un bouton
+ * @param {MV_LanguageManager} language_manager 
+ * @param {string} text_key 
+ * @param {function} on_click 
+ * @returns HTMLInputElement
+ */
+function getButton(language_manager, text_key, on_click) {
+  const button = document.createElement("INPUT");
+  button.setAttribute("type", "button");
+  button.classList.add("rs-btn-action");
+  button.classList.add("main-form");
+  setTranslatedContent(language_manager, button, text_key, "value");
+  button.addEventListener("click", ()=> { on_click(); });
+  return button;
+}
+
+/**
+ * Construit et retourne un footer contenant deux boutons
+ * @param {MV_LanguageManager} language_manager 
+ * @param {string} lbl_yes_key 
+ * @param {string} lbl_no_key 
+ * @param {function} fn_yes 
+ * @param {function} fn_no 
+ * @returns HTMLDivElement
+ */
+function getConfirmFooter(language_manager, lbl_yes_key, lbl_no_key, fn_yes, fn_no) {
+  const footer = document.createElement("DIV");
+  footer.classList.add("dialog-footer");
+  footer.appendChild( getButton(language_manager, lbl_yes_key, ()=> { fn_yes(); }) );
+  footer.appendChild( getButton(language_manager, lbl_no_key, ()=> { fn_no(); }) );
+  return footer;
+}
+
+/**
+ * Prépare un élément pour sa prise en charge par le LanguageManager, et applique la traduction
+ * @param {MV_LanguageManager} language_manager 
+ * @param {HTMLElement} element 
+ * @param {string} text_key 
+ * @param {string} target_property 
+ */
+function setTranslatedContent(language_manager, element, text_key, target_property) {
+  element.setAttribute("text-key", text_key);
+  element.setAttribute("translated-property", target_property);
+  element[target_property] = language_manager.getText(text_key);
 }

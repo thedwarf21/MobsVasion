@@ -211,8 +211,7 @@ class TutorialHelper {
         button.value = "Passer >>";
 
         button.addEventListener("click", function() {
-            RS_Confirm("<p>Le présent tutoriel ne vous sera présenté qu'une seule fois.</p><p>Souhaitez-vous réellement le passer ?</p>", 
-                "Passer l'intro et le tutoriel", "Bien sûr !", "Euuuuh...", function() {
+            RS_Confirm(MainController.language_manager, "skip_tuto_confirm", "skip_tuto_title", "skip_tuto_yes", "skip_tuto_no", function() {
                     MainController.scope.game.skip_tutorial = true;
                     MainController.report_popup.root_element.querySelector("#btn_close").dispatchEvent(new Event('click'));
                 }

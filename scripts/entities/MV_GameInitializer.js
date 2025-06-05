@@ -170,7 +170,7 @@ class MV_GameInitializer {
 	}
 
 	static __initLanguageManager(controller) {
-		controller.language_manger = new MV_LanguageManager( controller.scope.game );
+		controller.language_manager = new MV_LanguageManager( controller.scope.game );
 	}
 
 	static __initPopupsStack(controller) { 
@@ -206,13 +206,12 @@ class MV_GameInitializer {
 	static __initSaveManager(controller, onInitComplete) {
 		controller.save_manager = new MV_SaveManager(controller);
 		if (controller.save_manager.last_saved_game) {
-			RS_Confirm(`<div class="modal-line">Nous avons trouvé une sauvegarde.</div>
-						<div class="modal-line">Vous pouvez la charger, ou commencer une nouvelle partie. </div>
-						<div class="modal-line">Attention: commencer une nouvelle partie implique d'écraser la sauvegarde existante.</div>`, 
-						"Gestionnaire de sauvegarde", "Charger", "Nouvelle partie", ()=> {
+			RS_Confirm(controller.language_manager, "load_popup_confirm", "load_popup_title", "load_popup_yes", "load_popup_no", 
+				()=> {
 					controller.save_manager.loadGame();
 					onInitComplete();
-				}, ()=> { onInitComplete(); });
+				}, ()=> { onInitComplete(); }
+			);
 		} else onInitComplete(); // faut que ça démarre quand y a pas de sauvegarde !!!
 	}
 }
