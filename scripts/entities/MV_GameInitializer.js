@@ -31,6 +31,7 @@ class MV_GameInitializer {
 				attacking_monsters: [],   	// { monster: MV_Monster, time: number }
 				flying_monsters: [], 		// { monster: MV_Monster, deltaX, deltaY, deltaAngle, frames, max_scale: number, onAnimationEnd: function }
 				keyboard_type: KeyTranslater.AZERTY,
+				language: "fr",
 				showHitboxes: false,
 				skip_tutorial: false
 			},
@@ -154,6 +155,7 @@ class MV_GameInitializer {
 
 	static prepareGame(controller, onInitComplete) {
 		controller.scope = MV_GameInitializer.initial_scope;
+		MV_GameInitializer.__initLanguageManager(controller);
 		MV_GameInitializer.__initPopupsStack(controller);
 		MV_GameInitializer.__initShopManager(controller);
 		MV_GameInitializer.__initWaveGenerator(controller);
@@ -165,6 +167,10 @@ class MV_GameInitializer {
 		MV_GameInitializer.__initMainUI(controller);
         MV_GameInitializer.__createTimer(controller);
 		MV_GameInitializer.__initSaveManager(controller, onInitComplete);
+	}
+
+	static __initLanguageManager(controller) {
+		controller.language_manger = new MV_LanguageManager( controller.scope.game );
 	}
 
 	static __initPopupsStack(controller) { 
