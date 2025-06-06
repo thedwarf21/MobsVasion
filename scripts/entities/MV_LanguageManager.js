@@ -284,10 +284,10 @@ class MV_LanguageManager {
         },
         tutorial_message_intro_2: {
             fr: "<p>Peu importe...</p><p>Au fait, moi c'est Julie Péhainegis</p><p>Et toi, comment tu t'appelles ?</p>",
-            en: "<p>Never mind...</p><p>By the way, I'm Julia Peehenjay</p><p>What about you ? What's your name ?</p>",
+            en: "<p>Never mind...</p><p>By the way, I'm Julia Enpeesee</p><p>What about you ? What's your name ?</p>",
             es: "<p>No importa...</p><p>Por cierto, soy Julia Péyenejota</p><p>Y tú, ¿cómo te llamas?</p>",
-            it: "<p>Non importa...</p><p>A proposito, io sono Giulia Pehainegis</p><p>E tu, come ti chiami?</p>",
-            de: "<p>Egal...</p><p>Übrigens, ich bin Julia Peehenjay</p><p>Und du, wie heißt du?</p>"
+            it: "<p>Non importa...</p><p>A proposito, io sono Giulia Pienegi</p><p>E tu, come ti chiami?</p>",
+            de: "<p>Egal...</p><p>Übrigens, ich bin Julia Enes-se</p><p>Und du, wie heißt du?</p>"
         },
         tutorial_message_intro_3: {
             fr: "<p>...chelou comme nom.</p><p>Bref. Passons.</p>",
