@@ -51,10 +51,6 @@ class MV_LanguageManager {
 
             element[translated_property] = this.getText(text_key, templated_values);
         }
-
-        //TODO à déplacer dans le onChange de l'option de paramétrage correspondant au changement du langue
-        if (MainController.shop_manager)
-            MainController.shop_manager.refreshAllShopItems(true);
     }
 
     __setTamplatedValuesAttribute(element, templated_values) {
