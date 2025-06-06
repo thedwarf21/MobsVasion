@@ -35,6 +35,10 @@ class MV_LanguageManager {
             fr: "Fermer",
             en: "Close"
         },
+        wave_number: {
+            fr: `Vague ${MainController.scope.game.wave_number}`,
+            en: `Wave ${MainController.scope.game.wave_number}`
+        },
 
         load_popup_confirm: {
             fr: `<p>Nous avons trouvé une sauvegarde.</p>
@@ -358,10 +362,6 @@ class MV_LanguageManager {
         shop_knowledge_button: {
             fr: "Salle d'entrainement",
             en: "Training room"
-        },
-        shop_start_wave: {
-            fr: `Vague ${MainController.scope.game.wave_number}`,
-            en: `Wave ${MainController.scope.game.wave_number}`
         },
 
         params_title: {
