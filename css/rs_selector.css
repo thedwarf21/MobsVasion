@@ -35,3 +35,5 @@
     font-size: 1.8vh;
     font-family: monospace;
 }
+
+img.value-img { max-height: 5vh; }

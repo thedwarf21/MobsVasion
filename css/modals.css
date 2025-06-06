@@ -23,6 +23,7 @@ input { cursor: pointer; }
     margin: 2vh;
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 
 /** UI configuration manette */

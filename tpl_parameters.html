@@ -36,14 +36,23 @@
 	</div>
 
 	<div class="modal-line">
+		<div class="pref-title" id="language_lbl"><b>Langue:</b></div>
+		<rs-selector class="pref-value" id="language" value="MainController.scope.game.language" 
+					 onchange="ParametersPopup.languageSelectionChanged(this.selected_value)" nav-ident="0_5">
+			<option value="fr" infos="Français"><img class="value-img" src="images/flag_fr.png" /></option>
+			<option value="en" infos="English"><img class="value-img" src="images/flag_en.png" /></option>
+		</rs-selector>
+	</div>
+
+	<div class="modal-line">
 		<div class="pref-title" id="show_hitboxes_lbl"><b>Afficher les hitbox:</b></div>
-		<input type="checkbox" class="pref-value" id="show_hitboxes" nav-ident="0_5" />
+		<input type="checkbox" class="pref-value" id="show_hitboxes" nav-ident="0_6" />
 		<!-- Attribut "checked" synchronisé à MainController.scope.game.showHitboxes -->
 	</div>
 </div>
 
 <!-- Bouton de fermeture -->
 <div class="dialog-footer">
-	<input type="button" class="modal-button" value="Fermer" id="btn_close" nav-ident="0_6" onclick="MainController.popups_stack.pop()" />
-	<input type="button" class="modal-button" value="Paramétrer la manette" id="btn_gamepad_controls" nav-ident="1_6" onclick="MainController.scope.gamepadControlsUI.show();" />
+	<input type="button" class="modal-button" value="Fermer" id="btn_close" nav-ident="0_7" onclick="MainController.popups_stack.pop()" />
+	<input type="button" class="modal-button" value="Paramétrer la manette" id="btn_gamepad_controls" nav-ident="1_7" onclick="MainController.scope.gamepadControlsUI.show();" />
 </div>

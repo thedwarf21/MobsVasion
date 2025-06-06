@@ -8,6 +8,7 @@ class ParametersPopup extends AbstractPopup {
 
     show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog(MainController.language_manager, "params_title", "tpl_parameters.html", ()=> {
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#language_lbl"), "params_language_lbl", "innerHTML");
             MainController.language_manager.setTranslatedContent(this.__querySelector("#music_on_lbl"), "params_music_on_lbl", "innerHTML");
             MainController.language_manager.setTranslatedContent(this.__querySelector("#music_volume_lbl"), "params_music_volume_lbl", "innerHTML");
             MainController.language_manager.setTranslatedContent(this.__querySelector("#sound_fx_on_lbl"), "params_sound_fx_on_lbl", "innerHTML");
@@ -27,6 +28,11 @@ class ParametersPopup extends AbstractPopup {
 		document.body.appendChild(this.rs_dialog_instance.root_element);
 		MainController.parameters_popup = this.rs_dialog_instance;
 	}
+
+    static languageSelectionChanged(value) {
+        MainController.language_manager.setLanguage(value);
+        MainController.shop_manager.refreshAllShopItems(true);
+    }
 
     __removeUnnecessaryContent() {
         if(!MainController.timer.gamepad_mapper)
@@ -80,8 +86,8 @@ class ParametersPopup extends AbstractPopup {
         });
     }
 
-    get FOOTER_LINE() { return 6; }
-    __isSelectorInput(line) { return line === 4; }
+    get FOOTER_LINE() { return 7; }
+    __isSelectorInput(line) { return [4, 5].includes(line); }
     __isRangeInput(line) { return [1, 3].includes(line); }
     __setRangeInputValue(input, value) {
         input.value = value;
@@ -101,7 +107,8 @@ class ParametersPopup extends AbstractPopup {
     navigateDown() {
         const active_item_position = this.__getLineAndColumnNumbers();
         const new_line = active_item_position.line + 1;
-        const new_col = new_line === this.FOOTER_LINE ? 1 : 0;    // Le bouton de configuration de la manette est prioritaire sur le bouton de fermeture de la fenêtre (UX)
+        const new_col = new_line === this.FOOTER_LINE && this.__querySelector("#btn_gamepad_controls") 
+                      ? 1 : 0;    // Le bouton de configuration de la manette est prioritaire sur le bouton de fermeture de la fenêtre (UX)
         const new_active_ident = `${new_col}_${new_line}`;
         this.setActiveItem(new_active_ident);
     }

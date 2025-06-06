@@ -399,6 +399,10 @@ class MV_LanguageManager {
             fr: "Paramètres utilisateur",
             en: "User settings"
         },
+        params_language_lbl: {
+            fr: "<b>Langue:</b>",
+            en: "<b>Language:</b>"
+        },
         params_music_on_lbl: {
             fr: "<b>Musique:</b>",
             en: "<b>Music:</b>"
