@@ -48,6 +48,8 @@ class MV_SaveManager {
 			this.__loadShop(saved_game);
 			this.__loadSoundSettings(saved_game);
 		}
+
+		this.shop_manager.refreshAllShopItems(true); // Traduction des articles du magasin, si nécessaire (langue sauvegardée != langue du navigateur)
 	}
 
 	__loadGameScope(saved_game) {
