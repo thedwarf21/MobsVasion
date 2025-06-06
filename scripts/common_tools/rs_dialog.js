@@ -60,7 +60,7 @@ class RS_Dialog {
     __getHeaderElement(language_manager, title_key) {
         const header = document.createElement("DIV");
         header.classList.add("rs-modal-title");
-        setTranslatedContent(language_manager, header, title_key, "innerHTML");
+        language_manager.setTranslatedContent(header, title_key, "innerHTML");
         return header;
     }
 
@@ -158,7 +158,7 @@ function RS_Confirm(language_manager, question_key, title_key, lbl_yes_key, lbl_
 function getDialogBodyElement(language_manager, text_key) {
     const div_body = document.createElement("DIV");
     div_body.classList.add("dialog-body");
-    setTranslatedContent(language_manager, div_body, text_key, "innerHTML");
+    language_manager.setTranslatedContent(div_body, text_key, "innerHTML");
     return div_body;
 }
 
@@ -174,7 +174,7 @@ function getButton(language_manager, text_key, on_click) {
     button.setAttribute("type", "button");
     button.classList.add("rs-btn-action");
     button.classList.add("main-form");
-    setTranslatedContent(language_manager, button, text_key, "value");
+    language_manager.setTranslatedContent(button, text_key, "value");
     button.addEventListener("click", () => { on_click(); });
     return button;
 }
@@ -193,17 +193,4 @@ function getPopupFooter(language_manager, buttons_params_list) {
         footer.appendChild(getButton(language_manager, button_params.text_key, () => { button_params.on_click(); }));
 
     return footer;
-}
-
-/**
- * Prépare un élément pour sa prise en charge par le LanguageManager, et applique la traduction
- * @param {MV_LanguageManager} language_manager 
- * @param {HTMLElement} element 
- * @param {string} text_key 
- * @param {string} target_property 
- */
-function setTranslatedContent(language_manager, element, text_key, target_property) {
-    element.setAttribute("text-key", text_key);
-    element.setAttribute("translated-property", target_property);
-    element[target_property] = language_manager.getText(text_key);
 }

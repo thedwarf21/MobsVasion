@@ -154,11 +154,11 @@ class TutorialHelper {
 		MainController.report_popup = new RS_Dialog(MainController.language_manager, "tutorial_title", "tpl_report.html", function() {
             MainController.report_popup.root_element.querySelector("#friend-face").src = friend_face_url; 
             const message_container = MainController.report_popup.root_element.querySelector("#message");
-            setTranslatedContent(MainController.language_manager, message_container, message, "innerHTML");
+            MainController.language_manager.setTranslatedContent(message_container, message, "innerHTML");
             message_container.classList.add("tutorial");
 
             const close_button = MainController.report_popup.root_element.querySelector("#btn_close");
-            setTranslatedContent(MainController.language_manager, close_button, "tutorial_next", "value");
+            MainController.language_manager.setTranslatedContent(close_button, "tutorial_next", "value");
 			close_button.addEventListener("click", function() {
                 MainController.report_popup.closeModal();
                 MainController.report_popup = null;
@@ -174,7 +174,7 @@ class TutorialHelper {
         const button = document.createElement("INPUT");
         button.setAttribute("type", "button");
         button.classList.add("modal-button");
-        setTranslatedContent(MainController.language_manager, button, "tutorial_skip", "value");
+        MainController.language_manager.setTranslatedContent(button, "tutorial_skip", "value");
 
         button.addEventListener("click", function() {
             RS_Confirm(MainController.language_manager, "skip_tuto_confirm", "skip_tuto_title", "skip_tuto_yes", "skip_tuto_no", function() {
@@ -287,10 +287,10 @@ class TutorialHelper {
 
             const message_container = MainController.report_popup.root_element.querySelector("#message");
             message_container.classList.add("tutorial");
-            setTranslatedContent(MainController.language_manager, message_container, params.message, "innerHTML");
+            MainController.language_manager.setTranslatedContent(message_container, params.message, "innerHTML");
 
             const close_button = MainController.report_popup.root_element.querySelector("#btn_close");
-            setTranslatedContent(MainController.language_manager, close_button, "tutorial_next", "value");
+            MainController.language_manager.setTranslatedContent(close_button, "tutorial_next", "value");
 			close_button.addEventListener("click", function() {
                 if (params.special_element)
                     params.special_element.remove();

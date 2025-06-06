@@ -11,6 +11,12 @@ class MV_LanguageManager {
         this.__translateAll();
     }
 
+    setTranslatedContent(element, text_key, target_property) {
+        element.setAttribute("text-key", text_key);
+        element.setAttribute("translated-property", target_property);
+        element[target_property] = this.getText(text_key);
+    }
+
     getText(text_key) { return this.TEXTS[text_key][this.__game_scope.language]; }
 
     __initLanguageFromNavigator() {
@@ -362,6 +368,10 @@ class MV_LanguageManager {
         shop_knowledge_button: {
             fr: "Salle d'entrainement",
             en: "Training room"
+        },
+        shop_heal_maxed: {
+            fr: "Santé déjà au maximum",
+            en: "Health still maxed"
         },
 
         params_title: {

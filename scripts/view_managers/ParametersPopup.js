@@ -8,14 +8,14 @@ class ParametersPopup extends AbstractPopup {
 
     show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog(MainController.language_manager, "params_title", "tpl_parameters.html", ()=> {
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#music_on_lbl"), "params_music_on_lbl", "innerHTML");
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#music_volume_lbl"), "params_music_volume_lbl", "innerHTML");
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#sound_fx_on_lbl"), "params_sound_fx_on_lbl", "innerHTML");
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#sound_fx_volume_lbl"), "params_sound_fx_volume_lbl", "innerHTML");
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#keyboard_type_lbl"), "params_keyboard_type_lbl", "innerHTML");
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#show_hitboxes_lbl"), "params_show_hitboxes_lbl", "innerHTML");
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#btn_gamepad_controls"), "params_gamepad_config", "value");
-            setTranslatedContent(MainController.language_manager, this.__querySelector("#btn_close"), "popup_close", "value");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#music_on_lbl"), "params_music_on_lbl", "innerHTML");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#music_volume_lbl"), "params_music_volume_lbl", "innerHTML");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#sound_fx_on_lbl"), "params_sound_fx_on_lbl", "innerHTML");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#sound_fx_volume_lbl"), "params_sound_fx_volume_lbl", "innerHTML");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#keyboard_type_lbl"), "params_keyboard_type_lbl", "innerHTML");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#show_hitboxes_lbl"), "params_show_hitboxes_lbl", "innerHTML");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#btn_gamepad_controls"), "params_gamepad_config", "value");
+            MainController.language_manager.setTranslatedContent(this.__querySelector("#btn_close"), "popup_close", "value");
 
             this.__removeUnnecessaryContent();
             this.__bindOptions();
