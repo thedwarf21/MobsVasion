@@ -1,4 +1,5 @@
 class MV_LanguageManager {
+    TEMPLATED_VALUES_SEPARATOR = ",";
     __game_scope;
 
     constructor(game_scope) {
@@ -11,13 +12,25 @@ class MV_LanguageManager {
         this.__translateAll();
     }
 
-    setTranslatedContent(element, text_key, target_property) {
+    setTranslatedContent(element, text_key, target_property, templated_values) {
         element.setAttribute("text-key", text_key);
         element.setAttribute("translated-property", target_property);
-        element[target_property] = this.getText(text_key);
+
+        if (templated_values)
+            this.__setTamplatedValuesAttribute(element, templated_values);
+
+        element[target_property] = this.getText(text_key, templated_values);
     }
 
-    getText(text_key) { return this.TEXTS[text_key][this.__game_scope.language]; }
+    getText(text_key, templated_values) { 
+        let translated_string = this.TEXTS[text_key][this.__game_scope.language];
+
+        if (templated_values)
+            for (const current_value of templated_values)
+                translated_string = translated_string.replace("%value%", current_value); 
+        
+        return translated_string; 
+    }
 
     __initLanguageFromNavigator() {
         const language = navigator.language.split("-")[0];
@@ -32,8 +45,27 @@ class MV_LanguageManager {
         for (const element of document.querySelectorAll("[text-key][translated-property]")) {
             const text_key = element.getAttribute("text-key");
             const translated_property = element.getAttribute("translated-property");
-            element[translated_property] = this.getText(text_key);
+            const templated_values = this.__getTemplatedValuesArray(element);
+
+            element[translated_property] = this.getText(text_key, templated_values);
         }
+    }
+
+    __setTamplatedValuesAttribute(element, templated_values) {
+        let templated_values_string = ""
+        for (const val of templated_values)
+            templated_values_string += val + this.TEMPLATED_VALUES_SEPARATOR;
+        templated_values_string = templated_values_string.substring(0, templated_values_string.length-1);
+
+        element.setAttribute("templated-values", templated_values_string);
+    }
+
+    __getTemplatedValuesArray(element) {
+        const templated_values_string = element.getAttribute("templated-values");
+        
+        if (templated_values_string)
+            return templated_values_string.split(this.TEMPLATED_VALUES_SEPARATOR);
+        else return null;
     }
 
     TEXTS = {
@@ -42,8 +74,8 @@ class MV_LanguageManager {
             en: "Close"
         },
         wave_number: {
-            fr: `Vague ${MainController.scope.game.wave_number}`,
-            en: `Wave ${MainController.scope.game.wave_number}`
+            fr: "Vague %value%",
+            en: "Wave %value%"
         },
 
         load_popup_confirm: {
@@ -357,23 +389,6 @@ class MV_LanguageManager {
             en: "My turn to be useful...<br/>Does it hurt when I press there ?<br/>Ouch ! Don't hit me, I'm trying to help you !"
         },
 
-        shop_title: {
-            fr: "Pense à faire le plein, avant d'y retourner",
-            en: "Remember to fill up before going back"
-        },
-        shop_money_button: {
-            fr: "Ravitaillement",
-            en: "Refueling"
-        },
-        shop_knowledge_button: {
-            fr: "Salle d'entrainement",
-            en: "Training room"
-        },
-        shop_heal_maxed: {
-            fr: "Santé déjà au maximum",
-            en: "Health still maxed"
-        },
-
         params_title: {
             fr: "Paramètres utilisateur",
             en: "User settings"
@@ -405,6 +420,27 @@ class MV_LanguageManager {
         params_gamepad_config: {
             fr: "Paramétrer la manette",
             en: "Gamepad configuration"
+        },
+
+        shop_title: {
+            fr: "Pense à faire le plein, avant d'y retourner",
+            en: "Remember to fill up before going back"
+        },
+        shop_money_button: {
+            fr: "Ravitaillement",
+            en: "Refueling"
+        },
+        shop_knowledge_button: {
+            fr: "Salle d'entrainement",
+            en: "Training room"
+        },
+        shop_heal_maxed: {
+            fr: "Santé déjà au maximum",
+            en: "Health still maxed"
+        },
+        shop_item_price: {
+            fr: "<b>Prix:</b> %value%",
+            en: "<b>Cost:</b> %value%"
         }
     }
 }
