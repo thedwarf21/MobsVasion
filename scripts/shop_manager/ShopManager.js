@@ -18,11 +18,12 @@ class ShopManager {
     setShopItemsContainer(container_element) { this.__shop_items_container = container_element; }
     setShopItemDescriptionElement(element) { this.shop_item_description_element = element; }
 
-	refreshAllShopItems() {
-        this.__refreshHealingItems();
+	refreshAllShopItems(must_translate) {
+        for (const shop_item of this.__healing_items)
+            shop_item.refresh(must_translate);
 
 		for (const shop_item of this.__shop_items)
-            shop_item.refreshHtmlDetails();
+            shop_item.refreshHtmlDetails(must_translate);
 	}
 
     displayMoneyShop() {
@@ -61,21 +62,15 @@ class ShopManager {
     }
 
     __createHealingItems() {        
-        const small_heal =  new ShopHealingItem("Verre d'eau", 2, 5, "0_0");
+        const small_heal =  new ShopHealingItem("shop_heal_name_0", 2, 5, "0_0");
         this.__healing_items.push(small_heal);
 
-        const large_heal = new ShopHealingItem("Repas chaud", 8, 25, "0_1");
+        const large_heal = new ShopHealingItem("shop_heal_name_1", 8, 25, "0_1");
         this.__healing_items.push(large_heal);
     }
 
     __attachHealingItems() {
         for (const healing_item of this.__healing_items)
             this.__shop_items_container.appendChild(healing_item.root_element);
-    }
-
-    __refreshHealingItems() {
-        for (const shop_item of this.__healing_items) {
-            shop_item.refresh();
-        }
     }
 }

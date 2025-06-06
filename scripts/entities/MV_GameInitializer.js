@@ -61,10 +61,10 @@ class MV_GameInitializer {
 			},
 			gamepad_mapper: null,
 			shop: [{
-				name: "Détecteur de métaux",
+				name: "shop_item_name_DET",
 				code: "DET",
-				description: "Cet accessoire te permettra de récupérer plus de pièces sur les monstres",
-				lbl_effect: "Nombre maximum de pièces supplémentaires par monstre",
+				description: "shop_item_desc_DET",
+				lbl_effect: "shop_item_effect_DET",
 				level_0_effect: 0,
 				upgrade_value: 2,
 				level_1_price: 20,
@@ -72,10 +72,10 @@ class MV_GameInitializer {
 				current_level: 0,
 				nav_id: "0_2"
 			}, {
-				name: "Chargeur haute capacité",
+				name: "shop_item_name_CHC",
 				code: "CHC",
-				description: "Bricolons un peu ton arme, pour augmenter la capacité du chargeur",
-				lbl_effect: "Capacité du chargeur",
+				description: "shop_item_desc_CHC",
+				lbl_effect: "shop_item_effect_CHC",
 				level_0_effect: CLIP_SIZE,
 				upgrade_value: 1,
 				level_1_price: 30,
@@ -83,10 +83,10 @@ class MV_GameInitializer {
 				current_level: 0,
 				nav_id: "0_3"
 			}, {
-				name: "Déluge de balles",
+				name: "shop_item_name_RAT",
 				code: "RAT",
-				description: "Réduit le recul de l'arme, pour faciliter la visée entre deux coups de feu",
-				lbl_effect: "Temps entre deux coups (ms)",
+				description: "shop_item_desc_RAT",
+				lbl_effect: "shop_item_effect_RAT",
 				max_level: 10,
 				show_multiplicator: TIME_INTERVAL,
 				level_0_effect: TIMEOUTS.shot_interval,
@@ -96,10 +96,10 @@ class MV_GameInitializer {
 				current_level: 0,
 				nav_id: "0_4"
 			}, {
-				name: "Puissance de feu",
+				name: "shop_item_name_POW",
 				code: "POW",
-				description: "Modifie l'arme, afin d'en améliorer la puissance de feu",
-				lbl_effect: "Dégats par tir",
+				description: "shop_item_desc_POW",
+				lbl_effect: "shop_item_effect_POW",
 				level_0_effect: 1,
 				upgrade_value: 0.2,
 				level_1_price: 40,
@@ -107,29 +107,29 @@ class MV_GameInitializer {
 				current_level: 0,
 				nav_id: "0_5"
 			}, {
-				name: "Constitution",
+				name: "shop_item_name_CON",
 				code: "CON",
-				description: "Permet de mieux encaisser les coups",
-				lbl_effect: "Santé maximale",
+				description: "shop_item_desc_CON",
+				lbl_effect: "shop_item_effect_CON",
 				level_0_effect: CHARACTER_MAX_LIFE,
 				upgrade_value: 10,
 				current_level: 0,
 				nav_id: "1_0"
 			}, {
-				name: "Agilité",
+				name: "shop_item_name_AGI",
 				code: "AGI",
-				description: "Permet de courir plus vite",
-				lbl_effect: "Vitesse de déplacement",
+				description: "shop_item_desc_AGI",
+				lbl_effect: "shop_item_effect_AGI",
 				max_level: 24,
 				level_0_effect: CHARACTER_SPEED,
 				upgrade_value: 0.25,
 				current_level: 0,
 				nav_id: "1_1"
 			}, {
-				name: "Rechargement rapide",
+				name: "shop_item_name_RLD",
 				code: "RLD",
-				description: "Permet de changer plus rapidement de chargeur",
-				lbl_effect: "Temps de rechargement",
+				description: "shop_item_desc_RLD",
+				lbl_effect: "shop_item_effect_RLD",
 				max_level: 12,
 				show_multiplicator: TIME_INTERVAL / 1000,
 				display_unit: "s",
@@ -138,10 +138,10 @@ class MV_GameInitializer {
 				current_level: 0,
 				nav_id: "1_2"
 			}, {
-				name: "Récupération rapide",
+				name: "shop_item_name_DAR",
 				code: "DAR",
-				description: "Permet de récupérer plus vite d'une esquive",
-				lbl_effect: "Temps de rechargement",
+				description: "shop_item_desc_DAR",
+				lbl_effect: "shop_item_effect_DAR",
 				max_level: 15,
 				show_multiplicator: TIME_INTERVAL / 1000,
 				display_unit: "s",

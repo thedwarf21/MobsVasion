@@ -1,9 +1,11 @@
 class MV_LanguageManager {
     TEMPLATED_VALUES_SEPARATOR = ",";
     __game_scope;
+    __shop_manager;
 
-    constructor(game_scope) {
+    constructor(game_scope, shop_manager) {
         this.__game_scope = game_scope;
+        this.__shop_manager = shop_manager;
         this.__initLanguageFromNavigator();
     }
 
@@ -49,6 +51,10 @@ class MV_LanguageManager {
 
             element[translated_property] = this.getText(text_key, templated_values);
         }
+
+        //TODO à déplacer dans le onChange de l'option de paramétrage correspondant au changement du langue
+        if (MainController.shop_manager)
+            MainController.shop_manager.refreshAllShopItems(true);
     }
 
     __setTamplatedValuesAttribute(element, templated_values) {
@@ -438,9 +444,137 @@ class MV_LanguageManager {
             fr: "Santé déjà au maximum",
             en: "Health still maxed"
         },
+        shop_heal_desc: {
+            fr: "Rend %value% points de vie",
+            en: "Recovers %value% health points"
+        },
+        shop_heal_name_0: {
+            fr: "Verre d'eau",
+            en: "Glass of water"
+        },
+        shop_heal_name_1: {
+            fr: "Repas chaud",
+            en: "Hot meal"
+        },
+        shop_item_maxed: {
+            fr: "Niveau maximal atteint",
+            en: "Max level reached"
+        },
         shop_item_price: {
             fr: "<b>Prix:</b> %value%",
             en: "<b>Cost:</b> %value%"
+        },
+        shop_item_name_DET: {
+            fr: "Détecteur de métaux",
+            en: "Metal detector"
+        },
+        shop_item_desc_DET: {
+            fr: "Cet équipement te permettra de récupérer plus de pièces sur les monstres",
+            en: "This gear will allow you to collect more coins from monsters"
+        },
+        shop_item_effect_DET: {
+            fr: '<b>Argent supplémentaire maximum par monstre:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Maximum extra money per monster:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_name_CHC: {
+            fr: "Chargeur haute capacité",
+            en: "High capacity magazine"
+        },
+        shop_item_desc_CHC: {
+            fr: "Bricolons un peu ton arme, pour augmenter la capacité du chargeur",
+            en: "Let's tinker with your gun a little, to increase the magazine capacity"
+        },
+        shop_item_effect_CHC: {
+            fr: '<b>Capacité du chargeur:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Magazine capacity:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_name_RAT: {
+            fr: "Déluge de balles",
+            en: "Bullets' rain"
+        },
+        shop_item_desc_RAT: {
+            fr: "Réduit le recul de l'arme, pour faciliter la visée entre deux coups de feu",
+            en: "Reduces weapon recoil, making it easier to aim between shots"
+        },
+        shop_item_effect_RAT: {
+            fr: '<b>Temps entre deux coups (ms):</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Delay between shots (ms):</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_effect_RAT_maxed: {
+            fr: '<b>Temps entre deux coups (ms):</b> <span class="present-effect">%value%</span>',
+            en: '<b>Delay between shots (ms):</b> <span class="present-effect">%value%</span>'
+        },
+        shop_item_name_POW: {
+            fr: "Puissance de feu",
+            en: "Firepower"
+        },
+        shop_item_desc_POW: {
+            fr: "Modifie l'arme, afin d'en améliorer la puissance de feu",
+            en: "Modifies the weapon to improve its firepower"
+        },
+        shop_item_effect_POW: {
+            fr: '<b>Dégats par tir:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Damage per shot:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_name_CON: {
+            fr: "Constitution",
+            en: "Constitution"
+        },
+        shop_item_desc_CON: {
+            fr: "Permet de mieux encaisser les coups",
+            en: "Allows you to better absorb hits"
+        },
+        shop_item_effect_CON: {
+            fr: '<b>Santé maximale:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Maximum health:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_name_AGI: {
+            fr: "Agilité",
+            en: "Agility"
+        },
+        shop_item_desc_AGI: {
+            fr: "Permet de courir plus vite",
+            en: "Allows you to run faster"
+        },
+        shop_item_effect_AGI: {
+            fr: '<b>Vitesse de déplacement:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Movement speed:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_effect_AGI_maxed: {
+            fr: '<b>Vitesse de déplacement:</b> <span class="present-effect">%value%</span>',
+            en: '<b>Movement speed:</b> <span class="present-effect">%value%</span>'
+        },
+        shop_item_name_RLD: {
+            fr: "Rechargement rapide",
+            en: "Fast reload"
+        },
+        shop_item_desc_RLD: {
+            fr: "Permet de changer plus rapidement de chargeur",
+            en: "Allows faster magazine changes"
+        },
+        shop_item_effect_RLD: {
+            fr: '<b>Temps de rechargement:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Reload time:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_effect_RLD_maxed: {
+            fr: '<b>Temps de rechargement:</b> <span class="present-effect">%value%</span>',
+            en: '<b>Reload time:</b> <span class="present-effect">%value%</span>'
+        },
+        shop_item_name_DAR: {
+            fr: "Récupération rapide",
+            en: "Fast recovery"
+        },
+        shop_item_desc_DAR: {
+            fr: "Permet de récupérer plus vite d'une esquive",
+            en: "Allows you to recover faster from dashing"
+        },
+        shop_item_effect_DAR: {
+            fr: '<b>Temps de rechargement:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Reload time:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+        },
+        shop_item_effect_DAR_maxed: {
+            fr: '<b>Temps de rechargement:</b> <span class="present-effect">%value%</span>',
+            en: '<b>Reload time:</b> <span class="present-effect">%value%</span>'
         }
     }
 }

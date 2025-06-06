@@ -27,15 +27,21 @@ class ShopItem {
         this.__initHtmlElement();
     }
 
-    refreshHtmlDetails() {
+    refreshHtmlDetails(must_translate) {
+        if (must_translate)
+            this.__translateStaticContents();
+
 		this.__refreshPriceElement();
 		this.__refreshEffectElement();
 	}
 
-    static getHtmlElement(css_class, content) {
+    static getHtmlElement(css_class, content_key, templated_values) {
         const html_element = document.createElement("DIV");
 		html_element.classList.add(css_class);
-		html_element.innerHTML = content ? content : "";
+
+        if (content_key)
+            MainController.language_manager.setTranslatedContent(html_element, content_key, "innerHTML", templated_values);
+
         return html_element;
     }
 
@@ -84,13 +90,13 @@ class ShopItem {
 			this.price_html_element.classList.add("too-expensive");
         else this.price_html_element.classList.remove("too-expensive"); 
         
-        if (this.__isMaxed())
+        if (this.__isMaxed()) {
             this.price_html_element.classList.add("maxed");
-        else this.price_html_element.classList.remove("maxed"); 
-        
-        this.price_html_element.innerHTML   = this.__isMaxed()
-							                ? "Niveau maximal atteint"
-							                : `<b>Prix:</b> ${Tools.intToHumanReadableString( this.__getPrice() )} `;
+            MainController.language_manager.setTranslatedContent(this.price_html_element, "shop_item_maxed", "innerHTML");
+        } else {
+            this.price_html_element.classList.remove("maxed");
+            MainController.language_manager.setTranslatedContent(this.price_html_element, "shop_item_price", "innerHTML", [Tools.intToHumanReadableString( this.__getPrice() )]);
+        }
     }
 
     __refreshEffectElement() {
@@ -108,9 +114,16 @@ class ShopItem {
 							            : increased_val 
                                     ), this.display_unit || "");
 
-        this.effect_html_element.innerHTML = `<b>${this.lbl_effect}:</b> <span class="present-effect">${displayPresentValue}</span>`;
-        if (!this.__isMaxed())
-		    this.effect_html_element.innerHTML += ` >> <span class="increased-effect">${displayIncreasedValue}</span>`;
+        const text_key = this.__isMaxed()
+                        ? this.lbl_effect + "_maxed"
+                        : this.lbl_effect;
+        MainController.language_manager.setTranslatedContent(this.effect_html_element, text_key, "innerHTML", [displayPresentValue, displayIncreasedValue]);
+    }
+
+    __translateStaticContents() {
+        const language_manager = MainController.language_manager;
+        language_manager.setTranslatedContent(this.html_element.querySelector(".shop-item-name"), this.name, "innerHTML");
+        language_manager.setTranslatedContent(this.description_html_element, this.description, "innerHTML");
     }
 
     __isAffordable() {
