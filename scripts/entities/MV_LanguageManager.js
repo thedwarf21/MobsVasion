@@ -796,11 +796,11 @@ class MV_LanguageManager {
             de: "Mit dieser Ausrüstung kannst du mehr Münzen von Monstern sammeln"
         },
         shop_item_effect_DET: {
-            fr: '<b>Argent supplémentaire maximum par monstre:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
-            en: '<b>Maximum extra money per monster:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
-            es: '<b>Dinero adicional máximo por monstruo:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
-            it: '<b>Denaro extra massimo per mostro:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
-            de: '<b>Maximales Extra-Geld pro Monster:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
+            fr: '<b>Argent supplémentaire:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            en: '<b>Extra money:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            es: '<b>Dinero adicional:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            it: '<b>Denaro extra:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>',
+            de: '<b>Extra-Geld:</b> <span class="present-effect">%value%</span> >> <span class="increased-effect">%value%</span>'
         },
         shop_item_name_CHC: {
             fr: "Chargeur haute capacité",

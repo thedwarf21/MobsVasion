@@ -132,7 +132,7 @@ class MV_Monster extends MobileGameElement {
         JuiceHelper.monsterSlayed();
         MainController.UI.monsters.splice(monster_index, 1);
 
-        const monster_swag = Tools.radomValueInRange(this.monster_type.swag_range[0], this.monster_type.swag_range[1] + Abilities.getSwagUpgrade());
+        const monster_swag = Math.floor(Tools.radomValueInRange(this.monster_type.swag_range[0], this.monster_type.swag_range[1]) * Abilities.getSwagUpgrade());
 		MainController.scope.game.money += monster_swag;
 
 		XpBarHelper.addXp( this.monster_type.battle_value );

@@ -2,7 +2,7 @@ class Abilities {
 
     static setCurrentLevel(code, value) { Abilities.__getShopEntryByCode(code).current_level = value; }
     
-    static getSwagUpgrade()     { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DET") ); }
+    static getSwagUpgrade()     { return 1 + Abilities.__getValueOf( Abilities.__getShopEntryByCode("DET") ); }
     static getClipSize()        { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("CHC") ); }
     static getShotInterval()    { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RAT") ); }
     static getShotPower()       { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("POW") ); }
