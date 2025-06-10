@@ -35,7 +35,7 @@ class MV_LanguageManager {
     }
 
     __initLanguageFromNavigator() {
-        const language = navigator.language.split("-")[0];
+        let language = navigator.language.split("-")[0];
         
         if ( !["fr", "es", "it", "de"].includes(language ) ) // Si la langue du navigateur n'est pas supportée => anglais
             language = "en";
