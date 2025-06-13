@@ -30,7 +30,7 @@ class MV_SaveManager {
 	 * Fonction de sauvegarde de la partie en cours
 	 */
 	saveGame(is_silent_save) {
-		const save_object = this.__generateSaveObjet();
+		const save_object = this.#generateSaveObjet();
 		localStorage.setItem(this.save_name, JSON.stringify(save_object));
 
 		if (!is_silent_save)
@@ -44,27 +44,27 @@ class MV_SaveManager {
 		const saved_game = this.last_saved_game;
 
 		if (saved_game) {
-			this.__loadGameScope(saved_game);
-			this.__loadShop(saved_game);
-			this.__loadSoundSettings(saved_game);
+			this.#loadGameScope(saved_game);
+			this.#loadShop(saved_game);
+			this.#loadSoundSettings(saved_game);
 		}
 
 		this.shop_manager.refreshAllShopItems(true); // Traduction des articles du magasin, si nécessaire (langue sauvegardée != langue du navigateur)
 	}
 
-	__loadGameScope(saved_game) {
+	#loadGameScope(saved_game) {
 		for (const prop in saved_game.game_scope)
 			this.game_scope[prop] = saved_game.game_scope[prop];
 	}
 
-	__loadShop(saved_game) {
+	#loadShop(saved_game) {
 		for (const prop in saved_game.shop) {
 			Abilities.setCurrentLevel(prop, saved_game.shop[prop]);
 			this.shop_manager.forceItemLevel(prop, saved_game.shop[prop]);
 		}
 	}
 
-	__loadSoundSettings(saved_game) {
+	#loadSoundSettings(saved_game) {
 		for (const prop in saved_game.sound_settings)
 			this.sound_settings[prop] = saved_game.sound_settings[prop];
 		
@@ -77,24 +77,24 @@ class MV_SaveManager {
 	 * 		- l'état du shop dans un objet sous la formme { shop_item.code: shop_item.current_level }
 	 * 		- l'objet sound_settings de l'objet MV_AudioManager (MainController.audio_manager.sound_settings)
 	 */
-	__generateSaveObjet() {
+	#generateSaveObjet() {
 		const save = { game_scope: {} };
 		
-		this.__gameScopeToObject(save);
-		this.__shopToObject(save);
-		this.__soundSettingsToObject(save);	
+		this.#gameScopeToObject(save);
+		this.#shopToObject(save);
+		this.#soundSettingsToObject(save);	
 		
 		return save;
 	}
 
-	__gameScopeToObject(save) {
-		const game_properties = Object.keys( this.game_scope ).filter((key) => this.__gameScopePropsFilter(key));
+	#gameScopeToObject(save) {
+		const game_properties = Object.keys( this.game_scope ).filter((key) => this.#gameScopePropsFilter(key));
 
 		for (const prop of game_properties)
 			save.game_scope[prop] = this.game_scope[prop];
 	}
 
-	__shopToObject(save) {
+	#shopToObject(save) {
 		save.shop = Object.fromEntries(
 			this.ingame_shop.map( 
 				item => [item.code, item.current_level] 
@@ -102,7 +102,7 @@ class MV_SaveManager {
 		);
 	}
 
-	__soundSettingsToObject(save) {
+	#soundSettingsToObject(save) {
 		save.sound_settings = {
 			sound_fx_on : this.sound_settings.sound_fx_on,
 			music_on : this.sound_settings.music_on,
@@ -117,7 +117,7 @@ class MV_SaveManager {
 	 * 
 	 * @param {string}  key
 	 */
-	__gameScopePropsFilter(key) {
+	#gameScopePropsFilter(key) {
 		const excluded_keys = [	
 			"wave_pop",
 			"waiting_counter",

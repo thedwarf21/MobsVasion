@@ -235,7 +235,7 @@ class MainController {
 		if (!was_paused)   						// Mise en pause manuelle => ouverture de la popup paramètres
 			MainController.popups_stack.push(ParametersPopup);
 		else if (MainController.report_popup) 	// Possibilité de fermer la popup de rapport de fin de vague, via bouton pause (workflow particulier => gestion à part)
-			WaveReportPopup.__close( MainController.prepareWaveStart );
+			WaveReportPopup.close( MainController.prepareWaveStart );
 		else MainController.UI.closeAllPopups();
 	}
 
@@ -247,7 +247,7 @@ class MainController {
 		WaitingCounters.clear();
 		
 		JuiceHelper.characterPop();
-		MainController.__showWaveNumber();
+		MainController.#showWaveNumber();
 		MainController.wave_generator.scheduleLevelMonstersPop();
 		
 		setTimeout(TutorialHelper.showIntro, 1500);
@@ -263,14 +263,32 @@ class MainController {
 	
     static waveLost() {
 		JuiceHelper.stopWaveMusic();
-        MainController.__characterRescueFees();
+        MainController.#characterRescueFees();
 
 		MainController.save_manager.saveGame();
         WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed );
 		JuiceHelper.playerDied();
     }
 
-	static __showWaveNumber() {
+    static isWaveComplete() {
+        if (MainController.scope.game.wave_pop.timeouts)
+            return false;
+        if (MainController.UI.monsters.length > 0)
+            return false;
+        if (document.querySelector(".pop-animation"))
+            return false;
+        return true;
+    }
+
+    static waveDefeated() {
+		JuiceHelper.stopWaveMusic();
+        MainController.scope.game.wave_number++;
+
+		MainController.save_manager.saveGame();
+        WaveReportPopup.show( Tools.getRandomMessage(true), FRIEND_FACES.happy );
+    }
+
+	static #showWaveNumber() {
 		const wave_number_display = document.createElement("DIV");
 		wave_number_display.classList.add("wave-level");
 		wave_number_display.innerHTML = MainController.language_manager.getText("wave_number", [MainController.scope.game.wave_number]);
@@ -283,7 +301,7 @@ class MainController {
 		}, 1200);
 	}
 
-    static __characterRescueFees() {
+    static #characterRescueFees() {
         const scope = MainController.scope.game;
         const max_hp = Abilities.getMaxPlayerHealth();
 
@@ -297,23 +315,5 @@ class MainController {
 
         if (!scope.health_points)
             scope.health_points = 1;
-    }
-
-    static __isWaveComplete() {
-        if (MainController.scope.game.wave_pop.timeouts)
-            return false;
-        if (MainController.UI.monsters.length > 0)
-            return false;
-        if (document.querySelector(".pop-animation"))
-            return false;
-        return true;
-    }
-
-    static __waveDefeated() {
-		JuiceHelper.stopWaveMusic();
-        MainController.scope.game.wave_number++;
-
-		MainController.save_manager.saveGame();
-        WaveReportPopup.show( Tools.getRandomMessage(true), FRIEND_FACES.happy );
     }
 }

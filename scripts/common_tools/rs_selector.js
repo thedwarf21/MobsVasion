@@ -12,11 +12,11 @@ class SelectorInput extends HTMLBaseElement {
     connectedCallback() { super.setup(); }
 
     childrenAvailableCallback() {
-        this.__initOptions();
-        this.__setSelectedValue( eval(this.getAttribute("value")) );
+        this.#initOptions();
+        this.#setSelectedValue( eval(this.getAttribute("value")) );
         this.on_change = ()=> { eval(this.getAttribute("onchange")); };
 
-        this.__initShadowDOM();
+        this.#initShadowDOM();
     }
 
     select_previous() {
@@ -24,7 +24,7 @@ class SelectorInput extends HTMLBaseElement {
             return;
 
         this.selected_index--;
-        this.__applySelectedIndex();
+        this.#applySelectedIndex();
         JuiceHelper.dashSound();
     }
 
@@ -33,21 +33,21 @@ class SelectorInput extends HTMLBaseElement {
             return;
 
         this.selected_index++;
-        this.__applySelectedIndex();
+        this.#applySelectedIndex();
         JuiceHelper.dashSound();
     }
 
-    __initOptions() {
+    #initOptions() {
         this.options = [];
         
         for (const option of this.getElementsByTagName("option"))
-            this.__addOption(option);
+            this.#addOption(option);
 
         if (this.options.length === 0)
             throw new Error("The <rs-selector> custom element needs <option> tags in its body, to work");
     }
 
-    __addOption(html_element) {
+    #addOption(html_element) {
         this.options.push({
             value: html_element.getAttribute("value"),
             display: html_element.innerHTML,
@@ -55,7 +55,7 @@ class SelectorInput extends HTMLBaseElement {
         });
     }
 
-    __setSelectedValue(value) {
+    #setSelectedValue(value) {
         for (let i = 0; i < this.options.length; i++) {
             const option = this.options[i];
             if (option.value === value) {
@@ -65,18 +65,18 @@ class SelectorInput extends HTMLBaseElement {
         }
     }
 
-    __initShadowDOM() {
+    #initShadowDOM() {
         this.shadow = this.attachShadow({ mode: SHADOW_MODE });
         routage(this.TEMPLATE_LOCATION, ()=> {
             this.button_next.addEventListener('click', ()=> { this.select_next(); });
             this.button_previous.addEventListener('click', ()=> { this.select_previous(); });
-            this.__applySelectedIndex();
+            this.#applySelectedIndex();
         }, this.shadow);
     }
 
-    __applySelectedIndex() {
-        this.value_display_element.innerHTML = this.__selected_option.display;
-        this.infos_display_element.innerHTML = this.__selected_option.infos;
+    #applySelectedIndex() {
+        this.value_display_element.innerHTML = this.selected_option.display;
+        this.infos_display_element.innerHTML = this.selected_option.infos;
         this.on_change();
     }
 
@@ -85,7 +85,7 @@ class SelectorInput extends HTMLBaseElement {
     get value_display_element() { return this.shadow.querySelector(".displayed-value"); }
     get infos_display_element() { return this.shadow.querySelector(".displayed-infos"); }
 
-    get __selected_option() { return this.options[ this.selected_index ]; }
-    get selected_value() { return this.__selected_option.value; }
+    get selected_option() { return this.options[ this.selected_index ]; }
+    get selected_value() { return this.selected_option.value; }
 }
 customElements.define('rs-selector', SelectorInput);

@@ -8,7 +8,7 @@ class GamepadControls {
 			const gamepad = new GamepadGenericAdapter();
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.pause, "gamepad_config_pause", ()=> { controller.togglePause(); });
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.primary_auto_fire, "gamepad_config_auto_aim", 
-										()=> { GamepadControls.__autoAim(); }, 
+										()=> { GamepadControls.#autoAim(); }, 
 										()=> { controls.firing_primary = false; }, true);
 			gamepad.addControlEntry(GAMEPAD_ACTION_CODES.secondary_fire, "gamepad_config_rush", 
 										()=> { controls.firing_secondary = true; }, 
@@ -77,22 +77,22 @@ class GamepadControls {
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.primary_auto_fire);
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.secondary_fire);
 			MainController.timer.gamepad_mapper.applyControl(GAMEPAD_ACTION_CODES.reload);
-			GamepadControls.__applyJoysticksControls();
+			GamepadControls.#applyJoysticksControls();
 		}
 	}
 
-	static __autoAim() {
+	static #autoAim() {
 		MainController.scope.controls.firing_primary = true;
 		AutoAimHelper.proceed();
 	}
 
-	static __applyJoysticksControls() {
+	static #applyJoysticksControls() {
 		const character = MainController.UI.character;
 		const leftJoystick = MainController.timer.gamepad_mapper.leftJoystick;
 		const rightJoystick = MainController.timer.gamepad_mapper.rightJoystick;
 
-		GamepadControls.__applyMoveJoystick(leftJoystick, character);
-		GamepadControls.__applyFireJoystick(rightJoystick, character);
+		GamepadControls.#applyMoveJoystick(leftJoystick, character);
+		GamepadControls.#applyFireJoystick(rightJoystick, character);
 
 		if (rightJoystick.intensity === 0 
 		  && !MainController.scope.game.clip_ammo 
@@ -103,14 +103,14 @@ class GamepadControls {
 		character.applyAngles();
 	}
 
-	static __applyMoveJoystick(joystick, character) {
+	static #applyMoveJoystick(joystick, character) {
 		if (joystick.intensity !== 0) {
 			character.angle = joystick.angle;
 			character.walk();
 		}
 	}
 
-	static __applyFireJoystick(joystick, character) {
+	static #applyFireJoystick(joystick, character) {
 		if (joystick.intensity !== 0) {
 			MainController.scope.controls.firing_primary = true;
 			character.aiming_angle = joystick.angle;

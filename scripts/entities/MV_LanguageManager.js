@@ -1,17 +1,15 @@
 class MV_LanguageManager {
     TEMPLATED_VALUES_SEPARATOR = ",";
-    __game_scope;
-    __shop_manager;
+    #game_scope;
 
-    constructor(game_scope, shop_manager) {
-        this.__game_scope = game_scope;
-        this.__shop_manager = shop_manager;
-        this.__initLanguageFromNavigator();
+    constructor(game_scope) {
+        this.#game_scope = game_scope;
+        this.#initLanguageFromNavigator();
     }
 
     setLanguage(language) {
-        this.__game_scope.language = language;
-        this.__translateAll();
+        this.#game_scope.language = language;
+        this.#translateAll();
     }
 
     setTranslatedContent(element, text_key, target_property, templated_values) {
@@ -19,13 +17,13 @@ class MV_LanguageManager {
         element.setAttribute("translated-property", target_property);
 
         if (templated_values)
-            this.__setTamplatedValuesAttribute(element, templated_values);
+            this.#setTamplatedValuesAttribute(element, templated_values);
 
         element[target_property] = this.getText(text_key, templated_values);
     }
 
     getText(text_key, templated_values) { 
-        let translated_string = this.TEXTS[text_key][this.__game_scope.language];
+        let translated_string = this.TEXTS[text_key][this.#game_scope.language];
 
         if (templated_values)
             for (const current_value of templated_values)
@@ -34,7 +32,7 @@ class MV_LanguageManager {
         return translated_string; 
     }
 
-    __initLanguageFromNavigator() {
+    #initLanguageFromNavigator() {
         let language = navigator.language.split("-")[0];
         
         if ( !["fr", "es", "it", "de"].includes(language ) ) // Si la langue du navigateur n'est pas supportée => anglais
@@ -43,17 +41,17 @@ class MV_LanguageManager {
         this.setLanguage(language);
     }
 
-    __translateAll() {
+    #translateAll() {
         for (const element of document.querySelectorAll("[text-key][translated-property]")) {
             const text_key = element.getAttribute("text-key");
             const translated_property = element.getAttribute("translated-property");
-            const templated_values = this.__getTemplatedValuesArray(element);
+            const templated_values = this.#getTemplatedValuesArray(element);
 
             element[translated_property] = this.getText(text_key, templated_values);
         }
     }
 
-    __setTamplatedValuesAttribute(element, templated_values) {
+    #setTamplatedValuesAttribute(element, templated_values) {
         let templated_values_string = ""
         for (const val of templated_values)
             templated_values_string += val + this.TEMPLATED_VALUES_SEPARATOR;
@@ -62,7 +60,7 @@ class MV_LanguageManager {
         element.setAttribute("templated-values", templated_values_string);
     }
 
-    __getTemplatedValuesArray(element) {
+    #getTemplatedValuesArray(element) {
         const templated_values_string = element.getAttribute("templated-values");
         
         if (templated_values_string)

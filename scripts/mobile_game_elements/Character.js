@@ -4,7 +4,7 @@ class MV_Character extends MobileGameElement {
     constructor(viewport) {
         super(viewport);
         this.root_element.classList.add("character");
-        this.__init();
+        this.#init();
     }
   
     shoot() {
@@ -12,7 +12,7 @@ class MV_Character extends MobileGameElement {
             MainController.scope.game.waiting_counter.shot = Abilities.getShotInterval();
 
 			if (MainController.scope.game.clip_ammo) {
-				const shot = this.__createShot();
+				const shot = this.#createShot();
 				MainController.UI.addToGameWindow(shot.root_element);
                 MainController.UI.shots.push(shot);
 				MainController.scope.game.clip_ammo--;
@@ -37,30 +37,30 @@ class MV_Character extends MobileGameElement {
 
     applyAngles() {
         if (MainController.scope.controls.firing_primary) {
-            this.__rotate(this.aiming_angle);
+            this.rotate(this.aiming_angle);
         }
     }
   
-    __init() {
+    #init() {
         this.angle = 0;
         this.deltaX = 0;
         this.deltaY = 0;
         this.pixel_size = CHARACTER_SIZE;
         this.aiming_angle = 0;
     
-        this.__moveCenter();
+        this.#moveCenter();
         this.addImageElt("spinning-image");
         this.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
   
-    __moveCenter() {
+    #moveCenter() {
         this.x = (this.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE) / 2;
         this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
         this.root_element.style.top = this.viewport.getCssValue(this.y);
         this.root_element.style.left = this.viewport.getCssValue(this.x);
     }
 
-    __createShot() {
+    #createShot() {
         const front_spot = this.frontSpotPosition();
         JuiceHelper.shoot(front_spot.x, front_spot.y, this.aiming_angle);
         

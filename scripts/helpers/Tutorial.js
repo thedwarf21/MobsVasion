@@ -6,8 +6,8 @@ class TutorialHelper {
 
         JuiceHelper.startShopMusic();
 
-        const controls_sequence = TutorialHelper.__controlsSequence();
-        TutorialHelper.__popupsSequence(
+        const controls_sequence = TutorialHelper.#controlsSequence();
+        TutorialHelper.#popupsSequence(
             [{
                 message_key: "tutorial_message_intro_0",
                 face: FRIEND_FACES.happy
@@ -46,12 +46,12 @@ class TutorialHelper {
         if (MainController.scope.game.wave_number > 2)
             return;
 
-        TutorialHelper.__popupsSequence(
+        TutorialHelper.#popupsSequence(
             [{
                 message_key: "tutorial_message_shop_0",
                 face: FRIEND_FACES.happy
             }], ()=> {
-                setTimeout( TutorialHelper.__showMoneyShopTutorial, 1500 );
+                setTimeout( TutorialHelper.#showMoneyShopTutorial, 1500 );
             }
         );
     }
@@ -65,10 +65,10 @@ class TutorialHelper {
 
             if (monster_type.appear_from_wave === MainController.scope.game.wave_number) {
                 switch (key) {
-                    case "voracious":   return TutorialHelper.__showVoraciousTuto();
-                    case "spitter":     return TutorialHelper.__showSpitterTuto();
-                    case "tackler":     return TutorialHelper.__showTacklerTuto();
-                    case "golgoth":     return TutorialHelper.__showGolgothTuto();
+                    case "voracious":   return TutorialHelper.#showVoraciousTuto();
+                    case "spitter":     return TutorialHelper.#showSpitterTuto();
+                    case "tackler":     return TutorialHelper.#showTacklerTuto();
+                    case "golgoth":     return TutorialHelper.#showGolgothTuto();
                 }
             }
         }
@@ -76,7 +76,7 @@ class TutorialHelper {
         MainController.scope.controls.paused = false;
     }
 
-    static __controlsSequence() {
+    static #controlsSequence() {
         if ( Tools.isMediaStadalone() ) { // permet de savoir si l'utilisateur est sur mobile ou sur PC
             return [{
                 message_key: "tutorial_message_controls_mobile_0",
@@ -99,8 +99,8 @@ class TutorialHelper {
         }
     }
 
-    static __showMoneyShopTutorial() {
-        TutorialHelper.__popupsSequence(
+    static #showMoneyShopTutorial() {
+        TutorialHelper.#popupsSequence(
             [{
                 message_key: "tutorial_message_shop_money_0",
                 face: FRIEND_FACES.happy
@@ -115,13 +115,13 @@ class TutorialHelper {
                     return;
 
                 MainController.popups_stack.activePopup().switchToTrainingRoom();
-                setTimeout( TutorialHelper.__showTrainingRoomTutorial, 1500 );
+                setTimeout( TutorialHelper.#showTrainingRoomTutorial, 1500 );
             }
         );
     }
 
-    static __showTrainingRoomTutorial() {
-        TutorialHelper.__popupsSequence(
+    static #showTrainingRoomTutorial() {
+        TutorialHelper.#popupsSequence(
             [{
                 message_key: "tutorial_message_shop_taining_0",
                 face: FRIEND_FACES.happy
@@ -138,19 +138,19 @@ class TutorialHelper {
         );
     }
 
-    static __popupsSequence(dialogs, fn_on_sequence_end) {
+    static #popupsSequence(dialogs, fn_on_sequence_end) {
         if (MainController.scope.game.skip_tutorial)
             return fn_on_sequence_end();
 
         const next_dialog = dialogs.shift();
-        TutorialHelper.__showPopup(next_dialog.message_key, next_dialog.face, ()=> {
+        TutorialHelper.#showPopup(next_dialog.message_key, next_dialog.face, ()=> {
             if (dialogs.length > 0)
-                TutorialHelper.__popupsSequence(dialogs, fn_on_sequence_end);
+                TutorialHelper.#popupsSequence(dialogs, fn_on_sequence_end);
             else fn_on_sequence_end();
         })
     }
 
-    static __showPopup(message, friend_face_url, fn_on_close) {
+    static #showPopup(message, friend_face_url, fn_on_close) {
 		MainController.report_popup = new RS_Dialog(MainController.language_manager, "tutorial_title", "tpl_report.html", function() {
             MainController.report_popup.root_element.querySelector("#friend-face").src = friend_face_url; 
             const message_container = MainController.report_popup.root_element.querySelector("#message");
@@ -165,12 +165,12 @@ class TutorialHelper {
                 fn_on_close();
 			});
 
-            TutorialHelper.__addSkipTutorialButton();
+            TutorialHelper.#addSkipTutorialButton();
 		});
 		document.body.appendChild(MainController.report_popup.root_element);
 	}
     
-    static __addSkipTutorialButton() {
+    static #addSkipTutorialButton() {
         const button = document.createElement("INPUT");
         button.setAttribute("type", "button");
         button.classList.add("modal-button");
@@ -187,16 +187,16 @@ class TutorialHelper {
         MainController.report_popup.root_element.querySelector(".dialog-footer").prepend(button);
     }
 
-    static __showVoraciousTuto() {
-        TutorialHelper.__showSpecificMonsterTuto({
+    static #showVoraciousTuto() {
+        TutorialHelper.#showSpecificMonsterTuto({
             title_key: "tutorial_voracious_title",
             monster_class: MV_MonsterVoracious,
             message: "tutorial_voracious_message"
         });
 	}
 
-    static __showSpitterTuto() {
-        TutorialHelper.__showSpecificMonsterTuto({
+    static #showSpitterTuto() {
+        TutorialHelper.#showSpecificMonsterTuto({
             title_key: "tutorial_spitter_title",
             monster_class: MV_MonsterSpitter,
             attack: {
@@ -205,12 +205,12 @@ class TutorialHelper {
                 duration: 1000,
                 interval: 1500
             },
-            special_element: TutorialHelper.__getSpitterSpecial(),
+            special_element: TutorialHelper.#getSpitterSpecial(),
             message: "tutorial_spitter_message"
         });
 	}
 
-    static __getSpitterSpecial() {
+    static #getSpitterSpecial() {
         const toxic_cloud = document.createElement("DIV");
         toxic_cloud.classList.add("toxic-cloud");
         toxic_cloud.style.position = "unset";
@@ -219,8 +219,8 @@ class TutorialHelper {
         return toxic_cloud;
     }
 
-    static __showTacklerTuto() {
-        TutorialHelper.__showSpecificMonsterTuto({
+    static #showTacklerTuto() {
+        TutorialHelper.#showSpecificMonsterTuto({
             title_key: "tutorial_tackler_title",
             monster_class: MV_MonsterTackler,
             attack: {
@@ -233,8 +233,8 @@ class TutorialHelper {
         });
 	}
 
-    static __showGolgothTuto() {
-        TutorialHelper.__showSpecificMonsterTuto({
+    static #showGolgothTuto() {
+        TutorialHelper.#showSpecificMonsterTuto({
             title_key: "tutorial_golgoth_title",
             monster_class: MV_MonsterGolgoth,
             attack: {
@@ -243,12 +243,12 @@ class TutorialHelper {
                 duration: 600,
                 interval: 2000
             },
-            special_element: TutorialHelper.__getGolgothSpecial(),
+            special_element: TutorialHelper.#getGolgothSpecial(),
             message: "tutorial_golgoth_message"
         });
 	}
 
-    static __getGolgothSpecial() {
+    static #getGolgothSpecial() {
         const aoe = document.createElement("DIV");
         aoe.classList.add("bell-throw-aoe");
         aoe.style.position = "unset";
@@ -257,7 +257,7 @@ class TutorialHelper {
         return aoe;
     }
 
-    static __showSpecificMonsterTuto(params) {
+    static #showSpecificMonsterTuto(params) {
         MainController.report_popup = new RS_Dialog(MainController.language_manager, params.title_key, "tpl_monster_tutorial.html", function() {
             const monster_viewer = MainController.report_popup.root_element.querySelector("#monster_view");
             

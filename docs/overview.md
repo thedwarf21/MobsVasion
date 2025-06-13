@@ -234,7 +234,7 @@ Il extrait les données du `scope` pour créer la sauvegarde, et calque le conte
 
 Les données sauvegardées sont :
 
-* tout `scope.game`, à l'exception des propriétés liées à la vague en cours, et listées dans `__gameScopePropsFilter(key)`
+* tout `scope.game`, à l'exception des propriétés liées à la vague en cours, et listées dans `#gameScopePropsFilter(key)`
 * le niveau de chaque amélioration du magasin
 * les paramètres audio (volumes et états d'activation)
 
@@ -258,7 +258,7 @@ Nous avons évidemment la `MainUI`, qui gère l'interface du jeu en tant que tel
 
 Ces classes tiennent lieu de controllers spécifiques, et gèrent la mise en place du binding, les événements détectés au sein de l'UI qu'elles gèrent, etc.
 
-Exception faite de la `MainUI`, ces classes déclarent toutes une méthode `show`, responsable de la ouverture et de l'initialisation de la fenêtre modale, ainsi que d'une méthode `__close` assurant la fermenture de la popup, ainsi que l'exécution des opérations à effectuer à cette occasion.
+Exception faite de la `MainUI`, ces classes déclarent toutes une méthode `show`, responsable de la ouverture et de l'initialisation de la fenêtre modale, ainsi que d'une méthode `close` assurant la fermenture de la popup, ainsi que l'exécution des opérations à effectuer à cette occasion.
 
 En outre, dans le répertoire `view_managers`, on retrouve également le script `Popups.js`, dans lequel sont déclarées les classes `PopupsStack` et `AbstractPopup`, décrites dans le premier chapitre de la présente documentation.
 

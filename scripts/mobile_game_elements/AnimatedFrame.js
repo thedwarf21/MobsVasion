@@ -6,17 +6,17 @@ class MV_AnimatedFrame extends MobileGameElement {
         this.root_element.style.width = this.viewport.getCssValue(width);
         this.root_element.style.height = this.viewport.getCssValue(height);
 
-        this.__addAnimationElement(animationCssClass);
-        setTimeout(() => { this.__animationEnded(onAnimationEnd) }, animationDuration);
+        this.#addAnimationElement(animationCssClass);
+        setTimeout(() => { this.#animationEnded(onAnimationEnd) }, animationDuration);
     }
 
-    __addAnimationElement(animationCssClass) {
+    #addAnimationElement(animationCssClass) {
         const animationElement = document.createElement("div");
         this.root_element.appendChild(animationElement);
         animationElement.classList.add(animationCssClass);
     }
 
-    __animationEnded(onAnimationEnd) {
+    #animationEnded(onAnimationEnd) {
         this.root_element.remove();
         if (onAnimationEnd)
             onAnimationEnd();

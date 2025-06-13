@@ -24,15 +24,15 @@ class ShopItem {
             this[ property ] = shop_scope_item[ property ];
 
         this.is_money_priced_item = !!this.level_1_price;  // initialisation du flag permettant de différencier les items "Ravitaillement" de "Salle d'entrainement"
-        this.__initHtmlElement();
+        this.#initHtmlElement();
     }
 
     refreshHtmlDetails(must_translate) {
         if (must_translate)
-            this.__translateStaticContents();
+            this.#translateStaticContents();
 
-		this.__refreshPriceElement();
-		this.__refreshEffectElement();
+		this.#refreshPriceElement();
+		this.#refreshEffectElement();
 	}
 
     static getHtmlElement(css_class, content_key, templated_values) {
@@ -45,7 +45,7 @@ class ShopItem {
         return html_element;
     }
 
-    __initHtmlElement() {
+    #initHtmlElement() {
 		this.html_element = document.createElement("DIV");
 		this.html_element.classList.add("shop-item");
         this.html_element.setAttribute("nav-ident", this.nav_id);
@@ -58,8 +58,8 @@ class ShopItem {
         this.refreshHtmlDetails();
 		
         this.html_element.addEventListener('click', (event)=> {
-            if (this.__isAffordable() && !this.__isMaxed()) {
-                this.__performBuying();
+            if (this.#isAffordable() && !this.#isMaxed()) {
+                this.#performBuying();
                 JuiceHelper.popupValidate();
             }
         });
@@ -73,11 +73,11 @@ class ShopItem {
         });
 	}
 
-    __performBuying() {
+    #performBuying() {
         if (this.is_money_priced_item)
-            MainController.scope.game.money -= this.__getPrice();
+            MainController.scope.game.money -= this.#getPrice();
         else
-            MainController.scope.game.knowledge_points -= this.__getPrice();
+            MainController.scope.game.knowledge_points -= this.#getPrice();
         
         this.current_level++;
         Abilities.setCurrentLevel(this.code, this.current_level);
@@ -85,23 +85,23 @@ class ShopItem {
         MainController.shop_manager.refreshAllShopItems();
     }
 
-    __refreshPriceElement() {
-        if (!this.__isAffordable())
+    #refreshPriceElement() {
+        if (!this.#isAffordable())
 			this.price_html_element.classList.add("too-expensive");
         else this.price_html_element.classList.remove("too-expensive"); 
         
-        if (this.__isMaxed()) {
+        if (this.#isMaxed()) {
             this.price_html_element.classList.add("maxed");
             MainController.language_manager.setTranslatedContent(this.price_html_element, "shop_item_maxed", "innerHTML");
         } else {
             this.price_html_element.classList.remove("maxed");
-            MainController.language_manager.setTranslatedContent(this.price_html_element, "shop_item_price", "innerHTML", [Tools.intToHumanReadableString( this.__getPrice() )]);
+            MainController.language_manager.setTranslatedContent(this.price_html_element, "shop_item_price", "innerHTML", [Tools.intToHumanReadableString( this.#getPrice() )]);
         }
     }
 
-    __refreshEffectElement() {
-		const present_val = this.__getEffectValueAtLevel(this.current_level);
-		const increased_val = this.__getEffectValueAtLevel(this.current_level + 1);
+    #refreshEffectElement() {
+		const present_val = this.#getEffectValueAtLevel(this.current_level);
+		const increased_val = this.#getEffectValueAtLevel(this.current_level + 1);
 
 		const displayPresentValue	= Tools.prepareFloatForDisplay ( 
                                     ( this.show_multiplicator 
@@ -114,30 +114,30 @@ class ShopItem {
 							            : increased_val 
                                     ), this.display_unit || "");
 
-        const text_key = this.__isMaxed()
+        const text_key = this.#isMaxed()
                         ? this.lbl_effect + "_maxed"
                         : this.lbl_effect;
         MainController.language_manager.setTranslatedContent(this.effect_html_element, text_key, "innerHTML", [displayPresentValue, displayIncreasedValue]);
     }
 
-    __translateStaticContents() {
+    #translateStaticContents() {
         const language_manager = MainController.language_manager;
         language_manager.setTranslatedContent(this.html_element.querySelector(".shop-item-name"), this.name, "innerHTML");
         language_manager.setTranslatedContent(this.description_html_element, this.description, "innerHTML");
     }
 
-    __isAffordable() {
+    #isAffordable() {
         return this.is_money_priced_item 
-            ?  this.__getPrice() <= MainController.scope.game.money 
+            ?  this.#getPrice() <= MainController.scope.game.money 
             :  !!MainController.scope.game.knowledge_points;
     }
 
-    __getPrice() { 
+    #getPrice() { 
         return this.is_money_priced_item 
             ?  Tools.getFibonacciValue(this.level_1_price, this.level_2_price_coef, this.current_level)
             :  1; 
     }
 
-    __getEffectValueAtLevel(level)  { return this.level_0_effect + (this.upgrade_value * level); }
-    __isMaxed()                     { return (this.max_level && this.current_level === this.max_level); }
+    #getEffectValueAtLevel(level)  { return this.level_0_effect + (this.upgrade_value * level); }
+    #isMaxed()                     { return (this.max_level && this.current_level === this.max_level); }
 }

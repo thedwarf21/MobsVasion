@@ -10,20 +10,20 @@ class TouchScreenControls {
 			controller.togglePause();
 		});
 
-		TouchScreenControls.__bindEvents(document.querySelector('.hud .primary-fire'), function(e) {
+		TouchScreenControls.#bindEvents(document.querySelector('.hud .primary-fire'), function(e) {
 			controls.firing_primary = true;
 			controls.auto_aiming = true;
 		}, function() { 
-			TouchScreenControls.__resetControls(); 
+			TouchScreenControls.#resetControls(); 
 		});
 
-		TouchScreenControls.__bindEvents(document.querySelector('.hud .secondary-fire'), function(e) {
+		TouchScreenControls.#bindEvents(document.querySelector('.hud .secondary-fire'), function(e) {
 			controls.firing_secondary = true;
 		}, function() {
 			controls.firing_secondary = false;
 		});
 
-		TouchScreenControls.__bindEvents(document.querySelector('.hud .reload'), function(e) {
+		TouchScreenControls.#bindEvents(document.querySelector('.hud .reload'), function(e) {
 			controls.reloading = true;
 		}, function() {
 			controls.reloading = false;
@@ -33,15 +33,15 @@ class TouchScreenControls {
 	/** Contrôles clavier et écran tactile => seront déplacés dans des classes dédiées */
 	static applyControls() {
 		if (!MainController.scope.controls.paused) {
-			TouchScreenControls.__applyJoystick();
-			TouchScreenControls.__autoAim();
+			TouchScreenControls.#applyJoystick();
+			TouchScreenControls.#autoAim();
 		} else {
 			MainController.virtual_joystick.reset();
-			TouchScreenControls.__resetControls();
+			TouchScreenControls.#resetControls();
 		}
 	}
 
-	static __bindEvents(html_element, on_mouse_down, on_mouse_up) {
+	static #bindEvents(html_element, on_mouse_down, on_mouse_up) {
 		html_element.addEventListener('touchstart', function(e) {
 			e.preventDefault();
 			on_mouse_down();
@@ -50,21 +50,21 @@ class TouchScreenControls {
 		html_element.addEventListener('touchcancel', function(e) { on_mouse_up(); });
 	}
 
-	static __resetControls() {
+	static #resetControls() {
 		const controls = MainController.scope.controls;
 		controls.firing_secondary = false;
 		controls.firing_primary = false;
 		controls.auto_aiming = false;
 	}
 
-	static __applyJoystick() {
+	static #applyJoystick() {
 		if (MainController.virtual_joystick.angle === null)
 			return;
 
 		MainController.UI.character.walk();	
 	}
 
-	static __autoAim() {
+	static #autoAim() {
 		if (!MainController.scope.controls.auto_aiming)
 			return;
 
@@ -94,7 +94,7 @@ class VirtualJoystick {
 			e.preventDefault();
 			this.touch_index = e.touches.length - 1;
 
-			const current_touch = this.__getTouch(e.touches);
+			const current_touch = this.#getTouch(e.touches);
 			this.start_x = current_touch.clientX;
 			this.start_y = current_touch.clientY;
 		});
@@ -104,7 +104,7 @@ class VirtualJoystick {
 				return;
 
 			const stick_movement = 3;
-			const current_touch = this.__getTouch(e.touches);
+			const current_touch = this.#getTouch(e.touches);
 			const delta_x = current_touch.clientX - this.start_x;
 			const delta_y = current_touch.clientY - this.start_y;
 			
@@ -128,7 +128,7 @@ class VirtualJoystick {
 		this.angle = null;
 	}
 
-	__getTouch(event_touches_list) {
+	#getTouch(event_touches_list) {
 		for (let touch of event_touches_list) {
 			if (touch.target === this.global_element)
 				return touch;

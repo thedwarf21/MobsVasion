@@ -67,21 +67,21 @@ class KeyboardAndMouseControls {
             const controls = MainController.scope.controls;
             const absurd_value = 1000;
             let angle = absurd_value;
-            if (KeyboardAndMouseControls.__isToLeft(controls))
+            if (KeyboardAndMouseControls.#isToLeft(controls))
                 angle = Math.PI;
-            else if (KeyboardAndMouseControls.__isToRight(controls))
+            else if (KeyboardAndMouseControls.#isToRight(controls))
                 angle = 0;
-            else if (KeyboardAndMouseControls.__isToUp(controls))
+            else if (KeyboardAndMouseControls.#isToUp(controls))
                 angle = -Math.PI / 2;
-            else if (KeyboardAndMouseControls.__isToDown(controls))
+            else if (KeyboardAndMouseControls.#isToDown(controls))
                 angle = Math.PI / 2;
-            if (KeyboardAndMouseControls.__isToUpLeft(controls))
+            if (KeyboardAndMouseControls.#isToUpLeft(controls))
                 angle = -Math.PI * 3 / 4;
-            else if (KeyboardAndMouseControls.__isToUpRight(controls))
+            else if (KeyboardAndMouseControls.#isToUpRight(controls))
                 angle = -Math.PI / 4;
-            else if (KeyboardAndMouseControls.__isToDownLeft(controls))
+            else if (KeyboardAndMouseControls.#isToDownLeft(controls))
                 angle = Math.PI * 3 / 4;
-            else if (KeyboardAndMouseControls.__isToDownRight(controls))
+            else if (KeyboardAndMouseControls.#isToDownRight(controls))
                 angle = Math.PI / 4;
 
             if (angle !== absurd_value) {
@@ -90,11 +90,11 @@ class KeyboardAndMouseControls {
             }
 
             if (MainController.scope.controls.mouse_aiming)
-                KeyboardAndMouseControls.__applyMouseAiming(character);
+                KeyboardAndMouseControls.#applyMouseAiming(character);
 		}
 	}
 
-    static __applyMouseAiming(character) {
+    static #applyMouseAiming(character) {
         const mouse_position = MainController.scope.controls.mousePosition;
         const character_center = character.centralSpotPosition();
         let rad_angle = Math.atan( (mouse_position.y - character_center.y) / (mouse_position.x - character_center.x) );
@@ -105,22 +105,17 @@ class KeyboardAndMouseControls {
         character.applyAngles();
     }
 
-    static hasMoveControls() {
-        const controls = MainController.scope.controls;
-        return controls.upPressed || controls.downPressed || controls.upPressed || controls.downPressed; 
-    }
+    static #hasYaxisControls(controls) { return (controls.upPressed && !controls.downPressed) || (!controls.upPressed && controls.downPressed); }
+    static #hasXaxisControls(controls) { return (controls.leftPressed && !controls.rightPressed) || (!controls.leftPressed && controls.rightPressed); }
 
-    static __hasYaxisControls(controls) { return (controls.upPressed && !controls.downPressed) || (!controls.upPressed && controls.downPressed); }
-    static __hasXaxisControls(controls) { return (controls.leftPressed && !controls.rightPressed) || (!controls.leftPressed && controls.rightPressed); }
-
-    static __isToLeft(controls) {  return controls.leftPressed && !controls.rightPressed && !KeyboardAndMouseControls.__hasYaxisControls(controls); }
-    static __isToRight(controls) {  return !controls.leftPressed && controls.rightPressed && !KeyboardAndMouseControls.__hasYaxisControls(controls); }
-    static __isToUp(controls) {  return controls.upPressed && !controls.downPressed && !KeyboardAndMouseControls.__hasXaxisControls(controls); }
-    static __isToDown(controls) {  return !controls.upPressed && controls.downPressed && !KeyboardAndMouseControls.__hasXaxisControls(controls); }
-    static __isToUpLeft(controls) {  return controls.leftPressed && !controls.rightPressed && controls.upPressed && !controls.downPressed; }
-    static __isToUpRight(controls) {  return !controls.leftPressed && controls.rightPressed && controls.upPressed && !controls.downPressed; }
-    static __isToDownLeft(controls) {  return controls.leftPressed && !controls.rightPressed && !controls.upPressed && controls.downPressed; }
-    static __isToDownRight(controls) {  return !controls.leftPressed && controls.rightPressed && !controls.upPressed && controls.downPressed; }
+    static #isToLeft(controls) {  return controls.leftPressed && !controls.rightPressed && !KeyboardAndMouseControls.#hasYaxisControls(controls); }
+    static #isToRight(controls) {  return !controls.leftPressed && controls.rightPressed && !KeyboardAndMouseControls.#hasYaxisControls(controls); }
+    static #isToUp(controls) {  return controls.upPressed && !controls.downPressed && !KeyboardAndMouseControls.#hasXaxisControls(controls); }
+    static #isToDown(controls) {  return !controls.upPressed && controls.downPressed && !KeyboardAndMouseControls.#hasXaxisControls(controls); }
+    static #isToUpLeft(controls) {  return controls.leftPressed && !controls.rightPressed && controls.upPressed && !controls.downPressed; }
+    static #isToUpRight(controls) {  return !controls.leftPressed && controls.rightPressed && controls.upPressed && !controls.downPressed; }
+    static #isToDownLeft(controls) {  return controls.leftPressed && !controls.rightPressed && !controls.upPressed && controls.downPressed; }
+    static #isToDownRight(controls) {  return !controls.leftPressed && controls.rightPressed && !controls.upPressed && controls.downPressed; }
 }
 
 

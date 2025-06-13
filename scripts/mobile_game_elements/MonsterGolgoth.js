@@ -34,21 +34,21 @@ class MV_MonsterGolgoth extends MV_Monster {
     
     specificDeathEffect() {  // appelée par MV_Monster à la mort du monstre, si la méthode est présente
         if (this.carried_monster)
-            this.__carriedMonsterFallDown();
+            this.#carriedMonsterFallDown();
     }
 
     attack() {
         if (this.before_next_pick)
             this.before_next_pick--;
 
-        if (this.__isAttacking())
+        if (this.isAttacking())
             return;
 
-        if (this.carried_monster && this.__canThrow())
+        if (this.carried_monster && this.#canThrow())
             this.choseThrowMethod();
 
         if (this.current_target.monster_type)
-            return this.__pickUpIfPossible();
+            return this.#pickUpIfPossible();
 
         if (this.hitbox.checkCollide(MainController.UI.character.hitbox))
 			HealthBarHelper.characterHit(this.monster_type.strength);
@@ -62,7 +62,7 @@ class MV_MonsterGolgoth extends MV_Monster {
         const thrown_monster = this.setThrownMonsterStartPoition();
         TrailAttackHelper.performAttack(this, thrown_monster, throw_length);
 
-        this.__dropMonster(thrown_monster);
+        this.#dropMonster(thrown_monster);
     }
 
     isPickable() { return false; }
@@ -89,13 +89,13 @@ class MV_MonsterGolgoth extends MV_Monster {
         return thrown_monster;
     }
 
-    __canThrow() {
+    #canThrow() {
         const character = MainController.UI.character;
         return this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
     }
 
     /** Ramassage des monstres */
-    __pickUpIfPossible() {
+    #pickUpIfPossible() {
         if (this.before_next_pick)
             return;
         if (!this.hitbox.checkCollide(this.current_target.hitbox))
@@ -106,10 +106,10 @@ class MV_MonsterGolgoth extends MV_Monster {
         this.carried_monster = this.current_target;
         this.carried_monster.carried = true;
         this.carried_monster.resetAttackCounter();
-        this.__setCarriedMonsterPosition();
+        this.#setCarriedMonsterPosition();
     }
 
-    __setCarriedMonsterPosition() {
+    #setCarriedMonsterPosition() {
         const carried_monster_element = this.carried_monster.root_element;
         this.rotate_element.appendChild(carried_monster_element);
         
@@ -121,7 +121,7 @@ class MV_MonsterGolgoth extends MV_Monster {
     }
 
     /** Chute du monstre porté */
-    __carriedMonsterFallDown() {
+    #carriedMonsterFallDown() {
         MainController.UI.addToGameWindow(this.carried_monster.root_element);
         const position_delta = (this.pixel_size - this.carried_monster.pixel_size) / 2;
         this.carried_monster.x = this.x + position_delta;
@@ -130,15 +130,15 @@ class MV_MonsterGolgoth extends MV_Monster {
 
         const fallen_monster = this.carried_monster;
         this.carried_monster = null;
-        this.__dropMonster(fallen_monster);
+        this.#dropMonster(fallen_monster);
     }
     
-    __dropMonster(monster) {
-        this.__performDroppedMonsterInjuries(monster);
+    #dropMonster(monster) {
+        this.#performDroppedMonsterInjuries(monster);
         monster.carried = false;
     }
 
-    __performDroppedMonsterInjuries(monster) {
+    #performDroppedMonsterInjuries(monster) {
        monster.health_points -= this.THROWN_MONSTER_MAX_INJURIES;
         
         if (monster.health_points <= 0)
@@ -153,11 +153,11 @@ class MV_MonsterGolgoth extends MV_Monster {
         JuiceHelper.throw();
 
         const thrown_monster = this.setThrownMonsterStartPoition();
-        const aoe_element = this.__showBellThrowDamageZone();
-        this.__setBellThrowAnimation(thrown_monster, aoe_element);
+        const aoe_element = this.#showBellThrowDamageZone();
+        this.#setBellThrowAnimation(thrown_monster, aoe_element);
     }
 
-    __showBellThrowDamageZone() {
+    #showBellThrowDamageZone() {
         const target_position = MainController.UI.character.centralSpotPosition();
 
         const aoe_element = new MobileGameElement(this.viewport, target_position.x - this.AOE_RADIUS, target_position.y - this.AOE_RADIUS);
@@ -170,7 +170,7 @@ class MV_MonsterGolgoth extends MV_Monster {
         return aoe_element;
     }
 
-    __setBellThrowAnimation(thrown_monster, aoe_element) {
+    #setBellThrowAnimation(thrown_monster, aoe_element) {
         const character = MainController.UI.character;
         const throw_angle = thrown_monster.hitbox.getDirection(character.hitbox);
         const throw_distance = thrown_monster.hitbox.getDistance(character.hitbox);
@@ -183,13 +183,13 @@ class MV_MonsterGolgoth extends MV_Monster {
             deltaAngle: Math.random(this.FLYING_MAX_DELTA_ANGLE * 2) - this.FLYING_MAX_DELTA_ANGLE,
             frames: this.FLYING_FRAMES_NUMBER,
             max_scale: this.FLYING_MAX_SCALE,
-            onAnimationEnd: ()=> { this.__bellThrowLanding(thrown_monster, aoe_element); }
+            onAnimationEnd: ()=> { this.#bellThrowLanding(thrown_monster, aoe_element); }
         });
     }
 
-    __bellThrowLanding(thrown_monster, aoe_element) {
+    #bellThrowLanding(thrown_monster, aoe_element) {
         WaitingCounters.removeFlyingMonster(thrown_monster);
-        this.__dropMonster(thrown_monster);
+        this.#dropMonster(thrown_monster);
 
         if (aoe_element.hitbox.checkCollide(MainController.UI.character.hitbox))
             HealthBarHelper.characterHit(this.monster_type.strength);

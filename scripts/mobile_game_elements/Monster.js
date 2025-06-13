@@ -18,11 +18,11 @@ class MV_Monster extends MobileGameElement {
         this.health_points -= injury_amount;
         this.life_bar.assignValue(this.health_points);
         this.resetAttackCounter();
-        this.__dieOrBleed(monster_index, angle);
+        this.#dieOrBleed(monster_index, angle);
     }
   
     follow(target) {
-        if (!this.__canMove())
+        if (!this.#canMove())
             return;
         
         if (this.choseFollowTarget)
@@ -41,14 +41,14 @@ class MV_Monster extends MobileGameElement {
         this.angle = 0;
         this.deltaX = 0;
         this.deltaY = 0;
-        this.__initFromMonsterType();
-        this.__addLifeBar();
+        this.#initFromMonsterType();
+        this.#addLifeBar();
         super.addImageElt("spinning-image");
         super.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
 
     resetAttackCounter() {
-        if (this.__isAttacking()) {
+        if (this.isAttacking()) {
             this.root_element.classList.remove("attack-animation");
             this.attack_bar.root_element.remove();
             this.attack_bar = null;
@@ -59,7 +59,7 @@ class MV_Monster extends MobileGameElement {
     aimPlayer() {
         const character = MainController.UI.character;
         this.aiming_angle = this.hitbox.getDirection(character.hitbox);
-        this.__rotate( this.aiming_angle );
+        this.rotate( this.aiming_angle );
     }
 
     shock() {
@@ -88,33 +88,33 @@ class MV_Monster extends MobileGameElement {
 
     isPickable() { return !this.carried; }
 
-    __isAttacking() { return !!this.attack_bar; }
+    isAttacking() { return !!this.attack_bar; }
 
-    __canMove() { return !this.shocked && !this.carried && !this.__isAttacking(); }
+    #canMove() { return !this.shocked && !this.carried && !this.isAttacking(); }
   
-    __initFromMonsterType() {
+    #initFromMonsterType() {
         this.pixel_size = this.monster_type.size;
         this.health_points = MainController.wave_generator.healthPoints(this.monster_type);
         this.speed = MainController.wave_generator.randomSpeed(this.monster_type);
     }
   
-    __addLifeBar() {
+    #addLifeBar() {
         this.life_bar = new MV_Gauge("monster-health-bar", this.health_points, this.health_points);
         this.root_element.appendChild(this.life_bar.root_element);
     }
 
-    __dieOrBleed(monster_index, angle) {
+    #dieOrBleed(monster_index, angle) {
         if (this.health_points <= 0) {
             this.root_element.remove();
-            this.__createBloodPuddle(this.x + this.pixel_size/2, this.y + this.pixel_size/2, true);
-            this.__monsterSlayed(monster_index);
+            this.#createBloodPuddle(this.x + this.pixel_size/2, this.y + this.pixel_size/2, true);
+            this.#monsterSlayed(monster_index);
         } else {
             this.shock();
-            this.__bleed(angle);
+            this.#bleed(angle);
         }
     }
 
-    __bleed(angle) {
+    #bleed(angle) {
         if (angle)
             angle += Math.PI;
         else angle = this.angle;
@@ -124,11 +124,11 @@ class MV_Monster extends MobileGameElement {
         const x_puddle = x_splash + BLOOD_SPLASH_LENGTH * Math.cos(angle);
         const y_puddle = y_splash + BLOOD_SPLASH_LENGTH * Math.sin(angle);  
         JuiceHelper.bloodSplash(x_splash, y_splash, angle, ()=> {
-            this.__createBloodPuddle(x_puddle, y_puddle, false);
+            this.#createBloodPuddle(x_puddle, y_puddle, false);
         });
     }
 
-    __monsterSlayed(monster_index) {
+    #monsterSlayed(monster_index) {
         JuiceHelper.monsterSlayed();
         MainController.UI.monsters.splice(monster_index, 1);
 
@@ -140,11 +140,11 @@ class MV_Monster extends MobileGameElement {
         if (this.specificDeathEffect)
             this.specificDeathEffect();
 		
-        if (MainController.__isWaveComplete())
-			MainController.__waveDefeated();
+        if (MainController.isWaveComplete())
+			MainController.waveDefeated();
     }
 
-    __createBloodPuddle(x, y, isBig) {
+    #createBloodPuddle(x, y, isBig) {
         const puddle_element = document.createElement("DIV");
         puddle_element.classList.add("blood-puddle");
         

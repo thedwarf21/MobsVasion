@@ -12,7 +12,7 @@ class RS_Dialog {
     constructor(language_manager, title_key, urlHtmlContent, onAfterContentLoad) {
         this.root_element = document.createElement("DIV");
         this.root_element.classList.add("rs-modal-bg");
-        this.__initPopup(language_manager, title_key, urlHtmlContent, onAfterContentLoad);
+        this.#initPopup(language_manager, title_key, urlHtmlContent, onAfterContentLoad);
     }
 
     /**
@@ -37,15 +37,15 @@ class RS_Dialog {
      * @param {string} urlHtmlContent 
      * @param {function} onAfterContentLoad 
      */
-    __initPopup(language_manager, title_key, urlHtmlContent, onAfterContentLoad) {
+    #initPopup(language_manager, title_key, urlHtmlContent, onAfterContentLoad) {
         const popup = document.createElement("DIV");
         popup.classList.add("rs-modal");
         popup.classList.add("rs-closed");
 
-        popup.appendChild(this.__getHeaderElement(language_manager, title_key));
-        this.__initContentElement()
+        popup.appendChild(this.#getHeaderElement(language_manager, title_key));
+        this.#initContentElement()
         popup.appendChild(this.content_element);
-        this.__applyTemplateParams(urlHtmlContent, onAfterContentLoad);
+        this.#applyTemplateParams(urlHtmlContent, onAfterContentLoad);
 
         this.root_element.appendChild(popup);
         setTimeout(() => { popup.classList.remove("rs-closed") }, 25);
@@ -57,7 +57,7 @@ class RS_Dialog {
      * @param {string} title_key 
      * @returns HTMLDivElement
      */
-    __getHeaderElement(language_manager, title_key) {
+    #getHeaderElement(language_manager, title_key) {
         const header = document.createElement("DIV");
         header.classList.add("rs-modal-title");
         language_manager.setTranslatedContent(header, title_key, "innerHTML");
@@ -67,7 +67,7 @@ class RS_Dialog {
     /**
      * Construit l'élément de corps de la popup dans la propriété `content_element` de l'objet
      */
-    __initContentElement() {
+    #initContentElement() {
         this.content_element = document.createElement("DIV");
         this.content_element.classList.add("rs-modal-content");
     }
@@ -77,7 +77,7 @@ class RS_Dialog {
      * @param {string} urlHtmlContent 
      * @param {function} onAfterContentLoad
      */
-    __applyTemplateParams(urlHtmlContent, onAfterContentLoad) {
+     #applyTemplateParams(urlHtmlContent, onAfterContentLoad) {
         if (urlHtmlContent)
             routage(urlHtmlContent, onAfterContentLoad, this.content_element);
     }

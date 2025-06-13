@@ -12,14 +12,14 @@ class GameClock {
 	/** Exécution d'un TIK d'horlage (paramétré à 50ms, pour le moment => 20 FPS) */
 	letsPlay() {
 		document.body.scrollTo(0, 0);
-		this.__updateControlsObject();
+		this.#updateControlsObject();
 
 		if (!this.controls_state.paused) {
 			if (this.gamepad_mapper)
 				GamepadControls.updateControlsObject();
 			
-			this.__performControlsObjectChanges();
-			this.__testCollides();
+			this.#performControlsObjectChanges();
+			this.#testCollides();
 			WaitingCounters.decrementWaitingCounters();
 
 			if (MainController.scope.game.wave_pop.timeouts)
@@ -43,7 +43,7 @@ class GameClock {
 		}
 	}
 
-	__updateControlsObject() {
+	#updateControlsObject() {
 		KeyboardAndMouseControls.applyControlsObject();
 		TouchScreenControls.applyControls();
 
@@ -51,19 +51,19 @@ class GameClock {
 			GamepadControls.applyMenuControls();
 	}
 
-	__performControlsObjectChanges() {
+	#performControlsObjectChanges() {
 		const character = MainController.UI.character;
 		if (character)
-			this.__characterActions(character);
+			this.#characterActions(character);
 
-		this.__moveShots(MainController.UI.shots);
-		this.__moveShots(MainController.UI.monster_shots);
+		this.#moveShots(MainController.UI.shots);
+		this.#moveShots(MainController.UI.monster_shots);
 
 		for (const monster of MainController.UI.monsters)
 			monster.follow(character);
 	}
 
-	__moveShots(shots_list) {
+	#moveShots(shots_list) {
 		for (let i = shots_list.length - 1; i >= 0; i--) {
 			const shot = shots_list[i];
 			shot.move(()=> {
@@ -73,8 +73,8 @@ class GameClock {
 		}
 	}
 
-	__characterActions(character) {
-		if (this.__mustReload())
+	#characterActions(character) {
+		if (this.#mustReload())
 			this.launchReloadingAction();
 
 		if (this.controls_state.firing_primary && !MainController.UI.primaryReloadGauge)
@@ -91,7 +91,7 @@ class GameClock {
 		}
 	}
 
-	__mustReload() {
+	#mustReload() {
 		if (this.controls_state.reloading)
 			return true;
 		if (!this.controls_state.firing_primary && !MainController.scope.game.clip_ammo)
@@ -99,7 +99,7 @@ class GameClock {
 		return false;
 	}
 
-	__testCollides() {
+	#testCollides() {
 		const monsters = MainController.UI.monsters;
 		const character = MainController.UI.character;
 		const monster_shots = MainController.UI.monster_shots;
@@ -107,8 +107,8 @@ class GameClock {
 		for (let i = monsters.length - 1; i >= 0; i--) {
 			const monster = monsters[i];
 			monster.attack();
-			this.__performMonsterWounds(i, monster, MainController.UI.shots, Abilities.getShotPower());
-			this.__performMonsterWounds(i, monster, MainController.UI.monster_shots);
+			this.#performMonsterWounds(i, monster, MainController.UI.shots, Abilities.getShotPower());
+			this.#performMonsterWounds(i, monster, MainController.UI.monster_shots);
 		}
 
 		for (let i = monster_shots.length - 1; i >= 0; i--) {
@@ -126,7 +126,7 @@ class GameClock {
 		}
 	}
 
-	__performMonsterWounds(index, monster, shots, shot_power) {
+	#performMonsterWounds(index, monster, shots, shot_power) {
 		for (let i = shots.length - 1; i >=0; i--) {
 			const shot = shots[i];
 

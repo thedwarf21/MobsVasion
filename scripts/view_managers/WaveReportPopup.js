@@ -9,13 +9,13 @@ class WaveReportPopup {
             const close_button = MainController.report_popup.root_element.querySelector("#btn_close");
             MainController.language_manager.setTranslatedContent(close_button, "popup_close", "value");
 			close_button.addEventListener("click", function() {
-                WaveReportPopup.__close();
+                WaveReportPopup.close();
 			});
 		});
 		document.body.appendChild(MainController.report_popup.root_element);
 	}
 
-    static __close() {
+    static close() {
         MainController.report_popup.closeModal();
         MainController.report_popup = null;
         MainController.popups_stack.push(ShopPopup);

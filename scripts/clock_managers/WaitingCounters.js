@@ -21,13 +21,13 @@ class WaitingCounters {
 			if (counters_object[counter_key]) {
 				counters_object[counter_key]--;
 				if (!counters_object[counter_key])
-					WaitingCounters.__performCounterEndAction(counter_key);
-				else WaitingCounters.__performValueChangeAction(counter_key, counters_object[counter_key]);
+					WaitingCounters.#performCounterEndAction(counter_key);
+				else WaitingCounters.#performValueChangeAction(counter_key, counters_object[counter_key]);
 			}
 		}
 
-		this.__decrementMonsterAttackCounters();
-		this.__animateFlyingMonsters();
+		this.#decrementMonsterAttackCounters();
+		this.#animateFlyingMonsters();
 	}
 
 	static clear() {
@@ -60,7 +60,7 @@ class WaitingCounters {
 		}
 	}
 
-	static __performValueChangeAction(counter_key, counter_value) {
+	static #performValueChangeAction(counter_key, counter_value) {
 		switch(counter_key) {
 			case "clip":
 				MainController.UI.primaryReloadGauge.assignValue(Abilities.getPrimaryReloadInterval() - counter_value);
@@ -73,7 +73,7 @@ class WaitingCounters {
 		}
 	}
 
-	static __performCounterEndAction(counter_key) {
+	static #performCounterEndAction(counter_key) {
 		switch(counter_key) {
 			case "clip":
 				MainController.scope.game.clip_ammo = Abilities.getClipSize();
@@ -89,7 +89,7 @@ class WaitingCounters {
 		}
 	}
 
-	static __decrementMonsterAttackCounters() {
+	static #decrementMonsterAttackCounters() {
 		for (const attacking_monster of MainController.scope.game.attacking_monsters) {
 			const monster = attacking_monster.monster;
 
@@ -103,15 +103,15 @@ class WaitingCounters {
 		}
 	}
 
-	static __animateFlyingMonsters() {
+	static #animateFlyingMonsters() {
 		for (const flying_monster of MainController.scope.game.flying_monsters) {
-			WaitingCounters.__updateFlyingFramesCounter(flying_monster);
+			WaitingCounters.#updateFlyingFramesCounter(flying_monster);
 			
 			const monster = flying_monster.monster;
 			monster.angle += flying_monster.deltaAngle;
 			monster.move();
 
-			WaitingCounters.__applyFlyingScale(flying_monster);
+			WaitingCounters.#applyFlyingScale(flying_monster);
 
 			if (flying_monster.frames_counter === flying_monster.frames) {
 				monster.root_element.style.transform = null;
@@ -121,7 +121,7 @@ class WaitingCounters {
 		}
 	}
 
-	static __updateFlyingFramesCounter(flying_monster) {
+	static #updateFlyingFramesCounter(flying_monster) {
 		if (!flying_monster.frames_counter) {
 			flying_monster.frames_counter = 1;
 
@@ -132,7 +132,7 @@ class WaitingCounters {
 		} else flying_monster.frames_counter++;
 	}
 
-	static __applyFlyingScale(flying_monster) {
+	static #applyFlyingScale(flying_monster) {
 		const apogee_frame = flying_monster.frames / 2;
 		const frames_from_apogee = Math.abs(flying_monster.frames_counter - apogee_frame);
 		const from_apogee_ratio = frames_from_apogee / apogee_frame;

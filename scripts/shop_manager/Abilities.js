@@ -1,18 +1,18 @@
 class Abilities {
 
-    static setCurrentLevel(code, value) { Abilities.__getShopEntryByCode(code).current_level = value; }
+    static setCurrentLevel(code, value) { Abilities.#getShopEntryByCode(code).current_level = value; }
     
-    static getSwagUpgrade()     { return 1 + Abilities.__getValueOf( Abilities.__getShopEntryByCode("DET") ); }
-    static getClipSize()        { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("CHC") ); }
-    static getShotInterval()    { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RAT") ); }
-    static getShotPower()       { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("POW") ); }
-    static getMaxPlayerHealth() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("CON") ); }
-    static getCharacterSpeed()  { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("AGI") ); }
-    static getPrimaryReloadInterval()   { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("RLD") ); }
-    static getSecondaryReloadInterval() { return Abilities.__getValueOf( Abilities.__getShopEntryByCode("DAR") ); }
+    static getSwagUpgrade()     { return 1 + Abilities.#getValueOf( Abilities.#getShopEntryByCode("DET") ); }
+    static getClipSize()        { return Abilities.#getValueOf( Abilities.#getShopEntryByCode("CHC") ); }
+    static getShotInterval()    { return Abilities.#getValueOf( Abilities.#getShopEntryByCode("RAT") ); }
+    static getShotPower()       { return Abilities.#getValueOf( Abilities.#getShopEntryByCode("POW") ); }
+    static getMaxPlayerHealth() { return Abilities.#getValueOf( Abilities.#getShopEntryByCode("CON") ); }
+    static getCharacterSpeed()  { return Abilities.#getValueOf( Abilities.#getShopEntryByCode("AGI") ); }
+    static getPrimaryReloadInterval()   { return Abilities.#getValueOf( Abilities.#getShopEntryByCode("RLD") ); }
+    static getSecondaryReloadInterval() { return Abilities.#getValueOf( Abilities.#getShopEntryByCode("DAR") ); }
 
     static setMaxHealthBinding(character_health_bar, html_element) {
-        const max_health_shop_entry = Abilities.__getShopEntryByCode("CON");
+        const max_health_shop_entry = Abilities.#getShopEntryByCode("CON");
 
         new RS_Binding({
             object: max_health_shop_entry,
@@ -28,7 +28,7 @@ class Abilities {
     }
 
     static setClipSizeBinding(html_element) {
-        const clip_size_shop_entry = Abilities.__getShopEntryByCode("CHC");
+        const clip_size_shop_entry = Abilities.#getShopEntryByCode("CHC");
 
         new RS_Binding({
             object: clip_size_shop_entry,
@@ -37,14 +37,14 @@ class Abilities {
         });
     }
 
-    static __getShopEntryByCode(code) {
+    static #getShopEntryByCode(code) {
         for (const shop_entry of MainController.scope.shop) {
             if (shop_entry.code === code)
                 return shop_entry;
         }
     }
 
-    static __getValueOf(shop_entry) {
+    static #getValueOf(shop_entry) {
         return shop_entry.level_0_effect + (shop_entry.current_level * shop_entry.upgrade_value);
     }
 }

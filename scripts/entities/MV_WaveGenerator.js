@@ -10,87 +10,18 @@ class MV_WaveGenerator {
 		MainController.scope.game.wave_pop.elapsed = 0;
 		MainController.scope.game.wave_pop.timeouts = [];
         this.battle_value = 0;
-        this.__initScheduleCounters();
+        this.#initScheduleCounters();
 
-		let timeout = this.__getMandatoryPop();
+		let timeout = this.#getMandatoryPop();
 		while (this.remaining_battle_value) {
 			MainController.scope.game.wave_pop.timeouts.push({
                 ticks_number: timeout,
-                monster_type: this.__randomMonster()
+                monster_type: this.#randomMonster()
             });
 
 			timeout += this.time_before_next_pop;
 		}
 	}
-
-    __initScheduleCounters() {
-        for (const key in this.bestiary)
-            this.bestiary[key].count = 0;
-    }
-
-    __randomMonster() {
-        const available_bestiary = this.__filteredBestiary();
-        const monster_type = Tools.getRandomArrayElement( available_bestiary );
-        
-        this.battle_value += monster_type.battle_value;
-        monster_type.count++;
-
-        return monster_type;
-    }
-
-    __filteredBestiary() {
-        const result_list = [];
-        
-        for (const key in this.bestiary)
-            if (this.__canMonsterTypePop(key))
-                result_list.push(this.bestiary[key]);
-
-        return result_list;
-    }
-
-    __canMonsterTypePop(monster_key) {
-        const wave_number = MainController.scope.game.wave_number;
-        const monster_type = this.bestiary[monster_key];
-
-        if (monster_type.appear_from_wave > wave_number)
-            return false;
-
-        if (monster_type.battle_value > this.remaining_battle_value)
-            return false;
-
-        if (this.__occursLimitReached(monster_type))
-            return false;
-
-        return true;
-    }
-
-    __occursLimitReached(monster_type) {
-        if (!monster_type.appear_limiter)
-            return false;
-
-        const limit = Math.ceil( MainController.scope.game.wave_number / monster_type.appear_limiter );
-        return monster_type.count === limit;
-    }
-
-    __getMandatoryPop() {
-        for (const key in this.bestiary) {
-            const monster_type = this.bestiary[key];
-
-            if (monster_type.appear_from_wave === MainController.scope.game.wave_number) {
-                this.battle_value += monster_type.battle_value;
-                monster_type.count++;
-                
-                MainController.scope.game.wave_pop.timeouts.push({
-                    ticks_number: TIMEOUTS.before_pop,
-                    monster_type: monster_type
-                });
-
-                return TIMEOUTS.before_pop + this.time_before_next_pop;
-            }
-        }
-
-        return TIMEOUTS.before_pop;
-    }
 
     popMonsterRandomly(monster_type) {
 		const max_x_value = MainController.viewport.VIRTUAL_WIDTH - monster_type.size;
@@ -129,6 +60,75 @@ class MV_WaveGenerator {
         const min_value = monster_type.speed_range[0];
         const max_value = monster_type.speed_range[1];
         return Math.floor( Math.random() * (max_value - min_value + 1) ) + min_value;
+    }
+
+    #initScheduleCounters() {
+        for (const key in this.bestiary)
+            this.bestiary[key].count = 0;
+    }
+
+    #randomMonster() {
+        const available_bestiary = this.#filteredBestiary();
+        const monster_type = Tools.getRandomArrayElement( available_bestiary );
+        
+        this.battle_value += monster_type.battle_value;
+        monster_type.count++;
+
+        return monster_type;
+    }
+
+    #filteredBestiary() {
+        const result_list = [];
+        
+        for (const key in this.bestiary)
+            if (this.#canMonsterTypePop(key))
+                result_list.push(this.bestiary[key]);
+
+        return result_list;
+    }
+
+    #canMonsterTypePop(monster_key) {
+        const wave_number = MainController.scope.game.wave_number;
+        const monster_type = this.bestiary[monster_key];
+
+        if (monster_type.appear_from_wave > wave_number)
+            return false;
+
+        if (monster_type.battle_value > this.remaining_battle_value)
+            return false;
+
+        if (this.#occursLimitReached(monster_type))
+            return false;
+
+        return true;
+    }
+
+    #occursLimitReached(monster_type) {
+        if (!monster_type.appear_limiter)
+            return false;
+
+        const limit = Math.ceil( MainController.scope.game.wave_number / monster_type.appear_limiter );
+        return monster_type.count === limit;
+    }
+
+    #getMandatoryPop() {
+        for (const key in this.bestiary) {
+            const monster_type = this.bestiary[key];
+
+            if (monster_type.appear_from_wave === MainController.scope.game.wave_number) {
+                this.battle_value += monster_type.battle_value;
+                monster_type.count++;
+                
+                MainController.scope.game.wave_pop.timeouts.push({
+                    ticks_number: TIMEOUTS.before_pop,
+                    monster_type: monster_type
+                });
+
+                return TIMEOUTS.before_pop + this.time_before_next_pop;
+            }
+        }
+
+        return TIMEOUTS.before_pop;
     }
 
     get remaining_battle_value() {

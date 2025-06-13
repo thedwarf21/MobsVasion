@@ -8,7 +8,7 @@ class MV_MonsterTackler extends MV_Monster {
     }
 
     attack() {
-        if (this.__canAttack())
+        if (this.#canAttack())
             super.timedAttack( JuiceHelper.prepareTackling );
     }
 
@@ -22,8 +22,8 @@ class MV_MonsterTackler extends MV_Monster {
         this.shock();
     }
 
-    __canAttack() { 
-        if (this.__isAttacking() || this.carried)
+    #canAttack() { 
+        if (this.isAttacking() || this.carried)
             return false;
 
         const character = MainController.UI.character;

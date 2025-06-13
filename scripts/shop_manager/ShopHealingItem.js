@@ -11,18 +11,18 @@ class ShopHealingItem {
         this.price = price;
         this.hp_recover = hp_recover;
 
-        this.__initRootElement(nav_id);
+        this.#initRootElement(nav_id);
     }
 
     refresh(must_translate) {
         if (must_translate)
-            this.__translateStaticContents();
+            this.#translateStaticContents();
 
-        if (!this.__isAffordable())
+        if (!this.#isAffordable())
             this.price_element.classList.add("too-expensive");
         else this.price_element.classList.remove("too-expensive");
 
-        if (this.__isMaxed()) {
+        if (this.#isMaxed()) {
             this.price_element.classList.add("maxed");
             MainController.language_manager.setTranslatedContent(this.price_element, "shop_heal_maxed", "innerHTML");
         } else {
@@ -31,7 +31,7 @@ class ShopHealingItem {
         }
     }
 
-    __initRootElement(nav_id) {
+    #initRootElement(nav_id) {
         this.root_element = document.createElement("DIV");
         this.root_element.classList.add("shop-item");
         this.root_element.classList.add("healing-item");
@@ -43,7 +43,7 @@ class ShopHealingItem {
         this.refresh();
 
         this.root_element.addEventListener('click', ()=> {
-            if (this.__isAffordable() && !this.__isMaxed()) {
+            if (this.#isAffordable() && !this.#isMaxed()) {
                 MainController.scope.game.money -= this.price;
                 HealthBarHelper.healPlayer( this.hp_recover );
 
@@ -69,12 +69,12 @@ class ShopHealingItem {
         });
     }
 
-    __translateStaticContents() {
+    #translateStaticContents() {
         const language_manager = MainController.language_manager;
         language_manager.setTranslatedContent(this.root_element.querySelector(".shop-item-name"), this.name, "innerHTML");
         language_manager.setTranslatedContent(this.description_element, "shop_heal_desc", "innerHTML", [this.hp_recover]);
     }
 
-    __isAffordable() { return MainController.scope.game.money >= this.price; }
-    __isMaxed() { return MainController.scope.game.health_points === Abilities.getMaxPlayerHealth(); }
+    #isAffordable() { return MainController.scope.game.money >= this.price; }
+    #isMaxed() { return MainController.scope.game.health_points === Abilities.getMaxPlayerHealth(); }
 }

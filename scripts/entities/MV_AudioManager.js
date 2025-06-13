@@ -11,7 +11,7 @@ class MV_AudioManager {
 		this.sound_settings = sound_settings;
 		this.sound_lib = {};
 		
-		this.__initFromConfig(SOUND_LIB);
+		this.#initFromConfig(SOUND_LIB);
 	}
 
 	/**
@@ -27,8 +27,8 @@ class MV_AudioManager {
 			return;
 		}
 		
-		if (this.__canBePlayed(sound_entry.is_music)) {
-			const audio_element = this.__getAvailableElement(sound_entry);
+		if (this.#canBePlayed(sound_entry.is_music)) {
+			const audio_element = this.#getAvailableElement(sound_entry);
 			audio_element.currentTime = 0;
 			audio_element.play().catch((error)=> { console.error(error); });
 		}
@@ -54,7 +54,7 @@ class MV_AudioManager {
 	 * Arrête la lecture de tous les lecteurs audio, répertoriés comme musique
 	 */
 	stopMusic() {
-		this.__forEachMusic((music_entry) => {
+		this.#forEachMusic((music_entry) => {
 			music_entry.pause();
 		});
 	}
@@ -65,7 +65,7 @@ class MV_AudioManager {
 	 * @param {number} volume volume à appliquer (0 <= volume <= 1)
 	 */
 	setMusicVolume(volume) {
-		this.__forEachMusic((music_entry) => {
+		this.#forEachMusic((music_entry) => {
 			music_entry.volume = volume;
 		});
 	}
@@ -76,7 +76,7 @@ class MV_AudioManager {
 	 * @param {number} volume volume à appliquer (0 <= volume <= 1)
 	 */
 	setSoundFxVolume(volume) {
-		this.__forEachSoundFx((sound_fx_entry) => {
+		this.#forEachSoundFx((sound_fx_entry) => {
 			sound_fx_entry.volume = volume;
 		});
 	}
@@ -94,7 +94,7 @@ class MV_AudioManager {
 	 * 
 	 * @param {object} sounds_lib_config  Objet de configuration des sons (chemin, boucle/simple, fx/music, noumbre d'occurrences de lecteur audio)
 	 */
-	__initFromConfig(sounds_lib_config) {
+	#initFromConfig(sounds_lib_config) {
 		for (const key in sounds_lib_config) {
 			const sounds_config_entry = sounds_lib_config[key];
 
@@ -104,7 +104,7 @@ class MV_AudioManager {
 				elements: []
 			};
 
-			this.sound_lib[key].elements = this.__getConfigEntryElements(sounds_config_entry);
+			this.sound_lib[key].elements = this.#getConfigEntryElements(sounds_config_entry);
 		}
 	}
 
@@ -113,7 +113,7 @@ class MV_AudioManager {
 	 * 
 	 * @param {object} sounds_config_entry  Objet de configuration d'un son précis
 	 */
-	__getConfigEntryElements(sounds_config_entry) {
+	#getConfigEntryElements(sounds_config_entry) {
 		const elements = [];
 		
 		let players_number = sounds_config_entry.players_number;
@@ -121,7 +121,7 @@ class MV_AudioManager {
 			players_number = 1;
 		
 		for (let i = 0; i < players_number; i++)
-			elements.push( this.__createAudioTag(sounds_config_entry.file, sounds_config_entry.is_loop) );
+			elements.push( this.#createAudioTag(sounds_config_entry.file, sounds_config_entry.is_loop) );
 
 		return elements;
 	}
@@ -132,7 +132,7 @@ class MV_AudioManager {
 	 * @param {string} 		filename 
 	 * @param {boolean} 	is_loop
 	 */
-	__createAudioTag(filename, is_loop) {
+	#createAudioTag(filename, is_loop) {
 		const audio_player = document.createElement("AUDIO");
 		audio_player.src = AUDIO_PATH + filename;
 		audio_player.loop = is_loop;
@@ -147,7 +147,7 @@ class MV_AudioManager {
 	 * 
 	 * @param {boolean} is_music
 	 */
-	__canBePlayed(is_music) {
+	#canBePlayed(is_music) {
 		return is_music 
 			 ? this.sound_settings.music_on 
 			 : this.sound_settings.sound_fx_on;
@@ -158,7 +158,7 @@ class MV_AudioManager {
 	 * 
 	 * @param {object} sound_entry  Objet de travail correspondant à un son précis 
 	 */
-	__getAvailableElement(sound_entry) {
+	#getAvailableElement(sound_entry) {
 		let max_current_time = 0;
 		let best_choice_index;
 
@@ -181,7 +181,7 @@ class MV_AudioManager {
 	 * 
 	 * @param {function} fnDo fonction d'altération de la balise audio
 	 */
-	__forEachMusic(fnDo) {
+	#forEachMusic(fnDo) {
 		for (const key in this.sound_lib) {
 			const sound_entry = this.sound_lib[key];
 			if (sound_entry.is_music)
@@ -194,7 +194,7 @@ class MV_AudioManager {
 	 * 
 	 * @param {function} fnDo fonction d'altération de la balise audio
 	 */
-	__forEachSoundFx(fnDo) {
+	#forEachSoundFx(fnDo) {
 		for (const key in this.sound_lib) {
 			const sound_entry = this.sound_lib[key];
 			if (!sound_entry.is_music)

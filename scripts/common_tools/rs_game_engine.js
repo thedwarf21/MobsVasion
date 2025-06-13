@@ -25,15 +25,15 @@ class RS_Hitbox {
 		const str_notice = "veillez à n'initialiser la propriété shape qu'avec les constantes statiques prévues à cet effet.";
 		if (this.shape === RS_Hitbox.SHAPE_CIRCLE) {
 			if (hitbox.shape === RS_Hitbox.SHAPE_CIRCLE)
-				return this.__checkCircleVsCircle(hitbox);
+				return this.#checkCircleVsCircle(hitbox);
 			else if (hitbox.shape === RS_Hitbox.SHAPE_BOX)
-				return this.__checkCircleVsBox(hitbox);
+				return this.#checkCircleVsBox(hitbox);
 			else console.error(`Forme de hitbox inconnue: ${hitbox.shape} >>> ${str_notice}`);
 		} else if (this.shape === RS_Hitbox.SHAPE_BOX) {
 			if (hitbox.shape === RS_Hitbox.SHAPE_CIRCLE)
-				return hitbox.__checkCircleVsBox(this);
+				return hitbox.#checkCircleVsBox(this);
 			else if (hitbox.shape === RS_Hitbox.SHAPE_BOX)
-				return this.__checkBoxVsBox(hitbox);
+				return this.#checkBoxVsBox(hitbox);
 			else console.error(`Forme de hitbox inconnue: ${hitbox.shape} >>> ${str_notice}`);
 		} else console.error(`Forme de hitbox inconnue: ${this.shape} >>> ${str_notice}`);
 	}
@@ -67,19 +67,19 @@ class RS_Hitbox {
 		return nearest_element;
 	}
 
-	__checkCircleVsCircle(hitbox) {
+	#checkCircleVsCircle(hitbox) {
 		const deltaX = Math.abs(this.x - hitbox.x),
 			  deltaY = Math.abs(this.y - hitbox.y),
 			  distance = (deltaX**2 + deltaY**2) ** 0.5;
 		return (distance < this.radius + hitbox.radius);
 	}
 
-	__checkCircleVsBox(hitbox) {
+	#checkCircleVsBox(hitbox) {
 		console.warn("RS_Hitbox.checkCircleVsBox(): Cette fonction est en attente d'implémentation");	
 		return false;
 	}
 
-	__checkBoxVsBox(hitbox) {
+	#checkBoxVsBox(hitbox) {
 		console.warn("RS_Hitbox.checkBoxVsBox(): Cette fonction est en attente d'implémentation");
 		return false;
 	}
@@ -206,7 +206,7 @@ class MobileGameElement {
 		}
 
 	  	this.applyPosition();
-		this.__rotate();
+		this.rotate();
 	}
 
 	applyPosition() {
@@ -216,7 +216,7 @@ class MobileGameElement {
 		this.root_element.style.bottom = null;
 	}
 
-	__rotate(forced_angle) {
+	rotate(forced_angle) {
 		if (this.angle >= Math.PI) this.angle -= 2 * Math.PI;
     	if (this.angle < -Math.PI) this.angle += 2 * Math.PI;
 
@@ -266,11 +266,9 @@ class MobileGameElement {
 	 * @param {string} css_class_name Classe CSS permettant de définir l'affichage.
 	 */
 	addImageElt(css_class_name) {
-		this.__image_elt = document.createElement("DIV");
-		this.__image_elt.classList.add(css_class_name);
-		this.root_element.appendChild(this.__image_elt);
-	
-		this.rotate_element = this.__image_elt;
+		this.rotate_element = document.createElement("DIV");
+		this.rotate_element.classList.add(css_class_name);
+		this.root_element.appendChild(this.rotate_element);
 	}
 
 	/**
@@ -412,19 +410,19 @@ class GamepadControl {
 	}
 
 	applyContext(gamepad) {
-		if (this.__isButtonPressed(gamepad)) {
-			if (this.__isExecutionPossible()) {
-				this.__execute(true);
+		if (this.#isButtonPressed(gamepad)) {
+			if (this.#isExecutionPossible()) {
+				this.#execute(true);
 				this.actionAlreadyDone = true;
 			}
 		} else {
-			this.__execute(false);
+			this.#execute(false);
 			this.actionAlreadyDone = false;
 		}
 
 	}
 
-	__execute(button_state) {
+	#execute(button_state) {
 		if (button_state)
 			return this.pushedAction();
 		
@@ -432,11 +430,11 @@ class GamepadControl {
 			return this.unpushedAction();
 	}
 
-	__isButtonPressed(gamepad) {
+	#isButtonPressed(gamepad) {
 		return this.buttonIndex !== undefined && gamepad.buttons[this.buttonIndex].pressed;
 	}
 
-	__isExecutionPossible() {
+	#isExecutionPossible() {
 		return !this.actionAlreadyDone || this.isAuto;
 	}
 }
@@ -450,10 +448,10 @@ class GamepadJoystick {
 	constructor(x_rate, y_rate) {
 		this.x = x_rate;
 		this.y = y_rate;
-		this.__computeAngleAndIntensity();
+		this.#computeAngleAndIntensity();
 	}
 
-	__computeAngleAndIntensity() {
+	#computeAngleAndIntensity() {
 		this.angle = Math.atan2(this.y, this.x);
 		this.intensity 	= Math.abs(this.x) > Math.abs(this.y) 
 						? Math.abs(this.x) 
@@ -478,7 +476,7 @@ class GamepadConfigUI {
 		this.popup = new RS_Dialog(this.language_manager, "gamepad_config_title", "tpl_gamepad_config.html", ()=> {
 			const container = this.popup.root_element.querySelector("#controls-gui-container");
 			for (let i=0; i<this.controls_mapper.controls.length; i++) {
-				container.appendChild(this.__getConfigInterfaceItem(i));
+				container.appendChild(this.#getConfigInterfaceItem(i));
 			}
 			const btn_close = this.popup.root_element.querySelector("#btn_close");
 			btn_close.value = this.language_manager.getText("popup_close");
@@ -492,30 +490,30 @@ class GamepadConfigUI {
 		this.popup.closeModal(onPopupClose);
 	}
 
-	__getConfigInterfaceItem(control_index) {
+	#getConfigInterfaceItem(control_index) {
 		const control_mapping_item = this.controls_mapper.controls[control_index]
-		const config_interface_item = this.__getItemContainer();
-		config_interface_item.appendChild(this.__getItemNameDiv(control_mapping_item.name));
-		const button_mapped = this.__getItemMapDiv(control_mapping_item.buttonIndex);
+		const config_interface_item = this.#getItemContainer();
+		config_interface_item.appendChild(this.#getItemNameDiv(control_mapping_item.name));
+		const button_mapped = this.#getItemMapDiv(control_mapping_item.buttonIndex);
 		config_interface_item.appendChild(button_mapped);
-		config_interface_item.addEventListener("click", ()=> { this.__itemClicked(button_mapped, control_index); });
+		config_interface_item.addEventListener("click", ()=> { this.#itemClicked(button_mapped, control_index); });
 		return config_interface_item;
 	}
 
-	__getItemContainer() {
+	#getItemContainer() {
 		const config_interface_item = document.createElement("DIV");
 		config_interface_item.classList.add("control-item-container");
 		return config_interface_item;
 	}
 
-	__getItemNameDiv(name) {
+	#getItemNameDiv(name) {
 		const control_name = document.createElement("DIV");
 		control_name.classList.add("control-name");
 		control_name.innerHTML = this.language_manager.getText(name);
 		return control_name;
 	}
 
-	__getItemMapDiv(buttonIndex) {
+	#getItemMapDiv(buttonIndex) {
 		const button_mapped = document.createElement("DIV");
 		button_mapped.classList.add("button-mapped");
 		button_mapped.innerHTML = buttonIndex 
@@ -524,15 +522,15 @@ class GamepadConfigUI {
 		return button_mapped;
 	}
 
-	__itemClicked(button_mapped, control_index) {
+	#itemClicked(button_mapped, control_index) {
 		button_mapped.innerHTML = this.language_manager.getText("gamepad_config_press_button_lib");
-		this.__captureButtonPressed((button_index)=> {
+		this.#captureButtonPressed((button_index)=> {
 			this.controls_mapper.setControlMapping(control_index, button_index);
 			button_mapped.innerHTML = this.language_manager.getText("gamepad_config_mapped_lib") + " " + button_index;
 		});
 	}
 
-	__captureButtonPressed(fnThen) {
+	#captureButtonPressed(fnThen) {
 		const interval_id = setInterval(()=> {
 			const gamepad = GamepadGenericAdapter.getConnectedGamepad();
 			for (let i=0; i<gamepad.buttons.length; i++) {

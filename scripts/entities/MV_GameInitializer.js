@@ -157,37 +157,37 @@ class MV_GameInitializer {
 
 	static prepareGame(controller, onInitComplete) {
 		controller.scope = MV_GameInitializer.initial_scope;
-		MV_GameInitializer.__initLanguageManager(controller);
-		MV_GameInitializer.__initPopupsStack(controller);
-		MV_GameInitializer.__initShopManager(controller);
-		MV_GameInitializer.__initWaveGenerator(controller);
+		MV_GameInitializer.#initLanguageManager(controller);
+		MV_GameInitializer.#initPopupsStack(controller);
+		MV_GameInitializer.#initShopManager(controller);
+		MV_GameInitializer.#initWaveGenerator(controller);
 		TouchScreenControls.addListeners(controller);
 		KeyboardAndMouseControls.addKeyListeners(controller);
 		KeyboardAndMouseControls.addMouseListeners(controller);
 		GamepadControls.prepareControls(controller);
-		MV_GameInitializer.__initAudioManager(controller);
-		MV_GameInitializer.__initMainUI(controller);
-        MV_GameInitializer.__createTimer(controller);
-		MV_GameInitializer.__initSaveManager(controller, onInitComplete);
+		MV_GameInitializer.#initAudioManager(controller);
+		MV_GameInitializer.#initMainUI(controller);
+        MV_GameInitializer.#createTimer(controller);
+		MV_GameInitializer.#initSaveManager(controller, onInitComplete);
 	}
 
-	static __initLanguageManager(controller) {
+	static #initLanguageManager(controller) {
 		controller.language_manager = new MV_LanguageManager( controller.scope.game );
 	}
 
-	static __initPopupsStack(controller) { 
+	static #initPopupsStack(controller) { 
 		controller.popups_stack = new PopupsStack();
 	}
 
-	static __initShopManager(controller) { 
+	static #initShopManager(controller) { 
 		controller.shop_manager = new ShopManager( controller.scope.shop );
 	}
 
-	static __initWaveGenerator(controller) {
+	static #initWaveGenerator(controller) {
 		controller.wave_generator = new MV_WaveGenerator();
 	}
 
-	static __initAudioManager(controller) {
+	static #initAudioManager(controller) {
 		controller.audio_manager = new MV_AudioManager({
 			music_on: true,
 			sound_fx_on: true,
@@ -196,16 +196,16 @@ class MV_GameInitializer {
 		});
 	}
 
-	static __initMainUI(controller) {
+	static #initMainUI(controller) {
 		controller.UI = new MainUI();
 	}
 
-	static __createTimer(controller) {
+	static #createTimer(controller) {
 		controller.timer = new GameClock(controller.scope.controls);
 		controller.timer.letsPlay();
 	}
 
-	static __initSaveManager(controller, onInitComplete) {
+	static #initSaveManager(controller, onInitComplete) {
 		controller.save_manager = new MV_SaveManager(controller);
 		if (controller.save_manager.last_saved_game) {
 			RS_Confirm(controller.language_manager, "load_popup_confirm", "load_popup_title", "load_popup_yes", "load_popup_no", 

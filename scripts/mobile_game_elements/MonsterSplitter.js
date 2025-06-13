@@ -8,14 +8,14 @@ class MV_MonsterSpitter extends MV_Monster {
     }
 
     attack() {
-        if (this.__canAttack())
+        if (this.#canAttack())
             super.timedAttack( JuiceHelper.prepareSpitting );
     }
 
     performAttack() {
         JuiceHelper.spit();
         super.resetAttackCounter();
-        const shot = this.__createShot();
+        const shot = this.#createShot();
 		MainController.UI.addToGameWindow(shot.root_element);
         MainController.UI.monster_shots.push(shot);
     }
@@ -34,15 +34,15 @@ class MV_MonsterSpitter extends MV_Monster {
         MainController.UI.addToGameWindow(toxic_cloud);
     }
 
-    __canAttack() { 
-        if (this.__isAttacking() || this.carried)
+    #canAttack() { 
+        if (this.isAttacking() || this.carried)
             return false;
 
         const character = MainController.UI.character;
         return this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
     }
     
-    __createShot() {
+    #createShot() {
         const front_spot = this.frontSpotPosition();
         
         const deltaX = SHOT_VELOCITY/2 * Math.cos(this.aiming_angle);

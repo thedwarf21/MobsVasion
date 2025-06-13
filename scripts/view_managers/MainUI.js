@@ -12,87 +12,11 @@ class MainUI {
 		this.monsters = [];
 		this.toxic_clouds = [];
 		this.monster_shots = [];
-		this.__prepareWaveSwagAutoRefresh();
-		this.__prepareAmmoAutoRefresh();
-		this.__prepareLifeBarAutoRefresh( HealthBarHelper.create() );
-        this.__prepareLevelAndXpAutoRefresh( XpBarHelper.create() );
-		this.__manageHudDisplay();
-	}
-
-    clearGameWindow() {
-		this.__clearCharacter();
-		this.__clearBloodPuddles();
-		this.__clearToxicClouds();
-		this.__clearBellThrowMarks();
-		this.__clearMonsters();
-		this.__clearMonsterShots();
-		this.__clearPlayerShots();
-		this.__clearGauges();
-
-		const soil_index = Tools.radomValueInRange(0, 2);
-		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
-		this.game_window.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
-    }
-
-	__clearCharacter() {
-		if (this.character) {
-			this.character.root_element.remove();
-			this.character = null;
-		}
-	}
-
-	__clearBloodPuddles() {
-		for (let i = this.bloodPuddles.length - 1; i >= 0; i--)
-			this.bloodPuddles[i].remove();
-	}
-
-	__clearToxicClouds() {
-		for (let i = this.toxicClouds.length - 1; i >= 0; i--) {
-			this.toxicClouds[i].hitbox = null;
-			this.toxicClouds[i].remove();
-		}
-	}
-
-	__clearBellThrowMarks() {
-		for (let i = this.bellThrowMarks.length - 1; i >= 0; i--) {
-			this.bellThrowMarks[i].hitbox = null;
-			this.bellThrowMarks[i].remove();
-		}
-	}
-
-	__clearMonsters() {
-		for (let i = this.monsters.length - 1; i >= 0; i--) {
-			this.monsters[i].root_element.remove();
-			this.monsters.splice(i, 1);
-		}
-
-		//TODO essayer de comprendre pourquoi il arrive (même si c'est très rare) qu'un élément HTML de monstre ne se supprime pas correctement
-		for (const monster_element of document.querySelectorAll(".monster"))
-			monster_element.remove();
-	}
-
-	__clearMonsterShots() {
-		for (let i = this.monster_shots.length - 1; i >= 0; i--) {
-			this.monster_shots[i].root_element.remove();
-			this.monster_shots.splice(i, 1);
-		}
-	}
-
-	__clearPlayerShots() {
-		for (let i = this.player_shots.length - 1; i >= 0; i--)
-			this.player_shots[i].remove();
-	}
-
-	__clearGauges() {
-		if (this.primaryReloadGauge) {
-			this.primaryReloadGauge.root_element.remove();
-			this.primaryReloadGauge = null;
-		}
-
-		if (this.secondaryReloadGauge) {
-			this.secondaryReloadGauge.root_element.remove();
-			this.secondaryReloadGauge = null;
-		}
+		this.#prepareWaveSwagAutoRefresh();
+		this.#prepareAmmoAutoRefresh();
+		this.#prepareLifeBarAutoRefresh( HealthBarHelper.create() );
+        this.#prepareLevelAndXpAutoRefresh( XpBarHelper.create() );
+		this.#manageHudDisplay();
 	}
 
 	addToGameWindow(element) {
@@ -129,12 +53,88 @@ class MainUI {
 		return result_list;
 	}
 
-	__manageHudDisplay() {
+    clearGameWindow() {
+		this.#clearCharacter();
+		this.#clearBloodPuddles();
+		this.#clearToxicClouds();
+		this.#clearBellThrowMarks();
+		this.#clearMonsters();
+		this.#clearMonsterShots();
+		this.#clearPlayerShots();
+		this.#clearGauges();
+
+		const soil_index = Tools.radomValueInRange(0, 2);
+		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
+		this.game_window.style.backgroundSize = SOIL_BG_SIZE[ soil_index ];
+    }
+
+	#clearCharacter() {
+		if (this.character) {
+			this.character.root_element.remove();
+			this.character = null;
+		}
+	}
+
+	#clearBloodPuddles() {
+		for (let i = this.bloodPuddles.length - 1; i >= 0; i--)
+			this.bloodPuddles[i].remove();
+	}
+
+	#clearToxicClouds() {
+		for (let i = this.toxicClouds.length - 1; i >= 0; i--) {
+			this.toxicClouds[i].hitbox = null;
+			this.toxicClouds[i].remove();
+		}
+	}
+
+	#clearBellThrowMarks() {
+		for (let i = this.bellThrowMarks.length - 1; i >= 0; i--) {
+			this.bellThrowMarks[i].hitbox = null;
+			this.bellThrowMarks[i].remove();
+		}
+	}
+
+	#clearMonsters() {
+		for (let i = this.monsters.length - 1; i >= 0; i--) {
+			this.monsters[i].root_element.remove();
+			this.monsters.splice(i, 1);
+		}
+
+		//TODO essayer de comprendre pourquoi il arrive (même si c'est très rare) qu'un élément HTML de monstre ne se supprime pas correctement
+		for (const monster_element of document.querySelectorAll(".monster"))
+			monster_element.remove();
+	}
+
+	#clearMonsterShots() {
+		for (let i = this.monster_shots.length - 1; i >= 0; i--) {
+			this.monster_shots[i].root_element.remove();
+			this.monster_shots.splice(i, 1);
+		}
+	}
+
+	#clearPlayerShots() {
+		for (let i = this.player_shots.length - 1; i >= 0; i--)
+			this.player_shots[i].remove();
+	}
+
+	#clearGauges() {
+		if (this.primaryReloadGauge) {
+			this.primaryReloadGauge.root_element.remove();
+			this.primaryReloadGauge = null;
+		}
+
+		if (this.secondaryReloadGauge) {
+			this.secondaryReloadGauge.root_element.remove();
+			this.secondaryReloadGauge = null;
+		}
+	}
+
+	#manageHudDisplay() {
 		if (!Tools.isMediaStadalone())
 			this.hud.remove();
 	}
 
-    __prepareWaveSwagAutoRefresh() {
+    #prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
 			object: MainController.scope.game,
 			property: "human_readable_money",
@@ -154,7 +154,7 @@ class MainUI {
 
     }
 
-    __prepareAmmoAutoRefresh() {
+    #prepareAmmoAutoRefresh() {
 		const html_element = document.querySelector(".ammo-display #current");
         new RS_Binding({
 			object: MainController.scope.game,
@@ -169,7 +169,7 @@ class MainUI {
 		Abilities.setClipSizeBinding(document.querySelector(".ammo-display #total"));
     }
 
-    __prepareLifeBarAutoRefresh(character_health_bar) {
+    #prepareLifeBarAutoRefresh(character_health_bar) {
 		this.addToGameWindow(character_health_bar.root_element);
 
 		const html_element = document.querySelector(".health-display #current");
@@ -186,7 +186,7 @@ class MainUI {
 		Abilities.setMaxHealthBinding(character_health_bar, document.querySelector(".health-display #total"));
     }
 
-    __prepareLevelAndXpAutoRefresh(xp_bar) {
+    #prepareLevelAndXpAutoRefresh(xp_bar) {
 		this.addToGameWindow(xp_bar.root_element);
 		
 		new RS_Binding({
