@@ -197,11 +197,11 @@ class MV_GameInitializer {
 	}
 
 	static #initMainUI(controller) {
-		controller.UI = new MainUI();
+		controller.UI = new MainUI(controller);
 	}
 
 	static #createTimer(controller) {
-		controller.timer = new GameClock(controller.scope.controls);
+		controller.timer = new GameClock(controller.scope.controls, controller.UI, controller.scope.game);
 		controller.timer.letsPlay();
 	}
 
