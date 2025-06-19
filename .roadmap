@@ -25,7 +25,7 @@ V   Tâche terminée
     _   Ajouter le nav-ident du bouton de fermeture
     _   Modifier le code de la classe
     _   Passer par popups_stack, pour ouvrir et fermer la popup
-*   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto
+*   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto => renommer la fonction
 *   Faire passer GamepadConfigUI en AbstractPopup
 *   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
 
