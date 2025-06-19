@@ -12,7 +12,7 @@ class MainUI {
 
 		this.controller = controller
 		this.game_scope = controller.scope.game;
-		this.gamepad_controls_ui = controller.gamepadControlsUI;
+		this.gamepad_controls_ui = controller.scope.gamepadControlsUI;
 		
 		this.#prepareWaveSwagAutoRefresh();
 		this.#prepareAmmoAutoRefresh();

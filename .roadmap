@@ -13,9 +13,10 @@ x   Sous-tâche en cours
 V   Tâche terminée
 >   Sous-tâche terminée
 
-*   Passer MainUI.closeAllpopups dans le MainConttroller
 *   Faire passer ParametersPopup en AbstractPopup
+*   Faire passer GamepadConfigUI en AbstractPopup
 *   Créer la classe TutorialPopup héritant de AbstractPopup
+*   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
 *   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant un tuto
 
 *   Optimisations et assainissements
