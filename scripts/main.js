@@ -235,7 +235,7 @@ class MainController {
 		if (!was_paused)   						// Mise en pause manuelle => ouverture de la popup paramètres
 			MainController.popups_stack.push(ParametersPopup);
 		else if (MainController.report_popup) 	// Possibilité de fermer la popup de rapport de fin de vague, via bouton pause (workflow particulier => gestion à part)
-			WaveReportPopup.close( MainController.prepareWaveStart );
+			WaveReportPopup.close();
 		else MainController.UI.closeAllPopups();
 	}
 
