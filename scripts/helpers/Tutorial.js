@@ -158,7 +158,7 @@ class TutorialHelper {
 	}
 
     static #showVoraciousTuto() {
-        TutorialHelper.#showSpecificMonsterTuto({
+        MainController.popups_stack.push(MonsterTutoPopup, {
             title_key: "tutorial_voracious_title",
             monster_class: MV_MonsterVoracious,
             message: "tutorial_voracious_message"
@@ -166,7 +166,7 @@ class TutorialHelper {
 	}
 
     static #showSpitterTuto() {
-        TutorialHelper.#showSpecificMonsterTuto({
+        MainController.popups_stack.push(MonsterTutoPopup, {
             title_key: "tutorial_spitter_title",
             monster_class: MV_MonsterSpitter,
             attack: {
@@ -190,7 +190,7 @@ class TutorialHelper {
     }
 
     static #showTacklerTuto() {
-        TutorialHelper.#showSpecificMonsterTuto({
+        MainController.popups_stack.push(MonsterTutoPopup, {
             title_key: "tutorial_tackler_title",
             monster_class: MV_MonsterTackler,
             attack: {
@@ -204,7 +204,7 @@ class TutorialHelper {
 	}
 
     static #showGolgothTuto() {
-        TutorialHelper.#showSpecificMonsterTuto({
+        MainController.popups_stack.push(MonsterTutoPopup, {
             title_key: "tutorial_golgoth_title",
             monster_class: MV_MonsterGolgoth,
             attack: {
@@ -225,54 +225,5 @@ class TutorialHelper {
         aoe.style.width = MainController.viewport.getCssValue(270);
         aoe.style.height = MainController.viewport.getCssValue(270);
         return aoe;
-    }
-
-    static #showSpecificMonsterTuto(params) {
-        MainController.report_popup = new RS_Dialog(MainController.language_manager, params.title_key, "tpl_monster_tutorial.html", function() {
-            const monster_viewer = MainController.report_popup.root_element.querySelector("#monster_view");
-            
-            let timer;
-            if (params.attack) {
-                const monster_attacking = new params.monster_class(MainController.viewport, 0, 0);
-                monster_attacking.root_element.style.position = "unset";
-
-                timer = setInterval(()=> {
-                    params.attack.prepareSound();
-                    monster_attacking.root_element.classList.add("attack-animation");
-                    setTimeout(()=> {
-                        params.attack.sound();
-                        monster_attacking.root_element.classList.remove("attack-animation");
-                    }, params.attack.duration);
-                }, params.attack.interval);
-                
-                monster_viewer.appendChild(monster_attacking.root_element);
-            } else {
-                const monster = new params.monster_class(MainController.viewport, 0, 0);
-                monster.root_element.style.position = "unset";
-                monster_viewer.appendChild(monster.root_element);
-            }
-            
-            if (params.special_element)
-                monster_viewer.appendChild(params.special_element);
-
-            const message_container = MainController.report_popup.root_element.querySelector("#message");
-            message_container.classList.add("tutorial");
-            MainController.language_manager.setTranslatedContent(message_container, params.message, "innerHTML");
-
-            const close_button = MainController.report_popup.root_element.querySelector("#btn_close");
-            MainController.language_manager.setTranslatedContent(close_button, "tutorial_next", "value");
-			close_button.addEventListener("click", function() {
-                if (params.special_element)
-                    params.special_element.remove();
-
-                if (params.attack)
-                    clearInterval(timer);
-
-                MainController.report_popup.closeModal();
-                MainController.report_popup = null;
-                MainController.scope.controls.paused = false;
-			});
-		});
-		document.body.appendChild(MainController.report_popup.root_element);
     }
 }

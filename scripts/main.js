@@ -258,9 +258,7 @@ class MainController {
 
 	static startWave() {
 		JuiceHelper.startWaveMusic();
-
-		//if (!MainController.popups_stack.activePopup())
-			TutorialHelper.showMonsterTutorial();
+		TutorialHelper.showMonsterTutorial();
 	}
 
 	

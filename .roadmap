@@ -18,9 +18,13 @@ V   Tâche terminée
     V   Créer la classe avec la gestion de la navigation par manette, pour les deux boutons "Continuer" et "Passer..."
     V  Passer par popups_stack, pour ouvrir et fermer la popup
 *   Créer une classe MonsterTutoPopup héritant de AbstractPopup
+    V   Ajouter le nav-ident du bouton de fermeture
+    V   Créer la classe
+    V   Passer par popups_stack, pour ouvrir et fermer la popup
+*   Gérer la WaveReportPopup dans popups_stack
     _   Ajouter le nav-ident du bouton de fermeture
-    _   Créer la classe
-    _   Remplacer la création de la popup par un push dans popups_stack, dans le code du TutorialHelper
+    _   Modifier le code de la classe
+    _   Passer par popups_stack, pour ouvrir et fermer la popup
 *   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto
 *   Faire passer GamepadConfigUI en AbstractPopup
 *   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
