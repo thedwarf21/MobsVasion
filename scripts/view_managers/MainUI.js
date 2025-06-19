@@ -3,15 +3,17 @@ class MainUI {
 	shots;
 	monster_shots;
 	monsters;
-	primaryReloadGauge;
-	secondaryReloadGauge;
 
 
-	constructor() {
+	constructor(controller) {
 		this.shots = [];
 		this.monsters = [];
-		this.toxic_clouds = [];
 		this.monster_shots = [];
+
+		this.controller = controller
+		this.game_scope = controller.scope.game;
+		this.gamepad_controls_ui = controller.gamepadControlsUI;
+		
 		this.#prepareWaveSwagAutoRefresh();
 		this.#prepareAmmoAutoRefresh();
 		this.#prepareLifeBarAutoRefresh( HealthBarHelper.create() );
@@ -30,17 +32,16 @@ class MainUI {
 
 	refreshAllHitboxesVisibility() {
 		for (const hitbox of this.hitboxes)
-			hitbox.style.opacity = MainController.scope.game.showHitboxes ? "1" : "0";
+			hitbox.style.opacity = this.game_scope.showHitboxes ? "1" : "0";
 	}
 
 	closeAllPopups() {
-		const gamepadControlsUI = MainController.scope.gamepadControlsUI;
-		if (gamepadControlsUI) {
-			gamepadControlsUI.closeModal();
-			MainController.scope.controls.paused = false;
+		if (this.gamepad_controls_ui) {
+			this.gamepad_controls_ui.closeModal();
+			this.controller.scope.controls.paused = false;
 		}
 
-		MainController.popups_stack.closeAll();
+		this.controller.popups_stack.closeAll();
 	}
 
 	pickableMonsters() {
@@ -61,7 +62,6 @@ class MainUI {
 		this.#clearMonsters();
 		this.#clearMonsterShots();
 		this.#clearPlayerShots();
-		this.#clearGauges();
 
 		const soil_index = Tools.radomValueInRange(0, 2);
 		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
@@ -81,9 +81,9 @@ class MainUI {
 	}
 
 	#clearToxicClouds() {
-		for (let i = this.toxicClouds.length - 1; i >= 0; i--) {
-			this.toxicClouds[i].hitbox = null;
-			this.toxicClouds[i].remove();
+		for (let i = this.toxic_clouds.length - 1; i >= 0; i--) {
+			this.toxic_clouds[i].hitbox = null;
+			this.toxic_clouds[i].remove();
 		}
 	}
 
@@ -117,18 +117,6 @@ class MainUI {
 			this.player_shots[i].remove();
 	}
 
-	#clearGauges() {
-		if (this.primaryReloadGauge) {
-			this.primaryReloadGauge.root_element.remove();
-			this.primaryReloadGauge = null;
-		}
-
-		if (this.secondaryReloadGauge) {
-			this.secondaryReloadGauge.root_element.remove();
-			this.secondaryReloadGauge = null;
-		}
-	}
-
 	#manageHudDisplay() {
 		if (!Tools.isMediaStadalone())
 			this.hud.remove();
@@ -136,19 +124,19 @@ class MainUI {
 
     #prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
-			object: MainController.scope.game,
+			object: this.game_scope,
 			property: "human_readable_money",
 			callback: (value)=> {   // MAJ du display de l'argent dans le magasin, si la popup est ouverte 
-				if (MainController.shop_popup) 
-					MainController.shop_popup.root_element.querySelector("#player_money").innerHTML = value;
+				if (this.controller.shop_popup) 
+					this.controller.shop_popup.root_element.querySelector("#player_money").innerHTML = value;
 			}
 		}).addBinding( document.getElementById("wave-swag"), "innerHTML" );
 
 		new RS_Binding({
-			object: MainController.scope.game,
+			object: this.game_scope,
 			property: "money",
 			callback: (value)=> {
-				MainController.scope.game.human_readable_money = Tools.intToHumanReadableString(value);
+				this.game_scope.human_readable_money = Tools.intToHumanReadableString(value);
 			}
 		});
 
@@ -157,10 +145,10 @@ class MainUI {
     #prepareAmmoAutoRefresh() {
 		const html_element = document.querySelector(".ammo-display #current");
         new RS_Binding({
-			object: MainController.scope.game,
+			object: this.game_scope,
 			property: "clip_ammo",
 			callback: () => {
-				if (!MainController.scope.game.clip_ammo)
+				if (!this.game_scope.clip_ammo)
 					html_element.classList.add("out");
 				else html_element.classList.remove("out");
 			}
@@ -175,10 +163,10 @@ class MainUI {
 		const html_element = document.querySelector(".health-display #current");
 		html_element.innerHTML = CHARACTER_MAX_LIFE;
 		new RS_Binding({
-			object: MainController.scope.game,
+			object: this.game_scope,
 			property: "health_points",
 			callback: () => { 
-				character_health_bar.assignValue(MainController.scope.game.health_points); 
+				character_health_bar.assignValue(this.game_scope.health_points); 
 				JuiceHelper.checkPanicMode();
 			}
 		}).addBinding(html_element, "innerHTML");
@@ -190,24 +178,24 @@ class MainUI {
 		this.addToGameWindow(xp_bar.root_element);
 		
 		new RS_Binding({
-			object: MainController.scope.game,
+			object: this.game_scope,
 			property: "current_level_xp",
-			callback: () => { xp_bar.assignValue(MainController.scope.game.current_level_xp); }
+			callback: () => { xp_bar.assignValue(this.game_scope.current_level_xp); }
 		});
 		new RS_Binding({
-			object: MainController.scope.game,
+			object: this.game_scope,
 			property: "player_level",
 			callback: () => { 
-				document.querySelector(".player-level").innerHTML = MainController.scope.game.player_level; 
+				document.querySelector(".player-level").innerHTML = this.game_scope.player_level; 
 				xp_bar.setMaxValue(XpBarHelper.levelUpAt());
-				xp_bar.assignValue(MainController.scope.game.current_level_xp);
+				xp_bar.assignValue(this.game_scope.current_level_xp);
 			}
 		});
     }
 	
 	get game_window() 			{ return document.getElementById("game-window"); }
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
-	get toxicClouds() 			{ return document.getElementsByClassName("toxic-cloud"); }
+	get toxic_clouds() 			{ return document.getElementsByClassName("toxic-cloud"); }
 	get bellThrowMarks()		{ return document.getElementsByClassName("bell-throw-aoe"); }
 	get player_shots() 			{ return document.getElementsByClassName("shot"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
