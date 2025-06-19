@@ -156,7 +156,10 @@ const SOUND_LIB = {
 	},
 	popup_validate: { file: "popup-validate.mp3" },
 	popup_close: 	{ file: "popup-close.mp3" },
-	empty_clip: 	{ file: "empty-gun-shot.mp3" },
+	empty_clip: 	{ 
+		file: "empty-gun-shot.mp3",
+		players_number: 10 
+	},
 	reload: 		{ file: "reload.mp3" },
 	dash: 			{ file: "dash.mp3" },
 	level_up:   	{ file: "level-up.mp3" },
