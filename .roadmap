@@ -13,22 +13,10 @@ x   Sous-tâche en cours
 V   Tâche terminée
 >   Sous-tâche terminée
 
-
-*   Internationnalisation
-    V   Créer un LanguageManager pour gérer cet aspect
-    V   Revoir le fonctionnement de RS_Dialog pour prendre en charge le LanguageManager
-    V   Prise en charge dans la GamepadConfigUI
-    V   Prise en charge dans l'intro et le Tutoriel
-    V   Prise en charge dans le rapport de fin de vague
-    V   Prise en charge dans le bandeau de début de vague
-    X   Prise en charge dans la popup du magasin
-        >   Titre et libellés de boutons standards
-        _   Articles de soin
-        _   Autres articles du magasin
-    X   Prise en charge dans la popup des paramètres
-        >   Titre et libellés des boutons standards
-        >   Libellés des divers paramètres
-        _   Ajout du nouveau paramètre, pour sélectionner la langue (utiliser <rs-selector>)
+*   Passer MainUI.closeAllpopups dans le MainConttroller
+*   Faire passer ParametersPopup en AbstractPopup
+*   Créer la classe TutorialPopup héritant de AbstractPopup
+*   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant un tuto
 
 *   Optimisations et assainissements
     V   Adapter l'objet AudioManager pour le pooling => balises <audio> créées à l'initialisation, puis utilisées

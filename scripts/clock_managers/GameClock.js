@@ -3,9 +3,14 @@ class GameClock {
 	/**
 	 * Constructeur attendant les références au mapper de manette, ainsi qu'au dictionnaire de contrôles
 	 * @param {object} 	controls_state	Objet mis à jour périodiquement par écoute des différents périphériques de contrôle
+	 * @param {object} 	UI				Objet gérant l'UI du jeu
+	 * @param {object} 	game_scope		Dictionnaire des données concernant l'état du jeu
 	 */
-	constructor(controls_state) {
+	constructor(controls_state, UI, game_scope) {
+		this.UI = UI;
 		this.controls_state = controls_state;
+		this.game_scope = game_scope;
+		
 		this.gamepad_mapper = null;
 	}
 
@@ -22,7 +27,7 @@ class GameClock {
 			this.#testCollides();
 			WaitingCounters.decrementWaitingCounters();
 
-			if (MainController.scope.game.wave_pop.timeouts)
+			if (this.game_scope.wave_pop.timeouts)
 				WaitingCounters.applyWavePopScheduling();
 		}
 
@@ -31,13 +36,13 @@ class GameClock {
 	}
 
 	launchReloadingAction() {
-		if (!MainController.UI.primaryReloadGauge && MainController.scope.game.clip_ammo < Abilities.getClipSize()) {
+		if (!this.UI.primaryReloadGauge && this.game_scope.clip_ammo < Abilities.getClipSize()) {
 			const reload_time = Abilities.getPrimaryReloadInterval();
-			MainController.scope.game.waiting_counter.clip = reload_time;
+			this.game_scope.waiting_counter.clip = reload_time;
 			
 			const gauge = new MV_Gauge("primary-reload", reload_time, 0);
-			MainController.UI.primaryReloadGauge = gauge;
-			MainController.UI.character.root_element.appendChild(gauge.root_element);
+			this.UI.primaryReloadGauge = gauge;
+			this.UI.character.root_element.appendChild(gauge.root_element);
 
 			JuiceHelper.reload();
 		}
@@ -52,15 +57,14 @@ class GameClock {
 	}
 
 	#performControlsObjectChanges() {
-		const character = MainController.UI.character;
-		if (character)
-			this.#characterActions(character);
+		if (this.UI.character)
+			this.#characterActions();
 
-		this.#moveShots(MainController.UI.shots);
-		this.#moveShots(MainController.UI.monster_shots);
+		this.#moveShots(this.UI.shots);
+		this.#moveShots(this.UI.monster_shots);
 
-		for (const monster of MainController.UI.monsters)
-			monster.follow(character);
+		for (const monster of this.UI.monsters)
+			monster.follow(this.UI.character);
 	}
 
 	#moveShots(shots_list) {
@@ -73,55 +77,61 @@ class GameClock {
 		}
 	}
 
-	#characterActions(character) {
+	#characterActions() {
 		if (this.#mustReload())
 			this.launchReloadingAction();
 
-		if (this.controls_state.firing_primary && !MainController.UI.primaryReloadGauge)
-			character.shoot();
+		if (this.controls_state.firing_primary && !this.UI.primaryReloadGauge)
+			this.UI.character.shoot();
 
-		if (this.controls_state.firing_secondary && !MainController.UI.secondaryReloadGauge) {
-			character.dash();
+		if (this.controls_state.firing_secondary && !this.UI.secondaryReloadGauge) {
+			this.UI.character.dash();
 			this.controls_state.firing_secondary = false;
 			const dash_interval = Abilities.getSecondaryReloadInterval();
-			MainController.scope.game.waiting_counter.dash = dash_interval;
+			this.game_scope.waiting_counter.dash = dash_interval;
 			const gauge = new MV_Gauge("secondary-reload", dash_interval, 0);
-			MainController.UI.secondaryReloadGauge = gauge;
-			MainController.UI.character.root_element.appendChild( gauge.root_element );
+			this.UI.secondaryReloadGauge = gauge;
+			this.UI.character.root_element.appendChild( gauge.root_element );
 		}
 	}
 
 	#mustReload() {
 		if (this.controls_state.reloading)
 			return true;
-		if (!this.controls_state.firing_primary && !MainController.scope.game.clip_ammo)
+		if (!this.controls_state.firing_primary && !this.game_scope.clip_ammo)
 			return true;
 		return false;
 	}
 
 	#testCollides() {
-		const monsters = MainController.UI.monsters;
-		const character = MainController.UI.character;
-		const monster_shots = MainController.UI.monster_shots;
-
-		for (let i = monsters.length - 1; i >= 0; i--) {
-			const monster = monsters[i];
+		this.#testCollidesShotsOnMonsters();
+		this.#testCollidesShotsOnCharacter();
+		this.#testCollidesToxicClouds();
+	}
+	
+	#testCollidesShotsOnMonsters() {
+		for (let i = this.UI.monsters.length - 1; i >= 0; i--) {
+			const monster = this.UI.monsters[i];
 			monster.attack();
-			this.#performMonsterWounds(i, monster, MainController.UI.shots, Abilities.getShotPower());
-			this.#performMonsterWounds(i, monster, MainController.UI.monster_shots);
+			this.#performMonsterWounds(i, monster, this.UI.shots, Abilities.getShotPower());
+			this.#performMonsterWounds(i, monster, this.UI.monster_shots);
 		}
-
-		for (let i = monster_shots.length - 1; i >= 0; i--) {
-			const monster_shot = monster_shots[i];
-			if (monster_shot.hitbox.checkCollide(character.hitbox)) {
+	}
+	
+	#testCollidesShotsOnCharacter() {
+		for (let i = this.UI.monster_shots.length - 1; i >= 0; i--) {
+			const monster_shot = this.UI.monster_shots[i];
+			if (monster_shot.hitbox.checkCollide(this.UI.character.hitbox)) {
 				HealthBarHelper.characterHit(monster_shot.strength);
 				monster_shot.root_element.remove();
-				monster_shots.splice(i, 1);
+				this.UI.monster_shots.splice(i, 1);
 			}
 		}
-
-		for (const toxic_cloud of MainController.UI.toxicClouds) {
-			if (character.hitbox.checkCollide(toxic_cloud.hitbox))
+	}
+	
+	#testCollidesToxicClouds() {
+		for (const toxic_cloud of this.UI.toxic_clouds) {
+			if (this.UI.character.hitbox.checkCollide(toxic_cloud.hitbox))
 				HealthBarHelper.characterHit(1);
 		}
 	}
