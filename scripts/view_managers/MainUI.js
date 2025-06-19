@@ -1,4 +1,8 @@
 class MainUI {
+	#controller;
+	#game_scope;
+	#gamepad_controls_ui;
+
 	character;
 	shots;
 	monster_shots;
@@ -10,9 +14,9 @@ class MainUI {
 		this.monsters = [];
 		this.monster_shots = [];
 
-		this.controller = controller
-		this.game_scope = controller.scope.game;
-		this.gamepad_controls_ui = controller.scope.gamepadControlsUI;
+		this.#controller = controller
+		this.#game_scope = controller.scope.game;
+		this.#gamepad_controls_ui = controller.scope.gamepadControlsUI;
 		
 		this.#prepareWaveSwagAutoRefresh();
 		this.#prepareAmmoAutoRefresh();
@@ -32,16 +36,16 @@ class MainUI {
 
 	refreshAllHitboxesVisibility() {
 		for (const hitbox of this.hitboxes)
-			hitbox.style.opacity = this.game_scope.showHitboxes ? "1" : "0";
+			hitbox.style.opacity = this.#game_scope.showHitboxes ? "1" : "0";
 	}
 
 	closeAllPopups() {
-		if (this.gamepad_controls_ui) {
-			this.gamepad_controls_ui.closeModal();
-			this.controller.scope.controls.paused = false;
+		if (this.#gamepad_controls_ui) {
+			this.#gamepad_controls_ui.closeModal();
+			this.#controller.scope.controls.paused = false;
 		}
 
-		this.controller.popups_stack.closeAll();
+		this.#controller.popups_stack.closeAll();
 	}
 
 	pickableMonsters() {
@@ -124,19 +128,19 @@ class MainUI {
 
     #prepareWaveSwagAutoRefresh() {
 		new RS_Binding({
-			object: this.game_scope,
+			object: this.#game_scope,
 			property: "human_readable_money",
 			callback: (value)=> {   // MAJ du display de l'argent dans le magasin, si la popup est ouverte 
-				if (this.controller.shop_popup) 
-					this.controller.shop_popup.root_element.querySelector("#player_money").innerHTML = value;
+				if (this.#controller.shop_popup) 
+					this.#controller.shop_popup.root_element.querySelector("#player_money").innerHTML = value;
 			}
 		}).addBinding( document.getElementById("wave-swag"), "innerHTML" );
 
 		new RS_Binding({
-			object: this.game_scope,
+			object: this.#game_scope,
 			property: "money",
 			callback: (value)=> {
-				this.game_scope.human_readable_money = Tools.intToHumanReadableString(value);
+				this.#game_scope.human_readable_money = Tools.intToHumanReadableString(value);
 			}
 		});
 
@@ -145,10 +149,10 @@ class MainUI {
     #prepareAmmoAutoRefresh() {
 		const html_element = document.querySelector(".ammo-display #current");
         new RS_Binding({
-			object: this.game_scope,
+			object: this.#game_scope,
 			property: "clip_ammo",
 			callback: () => {
-				if (!this.game_scope.clip_ammo)
+				if (!this.#game_scope.clip_ammo)
 					html_element.classList.add("out");
 				else html_element.classList.remove("out");
 			}
@@ -163,10 +167,10 @@ class MainUI {
 		const html_element = document.querySelector(".health-display #current");
 		html_element.innerHTML = CHARACTER_MAX_LIFE;
 		new RS_Binding({
-			object: this.game_scope,
+			object: this.#game_scope,
 			property: "health_points",
 			callback: () => { 
-				character_health_bar.assignValue(this.game_scope.health_points); 
+				character_health_bar.assignValue(this.#game_scope.health_points); 
 				JuiceHelper.checkPanicMode();
 			}
 		}).addBinding(html_element, "innerHTML");
@@ -178,17 +182,17 @@ class MainUI {
 		this.addToGameWindow(xp_bar.root_element);
 		
 		new RS_Binding({
-			object: this.game_scope,
+			object: this.#game_scope,
 			property: "current_level_xp",
-			callback: () => { xp_bar.assignValue(this.game_scope.current_level_xp); }
+			callback: () => { xp_bar.assignValue(this.#game_scope.current_level_xp); }
 		});
 		new RS_Binding({
-			object: this.game_scope,
+			object: this.#game_scope,
 			property: "player_level",
 			callback: () => { 
-				document.querySelector(".player-level").innerHTML = this.game_scope.player_level; 
+				document.querySelector(".player-level").innerHTML = this.#game_scope.player_level; 
 				xp_bar.setMaxValue(XpBarHelper.levelUpAt());
-				xp_bar.assignValue(this.game_scope.current_level_xp);
+				xp_bar.assignValue(this.#game_scope.current_level_xp);
 			}
 		});
     }
