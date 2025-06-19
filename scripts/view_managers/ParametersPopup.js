@@ -1,10 +1,7 @@
 class ParametersPopup extends AbstractPopup {
     rs_dialog_instance;
 
-    constructor() {
-        super();
-        this.active_item_id = "0_0";
-    }
+    constructor() { super(); }
 
     show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog(MainController.language_manager, "params_title", "tpl_parameters.html", ()=> {

@@ -5,10 +5,10 @@ class PopupsStack {
         this.#popups = [];
     }
 
-    push(popup_manager) {
+    push(popup_manager, options) {
         MainController.scope.controls.paused = true;
         
-        const popup = new popup_manager();
+        const popup = new popup_manager(options);
         popup.show(()=> {
             popup.registerMenuItems();
             popup.highlightActiveItem();
@@ -54,6 +54,7 @@ class AbstractPopup {
             throw new TypeError('Abstract class "AbstractPopup" cannot be instantiated, directly');
 
         this.navigable_items = [];
+        this.active_item_id = "0_0";
     }
 
     close() {
