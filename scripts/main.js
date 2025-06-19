@@ -146,7 +146,10 @@ const PANIC_MODE_THRESHOLD_RATIO = 0.2;
 const AUDIO_PATH = "sounds/";
 const SOUND_LIB = {
 	lose: 			{ file: "lose.mp3" },
-	popup_open: 	{ file: "popup-open.mp3" },
+	popup_open: 	{ 
+		file: "popup-open.mp3",
+		players_number: 2
+	},
 	popup_navigate: {
 		file: "popup-navigate.mp3",
 		players_number: 3
@@ -256,7 +259,7 @@ class MainController {
 	static startWave() {
 		JuiceHelper.startWaveMusic();
 
-		if (!MainController.popups_stack.activePopup())
+		//if (!MainController.popups_stack.activePopup())
 			TutorialHelper.showMonsterTutorial();
 	}
 

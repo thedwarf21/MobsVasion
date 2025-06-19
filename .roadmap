@@ -14,8 +14,12 @@ V   Tâche terminée
 >   Sous-tâche terminée
 
 *   Créer la classe TutorialPopup héritant de AbstractPopup
-    _   Créer un template HTML dédié
-    _   Créer la classe avec la gestion de la navigation par manette, pour les deux boutons "Continuer" et "Passer..."
+    V   Créer un template HTML dédié
+    V   Créer la classe avec la gestion de la navigation par manette, pour les deux boutons "Continuer" et "Passer..."
+    V  Passer par popups_stack, pour ouvrir et fermer la popup
+*   Créer une classe MonsterTutoPopup héritant de AbstractPopup
+    _   Ajouter le nav-ident du bouton de fermeture
+    _   Créer la classe
     _   Remplacer la création de la popup par un push dans popups_stack, dans le code du TutorialHelper
 *   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto
 *   Faire passer GamepadConfigUI en AbstractPopup
