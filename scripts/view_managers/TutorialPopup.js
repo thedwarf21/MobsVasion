@@ -14,23 +14,9 @@ class TutorialPopup extends AbstractPopup {
 
     show(onPopupOpened) {
         this.rs_dialog_instance = new RS_Dialog(MainController.language_manager, "tutorial_title", "tpl_tutorial.html", ()=> {
-            const next_button = this.querySelector("#btn_next");
-            const skip_button = this.querySelector("#btn_skip");
-            const message_container = this.querySelector("#message");
+            this.#initDisplay();
 
-            message_container.classList.add("tutorial");
-            this.querySelector("#friend-face").src = this.#friend_face_url;
-
-            MainController.language_manager.setTranslatedContent(message_container, this.#message, "innerHTML");
-            MainController.language_manager.setTranslatedContent(next_button, "tutorial_next", "value");
-            MainController.language_manager.setTranslatedContent(skip_button, "tutorial_skip", "value");
-
-			next_button.addEventListener("click", ()=> {
-                MainController.popups_stack.pop();
-                this.#fn_on_close();
-			});
-
-            skip_button.addEventListener("click", ()=> {
+            this.querySelector("#btn_skip").addEventListener("click", ()=> {
                 RS_Confirm(MainController.language_manager, "skip_tuto_confirm", "skip_tuto_title", "skip_tuto_yes", "skip_tuto_no", ()=> {
                         MainController.scope.game.skip_tutorial = true;
                         this.querySelector("#btn_next").dispatchEvent(new Event('click'));
@@ -44,6 +30,19 @@ class TutorialPopup extends AbstractPopup {
 		document.body.appendChild(this.rs_dialog_instance.root_element);
         MainController.tuto_popup = this.rs_dialog_instance;
 	}
+
+    close() {
+        super.close();
+        this.#fn_on_close();
+    }
+
+    #initDisplay() {
+        this.querySelector("#friend-face").src = this.#friend_face_url;
+
+        MainController.language_manager.setTranslatedContent(this.querySelector("#message"), this.#message, "innerHTML");
+        MainController.language_manager.setTranslatedContent(this.querySelector("#btn_next"), "tutorial_next", "value");
+        MainController.language_manager.setTranslatedContent(this.querySelector("#btn_skip"), "tutorial_skip", "value");
+    }
 
     /*********  AbstractPopup methods implementation  *********/
     navigateLeft() {
