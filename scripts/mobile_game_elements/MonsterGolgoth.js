@@ -114,10 +114,10 @@ class MV_MonsterGolgoth extends MV_Monster {
         this.rotate_element.appendChild(carried_monster_element);
         
         const carried_monster_radius = this.carried_monster.pixel_size / 2;
+        delete carried_monster_element.style.left;
+        delete carried_monster_element.style.top;
         carried_monster_element.style.right = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.x - carried_monster_radius);
         carried_monster_element.style.bottom = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.y - carried_monster_radius);
-        carried_monster_element.style.left = null;
-        carried_monster_element.style.top = null;
     }
 
     /** Chute du monstre porté */
@@ -160,13 +160,13 @@ class MV_MonsterGolgoth extends MV_Monster {
     #showBellThrowDamageZone() {
         const target_position = MainController.UI.character.centralSpotPosition();
 
-        const aoe_element = new MobileGameElement(this.viewport, target_position.x - this.AOE_RADIUS, target_position.y - this.AOE_RADIUS);
+        const aoe_element = MobileGameElement.getInstance(this.viewport, target_position.x - this.AOE_RADIUS, target_position.y - this.AOE_RADIUS);
         aoe_element.pixel_size = this.AOE_RADIUS * 2;
         aoe_element.root_element.classList.add("bell-throw-aoe");
         aoe_element.root_element.style.width = this.viewport.getCssValue(this.AOE_RADIUS * 2);
         aoe_element.root_element.style.height = this.viewport.getCssValue(this.AOE_RADIUS * 2);
         
-        MainController.UI.addToGameWindow(aoe_element.root_element);
+        MainController.UI.addToGameWindow(aoe_element);
         return aoe_element;
     }
 

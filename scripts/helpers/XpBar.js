@@ -1,7 +1,7 @@
 class XpBarHelper {
 
     static create() {
-		return new MV_Gauge("xp-bar", XpBarHelper.levelUpAt(), MainController.scope.game.current_level_xp);
+		return MV_Gauge.getInstance("xp-bar", XpBarHelper.levelUpAt(), MainController.scope.game.current_level_xp);
     }
 
     static addXp(xp_amount) {

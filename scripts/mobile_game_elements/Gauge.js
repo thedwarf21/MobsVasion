@@ -1,13 +1,24 @@
 class MV_Gauge extends MobileGameElement {
+    #main_container;
     #progress_improvement_element;
     #progress_element;
     #current_value;
     #max_value;
 
-    constructor(css_class_name, max_value, initial_value) {
-        super(MainController.viewport);
-        this.root_element.classList.add("gauge");
-        this.root_element.classList.add(css_class_name);
+    constructor() { super(); }
+
+	static getInstance(css_class_name, max_value, initial_value) { 
+        const instance = document.createElement("rs-game-gauge")
+        instance.init(css_class_name, max_value, initial_value);
+        return instance;
+    }
+
+    init(css_class_name, max_value, initial_value) {
+        super.init(MainController.viewport, "css/gauges.css");
+        this.#main_container = document.createElement("DIV");
+        this.#main_container.classList.add("gauge");
+        this.#main_container.classList.add(css_class_name);
+        this.appendChild(this.#main_container);
         
         this.#max_value = max_value;
         this.#createProgressElements();
@@ -33,11 +44,12 @@ class MV_Gauge extends MobileGameElement {
     #createProgressElements() {
         this.#progress_element = document.createElement("DIV");
         this.#progress_element.classList.add("progress");
-        this.root_element.appendChild(this.#progress_element);
+        this.#main_container.appendChild(this.#progress_element);
         
         this.#progress_improvement_element = document.createElement("DIV");
         this.#progress_improvement_element.classList.add("progress-improvement");
         this.#progress_improvement_element.style.width = 0;
-        this.root_element.appendChild(this.#progress_improvement_element);
+        this.#main_container.appendChild(this.#progress_improvement_element);
     }
 }
+customElements.define("rs-game-gauge", MV_Gauge);

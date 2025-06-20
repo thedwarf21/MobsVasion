@@ -36,18 +36,6 @@
 	100% { opacity: 0; }
 }
 
-/* Animation d'affichage d'amélioration dans les gauges */
-.gauge .progress-improvement {
-	height: 100%;
-	background: white;
-	animation: partial-blink 0.5s linear infinite;
-}
-
-@keyframes partial-blink {
-	from { background-color: white; }
-	to { background-color: rgba(255, 255, 255, 0.5); }
-}
-
  /* Animations utilisables via AnimatedFrame, en utilisant la constante ANIMATIONS */
 .animation-container { position: absolute; }
 

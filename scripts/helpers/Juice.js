@@ -1,19 +1,19 @@
 class JuiceHelper {
     
     static characterPop() {
-        const pop_animation = new MV_AnimatedFrame(
+        const pop_animation = MV_AnimatedFrame.getInstance(
             MainController.viewport, 
             ( MainController.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE ) / 2, 
             ( MainController.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE ) / 2, 
             CHARACTER_SIZE, CHARACTER_SIZE, ANIMATIONS.monster_pop.css_class, ANIMATIONS.monster_pop.duration, 
             ()=> {
-                const character = new MV_Character(MainController.viewport);
+                const character = MV_Character.getInstance(MainController.viewport);
                 MainController.UI.character = character;
-                MainController.UI.addToGameWindow(character.root_element);
+                MainController.UI.addToGameWindow(character);
             }
         );
 
-		MainController.UI.addToGameWindow(pop_animation.root_element);
+		MainController.UI.addToGameWindow(pop_animation);
         MainController.audio_manager.playAudio("portal");
     }
 
@@ -42,12 +42,12 @@ class JuiceHelper {
     }
     
     static hitEffect() {
-        const flash_effect = new MV_AnimatedFrame( MainController.viewport, 0, 0, 0, 0, 
+        const flash_effect = MV_AnimatedFrame.getInstance( MainController.viewport, 0, 0, 0, 0, 
             ANIMATIONS.hit_effect.css_class, ANIMATIONS.hit_effect.duration, 
-            ()=> { flash_effect.root_element.remove(); }
+            ()=> { flash_effect.remove(); }
         );
 
-        MainController.UI.addToGameWindow(flash_effect.root_element);
+        MainController.UI.addToGameWindow(flash_effect);
     }
 
     static checkPanicMode() {
@@ -95,7 +95,7 @@ class JuiceHelper {
 
     static monsterPop(x, y, monster_type) {
 		const animation = ANIMATIONS.monster_pop;
-        const pop_animation = new MV_AnimatedFrame( MainController.viewport, 
+        const pop_animation = MV_AnimatedFrame.getInstance( MainController.viewport, 
             x, y, monster_type.size, monster_type.size, 
             animation.css_class, animation.duration, ()=> {
                 const monster = new monster_type.class(MainController.viewport, x, y);
@@ -104,20 +104,20 @@ class JuiceHelper {
             }
         );
 
-		MainController.UI.addToGameWindow(pop_animation.root_element);
+		MainController.UI.addToGameWindow(pop_animation);
         MainController.audio_manager.playAudio("portal");
 	}
 
     static bloodSplash(x, y, angle, onAmimationEnd) {
-        const blood_splash = new MV_AnimatedFrame( MainController.viewport, x, y, 0, 0, 
+        const blood_splash = MV_AnimatedFrame.getInstance( MainController.viewport, x, y, 0, 0, 
             ANIMATIONS.blood_splash.css_class, ANIMATIONS.blood_splash.duration, ()=> {
-                blood_splash.root_element.remove();
+                blood_splash.remove();
                 if (onAmimationEnd) 
                     onAmimationEnd();
             }
         );
-        blood_splash.root_element.style.transform = `rotate(${angle}rad)`;
-        MainController.UI.addToGameWindow(blood_splash.root_element);
+        blood_splash.rotate(angle);
+        MainController.UI.addToGameWindow(blood_splash);
     }
 
     static attackTrail(monster, trail_angle, trail_length) {

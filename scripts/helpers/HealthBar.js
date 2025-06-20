@@ -1,7 +1,7 @@
 class HealthBarHelper {
     
     static create() {
-        MainController.health_bar = new MV_Gauge("character-health-bar", Abilities.getMaxPlayerHealth(), MainController.scope.game.health_points);
+        MainController.health_bar = MV_Gauge.getInstance("character-health-bar", Abilities.getMaxPlayerHealth(), MainController.scope.game.health_points);
         return MainController.health_bar;
     }
 

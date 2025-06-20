@@ -66,7 +66,7 @@ class MainUI {
 
 	#clearCharacter() {
 		if (this.character) {
-			this.character.root_element.remove();
+			this.character.remove();
 			this.character = null;
 		}
 	}
@@ -115,12 +115,12 @@ class MainUI {
 
 	#clearGauges() {
 		if (this.primaryReloadGauge) {
-			this.primaryReloadGauge.root_element.remove();
+			this.primaryReloadGauge.remove();
 			this.primaryReloadGauge = null;
 		}
 
 		if (this.secondaryReloadGauge) {
-			this.secondaryReloadGauge.root_element.remove();
+			this.secondaryReloadGauge.remove();
 			this.secondaryReloadGauge = null;
 		}
 	}
@@ -166,7 +166,7 @@ class MainUI {
     }
 
     #prepareLifeBarAutoRefresh(character_health_bar) {
-		this.addToGameWindow(character_health_bar.root_element);
+		this.addToGameWindow(character_health_bar);
 
 		const html_element = document.querySelector(".health-display #current");
 		html_element.innerHTML = CHARACTER_MAX_LIFE;
@@ -183,7 +183,7 @@ class MainUI {
     }
 
     #prepareLevelAndXpAutoRefresh(xp_bar) {
-		this.addToGameWindow(xp_bar.root_element);
+		this.addToGameWindow(xp_bar);
 		
 		new RS_Binding({
 			object: this.#game_scope,

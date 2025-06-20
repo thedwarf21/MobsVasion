@@ -16,7 +16,7 @@ class MV_MonsterSpitter extends MV_Monster {
         JuiceHelper.spit();
         super.resetAttackCounter();
         const shot = this.#createShot();
-		MainController.UI.addToGameWindow(shot.root_element);
+		MainController.UI.addToGameWindow(shot);
         MainController.UI.monster_shots.push(shot);
     }
 
@@ -48,7 +48,7 @@ class MV_MonsterSpitter extends MV_Monster {
         const deltaX = SHOT_VELOCITY/2 * Math.cos(this.aiming_angle);
         const deltaY = SHOT_VELOCITY/2 * Math.sin(this.aiming_angle);
         
-        const shot = new MV_Shot(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
+        const shot = MV_Shot.getInstance(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
         shot.root_element.classList.add("monster");
         shot.strength = this.monster_type.strength;
         return shot;

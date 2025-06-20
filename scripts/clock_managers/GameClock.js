@@ -43,9 +43,9 @@ class GameClock {
 			const reload_time = Abilities.getPrimaryReloadInterval();
 			this.#game_scope.waiting_counter.clip = reload_time;
 			
-			const gauge = new MV_Gauge("primary-reload", reload_time, 0);
+			const gauge = MV_Gauge.getInstance("primary-reload", reload_time, 0);
 			this.#UI.primaryReloadGauge = gauge;
-			this.#UI.character.root_element.appendChild(gauge.root_element);
+			this.#UI.character.appendChild(gauge);
 
 			JuiceHelper.reload();
 		}
@@ -75,7 +75,7 @@ class GameClock {
 			const shot = shots_list[i];
 			shot.move(()=> {
 				shots_list.splice(i, 1);
-				shot.root_element.remove();
+				shot.remove();
 			});
 		}
 	}
@@ -92,9 +92,9 @@ class GameClock {
 			this.#controls_state.firing_secondary = false;
 			const dash_interval = Abilities.getSecondaryReloadInterval();
 			this.#game_scope.waiting_counter.dash = dash_interval;
-			const gauge = new MV_Gauge("secondary-reload", dash_interval, 0);
+			const gauge = MV_Gauge.getInstance("secondary-reload", dash_interval, 0);
 			this.#UI.secondaryReloadGauge = gauge;
-			this.#UI.character.root_element.appendChild( gauge.root_element );
+			this.#UI.character.appendChild( gauge );
 		}
 	}
 
@@ -126,7 +126,7 @@ class GameClock {
 			const monster_shot = this.#UI.monster_shots[i];
 			if (monster_shot.hitbox.checkCollide(this.#UI.character.hitbox)) {
 				HealthBarHelper.characterHit(monster_shot.strength);
-				monster_shot.root_element.remove();
+				monster_shot.remove();
 				this.#UI.monster_shots.splice(i, 1);
 			}
 		}
@@ -145,7 +145,7 @@ class GameClock {
 
 			if (!monster.carried && monster.hitbox.checkCollide(shot.hitbox)) {
 				shots.splice(i, 1);
-				shot.root_element.remove();
+				shot.remove();
 				monster.wound(shot_power || shot.strength, index, shot.angle);
 			}					
 		}

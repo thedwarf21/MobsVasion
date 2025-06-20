@@ -1,9 +1,17 @@
 class MV_Character extends MobileGameElement {
     aiming_angle;
-  
-    constructor(viewport) {
-        super(viewport);
-        this.root_element.classList.add("character");
+
+    constructor() { super(); }
+
+	static getInstance(viewport) { 
+        const instance = document.createElement("rs-game-character");
+        instance.init(viewport);
+        return instance;
+    }
+
+    init(viewport) {
+        super.init(viewport, "css/character.css");
+        this.classList.add("character");
         this.#init();
     }
   
@@ -13,7 +21,7 @@ class MV_Character extends MobileGameElement {
 
 			if (MainController.scope.game.clip_ammo) {
 				const shot = this.#createShot();
-				MainController.UI.addToGameWindow(shot.root_element);
+				MainController.UI.addToGameWindow(shot);
                 MainController.UI.shots.push(shot);
 				MainController.scope.game.clip_ammo--;
 			} else JuiceHelper.emptyClipPercussion();
@@ -56,8 +64,8 @@ class MV_Character extends MobileGameElement {
     #moveCenter() {
         this.x = (this.viewport.VIRTUAL_WIDTH - CHARACTER_SIZE) / 2;
         this.y = (this.viewport.VIRTUAL_HEIGHT - CHARACTER_SIZE) / 2;
-        this.root_element.style.top = this.viewport.getCssValue(this.y);
-        this.root_element.style.left = this.viewport.getCssValue(this.x);
+        this.style.top = this.viewport.getCssValue(this.y);
+        this.style.left = this.viewport.getCssValue(this.x);
     }
 
     #createShot() {
@@ -66,6 +74,7 @@ class MV_Character extends MobileGameElement {
         
         const deltaX = SHOT_VELOCITY * Math.cos(this.aiming_angle);
         const deltaY = SHOT_VELOCITY * Math.sin(this.aiming_angle);
-        return new MV_Shot(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
+        return MV_Shot.getInstance(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
     }
 }
+customElements.define("rs-game-character", MV_Character);

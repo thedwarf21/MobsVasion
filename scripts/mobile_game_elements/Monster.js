@@ -73,7 +73,7 @@ class MV_Monster extends MobileGameElement {
 
     timedAttack(fn_sound_fx) {
         this.aimPlayer();
-        this.attack_bar = new MV_Gauge("monster-attack-bar", this.ATTACK_TIME, 0);
+        this.attack_bar = MV_Gauge.getInstance("monster-attack-bar", this.ATTACK_TIME, 0);
         this.root_element.appendChild(this.attack_bar.root_element);
         this.root_element.classList.add("attack-animation");
 
@@ -99,7 +99,7 @@ class MV_Monster extends MobileGameElement {
     }
   
     #addLifeBar() {
-        this.life_bar = new MV_Gauge("monster-health-bar", this.health_points, this.health_points);
+        this.life_bar = MV_Gauge.getInstance("monster-health-bar", this.health_points, this.health_points);
         this.root_element.appendChild(this.life_bar.root_element);
     }
 

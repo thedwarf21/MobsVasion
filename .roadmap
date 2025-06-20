@@ -41,12 +41,13 @@ V   Tâche terminée
         >   Référence this.#gamepad_controls_ui devenue inutile dans MainUI
 
 *   Revenir à des MobileGameElements en tant qu'éléments de DOM (ça permettrait de simplifier grandement le code)
-    _   Modifier MobileGameElements
-        _   Plus de root_element, puisque ce sera this
-        _   L'implémenter comme customElement avec constructeur vide, et méthode init recevant les paramètres
-        _   Ajouter un méthode statique 'getInstance' qui crée une instance via createElement, avant d'appeller la méthode init de l'objet, pour ensuite le retourner
-    _   Modifier les classes héritantes en conséquence
-        _   Surcharger init au lieu de surcharger le constructeur
+    V   Modifier MobileGameElements
+        >   Plus de root_element, puisque ce sera this
+        >   L'implémenter comme customElement avec constructeur vide, et méthode init recevant les paramètres
+        >   Ajouter un méthode statique 'getInstance' qui crée une instance via createElement, avant d'appeller la méthode init de l'objet, pour ensuite le retourner
+    X   Modifier les classes héritantes en conséquence
+        _   Surcharger init et getInstance au lieu de surcharger le constructeur
+        _   Instanciation via getInstance au lieu de new (mais avec les mêmes paramètres)
         _   Plus de root_element
     _   Passer d'une gestion par liste d'objets, à des parcours de résultats de querySelector, et du référencement direct (plus de splice)
         _   Dans la MainUI => plus de liste mais des getters abstrayant les querySelector

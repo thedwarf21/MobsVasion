@@ -74,3 +74,15 @@
 	padding: 0;
 }
 .gauge.monster-attack-bar .progress { background: #1dc11d; }
+
+/* Animation d'affichage d'amélioration dans les gauges */
+.progress-improvement {
+	height: 100%;
+	background: white;
+	animation: partial-blink 0.5s linear infinite;
+}
+
+@keyframes partial-blink {
+	from { background-color: white; }
+	to { background-color: rgba(255, 255, 255, 0.5); }
+}

@@ -77,11 +77,11 @@ class WaitingCounters {
 		switch(counter_key) {
 			case "clip":
 				MainController.scope.game.clip_ammo = Abilities.getClipSize();
-				MainController.UI.primaryReloadGauge.root_element.remove();
+				MainController.UI.primaryReloadGauge.remove();
 				MainController.UI.primaryReloadGauge = null;
 				break;
 			case "dash":
-				MainController.UI.secondaryReloadGauge.root_element.remove();
+				MainController.UI.secondaryReloadGauge.remove();
 				MainController.UI.secondaryReloadGauge = null;
 				break;
 			default:
