@@ -32,11 +32,12 @@ V   Tâche terminée
         >   Modifier la condition d'ouverture des paramètres
     X   Faire passer GamepadConfigUI en AbstractPopup
         >   Créer un fichier dédié pour la classe (renommée en GamepadConfigPopup)
-        _   Modifier l'implémentation pour AbstractPopup et inclure la navigation par manette
+        >   Modifier l'implémentation pour AbstractPopup et inclure la navigation par manette
         _   Faire appel à GamepadConfigPopup via PopupsStack, pour ouvrir l'UI de config
         _   Supprimer la classe GamepadConfigUI, devenue inutile, dans rs_game_engine.js
         _   Modifier l'ordre des actions, pour encourager l'utilisateur à paramétrer la navigation par manette en premier lieu
     _   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
+        _   Référence this.#gamepad_controls_ui devenue inutile dans MainUI
 
 *   Revenir à des MobileGameElements en tant qu'éléments de DOM (ça permettrait de simplifier grandement le code)
     _   Modifier MobileGameElements
