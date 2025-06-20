@@ -113,7 +113,11 @@ class TutorialHelper {
                 if (MainController.scope.game.skip_tutorial)
                     return;
 
-                MainController.popups_stack.activePopup().switchToTrainingRoom();
+                const shop_popup_manager = MainController.popups_stack.activePopup();
+                if (MainController.timer.gamepad_mapper) {
+                    shop_popup_manager.navigateRight();
+                } else shop_popup_manager.switchToTrainingRoom();
+                
                 setTimeout( TutorialHelper.#showTrainingRoomTutorial, 1500 );
             }
         );
