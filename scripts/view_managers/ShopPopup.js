@@ -20,9 +20,7 @@ class ShopPopup extends AbstractPopup {
 
             this.#initMoneyDisplay();
             this.#initKnowledgeDisplay();
-
-            if (onPopupOpened)
-                onPopupOpened();
+            onPopupOpened();
 
             JuiceHelper.startShopMusic();
             TutorialHelper.showShopTutorial();
@@ -33,8 +31,8 @@ class ShopPopup extends AbstractPopup {
 	}
 
     close() {
-        JuiceHelper.stopShopMusic();
         super.close();
+        JuiceHelper.stopShopMusic();
         MainController.shop_popup = null;
         MainController.prepareWaveStart();
     }

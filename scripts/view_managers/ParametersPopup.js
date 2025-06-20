@@ -17,9 +17,7 @@ class ParametersPopup extends AbstractPopup {
 
             this.#removeUnnecessaryContent();
             this.#bindOptions();
-
-            if (onPopupOpened)
-                onPopupOpened();
+            onPopupOpened();
 		});
         
 		document.body.appendChild(this.rs_dialog_instance.root_element);

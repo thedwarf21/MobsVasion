@@ -19,9 +19,7 @@ class MonsterTutoPopup extends AbstractPopup {
 
             const close_button = this.querySelector("#btn_close");
             MainController.language_manager.setTranslatedContent(close_button, "tutorial_next", "value");
-            
-            if (onPopupOpened)
-                onPopupOpened();
+            onPopupOpened();
 		});
 
 		document.body.appendChild(this.rs_dialog_instance.root_element);

@@ -24,9 +24,9 @@ class TutorialPopup extends AbstractPopup {
                 );
             })
 
-            if (onPopupOpened)
-                onPopupOpened();
+            onPopupOpened();
 		});
+        
 		document.body.appendChild(this.rs_dialog_instance.root_element);
         MainController.tuto_popup = this.rs_dialog_instance;
 	}

@@ -17,9 +17,7 @@ class WaveReportPopup extends AbstractPopup {
             MainController.language_manager.setTranslatedContent(this.querySelector("#btn_close"), "popup_close", "value");
             
             this.querySelector("#friend-face").src = this.#friend_face_url;
-
-            if (onPopupOpened)
-                onPopupOpened();
+            onPopupOpened();
 		});
 
 		document.body.appendChild(this.rs_dialog_instance.root_element);
