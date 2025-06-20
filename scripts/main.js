@@ -237,9 +237,9 @@ class MainController {
     static togglePause() { 
 		const controls_state = MainController.scope.controls;
         
-		if (!controls_state.paused)   				// Mise en pause manuelle => ouverture de la popup paramètres
+		if (!controls_state.paused || MainController.tuto_popup)	// Mise en pause manuelle / tuto en cours => ouverture de la popup paramètres
 			MainController.popups_stack.push(ParametersPopup);
-		else MainController.UI.closeAllPopups(); 	// Sinon, on ferme toutes les popups actuellement ouvertes et le jeu reprend
+		else MainController.UI.closeAllPopups(); 					// Sinon, on ferme toutes les popups et le jeu reprend
 	}
 
     static prepareWaveStart(is_silent_save) {
