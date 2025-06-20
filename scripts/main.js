@@ -155,7 +155,10 @@ const SOUND_LIB = {
 		players_number: 3
 	},
 	popup_validate: { file: "popup-validate.mp3" },
-	popup_close: 	{ file: "popup-close.mp3" },
+	popup_close: 	{ 
+		file: "popup-close.mp3",
+		players_number: 3
+	},
 	empty_clip: 	{ 
 		file: "empty-gun-shot.mp3",
 		players_number: 10 
@@ -239,7 +242,7 @@ class MainController {
         
 		if (!controls_state.paused || MainController.tuto_popup)	// Mise en pause manuelle / tuto en cours => ouverture de la popup paramètres
 			MainController.popups_stack.push(ParametersPopup);
-		else MainController.UI.closeAllPopups(); 					// Sinon, on ferme toutes les popups et le jeu reprend
+		else MainController.popups_stack.closeAll(); 				// Sinon, on ferme toutes les popups et le jeu reprend
 	}
 
     static prepareWaveStart(is_silent_save) {

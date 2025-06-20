@@ -1,7 +1,6 @@
 class MainUI {
 	#controller;
 	#game_scope;
-	#gamepad_controls_ui;
 
 	character;
 	shots;
@@ -18,7 +17,6 @@ class MainUI {
 
 		this.#controller = controller
 		this.#game_scope = controller.scope.game;
-		this.#gamepad_controls_ui = controller.scope.gamepadControlsUI;
 		
 		this.#prepareWaveSwagAutoRefresh();
 		this.#prepareAmmoAutoRefresh();
@@ -39,15 +37,6 @@ class MainUI {
 	refreshAllHitboxesVisibility() {
 		for (const hitbox of this.hitboxes)
 			hitbox.style.opacity = this.#game_scope.showHitboxes ? "1" : "0";
-	}
-
-	closeAllPopups() {
-		if (this.#gamepad_controls_ui) {
-			this.#gamepad_controls_ui.closeModal();
-			this.#controller.scope.controls.paused = false;
-		}
-
-		this.#controller.popups_stack.closeAll();
 	}
 
 	pickableMonsters() {
@@ -106,6 +95,10 @@ class MainUI {
 			this.monsters[i].root_element.remove();
 			this.monsters.splice(i, 1);
 		}
+
+		//TODO essayer de comprendre pourquoi il arrive (même si c'est très rare) qu'un élément HTML de monstre ne se supprime pas correctement
+		for (const monster_element of document.querySelectorAll(".monster"))
+			monster_element.remove();
 	}
 
 	#clearMonsterShots() {
