@@ -59,4 +59,7 @@ class TutorialPopup extends AbstractPopup {
         const new_active_ident = `${new_col}_${active_item_position.line}`;
         this.setActiveItem(new_active_ident);
     }
+    
+    navigateUp() {}
+    navigateDown() {}
 }

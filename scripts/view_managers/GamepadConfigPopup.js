@@ -18,7 +18,7 @@ class GamepadConfigPopup extends AbstractPopup {
             for (let i=0; i<this.#controls_mapper.controls.length; i++)
 				container.appendChild(this.#getConfigInterfaceItem(i));
 
-            const btn_close = this.popup.root_element.querySelector("#btn_close");
+            const btn_close = this.querySelector("#btn_close");
 			btn_close.value = MainController.language_manager.getText("popup_close");
             btn_close.setAttribute("nav-ident", `0_${this.#FOOTER_LINE}`);
             onPopupOpened();
@@ -41,6 +41,7 @@ class GamepadConfigPopup extends AbstractPopup {
 		const button_mapped = this.#getItemMapDiv(control_mapping_item.buttonIndex);
 		config_interface_item.appendChild(button_mapped);
 		config_interface_item.addEventListener("click", ()=> { this.#itemClicked(button_mapped, control_index); });
+        config_interface_item.setAttribute("nav-ident", `0_${control_index}`);
 		return config_interface_item;
 	}
 
@@ -100,4 +101,7 @@ class GamepadConfigPopup extends AbstractPopup {
         const new_active_ident = `0_${new_line}`;
         this.setActiveItem(new_active_ident);
     }
+    
+    navigateLeft() {}
+    navigateRight() {}
 }

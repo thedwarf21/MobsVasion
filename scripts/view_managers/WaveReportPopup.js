@@ -29,4 +29,10 @@ class WaveReportPopup extends AbstractPopup {
         MainController.report_popup = null;
         MainController.popups_stack.push(ShopPopup);
     }
+    
+    /*********  AbstractPopup methods implementation  *********/
+    navigateUp() {}
+    navigateDown() {}
+    navigateLeft() {}
+    navigateRight() {}
 }

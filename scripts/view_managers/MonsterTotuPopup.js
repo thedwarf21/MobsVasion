@@ -64,4 +64,10 @@ class MonsterTutoPopup extends AbstractPopup {
         const message_container = this.querySelector("#message");
         MainController.language_manager.setTranslatedContent(message_container, this.#params.message, "innerHTML");
     }
+
+    /*********  AbstractPopup methods implementation  *********/
+    navigateUp() {}
+    navigateDown() {}
+    navigateLeft() {}
+    navigateRight() {}
 }
