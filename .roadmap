@@ -35,7 +35,7 @@ V   Tâche terminée
         >   Modifier l'implémentation pour AbstractPopup et inclure la navigation par manette
         >   Faire appel à GamepadConfigPopup via PopupsStack, pour ouvrir l'UI de config
         >   Modifier l'ordre des actions, pour encourager l'utilisateur à paramétrer la navigation par manette en premier lieu
-        _   Supprimer la classe GamepadConfigUI, devenue inutile, dans rs_game_engine.js
+        >   Supprimer la classe GamepadConfigUI, devenue inutile, dans rs_game_engine.js
         _   Faire en sorte que le bouton "Valider" soit ignoré lors de la lecture du bouton en cours de configuration (#captureButtonPressed de GamepadConfigPopup)
     _   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
         _   Référence this.#gamepad_controls_ui devenue inutile dans MainUI
