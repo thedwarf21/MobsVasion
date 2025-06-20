@@ -35,9 +35,10 @@ input { cursor: pointer; }
     margin-right: 5vh;
     cursor: pointer;
 }
-.control-item-container:hover {
+.control-item-container:hover, .control-item-container.active {
     background: #0005;
 }
+.control-item-container.active { box-shadow: 0 0 2vh lime; }
 
 .control-name {
     font-size: 2.4vh;
