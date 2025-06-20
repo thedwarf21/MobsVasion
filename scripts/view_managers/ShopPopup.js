@@ -35,6 +35,7 @@ class ShopPopup extends AbstractPopup {
     close() {
         JuiceHelper.stopShopMusic();
         super.close();
+        MainController.shop_popup = null;
         MainController.prepareWaveStart();
     }
 

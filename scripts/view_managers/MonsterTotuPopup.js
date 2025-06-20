@@ -30,6 +30,7 @@ class MonsterTutoPopup extends AbstractPopup {
 
     close() {
         super.close();
+        MainController.tuto_popup = null;
 
         if (this.#params.special_element)
             this.#params.special_element.remove();

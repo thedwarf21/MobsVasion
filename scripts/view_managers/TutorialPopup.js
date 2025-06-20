@@ -33,6 +33,7 @@ class TutorialPopup extends AbstractPopup {
 
     close() {
         super.close();
+        MainController.tuto_popup = null;
         this.#fn_on_close();
     }
 

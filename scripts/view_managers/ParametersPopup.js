@@ -26,6 +26,11 @@ class ParametersPopup extends AbstractPopup {
 		MainController.parameters_popup = this.rs_dialog_instance;
 	}
 
+    close() {
+        super.close();
+        MainController.parameters_popup = null;
+    }
+
     static languageSelectionChanged(value) {
         MainController.language_manager.setLanguage(value);
         MainController.shop_manager.refreshAllShopItems(true);
