@@ -30,13 +30,13 @@ V   Tâche terminée
     V   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto
         >   Nettoyer la référence MainController.tuto_popup quand la popup se ferme (pour détecter un tuto en cours)
         >   Modifier la condition d'ouverture des paramètres
-    X   Faire passer GamepadConfigUI en AbstractPopup
+    >   Faire passer GamepadConfigUI en AbstractPopup
         >   Créer un fichier dédié pour la classe (renommée en GamepadConfigPopup)
         >   Modifier l'implémentation pour AbstractPopup et inclure la navigation par manette
         >   Faire appel à GamepadConfigPopup via PopupsStack, pour ouvrir l'UI de config
         >   Modifier l'ordre des actions, pour encourager l'utilisateur à paramétrer la navigation par manette en premier lieu
         >   Supprimer la classe GamepadConfigUI, devenue inutile, dans rs_game_engine.js
-        _   Faire en sorte que le bouton "Valider" soit ignoré lors de la lecture du bouton en cours de configuration (#captureButtonPressed de GamepadConfigPopup)
+        >   Faire en sorte que le bouton "Valider" soit ignoré lors de la lecture du bouton en cours de configuration (#captureButtonPressed de GamepadConfigPopup)
     _   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
         _   Référence this.#gamepad_controls_ui devenue inutile dans MainUI
 

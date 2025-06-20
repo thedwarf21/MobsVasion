@@ -79,12 +79,18 @@ class GamepadConfigPopup extends AbstractPopup {
 		const interval_id = setInterval(()=> {
 			const gamepad = GamepadGenericAdapter.getConnectedGamepad();
 			for (let i=0; i<gamepad.buttons.length; i++) {
-				if (gamepad.buttons[i].pressed) {
+				if (gamepad.buttons[i].pressed && !this.#isValidationButton(i)) {
 					clearInterval(interval_id);
 					fnThen(i);
 				}
 			}
 		}, this.#CAPTURE_INTERVAL);
+	}
+
+	#isValidationButton(button_index) {
+		for (const action of this.#controls_mapper.controls)
+			if (action.buttonIndex === button_index)
+				return action.code === GAMEPAD_ACTION_CODES.menu_validate;
 	}
 
     /*********  AbstractPopup methods implementation  *********/
