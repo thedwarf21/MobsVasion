@@ -7,6 +7,8 @@ class MainUI {
 	shots;
 	monster_shots;
 	monsters;
+	primaryReloadGauge;
+	secondaryReloadGauge;
 
 
 	constructor(controller) {
@@ -66,6 +68,7 @@ class MainUI {
 		this.#clearMonsters();
 		this.#clearMonsterShots();
 		this.#clearPlayerShots();
+		this.#clearGauges();
 
 		const soil_index = Tools.radomValueInRange(0, 2);
 		this.game_window.style.background = `url("images/soil_${SOILS[ soil_index ]}.png")`;
@@ -103,10 +106,6 @@ class MainUI {
 			this.monsters[i].root_element.remove();
 			this.monsters.splice(i, 1);
 		}
-
-		//TODO essayer de comprendre pourquoi il arrive (même si c'est très rare) qu'un élément HTML de monstre ne se supprime pas correctement
-		for (const monster_element of document.querySelectorAll(".monster"))
-			monster_element.remove();
 	}
 
 	#clearMonsterShots() {
@@ -119,6 +118,18 @@ class MainUI {
 	#clearPlayerShots() {
 		for (let i = this.player_shots.length - 1; i >= 0; i--)
 			this.player_shots[i].remove();
+	}
+
+	#clearGauges() {
+		if (this.primaryReloadGauge) {
+			this.primaryReloadGauge.root_element.remove();
+			this.primaryReloadGauge = null;
+		}
+
+		if (this.secondaryReloadGauge) {
+			this.secondaryReloadGauge.root_element.remove();
+			this.secondaryReloadGauge = null;
+		}
 	}
 
 	#manageHudDisplay() {
