@@ -22,10 +22,12 @@ V   Tâche terminée
     V   Créer la classe
     V   Passer par popups_stack, pour ouvrir et fermer la popup
 *   Gérer la WaveReportPopup dans popups_stack
-    _   Ajouter le nav-ident du bouton de fermeture
-    _   Modifier le code de la classe
-    _   Passer par popups_stack, pour ouvrir et fermer la popup
-*   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto => renommer la fonction
+    V   Ajouter le nav-ident du bouton de fermeture
+    V   Modifier le code de la classe (héritage AbstractPopup)
+    V   Passer par popups_stack, pour ouvrir et fermer la popup
+*   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto
+    V   Nettoyer la référence MainController.tuto_popup quand la popup se ferme (pour détecter un tuto en cours)
+    _   Modifier la condition d'ouverture des paramètres
 *   Faire passer GamepadConfigUI en AbstractPopup
 *   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
 

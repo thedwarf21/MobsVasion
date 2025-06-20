@@ -236,13 +236,10 @@ class MainController {
 
     static togglePause() { 
 		const controls_state = MainController.scope.controls;
-		const was_paused = controls_state.paused;
         
-		if (!was_paused)   						// Mise en pause manuelle => ouverture de la popup paramètres
+		if (!controls_state.paused)   				// Mise en pause manuelle => ouverture de la popup paramètres
 			MainController.popups_stack.push(ParametersPopup);
-		else if (MainController.report_popup) 	// Possibilité de fermer la popup de rapport de fin de vague, via bouton pause (workflow particulier => gestion à part)
-			WaveReportPopup.close();
-		else MainController.UI.closeAllPopups();
+		else MainController.UI.closeAllPopups(); 	// Sinon, on ferme toutes les popups actuellement ouvertes et le jeu reprend
 	}
 
     static prepareWaveStart(is_silent_save) {
@@ -268,10 +265,13 @@ class MainController {
     static waveLost() {
 		JuiceHelper.stopWaveMusic();
         MainController.#characterRescueFees();
-
 		MainController.save_manager.saveGame();
-        WaveReportPopup.show( Tools.getRandomMessage(false), FRIEND_FACES.disappointed );
-		JuiceHelper.playerDied();
+
+		MainController.popups_stack.push(WaveReportPopup, {
+			friend_face_url: FRIEND_FACES.disappointed,
+			message: Tools.getRandomMessage(false)
+		});
+        JuiceHelper.playerDied();
     }
 
     static isWaveComplete() {
@@ -287,9 +287,12 @@ class MainController {
     static waveDefeated() {
 		JuiceHelper.stopWaveMusic();
         MainController.scope.game.wave_number++;
-
 		MainController.save_manager.saveGame();
-        WaveReportPopup.show( Tools.getRandomMessage(true), FRIEND_FACES.happy );
+
+		MainController.popups_stack.push(WaveReportPopup, {
+			friend_face_url: FRIEND_FACES.happy,
+			message: Tools.getRandomMessage(true)
+		});
     }
 
 	static #showWaveNumber() {
