@@ -64,20 +64,14 @@ class GameClock {
 			this.#characterActions();
 
 		this.#moveShots(this.#UI.shots);
-		this.#moveShots(this.#UI.monster_shots);
 
 		for (const monster of this.#UI.monsters)
 			monster.follow(this.#UI.character);
 	}
 
-	#moveShots(shots_list) {
-		for (let i = shots_list.length - 1; i >= 0; i--) {
-			const shot = shots_list[i];
-			shot.move(()=> {
-				shots_list.splice(i, 1);
-				shot.remove();
-			});
-		}
+	#moveShots() {
+		for (const shot of this.#UI.shots)
+			shot.move(()=> { shot.remove(); });
 	}
 
 	#characterActions() {
@@ -108,26 +102,23 @@ class GameClock {
 
 	#testCollides() {
 		this.#UI.refreshMonstersList();
-		this.#testCollidesShotsOnMonsters();
+		this.#monstersAttacksAndWounds();
 		this.#testCollidesShotsOnCharacter();
 		this.#testCollidesToxicClouds();
 	}
 	
-	#testCollidesShotsOnMonsters() {
+	#monstersAttacksAndWounds() {
 		for (const monster of this.#UI.monsters) {
 			monster.attack();
-			this.#performMonsterWounds(monster, this.#UI.shots, Abilities.getShotPower());
-			this.#performMonsterWounds(monster, this.#UI.monster_shots);
+			this.#performMonsterWounds(monster, this.#UI.shots);
 		}
 	}
 	
 	#testCollidesShotsOnCharacter() {
-		for (let i = this.#UI.monster_shots.length - 1; i >= 0; i--) {
-			const monster_shot = this.#UI.monster_shots[i];
-			if (monster_shot.hitbox.checkCollide(this.#UI.character.hitbox)) {
-				HealthBarHelper.characterHit(monster_shot.strength);
-				monster_shot.remove();
-				this.#UI.monster_shots.splice(i, 1);
+		for (const shot of this.#UI.monster_shots) {
+			if (shot.hitbox.checkCollide(this.#UI.character.hitbox)) {
+				HealthBarHelper.characterHit(shot.strength);
+				shot.remove();
 			}
 		}
 	}
@@ -139,14 +130,14 @@ class GameClock {
 		}
 	}
 
-	#performMonsterWounds(monster, shots, shot_power) {
+	#performMonsterWounds(monster, shots) {
 		for (let i = shots.length - 1; i >=0; i--) {
 			const shot = shots[i];
 
 			if (!monster.carried && monster.hitbox.checkCollide(shot.hitbox)) {
-				shots.splice(i, 1);
 				shot.remove();
-				monster.wound(shot_power || shot.strength, shot.angle);
+				shots.splice(i, 1);
+				monster.wound(shot.strength, shot.angle);
 			}					
 		}
 	}

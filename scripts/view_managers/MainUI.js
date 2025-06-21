@@ -5,7 +5,6 @@ class MainUI {
 	character;
 	monsters;
 	shots;
-	monster_shots;
 	primaryReloadGauge;
 	secondaryReloadGauge;
 
@@ -13,7 +12,6 @@ class MainUI {
 	constructor(controller) {
 		this.shots = [];
 		this.monsters = [];
-		this.monster_shots = [];
 
 		this.#controller = controller
 		this.#game_scope = controller.scope.game;
@@ -55,8 +53,7 @@ class MainUI {
 		this.#clearToxicClouds();
 		this.#clearBellThrowMarks();
 		this.#clearMonsters();
-		this.#clearMonsterShots();
-		this.#clearPlayerShots();
+		this.#clearShots();
 		this.#clearGauges();
 
 		const soil_index = Tools.radomValueInRange(0, 2);
@@ -97,16 +94,11 @@ class MainUI {
 		this.monsters = [];
 	}
 
-	#clearMonsterShots() {
-		for (let i = this.monster_shots.length - 1; i >= 0; i--) {
-			this.monster_shots[i].remove();
-			this.monster_shots.splice(i, 1);
-		}
-	}
+	#clearShots() {
+		for (const shot of this.shots)
+			shot.remove();
 
-	#clearPlayerShots() {
-		for (let i = this.player_shots.length - 1; i >= 0; i--)
-			this.player_shots[i].remove();
+		this.shots = [];
 	}
 
 	#clearGauges() {
@@ -197,15 +189,13 @@ class MainUI {
 		});
     }
 
-	refreshMonstersList() {
-		this.monsters = document.querySelectorAll(".monster");
-	}
+	refreshMonstersList() { this.monsters = Array.from(document.getElementsByClassName("monster")); }
 	
 	get game_window() 			{ return document.getElementById("game-window"); }
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
 	get toxic_clouds() 			{ return document.getElementsByClassName("toxic-cloud"); }
+	get monster_shots() 		{ return document.getElementsByClassName("monster-shot"); }
 	get bellThrowMarks()		{ return document.getElementsByClassName("bell-throw-aoe"); }
-	get player_shots() 			{ return document.getElementsByClassName("shot"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
 	get hud() 					{ return document.querySelector(".hud"); }
 }

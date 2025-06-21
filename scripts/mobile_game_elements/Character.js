@@ -20,10 +20,11 @@ class MV_Character extends MobileGameElement {
             MainController.scope.game.waiting_counter.shot = Abilities.getShotInterval();
 
 			if (MainController.scope.game.clip_ammo) {
-				const shot = this.#createShot();
-				MainController.UI.addToGameWindow(shot);
-                MainController.UI.shots.push(shot);
 				MainController.scope.game.clip_ammo--;
+
+				const shot = this.#createShot();
+                MainController.UI.shots.push(shot);
+				MainController.UI.addToGameWindow(shot);
 			} else JuiceHelper.emptyClipPercussion();
 		}
     }
@@ -74,7 +75,7 @@ class MV_Character extends MobileGameElement {
         
         const deltaX = SHOT_VELOCITY * Math.cos(this.aiming_angle);
         const deltaY = SHOT_VELOCITY * Math.sin(this.aiming_angle);
-        return MV_Shot.getInstance(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
+        return MV_Shot.getInstance(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle, Abilities.getShotPower());
     }
 }
 customElements.define("rs-game-character", MV_Character);

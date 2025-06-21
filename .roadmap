@@ -13,46 +13,7 @@ x   Sous-tâche en cours
 V   Tâche terminée
 >   Sous-tâche terminée
 
-
-*   Uniformiser la gestion des popups
-    V   Créer la classe TutorialPopup héritant de AbstractPopup
-        >   Créer un template HTML dédié
-        >   Créer la classe avec la gestion de la navigation par manette, pour les deux boutons "Continuer" et "Passer..."
-        >  Passer par popups_stack, pour ouvrir et fermer la popup
-    V   Créer une classe MonsterTutoPopup héritant de AbstractPopup
-        >   Ajouter le nav-ident du bouton de fermeture
-        >   Créer la classe
-        >   Passer par popups_stack, pour ouvrir et fermer la popup
-    V   Gérer la WaveReportPopup dans popups_stack
-        >   Ajouter le nav-ident du bouton de fermeture
-        >   Modifier le code de la classe (héritage AbstractPopup)
-        >   Passer par popups_stack, pour ouvrir et fermer la popup
-    V   Modifier le comportement de togglePause => la fenêtre de paramètres doit aussi pouvoir être ouverte pendant le tuto
-        >   Nettoyer la référence MainController.tuto_popup quand la popup se ferme (pour détecter un tuto en cours)
-        >   Modifier la condition d'ouverture des paramètres
-    V   Faire passer GamepadConfigUI en AbstractPopup
-        >   Créer un fichier dédié pour la classe (renommée en GamepadConfigPopup)
-        >   Modifier l'implémentation pour AbstractPopup et inclure la navigation par manette
-        >   Faire appel à GamepadConfigPopup via PopupsStack, pour ouvrir l'UI de config
-        >   Modifier l'ordre des actions, pour encourager l'utilisateur à paramétrer la navigation par manette en premier lieu
-        >   Supprimer la classe GamepadConfigUI, devenue inutile, dans rs_game_engine.js
-        >   Faire en sorte que le bouton "Valider" soit ignoré lors de la lecture du bouton en cours de configuration (#captureButtonPressed de GamepadConfigPopup)
-    V   Supprimer `MainUI.closeAllpopups` et remplacer son appel dans `MainConttroller`, par un appel à `MainConttroller.popups_stack.closeAll()`
-        >   Référence this.#gamepad_controls_ui devenue inutile dans MainUI
-
-*   Revenir à des MobileGameElements en tant qu'éléments de DOM (ça permettrait de simplifier grandement le code)
-    V   Modifier MobileGameElements
-        >   Plus de root_element, puisque ce sera this
-        >   L'implémenter comme customElement avec constructeur vide, et méthode init recevant les paramètres
-        >   Ajouter un méthode statique 'getInstance' qui crée une instance via createElement, avant d'appeller la méthode init de l'objet, pour ensuite le retourner
-    V   Modifier les classes héritantes en conséquence
-        >   Surcharger init et getInstance au lieu de surcharger le constructeur
-        >   Instanciation via getInstance au lieu de new (mais avec les mêmes paramètres)
-        >   Plus de root_element pour les injections dans le DOM et les remove
-    X   Passer d'une gestion par liste d'objets, à des parcours de résultats de querySelector, et du référencement direct (plus de splice)
-        x   Dans la MainUI => plus de liste mais des getters abstrayant les querySelector
-        x   Dans la MainUI => Parcours des listes par for/of pour augmenter la lisibilité
-        >   Plus de passation d'indice pour gérer les blessures des monstres
+* Continuer à assainir le code
  
 
 ------------ IDEES POUR LES VERSIONS SUIVANTES ------------

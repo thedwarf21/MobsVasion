@@ -24,8 +24,8 @@ class MV_MonsterSpitter extends MV_Monster {
         JuiceHelper.spit();
         super.resetAttackCounter();
         const shot = this.#createShot();
+        MainController.UI.shots.push(shot);
 		MainController.UI.addToGameWindow(shot);
-        MainController.UI.monster_shots.push(shot);
     }
 
     specificDeathEffect() {  // appelée par MV_Monster à la mort du monstre, si la méthode est présente (comme c'est le cas pour cette classe enfant)
@@ -56,9 +56,8 @@ class MV_MonsterSpitter extends MV_Monster {
         const deltaX = SHOT_VELOCITY/2 * Math.cos(this.aiming_angle);
         const deltaY = SHOT_VELOCITY/2 * Math.sin(this.aiming_angle);
         
-        const shot = MV_Shot.getInstance(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
+        const shot = MV_Shot.getInstance(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle, this.monster_type.strength);
         shot.classList.add("monster-shot");
-        shot.strength = this.monster_type.strength;
         return shot;
     }
 }
