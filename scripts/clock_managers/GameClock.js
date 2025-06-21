@@ -113,11 +113,10 @@ class GameClock {
 	}
 	
 	#testCollidesShotsOnMonsters() {
-		for (let i = this.#UI.monsters.length - 1; i >= 0; i--) {
-			const monster = this.#UI.monsters[i];
+		for (const monster of this.#UI.monsters) {
 			monster.attack();
-			this.#performMonsterWounds(i, monster, this.#UI.shots, Abilities.getShotPower());
-			this.#performMonsterWounds(i, monster, this.#UI.monster_shots);
+			this.#performMonsterWounds(monster, this.#UI.shots, Abilities.getShotPower());
+			this.#performMonsterWounds(monster, this.#UI.monster_shots);
 		}
 	}
 	
@@ -139,14 +138,14 @@ class GameClock {
 		}
 	}
 
-	#performMonsterWounds(index, monster, shots, shot_power) {
+	#performMonsterWounds(monster, shots, shot_power) {
 		for (let i = shots.length - 1; i >=0; i--) {
 			const shot = shots[i];
 
 			if (!monster.carried && monster.hitbox.checkCollide(shot.hitbox)) {
 				shots.splice(i, 1);
 				shot.remove();
-				monster.wound(shot_power || shot.strength, index, shot.angle);
+				monster.wound(shot_power || shot.strength, shot.angle);
 			}					
 		}
 	}

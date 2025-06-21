@@ -99,7 +99,6 @@ class JuiceHelper {
             x, y, monster_type.size, monster_type.size, 
             animation.css_class, animation.duration, ()=> {
                 const monster = (monster_type.class).getInstance(MainController.viewport, x, y);
-                MainController.UI.monsters.unshift(monster);
                 MainController.UI.addToGameWindow(monster);
             }
         );

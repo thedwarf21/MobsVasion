@@ -5,14 +5,12 @@ class MainUI {
 	character;
 	shots;
 	monster_shots;
-	monsters;
 	primaryReloadGauge;
 	secondaryReloadGauge;
 
 
 	constructor(controller) {
 		this.shots = [];
-		this.monsters = [];
 		this.monster_shots = [];
 
 		this.#controller = controller
@@ -208,4 +206,6 @@ class MainUI {
 	get player_shots() 			{ return document.getElementsByClassName("shot"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
 	get hud() 					{ return document.querySelector(".hud"); }
+
+	get monsters()				{ return document.querySelectorAll(".monster"); }
 }

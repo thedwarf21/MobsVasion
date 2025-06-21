@@ -49,10 +49,10 @@ V   Tâche terminée
         >   Surcharger init et getInstance au lieu de surcharger le constructeur
         >   Instanciation via getInstance au lieu de new (mais avec les mêmes paramètres)
         >   Plus de root_element pour les injections dans le DOM et les remove
-    _   Passer d'une gestion par liste d'objets, à des parcours de résultats de querySelector, et du référencement direct (plus de splice)
-        _   Dans la MainUI => plus de liste mais des getters abstrayant les querySelector
-        _   Dans la MainUI => Parcours des listes par for/of pour augmenter la lisibilité
-        _   Plus de passation d'indice pour gérer les blessures des monstres
+    X   Passer d'une gestion par liste d'objets, à des parcours de résultats de querySelector, et du référencement direct (plus de splice)
+        x   Dans la MainUI => plus de liste mais des getters abstrayant les querySelector
+        x   Dans la MainUI => Parcours des listes par for/of pour augmenter la lisibilité
+        >   Plus de passation d'indice pour gérer les blessures des monstres
  
 
 ------------ IDEES POUR LES VERSIONS SUIVANTES ------------

@@ -22,11 +22,11 @@ class MV_Monster extends MobileGameElement {
         this.#init(monster_key);
     }
   
-    wound(injury_amount, monster_index, angle) {
+    wound(injury_amount, angle) {
         this.health_points -= injury_amount;
         this.life_bar.assignValue(this.health_points);
         this.resetAttackCounter();
-        this.#dieOrBleed(monster_index, angle);
+        this.#dieOrBleed(angle);
     }
   
     follow(target) {
@@ -112,11 +112,11 @@ class MV_Monster extends MobileGameElement {
         this.appendChild(this.life_bar);
     }
 
-    #dieOrBleed(monster_index, angle) {
+    #dieOrBleed(angle) {
         if (this.health_points <= 0) {
             this.remove();
             this.#createBloodPuddle(this.x + this.pixel_size/2, this.y + this.pixel_size/2, true);
-            this.#monsterSlayed(monster_index);
+            this.#monsterSlayed();
         } else {
             this.shock();
             this.#bleed(angle);
@@ -137,9 +137,8 @@ class MV_Monster extends MobileGameElement {
         });
     }
 
-    #monsterSlayed(monster_index) {
+    #monsterSlayed() {
         JuiceHelper.monsterSlayed();
-        MainController.UI.monsters.splice(monster_index, 1);
 
         const monster_swag = Math.floor(Tools.radomValueInRange(this.monster_type.swag_range[0], this.monster_type.swag_range[1]) * Abilities.getSwagUpgrade());
 		MainController.scope.game.money += monster_swag;
