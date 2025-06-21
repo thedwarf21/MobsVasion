@@ -165,7 +165,7 @@ class MV_Monster extends MobileGameElement {
         }
 
         MainController.UI.addToGameWindow(puddle_element);
-        //setTimeout(()=> { puddle_element.remove(); }, 5000);
+        setTimeout(()=> { puddle_element.remove(); }, 15000);
     }
 }
 customElements.define("rs-game-monster", MV_Monster);
