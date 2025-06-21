@@ -32,6 +32,9 @@ class GameClock {
 
 			if (this.#game_scope.wave_pop.timeouts)
 				WaitingCounters.applyWavePopScheduling();
+			
+			if (MainController.isWaveComplete())
+				MainController.waveDefeated();
 		}
 
 		GamepadControls.clearState(this.#controls_state);
@@ -65,13 +68,17 @@ class GameClock {
 
 		this.#moveShots(this.#UI.shots);
 
-		for (const monster of this.#UI.monsters)
+		for (let i = 0; i < this.#UI.monsters.length; i++) {
+			const monster = this.#UI.monsters[i];
 			monster.follow(this.#UI.character);
+		}
 	}
 
 	#moveShots() {
-		for (const shot of this.#UI.shots)
+		for (let i = 0; i < this.#UI.shots.length; i++) {
+			const shot = this.#UI.shots[i];
 			shot.move(()=> { shot.remove(); });
+		}
 	}
 
 	#characterActions() {
@@ -108,14 +115,17 @@ class GameClock {
 	}
 	
 	#monstersAttacksAndWounds() {
-		for (const monster of this.#UI.monsters) {
+		for (let i = 0; i < this.#UI.monsters.length; i++) {
+			const monster = this.#UI.monsters[i];
 			monster.attack();
 			this.#performMonsterWounds(monster, this.#UI.shots);
 		}
 	}
 	
 	#testCollidesShotsOnCharacter() {
-		for (const shot of this.#UI.monster_shots) {
+		for (let i = 0; i < this.#UI.monster_shots.length; i++) {
+			const shot = this.#UI.monster_shots[i];
+
 			if (shot.hitbox.checkCollide(this.#UI.character.hitbox)) {
 				HealthBarHelper.characterHit(shot.strength);
 				shot.remove();
@@ -124,7 +134,9 @@ class GameClock {
 	}
 	
 	#testCollidesToxicClouds() {
-		for (const toxic_cloud of this.#UI.toxic_clouds) {
+		for (let i = 0; i < this.#UI.toxic_clouds.length; i++) {
+			const toxic_cloud = this.#UI.toxic_clouds[i];
+
 			if (this.#UI.character.hitbox.checkCollide(toxic_cloud.hitbox))
 				HealthBarHelper.characterHit(1);
 		}

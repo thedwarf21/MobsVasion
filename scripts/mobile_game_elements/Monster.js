@@ -138,6 +138,7 @@ class MV_Monster extends MobileGameElement {
     }
 
     #monsterSlayed() {
+        MainController.UI.refreshMonstersList();
         JuiceHelper.monsterSlayed();
 
         const monster_swag = Math.floor(Tools.radomValueInRange(this.monster_type.swag_range[0], this.monster_type.swag_range[1]) * Abilities.getSwagUpgrade());
@@ -147,9 +148,7 @@ class MV_Monster extends MobileGameElement {
 
         if (this.specificDeathEffect)
             this.specificDeathEffect();
-		
-        if (MainController.isWaveComplete())
-			MainController.waveDefeated();
+
     }
 
     #createBloodPuddle(x, y, isBig) {
@@ -164,7 +163,9 @@ class MV_Monster extends MobileGameElement {
             puddle_element.style.width = this.viewport.getCssValue(this.pixel_size);
             puddle_element.style.height = this.viewport.getCssValue(this.pixel_size);
         }
+
         MainController.UI.addToGameWindow(puddle_element);
+        //setTimeout(()=> { puddle_element.remove(); }, 5000);
     }
 }
 customElements.define("rs-game-monster", MV_Monster);

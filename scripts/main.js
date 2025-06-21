@@ -284,10 +284,9 @@ class MainController {
 		if (document.querySelector(".pop-animation"))
 			return false;
 
-		MainController.UI.refreshMonstersList();
         if (MainController.UI.monsters.length > 0)
             return false;
-		
+
         return true;
     }
 
