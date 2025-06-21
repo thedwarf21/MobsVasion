@@ -15,7 +15,7 @@
 	height: 1vh;
 	z-index: 1;
 }
-.shot.monster { background: #41da1b; }
+.shot.monster-shot { background: #41da1b; }
 
 .monster {
 	position: absolute;
