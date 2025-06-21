@@ -107,6 +107,7 @@ class GameClock {
 	}
 
 	#testCollides() {
+		this.#UI.refreshMonstersList();
 		this.#testCollidesShotsOnMonsters();
 		this.#testCollidesShotsOnCharacter();
 		this.#testCollidesToxicClouds();

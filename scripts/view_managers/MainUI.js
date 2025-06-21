@@ -3,6 +3,7 @@ class MainUI {
 	#game_scope;
 
 	character;
+	monsters;
 	shots;
 	monster_shots;
 	primaryReloadGauge;
@@ -11,6 +12,7 @@ class MainUI {
 
 	constructor(controller) {
 		this.shots = [];
+		this.monsters = [];
 		this.monster_shots = [];
 
 		this.#controller = controller
@@ -89,14 +91,10 @@ class MainUI {
 	}
 
 	#clearMonsters() {
-		for (let i = this.monsters.length - 1; i >= 0; i--) {
+		for (let i = this.monsters.length - 1; i >= 0; i--)
 			this.monsters[i].remove();
-			this.monsters.splice(i, 1);
-		}
 
-		//TODO essayer de comprendre pourquoi il arrive (même si c'est très rare) qu'un élément HTML de monstre ne se supprime pas correctement
-		for (const monster_element of document.querySelectorAll(".monster"))
-			monster_element.remove();
+		this.monsters = [];
 	}
 
 	#clearMonsterShots() {
@@ -198,6 +196,10 @@ class MainUI {
 			}
 		});
     }
+
+	refreshMonstersList() {
+		this.monsters = document.querySelectorAll(".monster");
+	}
 	
 	get game_window() 			{ return document.getElementById("game-window"); }
 	get bloodPuddles()			{ return document.getElementsByClassName("blood-puddle"); }
@@ -206,6 +208,4 @@ class MainUI {
 	get player_shots() 			{ return document.getElementsByClassName("shot"); }
 	get hitboxes()				{ return document.getElementsByClassName("hitbox"); }
 	get hud() 					{ return document.querySelector(".hud"); }
-
-	get monsters()				{ return document.querySelectorAll(".monster"); }
 }
