@@ -6,6 +6,8 @@ class MV_Monster extends MobileGameElement {
     shocked;
     carried;
 
+    #bonus_reward_ratio;
+
     constructor() { super(); }
 
 	static getInstance(viewport, x, y, monster_key) { 
@@ -18,7 +20,10 @@ class MV_Monster extends MobileGameElement {
         super.init(viewport, "css/monster.css", x, y);
         this.classList.add("monster");
         this.classList.add(monster_key);
+
         this.monster_type = MainController.wave_generator.bestiary[monster_key];
+        this.#bonus_reward_ratio = 1 + (MainController.scope.game.wave_number / 100);
+        
         this.#init(monster_key);
     }
   
@@ -141,15 +146,20 @@ class MV_Monster extends MobileGameElement {
         MainController.UI.refreshMonstersList();
         JuiceHelper.monsterSlayed();
 
-        const monster_swag = Math.floor(Tools.radomValueInRange(this.monster_type.swag_range[0], this.monster_type.swag_range[1]) * Abilities.getSwagUpgrade());
-		MainController.scope.game.money += monster_swag;
-
-		XpBarHelper.addXp( this.monster_type.battle_value );
+        MainController.scope.game.money += this.#getSwagAmount();
+		XpBarHelper.addXp( this.#getXpAmount() );
 
         if (this.specificDeathEffect)
             this.specificDeathEffect();
 
     }
+
+    #getSwagAmount() {
+        let swag = Tools.radomValueInRange(this.monster_type.swag_range[0], this.monster_type.swag_range[1]);
+        swag *= Abilities.getSwagUpgrade();
+        return Math.floor(swag * Abilities.getSwagUpgrade() * this.#bonus_reward_ratio);
+    }
+    #getXpAmount() { return Math.floor(this.monster_type.battle_value * this.#bonus_reward_ratio); }
 
     #createBloodPuddle(x, y, isBig) {
         const puddle_element = document.createElement("DIV");
