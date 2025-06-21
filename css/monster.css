@@ -46,6 +46,3 @@
 	margin-bottom: calc(3vh - 3.75vh);
   	margin-right: calc(1vh - 3.75vh);
 }
-
-/* trouver une solution pour arriver à faire ça en étant dans un ShadowDOM */
-.spinning-image > .monster > .gauge { opacity: 0; } /* la barre de vie d'un monstre porté par un golgoth n'apparaît pas */

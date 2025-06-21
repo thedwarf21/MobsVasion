@@ -55,7 +55,7 @@ class MV_MonsterGolgoth extends MV_Monster {
         if (this.carried_monster && this.#canThrow())
             this.choseThrowMethod();
 
-        if (this.current_target.monster_type)
+        if (this.current_target && this.current_target.monster_type)
             return this.#pickUpIfPossible();
 
         if (this.hitbox.checkCollide(MainController.UI.character.hitbox))
@@ -111,15 +111,16 @@ class MV_MonsterGolgoth extends MV_Monster {
         if (!this.current_target.isPickable())  // fix: si 2 golgoth tentent de ramasser le même monstre en mêmes temps => bug
             return;
 
-        this.carried_monster = this.current_target;
-        this.carried_monster.carried = true;
-        this.carried_monster.resetAttackCounter();
-        this.#setCarriedMonsterPosition();
+        this.#pickMonster();
     }
 
-    #setCarriedMonsterPosition() {
-        const carried_monster_element = this.carried_monster;
-        this.rotate_element.appendChild(carried_monster_element);
+    #pickMonster() {
+        this.carried_monster = this.current_target;
+        this.rotate_element.appendChild(this.carried_monster);
+
+        this.carried_monster.carried = true;
+        this.carried_monster.life_bar.style.opacity = 0;
+        this.carried_monster.resetAttackCounter();
     }
 
     /** Chute du monstre porté */
@@ -138,6 +139,7 @@ class MV_MonsterGolgoth extends MV_Monster {
     #dropMonster(monster) {
         this.#performDroppedMonsterInjuries(monster);
         monster.carried = false;
+        monster.life_bar.style.opacity = 1;
     }
 
     #performDroppedMonsterInjuries(monster) {
