@@ -2,9 +2,17 @@ class MV_MonsterSpitter extends MV_Monster {
     ATTACK_TIME = 25;
     TOXIC_CLOUD_RADIUS = 50;
     HITBOX_RATIO = 0.6;  // => rayon de la hitbox = 30
-  
-    constructor(viewport, x, y) {
-        super(viewport, x, y, "spitter");
+
+    constructor() { super(); }
+
+	static getInstance(viewport, x, y) { 
+        const instance = document.createElement("rs-game-monster-spitter");
+        instance.init(viewport, x, y);
+        return instance;
+    }
+
+    init(viewport, x, y) {
+        super.init(viewport, x, y, "spitter");
     }
 
     attack() {
@@ -49,8 +57,9 @@ class MV_MonsterSpitter extends MV_Monster {
         const deltaY = SHOT_VELOCITY/2 * Math.sin(this.aiming_angle);
         
         const shot = MV_Shot.getInstance(this.viewport, front_spot.x, front_spot.y, deltaX, deltaY, this.aiming_angle);
-        shot.root_element.classList.add("monster");
+        shot.classList.add("monster");
         shot.strength = this.monster_type.strength;
         return shot;
     }
 }
+customElements.define("rs-game-monster-spitter", MV_MonsterSpitter);

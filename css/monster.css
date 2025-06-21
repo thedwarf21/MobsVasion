@@ -1,0 +1,51 @@
+.spinning-image {
+	width: 100%;
+	height: 100%;
+	background-size: contain;
+	transform-origin: center;
+	position: absolute;
+}
+
+.hitbox {
+	position: absolute;
+ 	top: 0;
+	background: radial-gradient(circle at center, white 3%, rgba(255,255,255,0.2) 10%, rgba(255,255,255,0.3) 80%);
+	border-radius: 50%;
+}
+
+.spinning-image.voracious { background-image: url("../images/zombie.png"); }
+.spinning-image.spitter { background-image: url("../images/zombie_spitter.png"); }
+.spinning-image.tackler { background-image: url("../images/zombie_tackler.png"); }
+.spinning-image.golgoth {
+	background-image: url("../images/zombie_golgoth.png");
+
+	/* pour la cohérence d'affichage du monstre porté */
+	display: flex;
+	justify-content: end;
+	align-items: end;
+}
+
+/* Monstres portés par le golgoth */
+.voracious {
+	height: 10vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
+	width: 10vh;
+	margin-bottom: calc(3vh - 5vh);
+  	margin-right: calc(1vh - 5vh);
+}
+
+.spitter {
+	height: 5vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
+	width: 5vh;
+	margin-bottom: calc(3vh - 2.5vh);
+  	margin-right: calc(1vh - 2.5vh);
+}
+
+.tackler {
+	height: 7.5vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
+	width: 7.5vh;
+	margin-bottom: calc(3vh - 3.75vh);
+  	margin-right: calc(1vh - 3.75vh);
+}
+
+/* trouver une solution pour arriver à faire ça en étant dans un ShadowDOM */
+.spinning-image > .monster > .gauge { opacity: 0; } /* la barre de vie d'un monstre porté par un golgoth n'apparaît pas */

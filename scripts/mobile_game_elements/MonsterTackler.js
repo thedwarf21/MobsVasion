@@ -2,9 +2,17 @@ class MV_MonsterTackler extends MV_Monster {
     ATTACK_TIME = 20;
     TACKLE_LENGTH_RATIO = 1.25;
     aiming_locked_while_attacking = true;
-  
-    constructor(viewport, x, y) {
-        super(viewport, x, y, "tackler");
+
+    constructor() { super(); }
+
+	static getInstance(viewport, x, y) { 
+        const instance = document.createElement("rs-game-monster-tackler");
+        instance.init(viewport, x, y);
+        return instance;
+    }
+
+    init(viewport, x, y) {
+        super.init(viewport, x, y, "tackler");
     }
 
     attack() {
@@ -30,3 +38,4 @@ class MV_MonsterTackler extends MV_Monster {
         return this.hitbox.getDistance(character.hitbox) < this.monster_type.attack_range;
     }
 }
+customElements.define("rs-game-monster-tackler", MV_MonsterTackler);

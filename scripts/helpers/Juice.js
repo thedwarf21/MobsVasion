@@ -98,9 +98,9 @@ class JuiceHelper {
         const pop_animation = MV_AnimatedFrame.getInstance( MainController.viewport, 
             x, y, monster_type.size, monster_type.size, 
             animation.css_class, animation.duration, ()=> {
-                const monster = new monster_type.class(MainController.viewport, x, y);
+                const monster = (monster_type.class).getInstance(MainController.viewport, x, y);
                 MainController.UI.monsters.unshift(monster);
-                MainController.UI.addToGameWindow(monster.root_element);
+                MainController.UI.addToGameWindow(monster);
             }
         );
 

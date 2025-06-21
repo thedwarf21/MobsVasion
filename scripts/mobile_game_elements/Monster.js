@@ -5,13 +5,21 @@ class MV_Monster extends MobileGameElement {
     health_points;
     shocked;
     carried;
-  
-    constructor(viewport, x, y, monster_key) {
-        super(viewport, x, y);
-        this.root_element.classList.add("monster");
-        this.root_element.classList.add(monster_key);
+
+    constructor() { super(); }
+
+	static getInstance(viewport, x, y, monster_key) { 
+        const instance = document.createElement("rs-game-monster");
+        instance.init(viewport, x, y, monster_key);
+        return instance;
+    }
+
+    init(viewport, x, y, monster_key) {
+        super.init(viewport, "css/monster.css", x, y);
+        this.classList.add("monster");
+        this.classList.add(monster_key);
         this.monster_type = MainController.wave_generator.bestiary[monster_key];
-        this.init();
+        this.#init(monster_key);
     }
   
     wound(injury_amount, monster_index, angle) {
@@ -37,20 +45,21 @@ class MV_Monster extends MobileGameElement {
         this.move();
     }
   
-    init() {
+    #init(monster_key) {
         this.angle = 0;
         this.deltaX = 0;
         this.deltaY = 0;
         this.#initFromMonsterType();
         this.#addLifeBar();
         super.addImageElt("spinning-image");
+        this.rotate_element.classList.add(monster_key);
         super.addVisualHitBox(MainController.scope.game.showHitboxes);
     }
 
     resetAttackCounter() {
         if (this.isAttacking()) {
-            this.root_element.classList.remove("attack-animation");
-            this.attack_bar.root_element.remove();
+            this.classList.remove("attack-animation");
+            this.attack_bar.remove();
             this.attack_bar = null;
             WaitingCounters.removeAttackCounter(this);
         }
@@ -64,9 +73,9 @@ class MV_Monster extends MobileGameElement {
 
     shock() {
         this.shocked = true;
-        this.root_element.classList.add("shocked");
+        this.classList.add("shocked");
         setTimeout(()=> {
-            this.root_element.classList.remove("shocked");
+            this.classList.remove("shocked");
             this.shocked = false;
         }, WOUND_SHOCK_TIME);
     }
@@ -74,8 +83,8 @@ class MV_Monster extends MobileGameElement {
     timedAttack(fn_sound_fx) {
         this.aimPlayer();
         this.attack_bar = MV_Gauge.getInstance("monster-attack-bar", this.ATTACK_TIME, 0);
-        this.root_element.appendChild(this.attack_bar.root_element);
-        this.root_element.classList.add("attack-animation");
+        this.appendChild(this.attack_bar);
+        this.classList.add("attack-animation");
 
         MainController.scope.game.attacking_monsters.push({
             monster: this,
@@ -100,12 +109,12 @@ class MV_Monster extends MobileGameElement {
   
     #addLifeBar() {
         this.life_bar = MV_Gauge.getInstance("monster-health-bar", this.health_points, this.health_points);
-        this.root_element.appendChild(this.life_bar.root_element);
+        this.appendChild(this.life_bar);
     }
 
     #dieOrBleed(monster_index, angle) {
         if (this.health_points <= 0) {
-            this.root_element.remove();
+            this.remove();
             this.#createBloodPuddle(this.x + this.pixel_size/2, this.y + this.pixel_size/2, true);
             this.#monsterSlayed(monster_index);
         } else {
@@ -159,3 +168,4 @@ class MV_Monster extends MobileGameElement {
         MainController.UI.addToGameWindow(puddle_element);
     }
 }
+customElements.define("rs-game-monster", MV_Monster);

@@ -39,20 +39,20 @@ class MonsterTutoPopup extends AbstractPopup {
 
     #getMonsterPicture(monster_viewer) {
         const monster = new this.#params.monster_class(MainController.viewport, 0, 0);
-        monster.root_element.style.position = "unset";
+        monster.style.position = "unset";
         
         if (this.#params.attack) {
             this.#timer = setInterval(()=> {
                 this.#params.attack.prepareSound();
-                monster.root_element.classList.add("attack-animation");
+                monster.classList.add("attack-animation");
                 setTimeout(()=> {
                     this.#params.attack.sound();
-                    monster.root_element.classList.remove("attack-animation");
+                    monster.classList.remove("attack-animation");
                 }, this.#params.attack.duration);
             }, this.#params.attack.interval);
         }
 
-        return monster.root_element;
+        return monster;
     }
 
     #addSpecialElement(monster_viewer) {

@@ -92,7 +92,7 @@ class MainUI {
 
 	#clearMonsters() {
 		for (let i = this.monsters.length - 1; i >= 0; i--) {
-			this.monsters[i].root_element.remove();
+			this.monsters[i].remove();
 			this.monsters.splice(i, 1);
 		}
 
@@ -103,7 +103,7 @@ class MainUI {
 
 	#clearMonsterShots() {
 		for (let i = this.monster_shots.length - 1; i >= 0; i--) {
-			this.monster_shots[i].root_element.remove();
+			this.monster_shots[i].remove();
 			this.monster_shots.splice(i, 1);
 		}
 	}

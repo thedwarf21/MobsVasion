@@ -17,8 +17,16 @@ class MV_MonsterGolgoth extends MV_Monster {
     current_target;
     carried_monster;
 
-    constructor(viewport, x, y) {
-        super(viewport, x, y, "golgoth");
+    constructor() { super(); }
+
+	static getInstance(viewport, x, y) { 
+        const instance = document.createElement("rs-game-monster-golgoth");
+        instance.init(viewport, x, y);
+        return instance;
+    }
+
+    init(viewport, x, y) {
+        super.init(viewport, x, y, "golgoth");
         this.before_next_pick = 0;
     }
 
@@ -85,7 +93,7 @@ class MV_MonsterGolgoth extends MV_Monster {
         const thrown_monster = this.carried_monster;
         this.carried_monster = null;
 
-        MainController.UI.addToGameWindow(thrown_monster.root_element);
+        MainController.UI.addToGameWindow(thrown_monster);
         return thrown_monster;
     }
 
@@ -110,19 +118,13 @@ class MV_MonsterGolgoth extends MV_Monster {
     }
 
     #setCarriedMonsterPosition() {
-        const carried_monster_element = this.carried_monster.root_element;
+        const carried_monster_element = this.carried_monster;
         this.rotate_element.appendChild(carried_monster_element);
-        
-        const carried_monster_radius = this.carried_monster.pixel_size / 2;
-        delete carried_monster_element.style.left;
-        delete carried_monster_element.style.top;
-        carried_monster_element.style.right = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.x - carried_monster_radius);
-        carried_monster_element.style.bottom = MainController.viewport.getCssValue(this.CARRIED_OFFSETS.y - carried_monster_radius);
     }
 
     /** Chute du monstre porté */
     #carriedMonsterFallDown() {
-        MainController.UI.addToGameWindow(this.carried_monster.root_element);
+        MainController.UI.addToGameWindow(this.carried_monster);
         const position_delta = (this.pixel_size - this.carried_monster.pixel_size) / 2;
         this.carried_monster.x = this.x + position_delta;
         this.carried_monster.y = this.y + position_delta;
@@ -160,11 +162,11 @@ class MV_MonsterGolgoth extends MV_Monster {
     #showBellThrowDamageZone() {
         const target_position = MainController.UI.character.centralSpotPosition();
 
-        const aoe_element = MobileGameElement.getInstance(this.viewport, target_position.x - this.AOE_RADIUS, target_position.y - this.AOE_RADIUS);
+        const aoe_element = MobileGameElement.getInstance(this.viewport, "css/hitbox.css", target_position.x - this.AOE_RADIUS, target_position.y - this.AOE_RADIUS);
         aoe_element.pixel_size = this.AOE_RADIUS * 2;
-        aoe_element.root_element.classList.add("bell-throw-aoe");
-        aoe_element.root_element.style.width = this.viewport.getCssValue(this.AOE_RADIUS * 2);
-        aoe_element.root_element.style.height = this.viewport.getCssValue(this.AOE_RADIUS * 2);
+        aoe_element.classList.add("bell-throw-aoe");
+        aoe_element.style.width = this.viewport.getCssValue(this.AOE_RADIUS * 2);
+        aoe_element.style.height = this.viewport.getCssValue(this.AOE_RADIUS * 2);
         
         MainController.UI.addToGameWindow(aoe_element);
         return aoe_element;
@@ -196,7 +198,8 @@ class MV_MonsterGolgoth extends MV_Monster {
         
         JuiceHelper.monsterFalldown();
         MainController.UI.shakeGameWindow();
-        aoe_element.root_element.classList.add("impact-effect");
-        setTimeout(()=> { aoe_element.root_element.remove(); }, 1000);
+        aoe_element.classList.add("impact-effect");
+        setTimeout(()=> { aoe_element.remove(); }, 1000);
     }
 }
+customElements.define("rs-game-monster-golgoth", MV_MonsterGolgoth);

@@ -5,31 +5,33 @@
 	z-index: 1;
 }
 
-.shot { position: absolute; }
+.shot {
+	background: #fd8700;
+	box-shadow: 0 0 0.1vh 0.1vh black;
+	border: 0.1vh solid black;
+	position: absolute;
+	border-radius: 50%;
+	width: 1vh;
+	height: 1vh;
+	z-index: 1;
+}
+.shot.monster { background: #41da1b; }
 
 .monster {
 	position: absolute;
 	z-index: 1;
 }
 .monster.flying { z-index: 6; }
-.monster .spinning-image {
-	width: 100%;
-	height: 100%;
-	background-size: contain;
-	transform-origin: center;
-}
 
 .monster.voracious {
 	height: 10vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
 	width: 10vh;
 }
-.monster.voracious > .spinning-image { background-image: url("../images/zombie.png"); }
 
 .monster.spitter {
 	height: 5vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
 	width: 5vh;
 }
-.monster.spitter > .spinning-image { background-image: url("../images/zombie_spitter.png"); }
 .monster.spitter.attack-animation { animation: swell 1s ease-in; }
 @keyframes swell {
 	from { transform: scale(1); }
@@ -40,7 +42,6 @@
 	height: 7.5vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
 	width: 7.5vh;
 }
-.monster.tackler > .spinning-image { background-image: url("../images/zombie_tackler.png"); }
 .monster.tackler.attack-animation { animation: duck 1s ease-in; }
 @keyframes duck {
 	from { transform: scale(1); }
@@ -51,9 +52,7 @@
 	height: 15vh; /* taille en px virtuels convertie en vh => taille_vh = 100 / (hauteur_jeu_px / taille_px)  */
 	width: 15vh;
 }
-.monster.golgoth > .spinning-image { background-image: url("../images/zombie_golgoth.png"); }
 .monster.golgoth.attack-animation { animation: hard-shake 1s linear; }
-.spinning-image > .monster > .gauge { opacity: 0; } /* la barre de vie d'un monstre porté par un golgoth n'apparaît pas */
 @keyframes hard-shake {
 	0% { transform: translateX(0.8vh); }
 	10% { transform: translateY(-1vh); }

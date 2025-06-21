@@ -1,5 +1,4 @@
 class MV_Shot extends MobileGameElement {
-    #main_container;
 
     constructor() { super(); }
 
@@ -10,12 +9,8 @@ class MV_Shot extends MobileGameElement {
     }
 
     init(viewport, x, y, deltaX, deltaY, angle) {
-        super.init(viewport, "css/shot.css", x - SHOT_SIZE/2 ,y - SHOT_SIZE/2);
+        super.init(viewport, "css/hitbox.css", x - SHOT_SIZE/2 ,y - SHOT_SIZE/2);
         this.classList.add("shot");
-        
-        this.#main_container = document.createElement("DIV");
-        this.#main_container.classList.add("shot");
-        this.appendChild(this.#main_container);
 
         this.deltaX = deltaX;
         this.deltaY = deltaY;
