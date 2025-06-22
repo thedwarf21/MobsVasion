@@ -128,7 +128,7 @@ class MV_MonsterGolgoth extends MV_Monster {
         const position_delta = (this.pixel_size - this.carried_monster.pixel_size) / 2;
         this.carried_monster.x = this.x + position_delta;
         this.carried_monster.y = this.y + position_delta;
-        this.applyPosition();
+        this.carried_monster.applyPosition();
         MainController.UI.addToGameWindow(this.carried_monster);
 
         const fallen_monster = this.carried_monster;
