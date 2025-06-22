@@ -127,13 +127,13 @@ class MV_MonsterGolgoth extends MV_Monster {
     #carriedMonsterFallDown() {
         const fallen_monster = this.carried_monster;
         this.carried_monster = null;
-        MainController.UI.addToGameWindow(fallen_monster);
-
+        
         const position_delta = (this.pixel_size - fallen_monster.pixel_size) / 2;
         fallen_monster.x = this.x + position_delta;
         fallen_monster.y = this.y + position_delta;
         fallen_monster.applyPosition();
         
+        MainController.UI.addToGameWindow(fallen_monster);
         this.#dropMonster(fallen_monster);
     }
     
