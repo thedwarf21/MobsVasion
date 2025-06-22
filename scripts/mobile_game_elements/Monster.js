@@ -143,15 +143,15 @@ class MV_Monster extends MobileGameElement {
     }
 
     #monsterSlayed() {
-        MainController.UI.refreshMonstersList();
         JuiceHelper.monsterSlayed();
-
-        MainController.scope.game.money += this.#getSwagAmount();
-		XpBarHelper.addXp( this.#getXpAmount() );
-
+        
         if (this.specificDeathEffect)
             this.specificDeathEffect();
-
+        
+        MainController.scope.game.money += this.#getSwagAmount();
+		XpBarHelper.addXp( this.#getXpAmount() );
+        
+        MainController.UI.refreshMonstersList();
     }
 
     #getSwagAmount() {
