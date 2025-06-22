@@ -13,7 +13,13 @@ x   Sous-tâche en cours
 V   Tâche terminée
 >   Sous-tâche terminée
 
-* Continuer à assainir le code
+
+*   À corriger
+    V   Ajustement amélioration détecteur de métaux (0.3 au lieu de 0.5)
+    _   Les monstres n'apparaissent plus dans les popups de tuto
+    _   Si plus de monstres durant le pop du dernier monstre, fin de vague détectée à tort
+
+*   Continuer à assainir le code
  
 
 ------------ IDEES POUR LES VERSIONS SUIVANTES ------------
