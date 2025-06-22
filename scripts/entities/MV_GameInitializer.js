@@ -66,7 +66,7 @@ class MV_GameInitializer {
 				description: "shop_item_desc_DET",
 				lbl_effect: "shop_item_effect_DET",
 				level_0_effect: 0,
-				upgrade_value: 0.3,
+				upgrade_value: 0.2,
 				show_multiplicator: 100,
 				display_unit: "%",
 				level_1_price: 20,
