@@ -79,7 +79,7 @@ const MONSTERS_TYPES = {
 
 const TIMEOUTS = {
 	dash_interval: 75,
-	shot_interval: 13,
+	shot_interval: 18,
 	reload_time: 35,
 	before_pop: 25,
 	min_pop_interval: 25,
