@@ -88,6 +88,7 @@ class MainUI {
 	}
 
 	#clearMonsters() {
+		this.refreshMonstersList();
 		for (let i = this.monsters.length - 1; i >= 0; i--)
 			this.monsters[i].remove();
 
