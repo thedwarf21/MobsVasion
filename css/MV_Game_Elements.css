@@ -139,20 +139,7 @@ rs-game-animation { position: absolute; }
 	100% { transform: translateX(-0.8vh); }
 }
 
-.flash {
-	position: absolute;
-	z-index: 2;
-	height: 100vh;
-	width: 100vw;
-	background-color: red;
-	transition: opacity 0.25s linear;
-	animation: flash 0.25s linear;
-}@keyframes flash {
-	0% { opacity: 0.1; }
-	100% { opacity: 0; }
-}
-
-/* Animation d'AOE d'un lancer en cloche de golgoth */
+/* AOE d'un lancer en cloche de golgoth */
 .impact-effect {
 	background: radial-gradient(circle at center,transparent 32%, #ffffffb0 52%, transparent 72%);
 	animation: impact-effect 1s ease-out;
@@ -161,4 +148,31 @@ rs-game-animation { position: absolute; }
 	0% { transform: scale(0.1); }
 	75% { transform: scale(2); }
 	100% { opacity: 0; }
+}
+
+/* Santé basse */
+.panic-mode {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: radial-gradient(ellipse at center, transparent 65%, rgba(255, 0, 0, 0.5));
+
+	transition: all 0.15s linear;
+	animation: panic-mode 0.4s linear infinite;
+}
+@keyframes panic-mode {
+    0% { background: radial-gradient(ellipse at center, transparent 65%, rgba(255, 0, 0, 0.5)); }
+	25% { background: radial-gradient(ellipse at center, transparent 50%, rgba(255, 0, 0, 0.5)); }
+	50% { background: radial-gradient(ellipse at center, transparent 65%, rgba(255, 0, 0, 0.5)); }
+ }
+
+ /* Animation de Level UP */
+.player-level.level-up {
+	transition: box-shadow ;
+	animation: level-up 1s ease-in-out;
+}
+@keyframes level-up {
+	0% { box-shadow: 0 0 1.5vh #d0ff7d; }
+	50% { box-shadow: 0 0 1.5vh 1.5vh #d0ff7d; }
+	100% { box-shadow: 0 0 1.5vh #d0ff7d; }
 }
