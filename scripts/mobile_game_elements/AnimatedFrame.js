@@ -11,6 +11,7 @@ class MV_AnimatedFrame extends MobileGameElement {
     init(viewport, x, y, width, height, animationCssClass, animationDuration, onAnimationEnd) {
         super.init(viewport, "css/animations.css", x ,y);
         this.classList.add("animation-container");
+        this.classList.add(animationCssClass);
 
         this.style.width = this.viewport.getCssValue(width);
         this.style.height = this.viewport.getCssValue(height);
@@ -22,8 +23,8 @@ class MV_AnimatedFrame extends MobileGameElement {
 
     #addAnimationElement(animationCssClass) {
         const animationElement = document.createElement("div");
-        this.appendChild(animationElement);
         animationElement.classList.add(animationCssClass);
+        this.appendChild(animationElement);
     }
 
     #animationEnded(onAnimationEnd) {
