@@ -38,8 +38,9 @@ class MonsterTutoPopup extends AbstractPopup {
     }
 
     #getMonsterPicture(monster_viewer) {
-        const monster = new this.#params.monster_class(MainController.viewport, 0, 0);
+        const monster = this.#params.monster_class.getInstance(MainController.viewport, 0, 0);
         monster.style.position = "unset";
+        monster.rotate_element.style.position = "unset";
         
         if (this.#params.attack) {
             this.#timer = setInterval(()=> {
