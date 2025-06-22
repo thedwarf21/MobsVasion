@@ -118,3 +118,36 @@
   	background-repeat: no-repeat;
 	transform-origin: 0 50%;
 }
+
+/* animations */
+rs-game-animation { position: absolute; }
+.shocked {
+	transition: transform 0.125s linear;
+	animation: shake 0.5s linear;
+}
+@keyframes shake {
+	0% { transform: translateX(0.4vh); }
+	10% { transform: translateY(-0.5vh); }
+	20% { transform: translateX(-0.6vh); }
+	30% { transform: translateX(0.8vh); }
+	40% { transform: translateY(-0.7vh); }
+	50% { transform: translateX(0.5vh); }
+	60% { transform: translateY(0.5vh); }
+	70% { transform: translateY(-0.6vh); }
+	80% { transform: translateX(0.4vh); }
+	90% { transform: translateY(0.7vh); }
+	100% { transform: translateX(-0.8vh); }
+}
+
+.flash {
+	position: absolute;
+	z-index: 2;
+	height: 100vh;
+	width: 100vw;
+	background-color: red;
+	transition: opacity 0.25s linear;
+	animation: flash 0.25s linear;
+}@keyframes flash {
+	0% { opacity: 0.1; }
+	100% { opacity: 0; }
+}

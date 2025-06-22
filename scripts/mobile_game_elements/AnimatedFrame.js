@@ -17,8 +17,7 @@ class MV_AnimatedFrame extends MobileGameElement {
         this.style.height = this.viewport.getCssValue(height);
 
         this.#addAnimationElement(animationCssClass);
-        setTimeout(() => { this.#animationEnded(onAnimationEnd) 
-        }, animationDuration);
+        setTimeout(() => { this.#animationEnded(onAnimationEnd) }, animationDuration);
     }
 
     #addAnimationElement(animationCssClass) {
